@@ -1,4 +1,4 @@
-# iam
+# iam-policies
 
 > 
 
@@ -27,7 +27,7 @@ yarn add iam-policies
 ## Usage
 
 ```js
-const {Role}=require('iam')
+const {Role}=require('iam-policies')
 
 const role = new Role([
   {

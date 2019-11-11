@@ -1,4 +1,4 @@
-const {Role}=require('iam')
+const {Role}=require('iam-policies')
 
 const role = new Role([
   {

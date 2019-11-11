@@ -1,0 +1,13 @@
+{
+  "name": "iam-example",
+  "homepage": "https://Rogger794.github.io/react-seat-picker",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "iam": "link:.."
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

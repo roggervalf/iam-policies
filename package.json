@@ -1,0 +1,59 @@
+{
+  "author": {
+    "name": "Rogger794",
+    "email": "rogger.valverde@uni.pe"
+  },
+  "license": "MIT",
+  "repository": "Rogger794/iam-policies",
+  "deprecated": false,
+  "description": "Identity based policies library",
+  "version": "1.0.0",
+  "keywords": ["iam", "policies", "iam-policies"],
+  "name": "iam-policies",
+  "private": false,
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "test": "jest /tests",
+    "test:watch": "jest --watch",
+    "clean": "rimraf dist",
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w",
+    "start": "npm-run-all clean build:watch",
+    "prepare": "yarn run build",
+    "predeploy": "cd example && yarn install && yarn run build"
+  },
+  "source": "src/main.ts",
+  "main": "dist/main.js",
+  "module": "dist/main.es.js",
+  "jsnext:main": "dist/main.es.js",
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-typescript": "^7.7.2",
+    "@types/jest": "^24.0.22",
+    "@types/lodash.template": "^4.4.6",
+    "@types/minimatch": "^3.0.3",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.26.4",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "lodash.template": "^4.5.0",
+    "minimatch": "^3.0.4"
+  }
+}

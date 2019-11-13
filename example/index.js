@@ -13,7 +13,7 @@ const role = new Role([
   {
     effect: 'deny',
     resources: ['secrets:admin:*'],
-    actions: ['read'],
+    actions: ['read']
   },
 ])
  
@@ -40,3 +40,39 @@ const adminRole = new Role([
 console.log(adminRole.can('read', 'someResource'))
 // true
 console.log(adminRole.can('write', 'otherResource'))
+
+const condi={
+  "m":function(v,gg){
+    return v>gg
+  }
+}
+
+const roleWithCondition = new Role([
+  {
+    effect: 'allow', // optional, defaults to allow
+    resources: ['secrets:*'],
+    actions: ['read', 'write'],
+    conditions: {
+      "m":{
+          'user.id':500
+      }
+    }
+  },
+  /*{
+    resources: ['secrets:{${user.bestfriends}}:*'],
+    actions: ['read'],
+  },
+  {
+    effect: 'deny',
+    resources: ['secrets:admin:*'],
+    actions: ['read'],
+  },*/
+], condi)
+ 
+const contextgg = { user: { id: 456, bestfriends: [123, 563, 1211] } }
+
+
+// true
+console.log(roleWithCondition.can('read', 'secrets:563:sshhh', contextgg))
+// false
+console.log(roleWithCondition.can('read', 'secrets:admin:super-secret', contextgg))

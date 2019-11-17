@@ -7,7 +7,7 @@
   "repository": "Rogger794/iam-policies",
   "deprecated": false,
   "description": "Identity based policies library",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "keywords": ["iam", "policies", "iam-policies"],
   "name": "iam-policies",
   "private": false,
@@ -18,7 +18,7 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "test": "jest /tests",
-    "test:watch": "jest --watch",
+    "test:watch": "jest /tests --watch",
     "clean": "rimraf dist",
     "build": "rollup -c",
     "build:watch": "rollup -c -w",

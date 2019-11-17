@@ -41,9 +41,9 @@ console.log(adminRole.can('read', 'someResource'))
 // true
 console.log(adminRole.can('write', 'otherResource'))
 
-const condi={
-  "m":function(v,gg){
-    return v>gg
+const conditions={
+  "greatherThan":function(data,expected){
+    return data>expected
   }
 }
 
@@ -53,26 +53,14 @@ const roleWithCondition = new Role([
     resources: ['secrets:*'],
     actions: ['read', 'write'],
     conditions: {
-      "m":{
-          'user.id':500
+      "greatherThan":{
+          'user.age':18
       }
     }
   },
-  /*{
-    resources: ['secrets:{${user.bestfriends}}:*'],
-    actions: ['read'],
-  },
-  {
-    effect: 'deny',
-    resources: ['secrets:admin:*'],
-    actions: ['read'],
-  },*/
-], condi)
+], conditions)
  
-const contextgg = { user: { id: 456, bestfriends: [123, 563, 1211] } }
-
-
 // true
-console.log(roleWithCondition.can('read', 'secrets:563:sshhh', contextgg))
+console.log(roleWithCondition.can('read', 'secrets:sshhh', { user: { age: 19 } }))
 // false
-console.log(roleWithCondition.can('read', 'secrets:admin:super-secret', contextgg))
+console.log(roleWithCondition.can('read', 'secrets:admin:super-secret', { user: { age: 18 } }))

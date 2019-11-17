@@ -6,11 +6,11 @@
 
 ## About
 
-Define an allowed or denied set of actions against a set of resources with optional context.
+Define an allowed or denied set of actions against a set of resources with optional context and conditions.
 
 Deny rules trump allow rules.
 
-This is a fork of [@ddt/iam](https://www.npmjs.com/package/@ddt/iam) updated.
+This is a fork of [@ddt/iam](https://www.npmjs.com/package/@ddt/iam) updated with new functionalities.
 
 ## Install
 
@@ -84,4 +84,28 @@ const adminRole = new Role([
 adminRole.can('read', 'someResource')
 // true
 adminRole.can('write', 'otherResource')
+
+const conditions={
+  "greatherThan":function(data,expected){
+    return data>expected
+  }
+}
+
+const roleWithCondition = new Role([
+  {
+    effect: 'allow', // optional, defaults to allow
+    resources: ['secrets:*'],
+    actions: ['read', 'write'],
+    conditions: {
+      "greatherThan":{
+          'user.age':18
+      }
+    }
+  },
+], conditions)
+ 
+// true
+console.log(roleWithCondition.can('read', 'secrets:sshhh', { user: { age: 19 } }))
+// false
+console.log(roleWithCondition.can('read', 'secrets:admin:super-secret', { user: { age: 18 } }))
 ```

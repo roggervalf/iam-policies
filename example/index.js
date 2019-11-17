@@ -13,7 +13,7 @@ const role = new Role([
   {
     effect: 'deny',
     resources: ['secrets:admin:*'],
-    actions: ['read'],
+    actions: ['read']
   },
 ])
  
@@ -40,3 +40,27 @@ const adminRole = new Role([
 console.log(adminRole.can('read', 'someResource'))
 // true
 console.log(adminRole.can('write', 'otherResource'))
+
+const conditions={
+  "greatherThan":function(data,expected){
+    return data>expected
+  }
+}
+
+const roleWithCondition = new Role([
+  {
+    effect: 'allow', // optional, defaults to allow
+    resources: ['secrets:*'],
+    actions: ['read', 'write'],
+    conditions: {
+      "greatherThan":{
+          'user.age':18
+      }
+    }
+  },
+], conditions)
+ 
+// true
+console.log(roleWithCondition.can('read', 'secrets:sshhh', { user: { age: 19 } }))
+// false
+console.log(roleWithCondition.can('read', 'secrets:admin:super-secret', { user: { age: 18 } }))

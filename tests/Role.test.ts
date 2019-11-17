@@ -51,3 +51,38 @@ it('can match based on context', () => {
   ).toBe(true)
   expect(role.can('write', 'secrets:123:sshhh')).toBe(false)
 })
+
+it('can match based on conditions', () => {
+
+  const conditions={
+    "greatherThan":(data,expected)=>{
+      return data>expected
+    }
+  }
+  
+  const role = new Role([
+    {
+      resources: ['secrets:*'],
+      actions: ['read', 'write'],
+    },
+    {
+      resources: ['posts:${user.id}:*'],
+      actions: ['write','read','update'],
+      conditions: {
+        "greatherThan":{
+            "user.age": 18
+        }
+      }
+    },
+  ], conditions)  
+
+  expect(role.can('read', 'secrets:123:sshhh', { user: { id: 123 } })).toBe(
+    true
+  )
+  expect(role.can('write', 'posts:123:sshhh', { user: { id: 123, age: 17 } })).toBe(
+    false
+  )
+  expect(role.can('read', 'posts:456:sshhh', { user: { id: 456, age: 19 } })).toBe(
+    true
+  )
+})

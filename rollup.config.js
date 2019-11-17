@@ -1,4 +1,5 @@
 import babel from 'rollup-plugin-babel'
+import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs'
 import external from 'rollup-plugin-peer-deps-external'
 
@@ -20,6 +21,9 @@ export default {
       sourcemap: true
     }
   ],
+  external: [
+    'minimatch'
+  ],
   plugins: [
     typescript(),
     external(),
@@ -27,6 +31,7 @@ export default {
       exclude: 'node_modules/**',
       plugins: [ 'external-helpers' ]
     }),
+    resolve(),
     commonjs()
   ]
 }

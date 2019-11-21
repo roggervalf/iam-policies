@@ -15,6 +15,10 @@
   ],
   "name": "iam-policies",
   "private": false,
+  "bugs": {
+    "url": "https://github.com/Rogger794/iam-policies/issues"
+   },
+  "homepage":"https://github.com/Rogger794/iam-policies#readme",
   "engines": {
     "node": ">=8",
     "npm": ">=5"

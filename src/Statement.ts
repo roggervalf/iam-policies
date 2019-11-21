@@ -12,6 +12,10 @@ interface StatementConditions {
   [key: string]: Condition
 }
 
+interface ConditionResolver {
+  [key: string]: any
+}
+
 export type StatementConfig = {
   effect?: StatementEffect
   resources: StatementPattern[]
@@ -24,7 +28,7 @@ export class Statement {
   effect: StatementEffect
   private resources: StatementPattern[]
   private actions: StatementPattern[]
-  private conditions: StatementConditions
+  private conditions?: StatementConditions
   constructor({ effect = 'allow', resources, actions, conditions }: StatementConfig) {
     this.effect = effect
     this.resources = resources
@@ -32,7 +36,7 @@ export class Statement {
     this.conditions = conditions
   }
 
-  matches(action: string, resource: string, context?: object, conditionResolvers?: object): boolean {
+  matches(action: string, resource: string, context?: object, conditionResolvers?: ConditionResolver): boolean {
     if(conditionResolvers&&this.conditions&&context){
       return (
         this.actions.some(a =>
@@ -42,8 +46,8 @@ export class Statement {
           new Minimatch(applyContext(r, context)).match(resource)
         ) &&
         Object.keys(this.conditions).every(condition =>
-          Object.keys(this.conditions[condition]).every(path=>
-            conditionResolvers[condition](getValueFromPath(context,path),this.conditions[condition][path])
+          Object.keys(this.conditions?this.conditions[condition]:{}).every(path=>
+            conditionResolvers[condition](getValueFromPath(context,path),this.conditions?this.conditions[condition][path]:"")
           )  
         )
       )
@@ -59,10 +63,10 @@ export class Statement {
   }
 }
 
-export function getValueFromPath(data, path) {
+export function getValueFromPath(data:any, path:string) {
   let value= data
   const steps = path.split('.');
-  steps.forEach(e => value=value[e]);  
+  steps.forEach(e => value=value[e]);
   return value
 }
 

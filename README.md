@@ -94,3 +94,41 @@ roleWithCondition.can('read', 'secrets:sshhh', { user: { age: 19 } })
 // false
 roleWithCondition.can('read', 'secrets:admin:super-secret', { user: { age: 18 } })
 ```
+
+## Features
+
+Supports these glob features:
+
+* Role creation
+* [Minimatch features](https://www.npmjs.com/package/minimatch)
+
+## Role Class
+
+Create custom role with actions and permissions.
+
+```js
+const {Role}=require('iam-policies')
+
+const role = new Role(StatementConfigs,conditionResolvers)
+```
+
+config: StatementConfig[], conditionResolvers?: object
+{
+  effect?: StatementEffect
+  resource: StatementPattern[] | StatementPattern
+  action: StatementPattern[] | StatementPattern
+  condition?: StatementConditions
+}
+
+### Properties
+
+Name | Type | Default | Required|Description
+---- | ----- | ------- | ------ | -----------
+`StatementConfigs` | object[] | undefined | `true` | It contains permission statements.
+`StatementConfigs[].effect` | string | allow | `false` | It allow (`allow`) or deny (`deny`) the action.
+`StatementConfigs[].resource` | string or string[] | undefined | `true` | It represents the protected resource.
+`StatementConfigs[].action` | string or string[] | undefined | `true` | It represents the action associated to the protected resource.
+
+## License
+
+MIT © [Rogger794](https://github.com/Rogger794)

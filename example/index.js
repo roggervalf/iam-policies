@@ -3,17 +3,17 @@ const {Role}=require('iam-policies')
 const role = new Role([
   {
     effect: 'allow', // optional, defaults to allow
-    resources: ['secrets:${user.id}:*'],
-    actions: ['read', 'write'],
+    resource: ['secrets:${user.id}:*'],
+    action: ['read', 'write'],
   },
   {
-    resources: ['secrets:{${user.bestfriends}}:*'],
-    actions: ['read'],
+    resource: ['secrets:{${user.bestfriends}}:*'],
+    action: 'read',
   },
   {
     effect: 'deny',
-    resources: ['secrets:admin:*'],
-    actions: ['read']
+    resource: 'secrets:admin:*',
+    action: 'read'
   },
 ])
  
@@ -31,8 +31,8 @@ console.log(role.can('read', 'secrets:admin:super-secret', friendsWithAdminConte
 
 const adminRole = new Role([
   {
-    resources: ['*'],
-    actions: ['*'],
+    resource: '*',
+    action: '*',
   },
 ])
 
@@ -50,9 +50,9 @@ const conditions={
 const roleWithCondition = new Role([
   {
     effect: 'allow', // optional, defaults to allow
-    resources: ['secrets:*'],
-    actions: ['read', 'write'],
-    conditions: {
+    resource: 'secrets:*',
+    action: ['read', 'write'],
+    condition: {
       "greatherThan":{
           'user.age':18
       }

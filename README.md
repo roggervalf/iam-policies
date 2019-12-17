@@ -32,42 +32,27 @@ const {Role}=require('iam-policies')
 const role = new Role([
   {
     effect: 'allow', // optional, defaults to allow
-    resources: ['secrets:${user.id}:*'],
-    actions: ['read', 'write'],
+    resource: ['secrets:${user.id}:*'],
+    action: ['read', 'write'],
   },
   {
-    resources: ['secrets:{${user.bestfriends}}:*'],
-    actions: ['read'],
+    resource: ['secrets:{${user.bestfriends}}:*'],
+    action: 'read',
   },
   {
     effect: 'deny',
-    resources: ['secrets:admin:*'],
-    actions: ['read'],
+    resource: 'secrets:admin:*',
+    action: 'read'
   },
 ])
 
-const adminRole = new Role([
-  {
-    effect: 'allow',
-    resources: ['*'],
-    actions: ['*'],
-  },
-  {
-    resources: ['secrets:{${user.bestfriends}}:*'],
-    actions: ['read'],
-  },
-  {
-    effect: 'deny',
-    resources: ['secrets:admin:*'],
-    actions: ['read'],
-  },
-])
 const context = { user: { id: 456, bestfriends: [123, 563, 1211] } }
+
 // true
 role.can('read', 'secrets:563:sshhh', context)
 // false
 role.can('read', 'secrets:admin:super-secret', context)
-
+ 
 const friendsWithAdminContext = { user: { id: 456, bestfriends: ['admin'] } }
 
 // false
@@ -75,8 +60,8 @@ role.can('read', 'secrets:admin:super-secret', friendsWithAdminContext)
 
 const adminRole = new Role([
   {
-    resources: ['*'],
-    actions: ['*'],
+    resource: '*',
+    action: '*',
   },
 ])
 
@@ -94,9 +79,9 @@ const conditions={
 const roleWithCondition = new Role([
   {
     effect: 'allow', // optional, defaults to allow
-    resources: ['secrets:*'],
-    actions: ['read', 'write'],
-    conditions: {
+    resource: 'secrets:*',
+    action: ['read', 'write'],
+    condition: {
       "greatherThan":{
           'user.age':18
       }
@@ -105,7 +90,7 @@ const roleWithCondition = new Role([
 ], conditions)
  
 // true
-console.log(roleWithCondition.can('read', 'secrets:sshhh', { user: { age: 19 } }))
+roleWithCondition.can('read', 'secrets:sshhh', { user: { age: 19 } })
 // false
-console.log(roleWithCondition.can('read', 'secrets:admin:super-secret', { user: { age: 18 } }))
+roleWithCondition.can('read', 'secrets:admin:super-secret', { user: { age: 18 } })
 ```

@@ -18,45 +18,45 @@ interface ConditionResolver {
 
 export type StatementConfig = {
   effect?: StatementEffect
-  resources: StatementPattern[]
-  actions: StatementPattern[]
-  conditions?: StatementConditions
+  resource: StatementPattern[] | StatementPattern
+  action: StatementPattern[] | StatementPattern
+  condition?: StatementConditions
 }
 
 //"Condition" : { "{condition-operator}" : { "{condition-key}" : "{condition-value}" }}
 export class Statement {
   effect: StatementEffect
-  private resources: StatementPattern[]
-  private actions: StatementPattern[]
-  private conditions?: StatementConditions
-  constructor({ effect = 'allow', resources, actions, conditions }: StatementConfig) {
+  private resource: StatementPattern[]
+  private action: StatementPattern[]
+  private condition?: StatementConditions
+  constructor({ effect = 'allow', resource, action, condition }: StatementConfig) {
     this.effect = effect
-    this.resources = resources
-    this.actions = actions
-    this.conditions = conditions
+    this.resource = typeof resource === "string"? [resource]:resource
+    this.action = typeof action === "string"? [action]:action
+    this.condition = condition
   }
 
   matches(action: string, resource: string, context?: object, conditionResolvers?: ConditionResolver): boolean {
-    if(conditionResolvers&&this.conditions&&context){
+    if(conditionResolvers&&this.condition&&context){
       return (
-        this.actions.some(a =>
+        this.action.some(a =>
           new Minimatch(applyContext(a, context)).match(action)
         ) &&
-        this.resources.some(r =>
+        this.resource.some(r =>
           new Minimatch(applyContext(r, context)).match(resource)
         ) &&
-        Object.keys(this.conditions).every(condition =>
-          Object.keys(this.conditions?this.conditions[condition]:{}).every(path=>
-            conditionResolvers[condition](getValueFromPath(context,path),this.conditions?this.conditions[condition][path]:"")
+        Object.keys(this.condition).every(condition =>
+          Object.keys(this.condition?this.condition[condition]:{}).every(path=>
+            conditionResolvers[condition](getValueFromPath(context,path),this.condition?this.condition[condition][path]:"")
           )  
         )
       )
   }
     return (
-      this.actions.some(a =>
+      this.action.some(a =>
         new Minimatch(applyContext(a, context)).match(action)
       ) &&
-      this.resources.some(r =>
+      this.resource.some(r =>
         new Minimatch(applyContext(r, context)).match(resource)
       )
     )

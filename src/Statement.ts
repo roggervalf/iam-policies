@@ -63,14 +63,14 @@ export class Statement {
   }
 }
 
-export function getValueFromPath(data:any, path:string) {
+export function getValueFromPath(data:any, path:string):any {
   let value= data
   const steps = path.split('.');
   steps.forEach(e => value=value[e]);
   return value
 }
 
-export function applyContext(str: string, context?: object) {
+export function applyContext(str: string, context?: object):string {
   if (context == null) return str
   const t = template(str)
   return t(context)

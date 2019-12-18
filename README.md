@@ -112,14 +112,6 @@ const {Role}=require('iam-policies')
 const role = new Role(StatementConfigs,conditionResolvers)
 ```
 
-config: StatementConfig[], conditionResolvers?: object
-{
-  effect?: StatementEffect
-  resource: StatementPattern[] | StatementPattern
-  action: StatementPattern[] | StatementPattern
-  condition?: StatementConditions
-}
-
 ### Properties
 
 Name | Type | Default | Required|Description
@@ -128,6 +120,21 @@ Name | Type | Default | Required|Description
 `StatementConfigs[].effect` | string | allow | `false` | It allow (`allow`) or deny (`deny`) the action.
 `StatementConfigs[].resource` | string or string[] | undefined | `true` | It represents the protected resource.
 `StatementConfigs[].action` | string or string[] | undefined | `true` | It represents the action associated to the protected resource.
+`StatementConfigs[].condition` | object | undefined | `false` | It contains function condition for each statementConfig.
+
+### Methods
+
+#### role.can(action, resource, context)
+
+*public*: Verify if action for specific resource is allowed.
+
+Name | Type | Default | Required|Description
+---- | ----- | ------- | ------ | -----------
+`action` | string | undefined | `true` | It represents the action you are asking.
+`resource` | string | undefined | `true` | It represents the resource for the action you are asking.
+`context` | object | undefined | `false` | It represents the properties that will be embedded into your resources.
+
+## Statement Class
 
 ## License
 

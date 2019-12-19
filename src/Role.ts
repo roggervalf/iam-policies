@@ -1,10 +1,10 @@
-import { Statement, StatementConfig } from './Statement'
+import { Statement, StatementConfig, ConditionResolver } from './Statement'
 
 export class Role {
   private denyStatements: Statement[]
   private allowStatements: Statement[]
-  private conditionResolvers?: object
-  constructor(config: StatementConfig[], conditionResolvers?: object) {
+  private conditionResolvers?: ConditionResolver
+  constructor(config: StatementConfig[], conditionResolvers?: ConditionResolver) {
     const statements = config.map(s => new Statement(s))
     this.allowStatements = statements.filter(s => s.effect === 'allow')
     this.denyStatements = statements.filter(s => s.effect === 'deny')

@@ -12,10 +12,6 @@ interface StatementConditions {
   [key: string]: Condition
 }
 
-interface ConditionResolver {
-  [key: string]: any
-}
-
 export type StatementConfig = {
   effect?: StatementEffect
   resource: StatementPattern[] | StatementPattern
@@ -23,6 +19,11 @@ export type StatementConfig = {
   condition?: StatementConditions
 }
 
+type Resolver = (data: any, expected: any) => boolean;
+
+export interface ConditionResolver {
+  [key: string]: Resolver
+}
 //"Condition" : { "{condition-operator}" : { "{condition-key}" : "{condition-value}" }}
 export class Statement {
   effect: StatementEffect

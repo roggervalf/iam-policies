@@ -7,15 +7,24 @@
   "repository": "Rogger794/iam-policies",
   "deprecated": false,
   "description": "Identity based policies library",
-  "version": "1.1.0",
-  "keywords": ["iam", "policies", "iam-policies"],
+  "version": "1.2.0",
+  "keywords": [
+    "iam",
+    "policies",
+    "iam-policies"
+  ],
   "name": "iam-policies",
   "private": false,
+  "bugs": {
+    "url": "https://github.com/Rogger794/iam-policies/issues"
+  },
+  "homepage": "https://github.com/Rogger794/iam-policies#readme",
   "engines": {
     "node": ">=8",
     "npm": ">=5"
   },
   "scripts": {
+    "pretest": "./node_modules/.bin/eslint --ignore-path .gitignore . --fix",
     "prepublishOnly": "npm run build",
     "test": "jest /tests",
     "test:watch": "jest /tests --watch",
@@ -26,7 +35,7 @@
     "prepare": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build"
   },
-  "source": "src/main.ts",
+  "source": "main.ts",
   "main": "dist/main.js",
   "module": "dist/main.es.js",
   "jsnext:main": "dist/main.es.js",
@@ -34,18 +43,28 @@
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-typescript": "^7.7.2",
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
     "@types/jest": "^24.0.22",
     "@types/lodash.template": "^4.4.6",
     "@types/minimatch": "^3.0.3",
+    "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "husky": "^3.1.0",
     "jest": "^24.9.0",
     "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
     "rollup": "^1.26.4",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-typescript2": "^0.25.3",
     "tslib": "^1.10.0",
     "typescript": "^3.7.2"
   },
@@ -55,5 +74,16 @@
   "dependencies": {
     "lodash.template": "^4.5.0",
     "minimatch": "^3.0.4"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn pretest",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }

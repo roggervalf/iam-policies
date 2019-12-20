@@ -1,32 +1,35 @@
-import babel from 'rollup-plugin-babel'
-import commonjs from 'rollup-plugin-commonjs'
-import external from 'rollup-plugin-peer-deps-external'
+import babel from "rollup-plugin-babel";
+import resolve from "rollup-plugin-node-resolve";
+import commonjs from "rollup-plugin-commonjs";
+import external from "rollup-plugin-peer-deps-external";
 
-import typescript from 'rollup-plugin-typescript';
+import typescript from "rollup-plugin-typescript2";
 
-import pkg from './package.json'
+import pkg from "./package.json";
 
 export default {
-  input: 'src/main.ts',
+  input: "./main.ts",
   output: [
     {
       file: pkg.main,
-      format: 'cjs',
-      sourcemap: true
+      format: "cjs",
+      sourcemap: true,
     },
     {
       file: pkg.module,
-      format: 'es',
-      sourcemap: true
-    }
+      format: "es",
+      sourcemap: true,
+    },
   ],
+  external: ["minimatch"],
   plugins: [
     typescript(),
     external(),
     babel({
-      exclude: 'node_modules/**',
-      plugins: [ 'external-helpers' ]
+      exclude: "node_modules/**",
+      plugins: ["external-helpers"],
     }),
-    commonjs()
-  ]
-}
+    resolve(),
+    commonjs(),
+  ],
+};

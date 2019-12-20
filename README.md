@@ -126,7 +126,9 @@ Name | Type | Default | Required|Description
 
 #### role.can(action, resource, context)
 
-*public*: Verify if action for specific resource is allowed.
+*public*: Verify if action for specific resource is allowed (`true`) or denied (`false`).
+
+##### Params
 
 Name | Type | Default | Required|Description
 ---- | ----- | ------- | ------ | -----------
@@ -135,6 +137,73 @@ Name | Type | Default | Required|Description
 `context` | object | undefined | `false` | It represents the properties that will be embedded into your resources.
 
 ## Statement Class
+
+Create custom statement.
+
+```js
+const {Statement}=require('iam-policies')
+
+const statement = new Statement(StatementConfig)
+```
+
+### Properties
+
+Name | Type | Default | Required|Description
+---- | ----- | ------- | ------ | -----------
+`StatementConfig` | object | undefined | `true` | It contains permission statements.
+`StatementConfig.effect` | string | allow | `false` | It allow (`allow`) or deny (`deny`) the action.
+`StatementConfig.resource` | string or string[] | undefined | `true` | It represents the protected resource.
+`StatementConfig.action` | string or string[] | undefined | `true` | It represents the action associated to the protected resource.
+`StatementConfig.condition` | object | undefined | `false` | It contains function condition for each statementConfig.
+
+### Methods
+
+#### statement.matches(action, resource, context, conditionResolvers)
+
+*public*: Verify if action for specific resource is allowed (`true`) or denied (`false`) into the statement.
+
+##### Params
+
+Name | Type | Default | Required|Description
+---- | ----- | ------- | ------ | -----------
+`action` | string | undefined | `true` | It represents the action you are asking.
+`resource` | string | undefined | `true` | It represents the resource for the action you are asking.
+`context` | object | undefined | `false` | It represents the properties that will be embedded into your resources.
+`conditionResolvers` | object | undefined | `false` | It contains function conditions.
+
+## getValueFromPath(data, path) Function
+
+Get object value from path.
+
+```js
+const {getValueFromPath}=require('iam-policies')
+
+const value = getValueFromPath(data, path)
+```
+
+### Params
+
+Name | Type | Default | Required|Description
+---- | ----- | ------- | ------ | -----------
+`data` | object | undefined | `true` | It is our context.
+`path` | string | undefined | `true` | It is the value path from data. Separate attribute names by dots (`.`).
+
+## applyContext(str, context) Function
+
+Get string with context value embedded into it.
+
+```js
+const {applyContext}=require('iam-policies')
+
+const embeddedStr = applyContext(str, context)
+```
+
+### Params
+
+Name | Type | Default | Required|Description
+---- | ----- | ------- | ------ | -----------
+`str` | string | undefined | `true` | It could contain embedded path values into it by using (`${}` or `{}`).
+`context` | object | undefined | `false` | It represents the context that should be embedded into `str`.
 
 ## License
 

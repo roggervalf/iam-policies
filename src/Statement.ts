@@ -38,28 +38,17 @@ export class Statement {
   }
 
   matches(action: string, resource: string, context?: object, conditionResolvers?: ConditionResolver): boolean {
-    if(conditionResolvers&&this.condition&&context){
-      return (
-        this.action.some(a =>
-          new Minimatch(applyContext(a, context)).match(action)
-        ) &&
-        this.resource.some(r =>
-          new Minimatch(applyContext(r, context)).match(resource)
-        ) &&
-        Object.keys(this.condition).every(condition =>
-          Object.keys(this.condition?this.condition[condition]:{}).every(path=>
-            conditionResolvers[condition](getValueFromPath(context,path),this.condition?this.condition[condition][path]:"")
-          )  
-        )
-      )
-  }
     return (
       this.action.some(a =>
         new Minimatch(applyContext(a, context)).match(action)
       ) &&
       this.resource.some(r =>
         new Minimatch(applyContext(r, context)).match(resource)
-      )
+      ) && ((conditionResolvers&&this.condition&&context)?Object.keys(this.condition).every(condition =>
+        Object.keys(this.condition?this.condition[condition]:{}).every(path=>
+          conditionResolvers[condition](getValueFromPath(context,path),this.condition?this.condition[condition][path]:"")
+        )  
+      ):true)
     )
   }
 }
@@ -67,7 +56,10 @@ export class Statement {
 export function getValueFromPath(data:any, path:string):any {
   let value= data
   const steps = path.split('.');
-  steps.forEach(e => value=value[e]);
+  steps.forEach(step => {
+    if(value){
+      value=value[step]
+    }});
   return value
 }
 

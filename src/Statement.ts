@@ -1,5 +1,7 @@
-import { Minimatch } from 'minimatch'
-import template from 'lodash.template'
+import { Minimatch } from 'minimatch';
+
+const reDelimiters = /<%-([\s\S]+?)%>|<%=([\s\S]+?)%>|\$\{([^\\}]*(?:\\.[^\\}]*)*)\}|<%([\s\S]+?)%>|$/g;
+const trim = / +(?= )|^\s+|\s+$/g
 
 type StatementEffect = 'allow' | 'deny'
 type StatementPattern = string
@@ -63,8 +65,22 @@ export function getValueFromPath(data:any, path:string):any {
   return value
 }
 
+const specialTrim = (str:string):string => str.replace(trim, "");
+
 export function applyContext(str: string, context?: object):string {
-  if (context == null) return str
-  const t = template(str)
-  return t(context)
+  if (!context) return str
+  return specialTrim(str.replace(
+    reDelimiters,
+    (
+      match,
+      escapeValue,
+      interpolateValue,
+      esTemplateValue,
+      evaluateValue,
+      offset
+    ) => {
+      let path = interpolateValue || esTemplateValue;  
+      return match ? String(getValueFromPath(context, path)) : "";
+    }
+  ))
 }

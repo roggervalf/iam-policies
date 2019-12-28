@@ -46,7 +46,6 @@
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
     "@types/jest": "^24.0.22",
-    "@types/lodash.template": "^4.4.6",
     "@types/minimatch": "^3.0.3",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
@@ -72,7 +71,6 @@
     "dist"
   ],
   "dependencies": {
-    "lodash.template": "^4.5.0",
     "minimatch": "^3.0.4"
   },
   "commitlint": {

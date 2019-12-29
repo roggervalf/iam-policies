@@ -62,6 +62,8 @@ export function getValueFromPath(data:any, path:string):any {
     if(value){
       value=value[step]
     }});
+  if(value instanceof Array)
+    return `{${value}}`
   return value
 }
 

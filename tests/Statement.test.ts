@@ -6,7 +6,7 @@ it("can match based on context", () => {
   };
   expect(applyContext("secrets:${user.id}:*", context)).toBe("secrets:456:*");
 
-  expect(applyContext("secrets:{${user.bestfriends}}:*", context)).toBe(
+  expect(applyContext("secrets:${user.bestfriends}:*", context)).toBe(
     "secrets:{123,532,987}:*"
   );
 });

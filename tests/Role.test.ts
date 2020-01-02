@@ -31,7 +31,7 @@ it("can match based on context", () => {
       action: ["read", "write"],
     },
     {
-      resource: ["secrets:{${user.bestfriends}}:*"],
+      resource: ["secrets:${user.bestfriends}:*"],
       action: "read",
     },
   ]);

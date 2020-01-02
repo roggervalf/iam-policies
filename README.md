@@ -36,7 +36,7 @@ const role = new Role([
     action: ['read', 'write'],
   },
   {
-    resource: ['secrets:{${user.bestfriends}}:*'],
+    resource: ['secrets:${user.bestfriends}:*'],
     action: 'read',
   },
   {

@@ -100,7 +100,7 @@ roleWithCondition.can('read', 'secrets:admin:super-secret', { user: { age: 18 } 
 Supports these glob features:
 
 * Role creation
-* [Minimatch features](https://www.npmjs.com/package/minimatch)
+* Permission verifications
 
 ## Role Class
 

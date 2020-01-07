@@ -2,7 +2,7 @@
   "name": "iam-policies-example",
   "version": "1.0.1",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "dependencies": {
     "iam-policies": "link:.."
   },

@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/Rogger794/iam-policies#readme",
   "engines": {
-    "node": ">=8",
-    "npm": ">=5"
+    "node": ">=10",
+    "npm": ">=6"
   },
   "scripts": {
     "pretest": "./node_modules/.bin/eslint --ignore-path .gitignore . --fix",

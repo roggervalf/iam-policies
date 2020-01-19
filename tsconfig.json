@@ -5,6 +5,9 @@
     "declaration": true,
     "outDir": "./dist",
     "strict": true,
-    "allowSyntheticDefaultImports": true
-  }
+    "allowSyntheticDefaultImports": true    
+  },
+  "exclude": [
+    "tests",
+  ]
 }

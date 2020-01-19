@@ -21,7 +21,6 @@ export default {
       sourcemap: true,
     },
   ],
-  external: ["minimatch"],
   plugins: [
     typescript(),
     external(),

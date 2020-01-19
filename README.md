@@ -100,7 +100,7 @@ roleWithCondition.can('read', 'secrets:admin:super-secret', { user: { age: 18 } 
 Supports these glob features:
 
 * Role creation
-* [Minimatch features](https://www.npmjs.com/package/minimatch)
+* Permission verifications
 
 ## Role Class
 
@@ -202,7 +202,7 @@ const embeddedStr = applyContext(str, context)
 
 Name | Type | Default | Required|Description
 ---- | ----- | ------- | ------ | -----------
-`str` | string | undefined | `true` | It could contain embedded path values into it by using (`${}` or `{}`).
+`str` | string | undefined | `true` | It could contain embedded path values into it by using (`${}`).
 `context` | object | undefined | `false` | It represents the context that should be embedded into `str`.
 
 ## License

@@ -20,16 +20,16 @@ interface Balance {
   post: string
 }
 
-export type StatementConfig = {
-  effect?: StatementEffect
-  resource: StatementPattern[] | StatementPattern
-  action: StatementPattern[] | StatementPattern
-  condition?: StatementConditions
+type StatementConfig = {
+  effect?: StatementEffect;
+  resource: StatementPattern[] | StatementPattern;
+  action: StatementPattern[] | StatementPattern;
+  condition?: StatementConditions;
 }
 
 type Resolver = (data: any, expected: any) => boolean;
 
-export interface ConditionResolver {
+interface ConditionResolver {
   [key: string]: Resolver
 }
 //"Condition" : { "{condition-operator}" : { "{condition-key}" : "{condition-value}" }}
@@ -236,4 +236,9 @@ function range(a:string, b:string, str:string):number[] {
     return [ left, right ];
   }
   return [-1,-1];
+}
+
+export {
+  StatementConfig,
+  ConditionResolver
 }

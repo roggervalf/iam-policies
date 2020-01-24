@@ -54,7 +54,7 @@ it("can match based on context", () => {
 
 it("can match based on conditions", () => {
   const conditions = {
-    greatherThan: (data: number, expected: number) => {
+    greatherThan: (data: number, expected: number): boolean => {
       return data > expected;
     },
   };

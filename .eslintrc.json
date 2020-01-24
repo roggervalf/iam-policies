@@ -143,16 +143,6 @@
     // Prefer using arrow functions for callbacks
     "prefer-arrow-callback": 1,
 
-    // Return inside each then() to create readable and reusable Promise chains.
-    // Forces developers to return console logs and http calls in promises. 
-    "promise/always-return": 2,
-
-    //Enforces the use of catch() on un-returned promises
-    "promise/catch-or-return": 2,
-
-    // Warn against nested then() or catch() statements
-    "promise/no-nesting": 1,
-
     "max-len": [2, {"code":120,"ignoreComments":true}],
 
     "prettier/prettier": [
@@ -167,5 +157,38 @@
         "jsxBracketSameLine": false
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "env": { "browser": true, "es6": true, "node": true },
+      "globals": { "Atomics": "readonly", "SharedArrayBuffer": "readonly" },
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaFeatures": { "jsx": true },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+      },
+      "extends": [
+        "prettier",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "plugins": [
+        "promise",
+        "prettier",
+        "@typescript-eslint/eslint-plugin"
+      ],
+      "rules": {
+        "@typescript-eslint/no-empty-interface": [
+          "error",
+          {
+            "allowSingleExtends": false
+          }
+        ],
+        "@typescript-eslint/no-explicit-any":"off"
+      }
+    }
+  ]
 }

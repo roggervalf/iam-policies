@@ -1,5 +1,5 @@
-const reDelimiters = /\$\{([^\}])*\}/g;
-const trim = / +(?= )|^\s+|\s+$/g
+const reDelimiters = /\${([^}])*}/g;
+const trim = / +(?= )|^\s+|\s+$/g;
 
 type StatementEffect = 'allow' | 'deny'
 type StatementPattern = string
@@ -32,17 +32,19 @@ type Resolver = (data: any, expected: any) => boolean;
 export interface ConditionResolver {
   [key: string]: Resolver
 }
+
 //"Condition" : { "{condition-operator}" : { "{condition-key}" : "{condition-value}" }}
 export class Statement {
-  effect: StatementEffect
-  private resource: StatementPattern[]
-  private action: StatementPattern[]
-  private condition?: StatementConditions
+  effect: StatementEffect;
+  private resource: StatementPattern[];
+  private action: StatementPattern[];
+  private readonly condition?: StatementConditions;
+
   constructor({ effect = 'allow', resource, action, condition }: StatementConfig) {
-    this.effect = effect
-    this.resource = typeof resource === "string"? [resource]:resource
-    this.action = typeof action === "string"? [action]:action
-    this.condition = condition
+    this.effect = effect;
+    this.resource = typeof resource === "string"? [resource]:resource;
+    this.action = typeof action === "string"? [action]:action;
+    this.condition = condition;
   }
 
   matches(action: string, resource: string, context?: object, conditionResolvers?: ConditionResolver): boolean {

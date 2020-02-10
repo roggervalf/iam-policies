@@ -1,5 +1,5 @@
-const reDelimiters = /\$\{([^\}])*\}/g;
-const trim = / +(?= )|^\s+|\s+$/g
+const reDelimiters = /\${([^}])*}/g;
+const trim = / +(?= )|^\s+|\s+$/g;
 
 type StatementEffect = 'allow' | 'deny'
 type StatementPattern = string
@@ -32,17 +32,19 @@ type Resolver = (data: any, expected: any) => boolean;
 export interface ConditionResolver {
   [key: string]: Resolver
 }
+
 //"Condition" : { "{condition-operator}" : { "{condition-key}" : "{condition-value}" }}
 export class Statement {
-  effect: StatementEffect
-  private resource: StatementPattern[]
-  private action: StatementPattern[]
-  private condition?: StatementConditions
+  effect: StatementEffect;
+  private resource: StatementPattern[];
+  private action: StatementPattern[];
+  private readonly condition?: StatementConditions;
+
   constructor({ effect = 'allow', resource, action, condition }: StatementConfig) {
-    this.effect = effect
-    this.resource = typeof resource === 'string' ? [resource] : resource
-    this.action = typeof action === 'string' ? [action] : action
-    this.condition = condition
+    this.effect = effect;
+    this.resource = typeof resource === 'string' ? [resource] : resource;
+    this.action = typeof action === 'string' ? [action] : action;
+    this.condition = condition;
   }
 
   matches(action: string, resource: string, context?: object, conditionResolvers?: ConditionResolver): boolean {
@@ -52,58 +54,67 @@ export class Statement {
       ) &&
       this.resource.some(r =>
         new Matcher(applyContext(r, context)).match(resource)
-      ) && 
-      ((conditionResolvers && this.condition && context) ? 
+      ) &&
+      ((conditionResolvers && this.condition && context) ?
         Object.keys(this.condition)
               .every(condition =>
                 Object.keys(this.condition ? this.condition[condition] : {})
-                      .every(path => conditionResolvers[condition](getValueFromPath(context, path), this.condition ? this.condition[condition][path]: ''))  
+                      .every(path =>
+                          conditionResolvers[condition](
+                              getValueFromPath(context, path),
+                             this.condition ? this.condition[condition][path] : ''
+                          )
+                      )
       ) : true)
     )
   }
 }
 
 export function getValueFromPath(data:any, path:string):any {
-  let value= data
+  let value= data;
   
   const steps = path.split('.');
   steps.forEach(step => {
-    if(value){
-      value=value[step]
+    if (value) {
+      value=value[step];
     }
   });
   
   if(value instanceof Array)
-    return `{${value}}`
+    return `{${value}}`;
   
-  return value
+  return value;
 }
 
 const specialTrim = (str:string):string => str.replace(trim, '');
 
 export function applyContext(str: string, context?: object):string {
-  if (!context) return str
+  if (!context) return str;
+
   return specialTrim(str.replace(
     reDelimiters,
     (
       match
     ) => {
-      let path = match.substr(2, match.length - 3); 
+      let path = match.substr(2, match.length - 3);
+
       return match ? String(getValueFromPath(context, path)) : '';
     }
   ))
 }
 
 export class Matcher {
-  private pattern: string
-  private set: (string|RegExp)[]
-  private hasSpecialCaracter: boolean
-  private empty: boolean
+  private readonly pattern: string;
+  private readonly set: (string|RegExp)[];
+  private readonly empty: boolean;
+
+  private hasSpecialCharacter: boolean;
+
   constructor(pattern: string) {
     this.set = [];
     this.pattern = pattern.trim();
     this.empty = false;
-    this.hasSpecialCaracter = false;
+    this.hasSpecialCharacter = false;
 
     if (!this.pattern) {
       this.empty = true;
@@ -111,13 +122,13 @@ export class Matcher {
 
     this.set = this.braceExpand()
                 .map(val => this.parse(val))
-                .filter(s => s === true);
+                .filter(s => !!s);
   }
 
   braceExpand():string[] {
     let pattern = this.pattern;
 
-    if (!pattern.match(/\{.*\}/)) {
+    if (!pattern.match(/{.*}/)) {
       return [pattern];
     }
     // I don't know why Bash 4.3 does this, but it does.
@@ -138,7 +149,7 @@ export class Matcher {
       throw new TypeError('pattern is too long');
     }
     
-    let regExp,re = ''
+    let regExp,re = '';
     if (pattern === '') return '';
   
     for (
@@ -148,7 +159,7 @@ export class Matcher {
     ) {
 
       if (c === '*'){
-        this.hasSpecialCaracter=true
+        this.hasSpecialCharacter = true;
         re += '[^/]*';
       } else{
         re += c;
@@ -158,14 +169,14 @@ export class Matcher {
     // if the re is not "" at this point, then we need to make sure
     // it doesn't match against an empty path part.
     // Otherwise a/* will match a/, which it should not.
-    if (re !== '' && this.hasSpecialCaracter) {
+    if (re !== '' && this.hasSpecialCharacter) {
       re = '(?=.)' + re;
     }
   
     // skip the regexp for non-* patterns
     // unescape anything in it, though, so that it'll be
     // an exact match.
-    if (!this.hasSpecialCaracter) {
+    if (!this.hasSpecialCharacter) {
       return pattern.replace(/\\(.)/g, '$1');
     }
   
@@ -189,7 +200,7 @@ export class Matcher {
     if (!balance.body)
       parts = [''];
     else
-      parts = balance.body.split(',')
+      parts = balance.body.split(',');
 
     // no need to expand pre, since it is guaranteed to be free of brace-sets
     const pre = balance.pre;
@@ -201,7 +212,7 @@ export class Matcher {
         if (!isTop || expansion)
           expansions.push(expansion);
       })
-    })
+    });
 
     return expansions;
   }

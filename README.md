@@ -27,7 +27,7 @@ yarn add iam-policies
 ## Usage
 
 ```js
-const {Role}=require('iam-policies')
+const { Role } = require('iam-policies')
 
 const role = new Role([
   {
@@ -86,7 +86,7 @@ const roleWithCondition = new Role([
           'user.age':18
       }
     }
-  },
+  }
 ], conditions)
  
 // true
@@ -107,7 +107,7 @@ Supports these glob features:
 Create custom role with actions and permissions.
 
 ```js
-const {Role}=require('iam-policies')
+const { Role } = require('iam-policies')
 
 const role = new Role(StatementConfigs,conditionResolvers)
 ```
@@ -141,7 +141,7 @@ Name | Type | Default | Required|Description
 Create custom statement.
 
 ```js
-const {Statement}=require('iam-policies')
+const { Statement } = require('iam-policies')
 
 const statement = new Statement(StatementConfig)
 ```
@@ -176,7 +176,7 @@ Name | Type | Default | Required|Description
 Get object value from path.
 
 ```js
-const {getValueFromPath}=require('iam-policies')
+const { getValueFromPath } = require('iam-policies')
 
 const value = getValueFromPath(data, path)
 ```
@@ -193,7 +193,7 @@ Name | Type | Default | Required|Description
 Get string with context value embedded into it.
 
 ```js
-const {applyContext}=require('iam-policies')
+const { applyContext } = require('iam-policies')
 
 const embeddedStr = applyContext(str, context)
 ```

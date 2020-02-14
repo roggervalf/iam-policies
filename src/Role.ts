@@ -1,4 +1,4 @@
-import { Statement, StatementConfig, ConditionResolver } from "./Statement";
+import { Statement, StatementConfig, ConditionResolver } from './Statement';
 
 export class Role {
   private denyStatements: Statement[];
@@ -9,8 +9,8 @@ export class Role {
     conditionResolvers?: ConditionResolver
   ) {
     const statements = config.map(s => new Statement(s));
-    this.allowStatements = statements.filter(s => s.effect === "allow");
-    this.denyStatements = statements.filter(s => s.effect === "deny");
+    this.allowStatements = statements.filter(s => s.effect === 'allow');
+    this.denyStatements = statements.filter(s => s.effect === 'deny');
     this.conditionResolvers = conditionResolvers;
   }
   can(action: string, resource: string, context?: object): boolean {

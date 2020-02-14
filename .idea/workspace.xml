@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0c50cc35-a04d-4d5f-a717-90b9f03f6456" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Role.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Role.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Statement.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Statement.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Role.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Role.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Statement.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Statement.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/index.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/index.test.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1XcjYh6PbDzwmgKfT6nl5SMqibX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0c50cc35-a04d-4d5f-a717-90b9f03f6456" name="Default Changelist" comment="" />
+      <created>1581352325819</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581352325819</updated>
+      <workItem from="1581352327495" duration="2151000" />
+      <workItem from="1581451859971" duration="631000" />
+      <workItem from="1581711743347" duration="481000" />
+      <workItem from="1581712237067" duration="4542000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="440" y="202" key="#ESLint" timestamp="1581352768276">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="440" y="202" key="#ESLint/0.23.1680.1027@0.23.1680.1027" timestamp="1581352768276" />
+    <state x="168" y="115" key="MergeDialog" timestamp="1581452467300">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="168" y="115" key="MergeDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1581452467300" />
+    <state x="548" y="250" key="MultipleFileMergeDialog" timestamp="1581452482729">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="548" y="250" key="MultipleFileMergeDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1581452482729" />
+    <state x="496" y="277" width="687" height="518" key="find.popup" timestamp="1581352755156">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="496" y="277" width="687" height="518" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1581352755156" />
+    <state width="600" height="440" key="javadoc.popup" timestamp="1581715622202">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state width="600" height="440" key="javadoc.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1581715622202" />
+  </component>
+</project>

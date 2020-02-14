@@ -1,6 +1,6 @@
 # iam-policies
 
-> 
+>
 
 [![NPM](https://img.shields.io/npm/v/iam-policies.svg)](https://www.npmjs.com/package/iam-policies) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -52,7 +52,7 @@ const context = { user: { id: 456, bestfriends: [123, 563, 1211] } }
 role.can('read', 'secrets:563:sshhh', context)
 // false
 role.can('read', 'secrets:admin:super-secret', context)
- 
+
 const friendsWithAdminContext = { user: { id: 456, bestfriends: ['admin'] } }
 
 // false
@@ -88,7 +88,7 @@ const roleWithCondition = new Role([
     }
   }
 ], conditions)
- 
+
 // true
 roleWithCondition.can('read', 'secrets:sshhh', { user: { age: 19 } })
 // false

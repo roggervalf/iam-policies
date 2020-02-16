@@ -1,5 +1,5 @@
-import role from "./Role";
-import statement from "./Statement";
+import role from './Role';
+import statement from './Statement';
 
 role();
 statement();

@@ -10,22 +10,21 @@
   "keywords": [
     "iam",
     "policies",
-    "iam-policies"
+    "iam-policies",
+    "roles",
+    "permissions"
   ],
   "name": "iam-policies",
   "bugs": {
     "url": "https://github.com/Rogger794/iam-policies/issues"
   },
   "homepage": "https://github.com/Rogger794/iam-policies#readme",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "engines": {
     "node": ">=10",
     "npm": ">=6"
   },
   "scripts": {
-    "pretest": "./node_modules/.bin/eslint **/*.ts --fix",
+    "pretest": "./node_modules/.bin/eslint . --fix",
     "prepublishOnly": "npm run build",
     "test": "jest /tests",
     "test:watch": "jest /tests --watch",
@@ -52,7 +51,7 @@
     "@typescript-eslint/parser": "^2.17.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-promise": "^4.2.1",

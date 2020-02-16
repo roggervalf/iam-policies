@@ -17,6 +17,15 @@ export default (): void => {
         'secrets:{123,532,987}:account'
       );
 
+      expect(applyContext('secrets:${}:account', context)).toBe(
+        'secrets::account'
+      );
+    });
+    it('undefined context value', () => {
+      const context = {
+        user: { id: 456, bestfriends: [123, 532, 987] },
+      };
+
       expect(
         applyContext('secrets:${user.bestfriends.cat.name}:account', context)
       ).toBe('secrets:undefined:account');

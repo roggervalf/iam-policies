@@ -33,12 +33,12 @@ interface ConditionResolver {
   [key: string]: Resolver;
 }
 
-export function getValueFromPath(data: any, path: string): any | never {
+export function getValueFromPath(data: any, path: string): any {
   const value = path.split('.').reduce((key, nextChild) => {
     return data[key] ? data[key][nextChild] : undefined;
   });
 
-  if (value instanceof Array) return `{${value}}`;
+  if (Array.isArray(value)) return `{${value}}`;
 
   return value;
 }

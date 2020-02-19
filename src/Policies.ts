@@ -1,6 +1,7 @@
 //import { Statement, StatementInterface, ConditionResolver } from './Statement';
-import { IdentityBased, IdentityBasedType, ConditionResolver } from './nuevo';
-import { ResourceBased, ResourceBasedType, PrincipalMap, Patterns, Context } from './nuevo';
+import { IdentityBasedType, ConditionResolver, ResourceBasedType, Context } from './definitions';
+import { IdentityBased } from './IdentityBasedStatement';
+import { ResourceBased } from './ResourceBasedStatement';
 
 export class IdentityBasedPolicy {
   private denyStatements: IdentityBased[];

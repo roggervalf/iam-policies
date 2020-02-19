@@ -1,7 +1,7 @@
-import role from './Role';
-import resource from './Resource';
+import role from './IdentityBasedPolicy';
+import resource from './ResourceBasedPolicy';
 import statement from './Statement';
 
 role();
 resource();
-//statement();
+statement();

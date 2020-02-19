@@ -2,11 +2,50 @@ const reDelimiters = /\${([^}])*}/g;
 const trim = / +(?= )|^\s+|\s+$/g;
 
 type StatementEffect = 'allow' | 'deny';
+//type PrincipalAttributtes = 'principal' | 'notPrincipal';
 type StatementPattern = string;
 
-interface Condition {
-  [key: string]: any;
+interface PrincipalMap {
+  [key: string]: string[] | string;
 }
+
+interface PrincipalBlock {
+  principal?: PrincipalMap | string; // '*'
+}
+
+interface NotPrincipal {
+  notPrincipal?: PrincipalMap | string; // '*'
+}
+
+interface Action {
+  action: string[] | string;
+}
+
+interface NotAction {
+  notAction: string[] | string;
+}
+
+interface Resource {
+  resource: string[] | string;
+}
+
+interface NotResource {
+  notResource: string[] | string;
+}
+
+interface Condition {
+  [key: string]: string | number |boolean;
+}
+
+/*interface MessageWithText extends MessageBasics {
+  text: string;
+}
+interface MessageWithAttachment extends MessageBasics {
+  attachment: Attachment;
+}
+type Message = MessageWithText | MessageWithAttachment;
+
+type Message = MessageWithText | MessageWithAttachment | (MessageWithText & MessageWithAttachment);*/
 
 interface StatementConditions {
   [key: string]: Condition;
@@ -21,6 +60,7 @@ interface Balance {
 }
 
 type StatementConfig = {
+  sid?: StatementPattern;
   effect?: StatementEffect;
   resource: StatementPattern[] | StatementPattern;
   action: StatementPattern[] | StatementPattern;

@@ -1,7 +1,11 @@
-import role from './IdentityBasedPolicy';
-import resource from './ResourceBasedPolicy';
+import utils from './utils';
+import matcher from './Matcher';
 import statement from './Statement';
+import identityBasedPolicy from './IdentityBasedPolicy';
+import resourceBasedPolicy from './ResourceBasedPolicy';
 
-role();
-resource();
+utils();
+matcher();
 statement();
+identityBasedPolicy();
+resourceBasedPolicy();

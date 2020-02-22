@@ -1,15 +1,17 @@
 import {
   PrincipalMap,
   Context,
-  ConditionResolver,
   ResourceBasedType,
+  MatchResourceBasedInterface
+} from './types'
+import {
   instanceOfPrincipalBlock,
   instanceOfResourceBlock,
   instanceOfNotResourceBlock,
   instanceOfActionBlock
-} from './definitions'
-
-import {Statement, applyContext, Matcher} from './Statement'
+} from './utils'
+import { Matcher } from './Matcher'
+import { Statement, applyContext } from './Statement'
 
 class ResourceBased extends Statement{
   private principal?: PrincipalMap | string[];
@@ -38,14 +40,14 @@ class ResourceBased extends Statement{
     }
   }
 
-  matches(
-    principal: string,
-    action: string,
-    resource: string,
-    principalType?: string,
-    context?: Context,
-    conditionResolvers?: ConditionResolver
-  ): boolean {
+  matches({
+    principal,
+    action,
+    resource,
+    principalType,
+    context,
+    conditionResolver
+  }:MatchResourceBasedInterface): boolean {
     return (
       this.matchPrincipals(principal,principalType,context) &&
       this.matchNotPrincipals(principal, principalType, context) &&
@@ -53,25 +55,27 @@ class ResourceBased extends Statement{
       this.matchNotActions(action,context) &&
       this.matchResources(resource,context) &&
       this.matchNotResources(resource,context) &&
-      this.matchConditions(context,conditionResolvers)
+      this.matchConditions({context,conditionResolver})
     );
   }
 
   matchPrincipals( principal: string, principalType?: string,context?: Context): boolean {
     if(this.principal){
       if(this.principal instanceof Array){
-        return !principalType?this.principal.some(a =>
-          new Matcher(applyContext(a, context)).match(principal)):true   
+        return principalType?false: this.principal.some(a =>
+          new Matcher(applyContext(a, context)).match(principal))   
       }else{
         if(principalType){
-          //const principalValues=typeof this.principal[principalType]==="string" ?[this.principal[principalType]]:this.principal[principalType];
           const principalValues=this.principal[principalType];
-          if(this.principal instanceof Object && principalValues instanceof Array)
+          if(principalValues instanceof Array){
             return typeof principalValues==="string"?[principalValues].some(a =>
               new Matcher(applyContext(a, context)).match(principal)):
               principalValues.some(a =>
                 new Matcher(applyContext(a, context)).match(principal))
+          }
+          return new Matcher(applyContext(principalValues, context)).match(principal)
         }
+        return false;
       }
     }
     return true;
@@ -80,18 +84,20 @@ class ResourceBased extends Statement{
   matchNotPrincipals( principal: string, principalType?: string,context?: Context): boolean {
     if(this.notPrincipal){
       if(this.notPrincipal instanceof Array){
-        return !principalType?!this.notPrincipal.some(a =>
-          new Matcher(applyContext(a, context)).match(principal)):true   
+        return principalType? true: !this.notPrincipal.some(a =>
+          new Matcher(applyContext(a, context)).match(principal))
       }else{
         if(principalType){
-          //const principalValues=typeof this.principal[principalType]==="string" ?[this.principal[principalType]]:this.principal[principalType];
           const principalValues=this.notPrincipal[principalType];
-          if(this.notPrincipal instanceof Object && principalValues instanceof Array)
+          if(principalValues instanceof Array){
             return typeof principalValues==="string"?![principalValues].some(a =>
               new Matcher(applyContext(a, context)).match(principal)):
               !principalValues.some(a =>
                 new Matcher(applyContext(a, context)).match(principal))
+          }
+          return new Matcher(applyContext(principalValues, context)).match(principal)    
         }
+        return false;
       }
     }
     return true;

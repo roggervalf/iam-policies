@@ -1,7 +1,7 @@
 import { IdentityBasedPolicy } from '../src/Policies';
 export default (): void => {
   describe('IdentityBasedPolicy Class', () => {
-    describe('can create role', () => {
+    describe('when creating identity based policy', () => {
       it('don\'t throw an error', () => {
         expect(
           () =>
@@ -13,37 +13,86 @@ export default (): void => {
             ])
         ).not.toThrow();
       });
+
+      it('returns an IdentityBasedPolicy instance', () => {
+        expect(new IdentityBasedPolicy([
+          {
+            resource: 'some:glob:*:string/wqweqw',
+            action: ['read', 'write'],
+          },
+        ])).toBeInstanceOf(
+          IdentityBasedPolicy
+        );
+      });
     });
 
-    describe('can match some actions and not others', () => {
+    describe('when match actions', () => {
       it('returns true or false', () => {
-        const role = new IdentityBasedPolicy([
+        const policy = new IdentityBasedPolicy([
           {
             resource: ['books:horror:*'],
             action: ['read'],
           },
         ]);
-        expect(role.can('read', 'books:horror:The Call of Cthulhu')).toBe(true);
-        expect(role.can('write', 'books:horror:The Call of Cthulhu')).toBe(false);
+
+        expect(policy.can({action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+          .toBe(true);
+        expect(policy.can({action: 'write', resource: 'books:horror:The Call of Cthulhu'}))
+          .toBe(false);
       });
     });
 
-    describe('can match some resources and not others', () => {
+    describe('when match not actions', () => {
       it('returns true or false', () => {
-        const role = new IdentityBasedPolicy([
+        const policy = new IdentityBasedPolicy([
           {
-            resource: ['books:horror:*'],
-            action: ['read'],
+            resource: 'books:horror:*',
+            notAction: 'read',
           },
         ]);
-        expect(role.can('read', 'books:horror:The Call of Cthulhu')).toBe(true);
-        expect(role.can('read', 'books:fantasy:Brisingr')).toBe(false);
+
+        expect(policy.can({action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+          .toBe(false);
+        expect(policy.can({action: 'write', resource: 'books:horror:The Call of Cthulhu'}))
+          .toBe(true);
       });
     });
 
-    describe('can match based on context', () => {
+    describe('when match resources', () => {
       it('returns true or false', () => {
-        const role = new IdentityBasedPolicy([
+        const policy = new IdentityBasedPolicy([
+          {
+            resource: 'books:horror:*',
+            action: 'read',
+          },
+        ]);
+
+        expect(policy.can({action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+          .toBe(true);
+        expect(policy.can({action: 'read', resource: 'books:fantasy:Brisingr'}))
+          .toBe(false);
+      });
+    });
+
+    describe('when match not resources', () => {
+      it('returns true or false', () => {
+        const policy = new IdentityBasedPolicy([
+          {
+            notResource: 'books:horror:*',
+            action: 'read',
+          },
+        ]);
+
+        expect(policy.can({action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+          .toBe(false);
+        expect(policy.can({action: 'read', resource: 'books:fantasy:Brisingr'}))
+          .toBe(true);
+      });
+    });
+
+    describe('when match based on context', () => {
+      it('returns true or false', () => {
+        const policy = new IdentityBasedPolicy([
           {
             resource: ['secrets:${user.id}:*'],
             action: ['read', 'write'],
@@ -53,25 +102,23 @@ export default (): void => {
             action: 'read',
           },
         ]);
-        expect(role.can('read', 'secrets:123:sshhh', { user: { id: 123 } })).toBe(
-          true
-        );
-        expect(
-          role.can('write', 'secrets:123:sshhh', { user: { id: 123 } })
-        ).toBe(true);
-        expect(role.can('read', 'secrets:123:sshhh', { user: { id: 456 } })).toBe(
-          false
-        );
-        expect(
-          role.can('read', 'secrets:563:sshhh', {
+        
+        expect(policy.can({action: 'read', resource: 'secrets:123:sshhh', context: { user: { id: 123 } }}))
+          .toBe(true);
+        expect(policy.can({action: 'write', resource: 'secrets:123:sshhh', context: { user: { id: 123 } }}))
+          .toBe(true);
+        expect(policy.can({action: 'read', resource: 'secrets:123:sshhh', context: { user: { id: 456 } }}))
+          .toBe(false);
+        expect(policy.can({action: 'read', resource: 'secrets:563:sshhh', context: {
             user: { id: 456, bestfriends: [123, 563, 1211] },
-          })
-        ).toBe(true);
-        expect(role.can('write', 'secrets:123:sshhh')).toBe(false);
+          }}))
+          .toBe(true);
+        expect(policy.can({action: 'write', resource: 'secrets:123:sshhh'}))
+          .toBe(false);
       });
     });
 
-    describe('can match based on conditions', () => {
+    describe('when match based on conditions', () => {
       it('returns true or false', () => {
         const conditions = {
           greatherThan: (data: number, expected: number): boolean => {
@@ -79,7 +126,7 @@ export default (): void => {
           },
         };
   
-        const role = new IdentityBasedPolicy(
+        const policy = new IdentityBasedPolicy(
           [
             {
               resource: 'secrets:*',
@@ -98,15 +145,12 @@ export default (): void => {
           conditions
         );
   
-        expect(role.can('read', 'secrets:123:sshhh', { user: { id: 123 } })).toBe(
-          true
-        );
-        expect(
-          role.can('write', 'posts:123:sshhh', { user: { id: 123, age: 17 } })
-        ).toBe(false);
-        expect(
-          role.can('read', 'posts:456:sshhh', { user: { id: 456, age: 19 } })
-        ).toBe(true);
+        expect(policy.can({action: 'read', resource: 'secrets:123:sshhh', context: { user: { id: 123 } }}))
+          .toBe(true);
+        expect(policy.can({action: 'write', resource: 'posts:123:sshhh', context: { user: { id: 123, age: 17 } }}))
+          .toBe(false);
+        expect(policy.can({action: 'read', resource: 'posts:456:sshhh', context: { user: { id: 456, age: 19 } }}))
+          .toBe(true);
       });
     });
   });

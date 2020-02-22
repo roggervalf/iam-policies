@@ -6,11 +6,11 @@ interface PrincipalMap {
 }
 
 interface PrincipalBlock {
-  principal?: PrincipalMap | Patterns;
+  principal: PrincipalMap | Patterns;
 }
 
 interface NotPrincipalBlock {
-  notPrincipal?: PrincipalMap | Patterns;
+  notPrincipal: PrincipalMap | Patterns;
 }
 
 interface ActionBlock {
@@ -63,29 +63,43 @@ export interface Context {
   [key: string]: ConditionKey | Context | string[] | number[];
 }
 
+export interface MatchConditionInterface {
+  context?: Context,
+  conditionResolver?: ConditionResolver
+}
+
+export interface MatchIdentityBasedInterface extends MatchConditionInterface {
+  action: string,
+  resource: string
+}
+
+export interface MatchResourceBasedInterface extends MatchIdentityBasedInterface {
+  principal: string,
+  principalType?: string
+}
+
+export interface CanIdentityBasedInterface {
+  action: string,
+  resource: string,
+  context?: Context
+}
+
+export interface CanResourceBasedInterface extends CanIdentityBasedInterface{
+  principal: string,
+  principalType?: string,
+  action: string,
+  resource: string,
+  context?: Context
+}
+
 type IdentityBasedType = StatementInterface & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock)
 
 type ResourceBasedType = StatementInterface & (PrincipalBlock | NotPrincipalBlock) & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock | {})
 
 //type PermissionsBoundariesType = StatementInterface & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock)
 //type OrganizationsSCPsType = StatementInterface & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock)
-export function instanceOfResourceBlock(object: any): object is ResourceBlock {
-  return 'resource' in object;
-}
 
-export function instanceOfActionBlock(object: any): object is ActionBlock {
-  return 'action' in object;
-}
-
-export function instanceOfNotResourceBlock(object: any): object is NotResourceBlock {
-  return 'notResource' in object;
-}
-
-export function instanceOfPrincipalBlock(object: any): object is PrincipalBlock {
-  return 'principal' in object;
-}
-
-export { IdentityBasedType, ResourceBasedType, PrincipalMap, Patterns, ResourceBlock, ActionBlock};
+export { IdentityBasedType, ResourceBasedType, PrincipalMap, Patterns, ResourceBlock, NotResourceBlock, ActionBlock, PrincipalBlock};
 
 /*
 type Message = MessageWithText | MessageWithAttachment | (MessageWithText & MessageWithAttachment);*/

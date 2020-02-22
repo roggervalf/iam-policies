@@ -1,12 +1,14 @@
 import {
   Context,
-  ConditionResolver,
   IdentityBasedType,
+  MatchIdentityBasedInterface
+} from './types'
+import {
   instanceOfResourceBlock,
   instanceOfActionBlock
-} from './definitions'
-
-import {Statement, applyContext, Matcher} from './Statement'
+} from './utils'
+import {Matcher} from './Matcher'
+import {Statement, applyContext} from './Statement'
 
 class IdentityBased extends Statement{
   private resource?: string[];
@@ -28,35 +30,36 @@ class IdentityBased extends Statement{
     }
   }
 
-  matches(
-    action: string,
-    resource: string,
-    context?: Context,
-    conditionResolvers?: ConditionResolver
-  ): boolean {
+  matches({
+    action,
+    resource,
+    context,
+    conditionResolver
+  }:MatchIdentityBasedInterface)
+  : boolean {
     return (
       this.matchActions(action,context) &&
       this.matchNotActions(action,context) &&
       this.matchResources(resource,context) &&
       this.matchNotResources(resource,context) &&
-      this.matchConditions(context,conditionResolvers)
+      this.matchConditions({context,conditionResolver})
     );
   }
 
-  matchActions( action: string, context?: Context): boolean {
+  private matchActions( action: string, context?: Context): boolean {
     return this.action?this.action.some(a =>
       new Matcher(applyContext(a, context)).match(action)):true }
 
-  matchNotActions( action: string, context?: Context): boolean {
+  private matchNotActions( action: string, context?: Context): boolean {
     return this.notAction?!this.notAction.some(a =>
       new Matcher(applyContext(a, context)).match(action)):true }
   
  
-  matchResources( resource: string, context?: Context): boolean {
+  private matchResources( resource: string, context?: Context): boolean {
     return this.resource?this.resource.some(a =>
       new Matcher(applyContext(a, context)).match(resource)):true }
   
-  matchNotResources( resource: string, context?: Context): boolean {
+  private matchNotResources( resource: string, context?: Context): boolean {
     return this.notResource?!this.notResource.some(a =>
       new Matcher(applyContext(a, context)).match(resource)):true }
 }

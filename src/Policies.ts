@@ -1,28 +1,34 @@
 //import { Statement, StatementInterface, ConditionResolver } from './Statement';
-import { IdentityBasedType, ConditionResolver, ResourceBasedType, Context } from './definitions';
+import {
+  IdentityBasedType,
+  ResourceBasedType,
+  CanIdentityBasedInterface,
+  CanResourceBasedInterface,
+  ConditionResolver,
+  Context } from './types';
 import { IdentityBased } from './IdentityBasedStatement';
 import { ResourceBased } from './ResourceBasedStatement';
 
 export class IdentityBasedPolicy {
   private denyStatements: IdentityBased[];
   private allowStatements: IdentityBased[];
-  private conditionResolvers?: ConditionResolver;
+  private conditionResolver?: ConditionResolver;
   constructor(
     config: IdentityBasedType[],
-    conditionResolvers?: ConditionResolver
+    conditionResolver?: ConditionResolver
   ) {
     const statements = config.map(s => new IdentityBased(s));
     this.allowStatements = statements.filter(s => s.effect === 'allow');
     this.denyStatements = statements.filter(s => s.effect === 'deny');
-    this.conditionResolvers = conditionResolvers;
+    this.conditionResolver = conditionResolver;
   }
-  can(action: string, resource: string, context?: Context): boolean {
+  can({action, resource, context}:CanIdentityBasedInterface): boolean {
     return (
       !this.denyStatements.some(s =>
-        s.matches(action, resource, context, this.conditionResolvers)
+        s.matches({action, resource, context, conditionResolver:this.conditionResolver})
       ) &&
       this.allowStatements.some(s =>
-        s.matches(action, resource, context, this.conditionResolvers)
+        s.matches({action, resource, context, conditionResolver:this.conditionResolver})
       )
     );
   }
@@ -31,23 +37,23 @@ export class IdentityBasedPolicy {
 export class ResourceBasedPolicy {
   private denyStatements: ResourceBased[];
   private allowStatements: ResourceBased[];
-  private conditionResolvers?: ConditionResolver;
+  private conditionResolver?: ConditionResolver;
   constructor(
     config: ResourceBasedType[],
-    conditionResolvers?: ConditionResolver
+    conditionResolver?: ConditionResolver
   ) {
     const statements = config.map(s => new ResourceBased(s));
     this.allowStatements = statements.filter(s => s.effect === 'allow');
     this.denyStatements = statements.filter(s => s.effect === 'deny');
-    this.conditionResolvers = conditionResolvers;
+    this.conditionResolver = conditionResolver;
   }
-  can(principal: string, action: string, resource: string, principalType?: string, context?: Context): boolean {
+  can({principal, action, resource, principalType, context}:CanResourceBasedInterface): boolean {
     return (
       !this.denyStatements.some(s =>
-        s.matches(principal, action, resource, principalType, context, this.conditionResolvers)
+        s.matches({principal, action, resource, principalType, context, conditionResolver:this.conditionResolver})
       ) &&
       this.allowStatements.some(s =>
-        s.matches(principal, action, resource, principalType, context, this.conditionResolvers)
+        s.matches({principal, action, resource, principalType, context, conditionResolver:this.conditionResolver})
       )
     );
   }

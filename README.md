@@ -6,11 +6,11 @@
 
 ## About
 
-Define an allowed or denied set of actions against a set of resources with optional context and conditions.
+Define custom IAM Policies by allowed or denied set of actions against a set of resources with optional context and conditions.
 
 Deny rules trump allow rules.
 
-This is based of [@ddt/iam](https://www.npmjs.com/package/@ddt/iam) with new functionalities.
+This is based of [@ddt/iam](https://www.npmjs.com/package/@ddt/iam) and [AWS Reference Policies ](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html).
 
 ## Install
 
@@ -241,7 +241,7 @@ const identityBasedPolicy = new IdentityBasedPolicy(Statement,conditionResolver)
 ### Properties
 
 Name | Type | Default | Required|Description
----- | ----- | ------- | ------ | -----------
+---- | ------- | ------- | ------ | -----------
 `Statement` | object[] | undefined | `true` | The ***Statement*** element is the main element for a policy. The Statement element can contain a single statement or an array of individual statements.
 `Statement[].effect` | string | allow | `false` | The ***effect*** element specifies whether the statement results in an allow or an explicit deny. Valid values for Effect are `allow` and `deny`.
 `Statement[].action` | string or string[] | undefined | `false` | The ***action*** element describes the specific action or actions that will be allowed or denied. Statements must include either an `action` or `notAction` element.
@@ -261,7 +261,7 @@ Name | Type | Default | Required|Description
 ##### Params
 
 Name | Type | Default | Required|Description
----- | ----- | ------- | ------ | -----------
+---- | -------------- | ------- | ------ | ---------------
 `action` | string | undefined | `true` | It represents the action you are asking.
 `resource` | string | undefined | `true` | It represents the resource for the action you are asking.
 `context` | object | undefined | `false` | It represents the properties that will be embedded into your resources.
@@ -279,7 +279,7 @@ const resourceBasedPolicy = new IdentityBasedPolicy(Statement,conditionResolver)
 ### Properties
 
 Name | Type | Default | Required|Description
----- | ----- | ------- | ------ | -----------
+---- | -------------- | ------- | ------ | ---------------
 `Statement` | object[] | undefined | `true` | The ***Statement*** element is the main element for a policy. The Statement element can contain a single statement or an array of individual statements.
 `Statement[].effect` | string | allow | `false` | The ***effect*** element specifies whether the statement results in an allow or an explicit deny. Valid values for Effect are `allow` and `deny`.
 `Statement[].principal` | string or string[] | undefined | `false` | The ***principal*** element in a policy to specify the principal that is allowed or denied access to a resource. Statements must include either an `principal` or `notPrincipal` element.

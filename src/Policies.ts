@@ -1,0 +1,60 @@
+//import { Statement, StatementInterface, ConditionResolver } from './Statement';
+import {
+  IdentityBasedType,
+  ResourceBasedType,
+  CanIdentityBasedInterface,
+  CanResourceBasedInterface,
+  ConditionResolver,
+  Context } from './types';
+import { IdentityBased } from './IdentityBasedStatement';
+import { ResourceBased } from './ResourceBasedStatement';
+
+export class IdentityBasedPolicy {
+  private denyStatements: IdentityBased[];
+  private allowStatements: IdentityBased[];
+  private conditionResolver?: ConditionResolver;
+  constructor(
+    config: IdentityBasedType[],
+    conditionResolver?: ConditionResolver
+  ) {
+    const statements = config.map(s => new IdentityBased(s));
+    this.allowStatements = statements.filter(s => s.effect === 'allow');
+    this.denyStatements = statements.filter(s => s.effect === 'deny');
+    this.conditionResolver = conditionResolver;
+  }
+  can({action, resource, context}:CanIdentityBasedInterface): boolean {
+    return (
+      !this.denyStatements.some(s =>
+        s.matches({action, resource, context, conditionResolver:this.conditionResolver})
+      ) &&
+      this.allowStatements.some(s =>
+        s.matches({action, resource, context, conditionResolver:this.conditionResolver})
+      )
+    );
+  }
+}
+
+export class ResourceBasedPolicy {
+  private denyStatements: ResourceBased[];
+  private allowStatements: ResourceBased[];
+  private conditionResolver?: ConditionResolver;
+  constructor(
+    config: ResourceBasedType[],
+    conditionResolver?: ConditionResolver
+  ) {
+    const statements = config.map(s => new ResourceBased(s));
+    this.allowStatements = statements.filter(s => s.effect === 'allow');
+    this.denyStatements = statements.filter(s => s.effect === 'deny');
+    this.conditionResolver = conditionResolver;
+  }
+  can({principal, action, resource, principalType, context}:CanResourceBasedInterface): boolean {
+    return (
+      !this.denyStatements.some(s =>
+        s.matches({principal, action, resource, principalType, context, conditionResolver:this.conditionResolver})
+      ) &&
+      this.allowStatements.some(s =>
+        s.matches({principal, action, resource, principalType, context, conditionResolver:this.conditionResolver})
+      )
+    );
+  }
+}

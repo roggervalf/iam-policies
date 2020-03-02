@@ -1,18 +1,64 @@
 const { IdentityBasedPolicy, ResourceBasedPolicy } = require('iam-policies');
 
-const identityBasedPolicy = new IdentityBasedPolicy([
+console.log('Allow Example');
+
+const allowExample = new IdentityBasedPolicy([
   {
     effect: 'allow', // optional, defaults to allow
-    resource: ['secrets:${user.id}:*'],
+    resource: ['secrets:${user.id}:*'], // embedded value by context
     action: ['read', 'write'],
   },
+  {
+    resource: ['bd:company:*'],
+    action: 'create',
+  },
+]);
+
+const contextForAllowExample = { user: { id: 456 } };
+
+// true
+console.log(
+  allowExample.can({
+    action: 'read',
+    resource: 'secrets:456:ultrasecret',
+    context: contextForAllowExample,
+  })
+);
+// false
+console.log(
+  allowExample.can({
+    action: 'create',
+    resource: 'secrets:456:ultrasecret',
+    context: contextForAllowExample,
+  })
+);
+// true
+console.log(
+  allowExample.can({
+    action: 'create',
+    resource: 'bd:company:account',
+    context: contextForAllowExample,
+  })
+);
+// false
+console.log(
+  allowExample.can({
+    action: 'read',
+    resource: 'bd:company:account',
+    context: contextForAllowExample,
+  })
+);
+
+console.log('Deny Example');
+
+const denyExample = new IdentityBasedPolicy([
   {
     resource: ['secrets:${user.bestfriends}:*'],
     action: 'read',
   },
   {
     effect: 'deny',
-    resource: 'secrets:admin:*',
+    resource: 'secrets:123:*',
     action: 'read',
   },
   {
@@ -25,150 +71,71 @@ const identityBasedPolicy = new IdentityBasedPolicy([
   },
 ]);
 
-const context = { user: { id: 456, bestfriends: [123, 563, 1211] } };
+const contextForDenyExample = { user: { bestfriends: [123, 563, 1211] } };
 
 // true
 console.log(
-  identityBasedPolicy.can({
+  denyExample.can({
     action: 'read',
-    resource: 'secrets:563:sshhh',
-    context,
+    resource: 'secrets:563:super-secret',
+    context: contextForDenyExample,
   })
 );
 // false
 console.log(
-  identityBasedPolicy.can({
+  denyExample.can({
     action: 'read',
-    resource: 'secrets:admin:super-secret',
-    context,
+    resource: 'secrets:123:super-secret',
+    context: contextForDenyExample,
   })
 );
+
+console.log('Not Action Example');
+
+const notActionExample = new IdentityBasedPolicy([
+  {
+    resource: 'bd:company:*',
+    notAction: 'update',
+  },
+]);
+
 // true
 console.log(
-  identityBasedPolicy.can({
+  notActionExample.can({
     action: 'delete',
     resource: 'bd:company:account',
-    context,
-  })
-);
-// true
-console.log(
-  identityBasedPolicy.can({
-    action: 'create',
-    resource: 'bd:company:account',
-    context,
   })
 );
 // false
 console.log(
-  identityBasedPolicy.can({
+  notActionExample.can({
     action: 'update',
-    resource: 'bd:roles:here',
-    context,
+    resource: 'bd:company:account',
   })
 );
-// true
-console.log(
-  identityBasedPolicy.can({ action: 'update', resource: 'photos', context })
-);
 
-const resourceBasedPolicy = new ResourceBasedPolicy([
+console.log('Not Resource Example');
+
+const notResourceExample = new IdentityBasedPolicy([
   {
-    principal: '1',
-    effect: 'allow',
-    resource: ['secrets:${user.id}:*'],
-    action: ['read', 'write'],
-  },
-  {
-    principal: ['1', '2'],
-    resource: ['secrets:${user.bestfriends}:*'],
-    action: 'read',
-  },
-  {
-    notPrincipal: { id: '3' },
-    effect: 'deny',
-    resource: 'secrets:admin:*',
-    action: 'read',
-  },
-  {
-    principal: { id: '2' },
-    resource: 'bd:company:*',
-    notAction: 'update',
-  },
-  {
-    principal: '3',
     notResource: ['bd:roles:*'],
     action: 'update',
   },
 ]);
 
 // true
-console.log(
-  resourceBasedPolicy.can({
-    principal: '1',
-    action: 'read',
-    resource: 'secrets:563:sshhh',
-    context,
-  })
-);
+console.log(notResourceExample.can({ action: 'update', resource: 'photos' }));
 // false
 console.log(
-  resourceBasedPolicy.can({
-    principal: '1',
-    action: 'read',
-    resource: 'secrets:admin:super-secret',
-    context,
-  })
-);
-// false
-console.log(
-  resourceBasedPolicy.can({
-    principal: '3',
-    action: 'read',
-    resource: 'secrets:admin:name',
-    principalType: 'id',
-    context,
-  })
-);
-// true
-console.log(
-  resourceBasedPolicy.can({
-    principal: '3',
-    action: 'create',
-    resource: 'bd:company:account',
-    context,
-  })
-);
-// false
-console.log(
-  resourceBasedPolicy.can({
-    principal: '',
+  notResourceExample.can({
     action: 'update',
-    resource: 'bd:roles:here',
-    context,
-  })
-);
-// false
-console.log(
-  resourceBasedPolicy.can({
-    principal: '',
-    action: 'update',
-    resource: 'photos',
-    context,
+    resource: 'bd:roles:admin',
   })
 );
 
-const friendsWithAdminContext = { user: { id: 456, bestfriends: ['admin'] } };
+console.log('Admin Example');
 
-// false
-console.log(
-  identityBasedPolicy.can(
-    { action: 'read', resource: 'secrets:admin:super-secret' },
-    friendsWithAdminContext
-  )
-);
-
-const adminIdentityBasedPolicy = new IdentityBasedPolicy([
+const adminExample = new IdentityBasedPolicy([
   {
     resource: '*',
     action: '*',
@@ -176,13 +143,11 @@ const adminIdentityBasedPolicy = new IdentityBasedPolicy([
 ]);
 
 // true
-console.log(
-  adminIdentityBasedPolicy.can({ action: 'read', resource: 'someResource' })
-);
+console.log(adminExample.can({ action: 'read', resource: 'someResource' }));
 // true
-console.log(
-  adminIdentityBasedPolicy.can({ action: 'write', resource: 'otherResource' })
-);
+console.log(adminExample.can({ action: 'write', resource: 'otherResource' }));
+
+console.log('Conditions Example');
 
 const conditions = {
   greatherThan: function(data, expected) {
@@ -190,7 +155,7 @@ const conditions = {
   },
 };
 
-const identityBasedPolicyWithCondition = new IdentityBasedPolicy(
+const conditionExample = new IdentityBasedPolicy(
   [
     {
       effect: 'allow', // optional, defaults to allow
@@ -208,7 +173,7 @@ const identityBasedPolicyWithCondition = new IdentityBasedPolicy(
 
 // true
 console.log(
-  identityBasedPolicyWithCondition.can({
+  conditionExample.can({
     action: 'read',
     resource: 'secrets:sshhh',
     context: { user: { age: 19 } },
@@ -216,11 +181,112 @@ console.log(
 );
 // false
 console.log(
-  identityBasedPolicyWithCondition.can({
+  conditionExample.can({
     action: 'read',
     resource: 'secrets:admin:super-secret',
     context: {
       user: { age: 18 },
     },
+  })
+);
+
+console.log('Principal Example');
+
+const principalExample = new ResourceBasedPolicy([
+  {
+    principal: '1',
+    effect: 'allow',
+    resource: ['secrets:user:*'],
+    action: ['read', 'write'],
+  },
+  {
+    principal: { id: '2' },
+    resource: 'bd:company:*',
+    notAction: 'update',
+  },
+]);
+
+// true
+console.log(
+  principalExample.can({
+    principal: '1',
+    action: 'read',
+    resource: 'secrets:user:name',
+  })
+);
+// false
+console.log(
+  principalExample.can({
+    principal: '2',
+    action: 'read',
+    resource: 'secrets:user:super-secret',
+  })
+);
+// true
+console.log(
+  principalExample.can({
+    principal: '2',
+    action: 'read',
+    resource: 'bd:company:name',
+    principalType: 'id',
+  })
+);
+// false
+console.log(
+  principalExample.can({
+    principal: '2',
+    action: 'update',
+    resource: 'bd:company:name',
+    principalType: 'id',
+  })
+);
+
+console.log('Not Principal Example');
+
+const notPrincipalExample = new ResourceBasedPolicy([
+  {
+    notPrincipal: ['1', '2'],
+    resource: ['secrets:bd:*'],
+    action: 'read',
+  },
+  {
+    notPrincipal: { id: '3' },
+    resource: 'secrets:admin:*',
+    action: 'read',
+  },
+]);
+
+// true
+console.log(
+  notPrincipalExample.can({
+    principal: '3',
+    action: 'read',
+    resource: 'secrets:bd:tables',
+  })
+);
+// false
+console.log(
+  notPrincipalExample.can({
+    principal: '1',
+    action: 'read',
+    resource: 'secrets:bd:tables',
+  })
+);
+// true
+console.log(
+  notPrincipalExample.can({
+    principal: '1',
+    action: 'read',
+    resource: 'secrets:admin:friends',
+    principalType: 'id',
+  })
+);
+// false
+console.log(
+  notPrincipalExample.can({
+    principal: '3',
+    action: 'read',
+    resource: 'secrets:admin:friends',
+    principalType: 'id',
   })
 );

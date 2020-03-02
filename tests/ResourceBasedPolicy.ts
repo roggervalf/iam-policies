@@ -64,11 +64,20 @@ export default (): void => {
             resource: 'books:horror:*',
             action: ['read'],
           },
+          {
+            notPrincipal: { id: 'rogger' },
+            resource: 'secrets:admin:*',
+            action: 'read',
+          },
         ]);
 
         expect(policy.can({principal: 'andre', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
           .toBe(false);
         expect(policy.can({principal: 'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+          .toBe(true);
+        expect(policy.can({principal: 'rogger', action: 'read', resource: 'secrets:admin:friends', principalType: 'id'}))
+          .toBe(false);
+        expect(policy.can({principal: 'andre', action: 'read', resource: 'secrets:admin:friends', principalType: 'id'}))
           .toBe(true);
       });
     });

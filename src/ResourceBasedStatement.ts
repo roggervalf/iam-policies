@@ -95,7 +95,7 @@ class ResourceBased extends Statement{
               !principalValues.some(a =>
                 new Matcher(applyContext(a, context)).match(principal))
           }
-          return new Matcher(applyContext(principalValues, context)).match(principal)    
+          return !(new Matcher(applyContext(principalValues, context)).match(principal))    
         }
         return false;
       }

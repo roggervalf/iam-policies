@@ -24,175 +24,164 @@ Or
 yarn add iam-policies
 ```
 
+## Features
+
+Supports these glob features:
+
+* Policies creation ([IdentityBasedPolicy and ResourceBasedPolicy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policy-types))
+* Permission verifications
+
 ## Usage
+
+### Examples
+
+First, we should get our policies classes:
 
 ```js
 const { IdentityBasedPolicy, ResourceBasedPolicy } = require('iam-policies');
+```
 
-const identityBasedPolicy = new IdentityBasedPolicy([
+#### Effect property allow
+
+```js
+const allowExample = new IdentityBasedPolicy([
   {
     effect: 'allow', // optional, defaults to allow
-    resource: ['secrets:${user.id}:*'],
+    resource: ['secrets:${user.id}:*'], // embedded value by context
     action: ['read', 'write'],
   },
+  {
+    resource: ['bd:company:*'],
+    action: 'create',
+  },
+]);
+
+const contextForAllowExample = { user: { id: 456 } };
+
+allowExample.can({
+  action: 'read',
+  resource: 'secrets:456:ultrasecret',
+  context: contextForAllowExample,
+});// true
+allowExample.can({
+  action: 'create',
+  resource: 'secrets:456:ultrasecret',
+  context: contextForAllowExample,
+});// false
+allowExample.can({
+  action: 'create',
+  resource: 'bd:company:account',
+  context: contextForAllowExample,
+});// true
+allowExample.can({
+  action: 'read',
+  resource: 'bd:company:account',
+  context: contextForAllowExample,
+});// false
+
+```
+
+#### Effect property deny
+
+```js
+const denyExample = new IdentityBasedPolicy([
   {
     resource: ['secrets:${user.bestfriends}:*'],
     action: 'read',
   },
   {
     effect: 'deny',
-    resource: 'secrets:admin:*',
+    resource: 'secrets:123:*',
     action: 'read',
   },
+]);
+
+const contextForDenyExample = { user: { bestfriends: [123, 563, 1211] } };
+
+denyExample.can({
+  action: 'read',
+  resource: 'secrets:563:super-secret',
+  context: contextForDenyExample,
+});// true
+denyExample.can({
+  action: 'read',
+  resource: 'secrets:123:super-secret',
+  context: contextForDenyExample,
+});// false
+```
+
+#### Not Action property
+
+```js
+const notActionExample = new IdentityBasedPolicy([
   {
     resource: 'bd:company:*',
     notAction: 'update',
   },
-  {
-    notResource: ['bd:roles:*'],
-    action: 'update',
-  },
 ]);
 
-const context = { user: { id: 456, bestfriends: [123, 563, 1211] } };
-
-// true
-identityBasedPolicy.can({
-  action: 'read',
-  resource: 'secrets:563:sshhh',
-  context,
-});
-// false
-identityBasedPolicy.can({
-  action: 'read',
-  resource: 'secrets:admin:super-secret',
-  context,
-});
-// true
-identityBasedPolicy.can({
+notActionExample.can({
   action: 'delete',
   resource: 'bd:company:account',
-  context,
-});
-// true
-identityBasedPolicy.can({
-  action: 'create',
-  resource: 'bd:company:account',
-  context,
-});
-// false
-identityBasedPolicy.can({
+});// true
+notActionExample.can({
   action: 'update',
-  resource: 'bd:roles:here',
-  context,
-});
-// true
-identityBasedPolicy.can({ action: 'update', resource: 'photos', context })
+  resource: 'bd:company:account',
+});// false
+```
 
-const resourceBasedPolicy = new ResourceBasedPolicy([
+#### Not Resource property
+
+```js
+const notResourceExample = new IdentityBasedPolicy([
   {
-    principal: '1',
-    effect: 'allow',
-    resource: ['secrets:${user.id}:*'],
-    action: ['read', 'write'],
-  },
-  {
-    principal: ['1', '2'],
-    resource: ['secrets:${user.bestfriends}:*'],
-    action: 'read',
-  },
-  {
-    notPrincipal: { id: '3' },
-    effect: 'deny',
-    resource: 'secrets:admin:*',
-    action: 'read',
-  },
-  {
-    principal: { id: '2' },
-    resource: 'bd:company:*',
-    notAction: 'update',
-  },
-  {
-    principal: '3',
     notResource: ['bd:roles:*'],
     action: 'update',
   },
 ]);
 
-// true
-resourceBasedPolicy.can({
-  principal: '1',
-  action: 'read',
-  resource: 'secrets:563:sshhh',
-  context,
-});
-// false
-resourceBasedPolicy.can({
-  principal: '1',
-  action: 'read',
-  resource: 'secrets:admin:super-secret',
-  context,
-});
-// false
-resourceBasedPolicy.can({
-  principal: '3',
-  action: 'read',
-  resource: 'secrets:admin:name',
-  principalType: 'id',
-  context,
-});
-// true
-resourceBasedPolicy.can({
-  principal: '3',
-  action: 'create',
-  resource: 'bd:company:account',
-  context,
-});
-// false
-resourceBasedPolicy.can({
-  principal: '',
+notResourceExample.can({
   action: 'update',
-  resource: 'bd:roles:here',
-  context,
-});
-// false
-resourceBasedPolicy.can({
-  principal: '',
+  resource: 'photos'
+});// true
+notResourceExample.can({
   action: 'update',
-  resource: 'photos',
-  context,
-});
+  resource: 'bd:roles:admin',
+});// false
+```
 
-const friendsWithAdminContext = { user: { id: 456, bestfriends: ['admin'] } };
+#### Allow everything
 
-// false
-identityBasedPolicy.can(
-  { action: 'read', resource: 'secrets:admin:super-secret' },
-  friendsWithAdminContext
-);
-
-const adminIdentityBasedPolicy = new IdentityBasedPolicy([
+```js
+const adminExample = new IdentityBasedPolicy([
   {
     resource: '*',
     action: '*',
   },
 ]);
 
-// true
-adminIdentityBasedPolicy.can({ action: 'read', resource: 'someResource' });
-// true
-adminIdentityBasedPolicy.can({ action: 'write', resource: 'otherResource' });
+adminExample.can({
+  action: 'read',
+  resource: 'someResource'
+});// true
+adminExample.can({
+  action: 'write',
+  resource: 'otherResource'
+});// true
+```
 
+#### Conditions property
+
+```js
 const conditions = {
   greatherThan: function(data, expected) {
     return data > expected;
   },
 };
 
-const identityBasedPolicyWithCondition = new IdentityBasedPolicy(
+const conditionExample = new IdentityBasedPolicy(
   [
     {
-      effect: 'allow', // optional, defaults to allow
       resource: 'secrets:*',
       action: ['read', 'write'],
       condition: {
@@ -205,28 +194,100 @@ const identityBasedPolicyWithCondition = new IdentityBasedPolicy(
   conditions
 );
 
-// true
-identityBasedPolicyWithCondition.can({
+conditionExample.can({
   action: 'read',
   resource: 'secrets:sshhh',
   context: { user: { age: 19 } },
-});
-// false
-identityBasedPolicyWithCondition.can({
+});// true
+conditionExample.can({
   action: 'read',
   resource: 'secrets:admin:super-secret',
   context: {
     user: { age: 18 },
   },
-});
+});// false
 ```
 
-## Features
+#### Principal property
 
-Supports these glob features:
+```js
+const principalExample = new ResourceBasedPolicy([
+  {
+    principal: '1',
+    effect: 'allow',
+    resource: ['secrets:user:*'],
+    action: ['read', 'write'],
+  },
+  {
+    principal: { id: '2' },
+    resource: 'bd:company:*',
+    notAction: 'update',
+  },
+]);
 
-* Policies creation
-* Permission verifications
+principalExample.can({
+  principal: '1',
+  action: 'read',
+  resource: 'secrets:user:name',
+});// true
+principalExample.can({
+  principal: '2',
+  action: 'read',
+  resource: 'secrets:user:super-secret',
+});// false
+principalExample.can({
+  principal: '2',
+  action: 'read',
+  resource: 'bd:company:name',
+  principalType: 'id',
+});// true
+principalExample.can({
+  principal: '2',
+  action: 'update',
+  resource: 'bd:company:name',
+  principalType: 'id',
+});// false
+```
+
+#### Not Principal property
+
+```js
+const notPrincipalExample = new ResourceBasedPolicy([
+  {
+    notPrincipal: ['1', '2'],
+    resource: ['secrets:bd:*'],
+    action: 'read',
+  },
+  {
+    notPrincipal: { id: '3' },
+    resource: 'secrets:admin:*',
+    action: 'read',
+  },
+]);
+
+notPrincipalExample.can({
+  principal: '3',
+  action: 'read',
+  resource: 'secrets:bd:tables',
+});// true
+notPrincipalExample.can({
+  principal: '1',
+  action: 'read',
+  resource: 'secrets:bd:tables',
+});// false
+notPrincipalExample.can({
+  principal: '1',
+  action: 'read',
+  resource: 'secrets:admin:friends',
+  principalType: 'id',
+});// true
+notPrincipalExample.can({
+  principal: '3',
+  action: 'read',
+  resource: 'secrets:admin:friends',
+  principalType: 'id',
+});// false
+```
 
 ## IdentityBasedPolicy Class
 
@@ -273,7 +334,7 @@ Attach inline policies to resources. Resource-based policies grant permissions t
 ```js
 const { ResourceBasedPolicy } = require('iam-policies')
 
-const resourceBasedPolicy = new IdentityBasedPolicy(Statement,conditionResolver)
+const resourceBasedPolicy = new ResourceBasedPolicy(Statement,conditionResolver)
 ```
 
 ### Properties

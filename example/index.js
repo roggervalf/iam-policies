@@ -61,6 +61,14 @@ const denyExample = new IdentityBasedPolicy([
     resource: 'secrets:123:*',
     action: 'read',
   },
+  {
+    resource: 'bd:company:*',
+    notAction: 'update',
+  },
+  {
+    notResource: ['bd:roles:*'],
+    action: 'update',
+  },
 ]);
 
 const contextForDenyExample = { user: { bestfriends: [123, 563, 1211] } };

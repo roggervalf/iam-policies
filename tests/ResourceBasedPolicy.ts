@@ -217,5 +217,42 @@ export default (): void => {
           .toBe(true);
       });
     });
+    describe('can and cannot', () => {
+
+      it('can should return false when not found and true for when matched with allow', () => {
+        const policy = new ResourceBasedPolicy(
+            [
+              {
+                effect: 'allow',
+                principal:{id: 'rogger'},
+                resource: ['posts:${user.id}:*'],
+                action: ['write', 'read', 'update'],
+              },
+            ],
+        );
+        expect(policy.can({principal: 'rogger', action: 'read', resource: 'posts:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
+        .toBe(true);
+        expect(policy.can({principal: 'rogger', action: 'read', resource: 'posts:000:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
+        .toBe(false);
+      });
+
+      it('cannot should return false when not found and true for when matched with deny', () => {
+        const policy = new ResourceBasedPolicy(
+            [
+              {
+                effect: 'deny',
+                principal:{id: 'rogger'},
+                resource: ['posts:${user.id}:*'],
+                action: ['write', 'read', 'update'],
+              },
+            ],
+        );
+        expect(policy.cannot({principal: 'rogger', action: 'read', resource: 'posts:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
+        .toBe(true);
+        expect(policy.cannot({principal: 'rogger', action: 'read', resource: 'posts:000:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
+        .toBe(false);
+      });
+
+    });
   });
 };

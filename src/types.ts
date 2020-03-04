@@ -78,13 +78,13 @@ export interface MatchResourceBasedInterface extends MatchIdentityBasedInterface
   principalType?: string
 }
 
-export interface CanIdentityBasedInterface {
+export interface EvaluateIdentityBasedInterface {
   action: string,
   resource: string,
   context?: Context
 }
 
-export interface CanResourceBasedInterface extends CanIdentityBasedInterface{
+export interface EvaluateResourceBasedInterface extends EvaluateIdentityBasedInterface{
   principal: string,
   principalType?: string,
   action: string,

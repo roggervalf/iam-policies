@@ -360,9 +360,9 @@ console.log(
   canAndCannotAllowPolicy.can(canAndCannotDeniedArgument)
   /* It's present as an allow policy, so it must be explicitly denied, right? */
 );
-// false
+// true
 console.log(
-  canAndCannotDenyPolicy.can(canAndCannotDeniedArgument)
+  canAndCannotDenyPolicy.cannot(canAndCannotDeniedArgument)
   /* I knew it! */
 );
 
@@ -383,6 +383,6 @@ console.log(
 );
 // false
 console.log(
-  canAndCannotDenyPolicy.can(canAndCannotNotPresentArgument)
+  canAndCannotDenyPolicy.cannot(canAndCannotNotPresentArgument)
   /* Nope, it just isn't there. */
 );

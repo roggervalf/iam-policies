@@ -346,7 +346,7 @@ canAndCannotInclusivePolicy.evaluate(canAndCannotDeniedArgument);   // false
 /* So far, we are not sure whether the argument is denied or not present. */
 canAndCannotAllowPolicy.can(canAndCannotDeniedArgument);             // true
 /* It matches an allow statement, so it must be explicitly denied, right? */
-canAndCannotDenyPolicy.cannot(canAndCannotDeniedArgument);          // false
+canAndCannotDenyPolicy.cannot(canAndCannotDeniedArgument);           // true
 /* I knew it!                                                             */
 
 // Let's test to see if the user can read within the context of the resource.

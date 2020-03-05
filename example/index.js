@@ -18,7 +18,7 @@ const contextForAllowExample = { user: { id: 456 } };
 
 // true
 console.log(
-  allowExample.can({
+  allowExample.evaluate({
     action: 'read',
     resource: 'secrets:456:ultrasecret',
     context: contextForAllowExample,
@@ -26,7 +26,7 @@ console.log(
 );
 // false
 console.log(
-  allowExample.can({
+  allowExample.evaluate({
     action: 'create',
     resource: 'secrets:456:ultrasecret',
     context: contextForAllowExample,
@@ -34,7 +34,7 @@ console.log(
 );
 // true
 console.log(
-  allowExample.can({
+  allowExample.evaluate({
     action: 'create',
     resource: 'bd:company:account',
     context: contextForAllowExample,
@@ -42,7 +42,7 @@ console.log(
 );
 // false
 console.log(
-  allowExample.can({
+  allowExample.evaluate({
     action: 'read',
     resource: 'bd:company:account',
     context: contextForAllowExample,
@@ -75,7 +75,7 @@ const contextForDenyExample = { user: { bestfriends: [123, 563, 1211] } };
 
 // true
 console.log(
-  denyExample.can({
+  denyExample.evaluate({
     action: 'read',
     resource: 'secrets:563:super-secret',
     context: contextForDenyExample,
@@ -83,7 +83,7 @@ console.log(
 );
 // false
 console.log(
-  denyExample.can({
+  denyExample.evaluate({
     action: 'read',
     resource: 'secrets:123:super-secret',
     context: contextForDenyExample,
@@ -101,14 +101,14 @@ const notActionExample = new IdentityBasedPolicy([
 
 // true
 console.log(
-  notActionExample.can({
+  notActionExample.evaluate({
     action: 'delete',
     resource: 'bd:company:account',
   })
 );
 // false
 console.log(
-  notActionExample.can({
+  notActionExample.evaluate({
     action: 'update',
     resource: 'bd:company:account',
   })
@@ -124,10 +124,12 @@ const notResourceExample = new IdentityBasedPolicy([
 ]);
 
 // true
-console.log(notResourceExample.can({ action: 'update', resource: 'photos' }));
+console.log(
+  notResourceExample.evaluate({ action: 'update', resource: 'photos' })
+);
 // false
 console.log(
-  notResourceExample.can({
+  notResourceExample.evaluate({
     action: 'update',
     resource: 'bd:roles:admin',
   })
@@ -143,9 +145,13 @@ const adminExample = new IdentityBasedPolicy([
 ]);
 
 // true
-console.log(adminExample.can({ action: 'read', resource: 'someResource' }));
+console.log(
+  adminExample.evaluate({ action: 'read', resource: 'someResource' })
+);
 // true
-console.log(adminExample.can({ action: 'write', resource: 'otherResource' }));
+console.log(
+  adminExample.evaluate({ action: 'write', resource: 'otherResource' })
+);
 
 console.log('Conditions Example');
 
@@ -173,7 +179,7 @@ const conditionExample = new IdentityBasedPolicy(
 
 // true
 console.log(
-  conditionExample.can({
+  conditionExample.evaluate({
     action: 'read',
     resource: 'secrets:sshhh',
     context: { user: { age: 19 } },
@@ -181,7 +187,7 @@ console.log(
 );
 // false
 console.log(
-  conditionExample.can({
+  conditionExample.evaluate({
     action: 'read',
     resource: 'secrets:admin:super-secret',
     context: {
@@ -208,7 +214,7 @@ const principalExample = new ResourceBasedPolicy([
 
 // true
 console.log(
-  principalExample.can({
+  principalExample.evaluate({
     principal: '1',
     action: 'read',
     resource: 'secrets:user:name',
@@ -216,7 +222,7 @@ console.log(
 );
 // false
 console.log(
-  principalExample.can({
+  principalExample.evaluate({
     principal: '2',
     action: 'read',
     resource: 'secrets:user:super-secret',
@@ -224,7 +230,7 @@ console.log(
 );
 // true
 console.log(
-  principalExample.can({
+  principalExample.evaluate({
     principal: '2',
     action: 'read',
     resource: 'bd:company:name',
@@ -233,7 +239,7 @@ console.log(
 );
 // false
 console.log(
-  principalExample.can({
+  principalExample.evaluate({
     principal: '2',
     action: 'update',
     resource: 'bd:company:name',
@@ -258,7 +264,7 @@ const notPrincipalExample = new ResourceBasedPolicy([
 
 // true
 console.log(
-  notPrincipalExample.can({
+  notPrincipalExample.evaluate({
     principal: '3',
     action: 'read',
     resource: 'secrets:bd:tables',
@@ -266,7 +272,7 @@ console.log(
 );
 // false
 console.log(
-  notPrincipalExample.can({
+  notPrincipalExample.evaluate({
     principal: '1',
     action: 'read',
     resource: 'secrets:bd:tables',
@@ -274,7 +280,7 @@ console.log(
 );
 // true
 console.log(
-  notPrincipalExample.can({
+  notPrincipalExample.evaluate({
     principal: '1',
     action: 'read',
     resource: 'secrets:admin:friends',
@@ -283,10 +289,100 @@ console.log(
 );
 // false
 console.log(
-  notPrincipalExample.can({
+  notPrincipalExample.evaluate({
     principal: '3',
     action: 'read',
     resource: 'secrets:admin:friends',
     principalType: 'id',
   })
+);
+
+console.log('Can and Cannot Examples');
+
+const canAndCannotStatements = [
+    {
+      effect: 'allow', // again, this is optional, as it already defaults to allow
+      resource: [
+        'website:${req.companyId}:${req.countryId}:${req.regionId}:*/*',
+      ],
+      action: ['create', 'update', 'delete'],
+    },
+    {
+      resource: ['system:*/*'],
+      action: 'read',
+    },
+    {
+      effect: 'deny',
+      resource: [
+        'website:${req.companyId}:${req.countryId}:${req.regionId}:city/lima',
+      ],
+      action: 'delete',
+    },
+  ],
+  // This is all the policies together; used for comparison.
+  canAndCannotInclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements),
+  // By default, statements are allow statements, so we simply check they're not deny statements.
+  canAndCannotAllowStatements = canAndCannotStatements.filter(
+    s => s.effect !== 'deny'
+  ),
+  canAndCannotAllowPolicy = new IdentityBasedPolicy(
+    canAndCannotAllowStatements
+  ),
+  // For deny statements, we check to see if they're deny statements, as the deny effect property must be present.
+  canAndCannotDenyStatements = canAndCannotStatements.filter(
+    s => s.effect === 'deny'
+  ),
+  canAndCannotDenyPolicy = new IdentityBasedPolicy(canAndCannotDenyStatements),
+  contextCanAndCannot = {
+    req: {
+      companyId: 123,
+      countryId: 456,
+      regionId: 789,
+    },
+  },
+  canAndCannotArgument = {
+    resource: 'website:123:456:789:city/lima',
+    context: contextCanAndCannot,
+  };
+
+const canAndCannotDeniedArgument = {
+  action: 'delete',
+  ...canAndCannotArgument,
+};
+
+// false
+console.log(
+  canAndCannotInclusivePolicy.evaluate(canAndCannotDeniedArgument)
+  /* So far, we are not sure whether the argument is denied or not present. */
+);
+// true
+console.log(
+  canAndCannotAllowPolicy.can(canAndCannotDeniedArgument)
+  /* It's present as an allow policy, so it must be explicitly denied, right? */
+);
+// false
+console.log(
+  canAndCannotDenyPolicy.can(canAndCannotDeniedArgument)
+  /* I knew it! */
+);
+
+const canAndCannotNotPresentArgument = {
+  action: 'read',
+  ...canAndCannotArgument,
+};
+
+// false
+console.log(
+  canAndCannotInclusivePolicy.evaluate(canAndCannotNotPresentArgument)
+  /* Again, the user doesn't have access here, but why? Let's investigate.. */
+);
+// false
+console.log(
+  canAndCannotAllowPolicy.can(canAndCannotNotPresentArgument)
+  /* It's not present as an allow policy, but is it explicitly denied? */
+);
+// false
+console.log(
+  canAndCannotDenyPolicy.can(canAndCannotNotPresentArgument)
+  /* Nope, it just isn't there. */
 );

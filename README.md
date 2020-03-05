@@ -296,7 +296,7 @@ const
     canAndCannotStatements = [
     {
         effect: 'allow', // again, this is optional, as it already defaults to allow
-        resource: ['website:${req.companyId}:${req.countryId}:${req.regionId}:*/*'],
+        resource: ['website:${division.companyId}:${division.countryId}:${division.regionId}:*/*'],
         action: ['create', 'update', 'delete'],
     },
     {
@@ -306,7 +306,7 @@ const
     },
     {
         effect: 'deny',
-        resource: ['website:${req.companyId}:${req.countryId}:${req.regionId}:city/lima'],
+        resource: ['website:${division.companyId}:${division.countryId}:${division.regionId}:city/lima'],
         action: 'delete',
     },
 ],
@@ -324,7 +324,7 @@ canAndCannotDenyPolicy  = new IdentityBasedPolicy(canAndCannotDenyStatements),
 
 // Let's set up the context for the argument.
 contextCanAndCannot = {
-    req: {
+    division: {
         companyId: 123,
         countryId: 456,
         regionId: 789,

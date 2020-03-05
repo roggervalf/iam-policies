@@ -14,6 +14,8 @@ install:
   - yarn
 after_success:
   - yarn semantic-release
+script:
+  - commitlint-travis
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"

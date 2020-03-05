@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/Rogger794/iam-policies#readme",
   "engines": {
-    "node": ">=10",
-    "npm": ">=6"
+    "node": ">=10.18.1",
+    "npm": ">=6.13.4"
   },
   "scripts": {
     "pretest": "./node_modules/.bin/eslint . --fix",
@@ -53,6 +53,12 @@
     "@babel/preset-typescript": "^7.7.2",
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
+    "@commitlint/travis-cli": "^8.3.5",
+    "@semantic-release/changelog": "^5.0.0",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/npm": "^7.0.3",
+    "@semantic-release/release-notes-generator": "^9.0.1",
     "@types/jest": "^24.0.22",
     "@typescript-eslint/eslint-plugin": "^2.17.0",
     "@typescript-eslint/parser": "^2.17.0",
@@ -83,6 +89,16 @@
     "dist"
   ],
   "dependencies": {},
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/changelog",
+      "@semantic-release/git"
+    ],
+    "branch": "master"
+  },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
@@ -90,7 +106,6 @@
   },
   "husky": {
     "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
       "pre-commit": "yarn pretest",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }

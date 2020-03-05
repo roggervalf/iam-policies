@@ -12,3 +12,8 @@ notifications:
     on_failure: always
 install:
   - yarn
+after_success:
+  - yarn semantic-release
+branches:
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"

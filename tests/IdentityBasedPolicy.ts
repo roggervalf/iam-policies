@@ -186,7 +186,6 @@ export default (): void => {
         expect(policy.cannot({action: 'read', resource: 'posts:000:sshhh', context: { user: { id: 123 } }}))
         .toBe(false);
       });
-
     });
   });
 };

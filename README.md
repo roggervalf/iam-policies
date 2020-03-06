@@ -292,75 +292,61 @@ notPrincipalExample.evaluate({
 #### Using `can` and `cannot`
 
 ```js
-const
-    canAndCannotStatements = [
-    {
-        effect: 'allow', // again, this is optional, as it already defaults to allow
-        resource: ['website:${division.companyId}:${division.countryId}:${division.regionId}:*/*'],
-        action: ['create', 'update', 'delete'],
-    },
-    {
-        // See this? It counts as an allow statement.
-        resource: ['system:*/*'],
-        action: 'read',
-    },
-    {
-        effect: 'deny',
-        resource: ['website:${division.companyId}:${division.countryId}:${division.regionId}:city/lima'],
-        action: 'delete',
-    },
-],
-
-// This is all the policies together; used for comparison.
-canAndCannotInclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements),
-
-// By default, statements are allow statements, so we simply check they're not deny statements.
-canAndCannotAllowStatements = canAndCannotStatements.filter(s => s.effect !== 'deny' ),
-canAndCannotAllowPolicy = new IdentityBasedPolicy(canAndCannotAllowStatements),
-
-// For deny statements, we check to see if their effect is to deny, as otherwise it would be an allow statement.
-canAndCannotDenyStatements  = canAndCannotStatements.filter(s => s.effect === 'deny' ),
-canAndCannotDenyPolicy  = new IdentityBasedPolicy(canAndCannotDenyStatements),
-
-// Let's set up the context for the argument.
-contextCanAndCannot = {
-    division: {
-        companyId: 123,
-        countryId: 456,
-        regionId: 789,
-    }
-},
-// We plug the context into our argument, and we're ready to go.
-canAndCannotArgument = {
-    resource: 'website:123:456:789:city/lima',
-    context: contextCanAndCannot,
-};
-
-// Let's test to see if the user can delete within the context of the resource.
-const canAndCannotDeniedArgument = {
+const canAndCannotStatements = [
+  {
+    effect: 'allow', // again, this is optional, as it already defaults to allow
+    resource: [
+      'website:${division.companyId}:${division.countryId}:*/*',
+    ],
+    action: ['create', 'update', 'delete'],
+  },
+  {
+    effect: 'deny',
+    resource: [
+      'website:${division.companyId}:${division.countryId}:city/lima',
+    ],
     action: 'delete',
-    ...canAndCannotArgument,
+  },
+];
+
+const inclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements);
+
+const contextCanAndCannot = {
+  division: {
+    companyId: 123,
+    countryId: 456
+  },
 };
 
-canAndCannotInclusivePolicy.evaluate(canAndCannotDeniedArgument);   // false
-/* So far, we are not sure whether the argument is denied or not present. */
-canAndCannotAllowPolicy.can(canAndCannotDeniedArgument);             // true
-/* It matches an allow statement, so it must be explicitly denied, right? */
-canAndCannotDenyPolicy.cannot(canAndCannotDeniedArgument);           // true
-/* I knew it!                                                             */
+const canAndCannotDeniedArgument = {
+  action: 'delete',
+  resource: 'website:123:456:city/lima',
+  context: contextCanAndCannot,
+};
 
-// Let's test to see if the user can read within the context of the resource.
+inclusivePolicy.evaluate(canAndCannotDeniedArgument);// false
+// So far, we are not sure whether the argument is denied or not present.
+
+inclusivePolicy.can(canAndCannotDeniedArgument);// true
+// It's present as an allow policy, so it must be explicitly denied, right?
+
+inclusivePolicy.cannot(canAndCannotDeniedArgument);// true
+// I knew it!
+
 const canAndCannotNotPresentArgument = {
-    action: 'read',
-    ...canAndCannotArgument,
+  action: 'read',
+  resource: 'website:123:456:}city/lima',
+  context: contextCanAndCannot,
 };
 
-canAndCannotInclusivePolicy.evaluate(canAndCannotNotPresentArgument); // false
-/* Again, the user doesn't have access here, but why? Let's investigate..   */
-canAndCannotAllowPolicy.can(canAndCannotNotPresentArgument);          // false
-/* It's not present as an allow policy, but is it explicitly denied?        */
-canAndCannotDenyPolicy.cannot(canAndCannotNotPresentArgument);        // false
-/* Nope, it just isn't there; no match was found.                           */
+inclusivePolicy.evaluate(canAndCannotNotPresentArgument);// false
+// Again, the user doesn't have access here, but why? Let's investigate..
+
+inclusivePolicy.can(canAndCannotNotPresentArgument);// false
+// It's not present as an allow policy, but is it explicitly denied?
+
+inclusivePolicy.cannot(canAndCannotNotPresentArgument);// false
+// Nope, it just isn't there.
 ```
 
 ## IdentityBasedPolicy Class

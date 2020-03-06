@@ -300,89 +300,63 @@ console.log(
 console.log('Can and Cannot Examples');
 
 const canAndCannotStatements = [
-    {
-      effect: 'allow', // again, this is optional, as it already defaults to allow
-      resource: [
-        'website:${division.companyId}:${division.countryId}:${division.regionId}:*/*',
-      ],
-      action: ['create', 'update', 'delete'],
-    },
-    {
-      resource: ['system:*/*'],
-      action: 'read',
-    },
-    {
-      effect: 'deny',
-      resource: [
-        'website:${division.companyId}:${division.countryId}:${division.regionId}:city/lima',
-      ],
-      action: 'delete',
-    },
-  ],
-  // This is all the policies together; used for comparison.
-  canAndCannotInclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements),
-  // By default, statements are allow statements, so we simply check they're not deny statements.
-  canAndCannotAllowStatements = canAndCannotStatements.filter(
-    s => s.effect !== 'deny'
-  ),
-  canAndCannotAllowPolicy = new IdentityBasedPolicy(
-    canAndCannotAllowStatements
-  ),
-  // For deny statements, we check to see if they're deny statements, as the deny effect property must be present.
-  canAndCannotDenyStatements = canAndCannotStatements.filter(
-    s => s.effect === 'deny'
-  ),
-  canAndCannotDenyPolicy = new IdentityBasedPolicy(canAndCannotDenyStatements),
-  contextCanAndCannot = {
-    division: {
-      companyId: 123,
-      countryId: 456,
-      regionId: 789,
-    },
+  {
+    effect: 'allow', // again, this is optional, as it already defaults to allow
+    resource: [
+      'website:${division.companyId}:${division.countryId}:*/*',
+    ],
+    action: ['create', 'update', 'delete'],
   },
-  canAndCannotArgument = {
-    resource: 'website:123:456:789:city/lima',
-    context: contextCanAndCannot,
-  };
+  {
+    effect: 'deny',
+    resource: [
+      'website:${division.companyId}:${division.countryId}:city/lima',
+    ],
+    action: 'delete',
+  },
+];
+
+const inclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements);
+
+const contextCanAndCannot = {
+  division: {
+    companyId: 123,
+    countryId: 456
+  },
+};
 
 const canAndCannotDeniedArgument = {
   action: 'delete',
-  ...canAndCannotArgument,
+  resource: 'website:123:456:city/lima',
+  context: contextCanAndCannot,
 };
 
 // false
-console.log(
-  canAndCannotInclusivePolicy.evaluate(canAndCannotDeniedArgument)
-  /* So far, we are not sure whether the argument is denied or not present. */
-);
+console.log(inclusivePolicy.evaluate(canAndCannotDeniedArgument));
+// So far, we are not sure whether the argument is denied or not present.
+
 // true
-console.log(
-  canAndCannotAllowPolicy.can(canAndCannotDeniedArgument)
-  /* It's present as an allow policy, so it must be explicitly denied, right? */
-);
+console.log(inclusivePolicy.can(canAndCannotDeniedArgument));
+// It's present as an allow policy, so it must be explicitly denied, right?
+
 // true
-console.log(
-  canAndCannotDenyPolicy.cannot(canAndCannotDeniedArgument)
-  /* I knew it! */
-);
+console.log(inclusivePolicy.cannot(canAndCannotDeniedArgument));
+// I knew it!
 
 const canAndCannotNotPresentArgument = {
   action: 'read',
-  ...canAndCannotArgument,
+  resource: 'website:123:456:}city/lima',
+  context: contextCanAndCannot,
 };
 
 // false
-console.log(
-  canAndCannotInclusivePolicy.evaluate(canAndCannotNotPresentArgument)
-  /* Again, the user doesn't have access here, but why? Let's investigate.. */
-);
+console.log(inclusivePolicy.evaluate(canAndCannotNotPresentArgument));
+// Again, the user doesn't have access here, but why? Let's investigate..
+
 // false
-console.log(
-  canAndCannotAllowPolicy.can(canAndCannotNotPresentArgument)
-  /* It's not present as an allow policy, but is it explicitly denied? */
-);
+console.log(inclusivePolicy.can(canAndCannotNotPresentArgument));
+// It's not present as an allow policy, but is it explicitly denied?
+
 // false
-console.log(
-  canAndCannotDenyPolicy.cannot(canAndCannotNotPresentArgument)
-  /* Nope, it just isn't there. */
-);
+console.log(inclusivePolicy.cannot(canAndCannotNotPresentArgument));
+// Nope, it just isn't there.

@@ -5,7 +5,7 @@ import {
   EvaluateIdentityBasedInterface,
   EvaluateResourceBasedInterface,
   ConditionResolver,
-  Context } from './types';
+} from './types';
 import { IdentityBased } from './IdentityBasedStatement';
 import { ResourceBased } from './ResourceBasedStatement';
 

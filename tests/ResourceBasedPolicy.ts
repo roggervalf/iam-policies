@@ -43,15 +43,15 @@ export default (): void => {
           },
         ]);
         
-        expect(policy.can({principal: 'andre', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+        expect(policy.evaluate({principal: 'andre', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
           .toBe(true);
-        expect(policy.can({principal: 'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
           .toBe(false);
-        expect(policy.can({principal: '1', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+        expect(policy.evaluate({principal: '1', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
           .toBe(false);
-        expect(policy.can({principal: '1', action: 'write', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
+        expect(policy.evaluate({principal: '1', action: 'write', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
           .toBe(true);
-        expect(policy.can({principal: '1', action: 'write', resource: 'books:horror:The Call of Cthulhu'}))
+        expect(policy.evaluate({principal: '1', action: 'write', resource: 'books:horror:The Call of Cthulhu'}))
           .toBe(false);
       });
     });
@@ -71,13 +71,13 @@ export default (): void => {
           },
         ]);
 
-        expect(policy.can({principal: 'andre', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+        expect(policy.evaluate({principal: 'andre', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
           .toBe(false);
-        expect(policy.can({principal: 'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
           .toBe(true);
-        expect(policy.can({principal: 'rogger', action: 'read', resource: 'secrets:admin:friends', principalType: 'id'}))
+        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'secrets:admin:friends', principalType: 'id'}))
           .toBe(false);
-        expect(policy.can({principal: 'andre', action: 'read', resource: 'secrets:admin:friends', principalType: 'id'}))
+        expect(policy.evaluate({principal: 'andre', action: 'read', resource: 'secrets:admin:friends', principalType: 'id'}))
           .toBe(true);
       });
     });
@@ -92,9 +92,9 @@ export default (): void => {
           },
         ]);
 
-        expect(policy.can({principal: '123', action: 'read', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
+        expect(policy.evaluate({principal: '123', action: 'read', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
           .toBe(true);
-        expect(policy.can({principal: '123', action: 'write', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
+        expect(policy.evaluate({principal: '123', action: 'write', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
           .toBe(false);
       });
     });
@@ -109,9 +109,9 @@ export default (): void => {
           },
         ]);
 
-        expect(policy.can({principal: '123', action: 'getAuthor', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
+        expect(policy.evaluate({principal: '123', action: 'getAuthor', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
           .toBe(false);
-        expect(policy.can({principal: '123', action: 'write', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
+        expect(policy.evaluate({principal: '123', action: 'write', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
           .toBe(true);
       });
     });
@@ -126,9 +126,9 @@ export default (): void => {
           },
         ]);
 
-        expect(policy.can({principal:'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+        expect(policy.evaluate({principal:'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
           .toBe(true);
-        expect(policy.can({principal: 'andre', action: 'read', resource: 'books:fantasy:Brisingr'}))
+        expect(policy.evaluate({principal: 'andre', action: 'read', resource: 'books:fantasy:Brisingr'}))
           .toBe(false);
       });
     });
@@ -143,9 +143,9 @@ export default (): void => {
           },
         ]);
 
-        expect(policy.can({principal:'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
+        expect(policy.evaluate({principal:'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
           .toBe(false);
-        expect(policy.can({principal: 'andre', action: 'read', resource: 'books:fantasy:Brisingr'}))
+        expect(policy.evaluate({principal: 'andre', action: 'read', resource: 'books:fantasy:Brisingr'}))
           .toBe(true);
       });
     });
@@ -165,17 +165,17 @@ export default (): void => {
           },
         ]);
 
-        expect(policy.can({principal: 'rogger', action: 'read', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
+        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
           .toBe(true);
-        expect(policy.can({principal: 'rogger', action: 'write', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
+        expect(policy.evaluate({principal: 'rogger', action: 'write', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
           .toBe(true);
-        expect(policy.can({principal: 'rogger', action: 'read', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 456 } }}))
+        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 456 } }}))
           .toBe(false);
-        expect(policy.can({principal: 'rogger', action: 'read', resource: 'secrets:563:sshhh', principalType: 'id', context: {
+        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'secrets:563:sshhh', principalType: 'id', context: {
             user: { id: 456, bestfriends: [123, 563, 1211] },
           }}))
           .toBe(true);
-        expect(policy.can({principal: 'rogger', action: 'write', resource: 'secrets:123:sshhh'}))
+        expect(policy.evaluate({principal: 'rogger', action: 'write', resource: 'secrets:123:sshhh'}))
           .toBe(false);
       });
     });
@@ -209,11 +209,11 @@ export default (): void => {
           conditions
         );
   
-        expect(policy.can({principal: 'rogger', action: 'read', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
+        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
           .toBe(true);
-        expect(policy.can({principal: 'rogger', action: 'write', resource: 'posts:123:sshhh', principalType: 'id', context: { user: { id: 123, age: 17 } }}))
+        expect(policy.evaluate({principal: 'rogger', action: 'write', resource: 'posts:123:sshhh', principalType: 'id', context: { user: { id: 123, age: 17 } }}))
           .toBe(false);
-        expect(policy.can({principal: 'rogger', action: 'read', resource: 'posts:456:sshhh', principalType: 'id', context: { user: { id: 456, age: 19 } }}))
+        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'posts:456:sshhh', principalType: 'id', context: { user: { id: 456, age: 19 } }}))
           .toBe(true);
       });
     });

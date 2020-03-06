@@ -25,15 +25,15 @@
   },
   "scripts": {
     "pretest": "./node_modules/.bin/eslint . --fix",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "yarn build",
     "test": "jest /tests",
     "test:watch": "jest /tests --watch",
     "clean": "rimraf dist",
     "build": "rollup -c",
     "build:watch": "rollup -c -w",
     "start": "npm-run-all clean build:watch",
-    "prepare": "yarn run build",
-    "predeploy": "cd example && yarn install && yarn run build",
+    "prepare": "yarn build",
+    "predeploy": "cd example && yarn && yarn build",
     "cm": "git cz",
     "semantic-release": "semantic-release"
   },
@@ -107,7 +107,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn pretest",
+      "pre-commit": "yarn test",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   }

@@ -82,6 +82,7 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-typescript2": "^0.25.3",
+    "semantic-release": "^17.0.4",
     "tslib": "^1.10.0",
     "typescript": "^3.7.2"
   },
@@ -93,8 +94,8 @@
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
-      "@semantic-release/npm",
       "@semantic-release/changelog",
+      "@semantic-release/npm",
       "@semantic-release/git"
     ],
     "branch": "master"

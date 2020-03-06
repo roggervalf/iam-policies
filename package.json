@@ -6,8 +6,7 @@
   "license": "MIT",
   "repository": "Rogger794/iam-policies",
   "description": "Identity based policies library",
-  "version": "0.0.0-semantic-release",
-  
+  "version": "3.0.1",
   "keywords": [
     "iam",
     "policies",

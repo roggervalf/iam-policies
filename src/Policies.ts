@@ -2,10 +2,10 @@
 import {
   IdentityBasedType,
   ResourceBasedType,
-  CanIdentityBasedInterface,
-  CanResourceBasedInterface,
+  EvaluateIdentityBasedInterface,
+  EvaluateResourceBasedInterface,
   ConditionResolver,
-  Context } from './types';
+} from './types';
 import { IdentityBased } from './IdentityBasedStatement';
 import { ResourceBased } from './ResourceBasedStatement';
 
@@ -22,15 +22,19 @@ export class IdentityBasedPolicy {
     this.denyStatements = statements.filter(s => s.effect === 'deny');
     this.conditionResolver = conditionResolver;
   }
-  can({action, resource, context}:CanIdentityBasedInterface): boolean {
-    return (
-      !this.denyStatements.some(s =>
-        s.matches({action, resource, context, conditionResolver:this.conditionResolver})
-      ) &&
-      this.allowStatements.some(s =>
-        s.matches({action, resource, context, conditionResolver:this.conditionResolver})
-      )
-    );
+  evaluate({action, resource, context}:EvaluateIdentityBasedInterface): boolean {
+    const args = {action, resource, context};
+    return !this.cannot(args) && this.can(args)
+  }
+  can({action, resource, context}:EvaluateIdentityBasedInterface): boolean {
+    return this.allowStatements.some(s =>
+      s.matches({action, resource, context, conditionResolver:this.conditionResolver})
+    )
+  }
+  cannot({action, resource, context}:EvaluateIdentityBasedInterface): boolean {
+    return this.denyStatements.some(s =>
+      s.matches({action, resource, context, conditionResolver:this.conditionResolver})
+    )
   }
 }
 
@@ -47,14 +51,18 @@ export class ResourceBasedPolicy {
     this.denyStatements = statements.filter(s => s.effect === 'deny');
     this.conditionResolver = conditionResolver;
   }
-  can({principal, action, resource, principalType, context}:CanResourceBasedInterface): boolean {
-    return (
-      !this.denyStatements.some(s =>
-        s.matches({principal, action, resource, principalType, context, conditionResolver:this.conditionResolver})
-      ) &&
-      this.allowStatements.some(s =>
-        s.matches({principal, action, resource, principalType, context, conditionResolver:this.conditionResolver})
-      )
-    );
+  evaluate({principal, action, resource, principalType, context}:EvaluateResourceBasedInterface): boolean {
+    const args = {principal, action, resource, principalType, context};
+    return !this.cannot(args) && this.can(args)
+  }
+  can({principal, action, resource, principalType, context}:EvaluateResourceBasedInterface): boolean {
+    return this.allowStatements.some(s =>
+      s.matches({principal, action, resource, principalType, context, conditionResolver:this.conditionResolver})
+    )
+  }
+  cannot({principal, action, resource, principalType, context}:EvaluateResourceBasedInterface): boolean {
+    return this.denyStatements.some(s =>
+      s.matches({principal, action, resource, principalType, context, conditionResolver:this.conditionResolver})
+    )
   }
 }

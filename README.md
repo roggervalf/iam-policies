@@ -58,22 +58,22 @@ const allowExample = new IdentityBasedPolicy([
 
 const contextForAllowExample = { user: { id: 456 } };
 
-allowExample.can({
+allowExample.evaluate({
   action: 'read',
   resource: 'secrets:456:ultrasecret',
   context: contextForAllowExample,
 });// true
-allowExample.can({
+allowExample.evaluate({
   action: 'create',
   resource: 'secrets:456:ultrasecret',
   context: contextForAllowExample,
 });// false
-allowExample.can({
+allowExample.evaluate({
   action: 'create',
   resource: 'bd:company:account',
   context: contextForAllowExample,
 });// true
-allowExample.can({
+allowExample.evaluate({
   action: 'read',
   resource: 'bd:company:account',
   context: contextForAllowExample,
@@ -98,12 +98,12 @@ const denyExample = new IdentityBasedPolicy([
 
 const contextForDenyExample = { user: { bestfriends: [123, 563, 1211] } };
 
-denyExample.can({
+denyExample.evaluate({
   action: 'read',
   resource: 'secrets:563:super-secret',
   context: contextForDenyExample,
 });// true
-denyExample.can({
+denyExample.evaluate({
   action: 'read',
   resource: 'secrets:123:super-secret',
   context: contextForDenyExample,
@@ -120,11 +120,11 @@ const notActionExample = new IdentityBasedPolicy([
   },
 ]);
 
-notActionExample.can({
+notActionExample.evaluate({
   action: 'delete',
   resource: 'bd:company:account',
 });// true
-notActionExample.can({
+notActionExample.evaluate({
   action: 'update',
   resource: 'bd:company:account',
 });// false
@@ -140,11 +140,11 @@ const notResourceExample = new IdentityBasedPolicy([
   },
 ]);
 
-notResourceExample.can({
+notResourceExample.evaluate({
   action: 'update',
   resource: 'photos'
 });// true
-notResourceExample.can({
+notResourceExample.evaluate({
   action: 'update',
   resource: 'bd:roles:admin',
 });// false
@@ -160,11 +160,11 @@ const adminExample = new IdentityBasedPolicy([
   },
 ]);
 
-adminExample.can({
+adminExample.evaluate({
   action: 'read',
   resource: 'someResource'
 });// true
-adminExample.can({
+adminExample.evaluate({
   action: 'write',
   resource: 'otherResource'
 });// true
@@ -194,12 +194,12 @@ const conditionExample = new IdentityBasedPolicy(
   conditions
 );
 
-conditionExample.can({
+conditionExample.evaluate({
   action: 'read',
   resource: 'secrets:sshhh',
   context: { user: { age: 19 } },
 });// true
-conditionExample.can({
+conditionExample.evaluate({
   action: 'read',
   resource: 'secrets:admin:super-secret',
   context: {
@@ -225,23 +225,23 @@ const principalExample = new ResourceBasedPolicy([
   },
 ]);
 
-principalExample.can({
+principalExample.evaluate({
   principal: '1',
   action: 'read',
   resource: 'secrets:user:name',
 });// true
-principalExample.can({
+principalExample.evaluate({
   principal: '2',
   action: 'read',
   resource: 'secrets:user:super-secret',
 });// false
-principalExample.can({
+principalExample.evaluate({
   principal: '2',
   action: 'read',
   resource: 'bd:company:name',
   principalType: 'id',
 });// true
-principalExample.can({
+principalExample.evaluate({
   principal: '2',
   action: 'update',
   resource: 'bd:company:name',
@@ -265,28 +265,88 @@ const notPrincipalExample = new ResourceBasedPolicy([
   },
 ]);
 
-notPrincipalExample.can({
+notPrincipalExample.evaluate({
   principal: '3',
   action: 'read',
   resource: 'secrets:bd:tables',
 });// true
-notPrincipalExample.can({
+notPrincipalExample.evaluate({
   principal: '1',
   action: 'read',
   resource: 'secrets:bd:tables',
 });// false
-notPrincipalExample.can({
+notPrincipalExample.evaluate({
   principal: '1',
   action: 'read',
   resource: 'secrets:admin:friends',
   principalType: 'id',
 });// true
-notPrincipalExample.can({
+notPrincipalExample.evaluate({
   principal: '3',
   action: 'read',
   resource: 'secrets:admin:friends',
   principalType: 'id',
 });// false
+```
+
+#### Using `can` and `cannot`
+
+```js
+const canAndCannotStatements = [
+  {
+    effect: 'allow', // again, this is optional, as it already defaults to allow
+    resource: [
+      'website:${division.companyId}:${division.countryId}:*/*',
+    ],
+    action: ['create', 'update', 'delete'],
+  },
+  {
+    effect: 'deny',
+    resource: [
+      'website:${division.companyId}:${division.countryId}:city/lima',
+    ],
+    action: 'delete',
+  },
+];
+
+const inclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements);
+
+const contextCanAndCannot = {
+  division: {
+    companyId: 123,
+    countryId: 456
+  },
+};
+
+const canAndCannotDeniedArgument = {
+  action: 'delete',
+  resource: 'website:123:456:city/lima',
+  context: contextCanAndCannot,
+};
+
+inclusivePolicy.evaluate(canAndCannotDeniedArgument);// false
+// So far, we are not sure whether the argument is denied or not present.
+
+inclusivePolicy.can(canAndCannotDeniedArgument);// true
+// It's present as an allow policy, so it must be explicitly denied, right?
+
+inclusivePolicy.cannot(canAndCannotDeniedArgument);// true
+// I knew it!
+
+const canAndCannotNotPresentArgument = {
+  action: 'read',
+  resource: 'website:123:456:}city/lima',
+  context: contextCanAndCannot,
+};
+
+inclusivePolicy.evaluate(canAndCannotNotPresentArgument);// false
+// Again, the user doesn't have access here, but why? Let's investigate..
+
+inclusivePolicy.can(canAndCannotNotPresentArgument);// false
+// It's not present as an allow policy, but is it explicitly denied?
+
+inclusivePolicy.cannot(canAndCannotNotPresentArgument);// false
+// Nope, it just isn't there.
 ```
 
 ## IdentityBasedPolicy Class
@@ -315,9 +375,33 @@ Name | Type | Default | Required|Description
 
 ### Methods
 
-#### identityBasedPolicy.can({action, resource, context})
+#### identityBasedPolicy.evaluate({action, resource, context})
 
 *public*: Verify if action for specific resource is allowed (`true`) or denied (`false`).
+
+##### Params
+
+Name | Type | Default | Required|Description
+---- | -------------- | ------- | ------ | ---------------
+`action` | string | undefined | `true` | It represents the action you are asking.
+`resource` | string | undefined | `true` | It represents the resource for the action you are asking.
+`context` | object | undefined | `false` | It represents the properties that will be embedded into your resources.
+
+#### identityBasedPolicy.can({action, resource, context})
+
+*public*: Verify if action for specific resource is allowed (`true`) or not present (`false`).
+
+##### Params
+
+Name | Type | Default | Required|Description
+---- | -------------- | ------- | ------ | ---------------
+`action` | string | undefined | `true` | It represents the action you are asking.
+`resource` | string | undefined | `true` | It represents the resource for the action you are asking.
+`context` | object | undefined | `false` | It represents the properties that will be embedded into your resources.
+
+#### identityBasedPolicy.cannot({action, resource, context})
+
+*public*: Verify if action for specific resource is denied (`true`) or not present (`false`).
 
 ##### Params
 
@@ -355,9 +439,37 @@ Name | Type | Default | Required|Description
 
 ### Methods
 
-#### resourceBasedPolicy.can({principal, action, resource, context, principalType})
+#### resourceBasedPolicy.evaluate({principal, action, resource, context, principalType})
 
 *public*: Verify if action for specific resource is allowed (`true`) or denied (`false`).
+
+##### Params
+
+Name | Type | Default | Required|Description
+---- | ----- | ------- | ------ | -----------
+`principal` | string | undefined | `true` | It represents the principal you are asking.
+`action` | string | undefined | `true` | It represents the action you are asking.
+`resource` | string | undefined | `true` | It represents the resource for the action you are asking.
+`context` | object | undefined | `false` | It represents the properties that will be embedded into your resources.
+`principalType` | string | undefined | `true` | It represents the principalType (principal attribute if the statement have principal object) you are asking.
+
+#### resourceBasedPolicy.can({principal, action, resource, context, principalType})
+
+*public*: Verify if action for specific resource is allowed (`true`) or not present (`false`).
+
+##### Params
+
+Name | Type | Default | Required|Description
+---- | ----- | ------- | ------ | -----------
+`principal` | string | undefined | `true` | It represents the principal you are asking.
+`action` | string | undefined | `true` | It represents the action you are asking.
+`resource` | string | undefined | `true` | It represents the resource for the action you are asking.
+`context` | object | undefined | `false` | It represents the properties that will be embedded into your resources.
+`principalType` | string | undefined | `true` | It represents the principalType (principal attribute if the statement have principal object) you are asking.
+
+#### resourceBasedPolicy.cannot({principal, action, resource, context, principalType})
+
+*public*: Verify if action for specific resource is denied (`true`) or not present (`false`).
 
 ##### Params
 

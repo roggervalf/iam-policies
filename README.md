@@ -2,7 +2,7 @@
 
 >
 
-[![NPM](https://img.shields.io/npm/v/iam-policies.svg)](https://www.npmjs.com/package/iam-policies) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/iam-policies.svg)](https://www.npmjs.com/package/iam-policies) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 ## About
 
@@ -514,6 +514,10 @@ Name | Type | Default | Required|Description
 ---- | ----- | ------- | ------ | -----------
 `str` | string | undefined | `true` | It could contain embedded path values into it by using (`${}`).
 `context` | object | undefined | `false` | It represents the context that should be embedded into `str`.
+
+## Contributing
+
+Fork the repo, make some changes, submit a pull-request! Here is the [contributing](contributing.md) doc that has some details.
 
 ## License
 

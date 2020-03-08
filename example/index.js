@@ -302,16 +302,12 @@ console.log('Can and Cannot Examples');
 const canAndCannotStatements = [
   {
     effect: 'allow', // again, this is optional, as it already defaults to allow
-    resource: [
-      'website:${division.companyId}:${division.countryId}:*/*',
-    ],
+    resource: ['website:${division.companyId}:${division.countryId}:*/*'],
     action: ['create', 'update', 'delete'],
   },
   {
     effect: 'deny',
-    resource: [
-      'website:${division.companyId}:${division.countryId}:city/lima',
-    ],
+    resource: ['website:${division.companyId}:${division.countryId}:city/lima'],
     action: 'delete',
   },
 ];
@@ -321,7 +317,7 @@ const inclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements);
 const contextCanAndCannot = {
   division: {
     companyId: 123,
-    countryId: 456
+    countryId: 456,
   },
 };
 

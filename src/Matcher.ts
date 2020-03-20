@@ -1,6 +1,4 @@
-import {
-  Balance,
-} from './types'
+import { Balance } from './types';
 
 function range(a: string, b: string, str: string): number[] {
   const left = str.indexOf(a);

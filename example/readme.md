@@ -1,1 +1,0 @@
-# iam-policies example

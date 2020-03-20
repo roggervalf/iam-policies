@@ -3,19 +3,18 @@ import {
   ConditionBlock,
   StatementInterface,
   Context,
-  MatchConditionInterface
-} from './types'
+  MatchConditionInterface,
+} from './types';
 
 const reDelimiters = /\${([^}])*}/g;
 const trim = / +(?= )|^\s+|\s+$/g;
 
 export function getValueFromPath(data: any, path: string): string {
-  let value=data;
-  path.split('.').forEach((step) => {
-    if(value)
-      value=value[step];
+  let value = data;
+  path.split('.').forEach(step => {
+    if (value) value = value[step];
   });
-  
+
   if (Array.isArray(value)) return `{${value}}`;
   if (value instanceof Object) return 'undefined';
 
@@ -40,47 +39,42 @@ class Statement {
   effect: EffectBlock;
   protected readonly condition?: ConditionBlock;
 
-  constructor({
-    effect = 'allow',
-    condition,
-  }: StatementInterface) {
+  constructor({ effect = 'allow', condition }: StatementInterface) {
     this.effect = effect;
     this.condition = condition;
   }
 
   matchConditions({
     context,
-    conditionResolver
-  }:MatchConditionInterface): boolean {
-    return (
-      (conditionResolver && this.condition && context
-        ? Object.keys(this.condition).every(condition =>
-            Object.keys(
-              this.condition ? this.condition[condition] : {}
-            ).every(path =>{
-              if(this.condition){
-                const conditionValues=this.condition[condition][path]
-                if(conditionValues instanceof Array){
-                  return conditionValues.some(value=>conditionResolver[condition](
-                    getValueFromPath(context, path),
-                    value
-                  ))
+    conditionResolver,
+  }: MatchConditionInterface): boolean {
+    return conditionResolver && this.condition && context
+      ? Object.keys(this.condition).every(condition =>
+          Object.keys(this.condition ? this.condition[condition] : {}).every(
+            path => {
+              if (this.condition) {
+                const conditionValues = this.condition[condition][path];
+                if (conditionValues instanceof Array) {
+                  return conditionValues.some(value =>
+                    conditionResolver[condition](
+                      getValueFromPath(context, path),
+                      value
+                    )
+                  );
                 }
                 return conditionResolver[condition](
                   getValueFromPath(context, path),
                   conditionValues
-                )
+                );
               }
               return conditionResolver[condition](
                 getValueFromPath(context, path),
                 ''
-              )
+              );
             }
-              
-            )
           )
-        : true)
-    );
+        )
+      : true;
   }
 }
 

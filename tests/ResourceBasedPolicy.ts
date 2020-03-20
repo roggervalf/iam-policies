@@ -2,7 +2,7 @@ import { ResourceBasedPolicy } from '../src/Policies';
 export default (): void => {
   describe('ResourceBasedPolicy Class', () => {
     describe('when creating resource based policy', () => {
-      it('don\'t throw an error', () => {
+      it("don't throw an error", () => {
         expect(
           () =>
             new ResourceBasedPolicy([
@@ -16,15 +16,15 @@ export default (): void => {
       });
 
       it('returns a ResourceBasedPolicy instance', () => {
-        expect(new ResourceBasedPolicy([
-          {
-            notPrincipal: 'rogger',
-            resource: 'some:glob:*:string/wqweqw',
-            action: ['read', 'write'],
-          },
-        ])).toBeInstanceOf(
-          ResourceBasedPolicy
-        );
+        expect(
+          new ResourceBasedPolicy([
+            {
+              notPrincipal: 'rogger',
+              resource: 'some:glob:*:string/wqweqw',
+              action: ['read', 'write'],
+            },
+          ])
+        ).toBeInstanceOf(ResourceBasedPolicy);
       });
     });
 
@@ -37,22 +37,48 @@ export default (): void => {
             action: ['read'],
           },
           {
-            principal: {id: '1'},
+            principal: { id: '1' },
             resource: ['books:horror:*'],
             action: 'write',
           },
         ]);
-        
-        expect(policy.evaluate({principal: 'andre', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
-          .toBe(true);
-        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
-          .toBe(false);
-        expect(policy.evaluate({principal: '1', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
-          .toBe(false);
-        expect(policy.evaluate({principal: '1', action: 'write', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
-          .toBe(true);
-        expect(policy.evaluate({principal: '1', action: 'write', resource: 'books:horror:The Call of Cthulhu'}))
-          .toBe(false);
+
+        expect(
+          policy.evaluate({
+            principal: 'andre',
+            action: 'read',
+            resource: 'books:horror:The Call of Cthulhu',
+          })
+        ).toBe(true);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'books:horror:The Call of Cthulhu',
+          })
+        ).toBe(false);
+        expect(
+          policy.evaluate({
+            principal: '1',
+            action: 'read',
+            resource: 'books:horror:The Call of Cthulhu',
+          })
+        ).toBe(false);
+        expect(
+          policy.evaluate({
+            principal: '1',
+            action: 'write',
+            resource: 'books:horror:The Call of Cthulhu',
+            principalType: 'id',
+          })
+        ).toBe(true);
+        expect(
+          policy.evaluate({
+            principal: '1',
+            action: 'write',
+            resource: 'books:horror:The Call of Cthulhu',
+          })
+        ).toBe(false);
       });
     });
 
@@ -71,14 +97,36 @@ export default (): void => {
           },
         ]);
 
-        expect(policy.evaluate({principal: 'andre', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
-          .toBe(false);
-        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
-          .toBe(true);
-        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'secrets:admin:friends', principalType: 'id'}))
-          .toBe(false);
-        expect(policy.evaluate({principal: 'andre', action: 'read', resource: 'secrets:admin:friends', principalType: 'id'}))
-          .toBe(true);
+        expect(
+          policy.evaluate({
+            principal: 'andre',
+            action: 'read',
+            resource: 'books:horror:The Call of Cthulhu',
+          })
+        ).toBe(false);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'books:horror:The Call of Cthulhu',
+          })
+        ).toBe(true);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'secrets:admin:friends',
+            principalType: 'id',
+          })
+        ).toBe(false);
+        expect(
+          policy.evaluate({
+            principal: 'andre',
+            action: 'read',
+            resource: 'secrets:admin:friends',
+            principalType: 'id',
+          })
+        ).toBe(true);
       });
     });
 
@@ -86,16 +134,28 @@ export default (): void => {
       it('returns true or false', () => {
         const policy = new ResourceBasedPolicy([
           {
-            principal: {id: '123'},
+            principal: { id: '123' },
             resource: ['books:horror:*'],
             action: ['read'],
           },
         ]);
 
-        expect(policy.evaluate({principal: '123', action: 'read', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
-          .toBe(true);
-        expect(policy.evaluate({principal: '123', action: 'write', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
-          .toBe(false);
+        expect(
+          policy.evaluate({
+            principal: '123',
+            action: 'read',
+            resource: 'books:horror:The Call of Cthulhu',
+            principalType: 'id',
+          })
+        ).toBe(true);
+        expect(
+          policy.evaluate({
+            principal: '123',
+            action: 'write',
+            resource: 'books:horror:The Call of Cthulhu',
+            principalType: 'id',
+          })
+        ).toBe(false);
       });
     });
 
@@ -103,16 +163,28 @@ export default (): void => {
       it('returns true or false', () => {
         const policy = new ResourceBasedPolicy([
           {
-            principal: {id: '123'},
+            principal: { id: '123' },
             resource: ['books:horror:*'],
             notAction: 'get*',
           },
         ]);
 
-        expect(policy.evaluate({principal: '123', action: 'getAuthor', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
-          .toBe(false);
-        expect(policy.evaluate({principal: '123', action: 'write', resource: 'books:horror:The Call of Cthulhu', principalType: 'id'}))
-          .toBe(true);
+        expect(
+          policy.evaluate({
+            principal: '123',
+            action: 'getAuthor',
+            resource: 'books:horror:The Call of Cthulhu',
+            principalType: 'id',
+          })
+        ).toBe(false);
+        expect(
+          policy.evaluate({
+            principal: '123',
+            action: 'write',
+            resource: 'books:horror:The Call of Cthulhu',
+            principalType: 'id',
+          })
+        ).toBe(true);
       });
     });
 
@@ -126,10 +198,20 @@ export default (): void => {
           },
         ]);
 
-        expect(policy.evaluate({principal:'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
-          .toBe(true);
-        expect(policy.evaluate({principal: 'andre', action: 'read', resource: 'books:fantasy:Brisingr'}))
-          .toBe(false);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'books:horror:The Call of Cthulhu',
+          })
+        ).toBe(true);
+        expect(
+          policy.evaluate({
+            principal: 'andre',
+            action: 'read',
+            resource: 'books:fantasy:Brisingr',
+          })
+        ).toBe(false);
       });
     });
 
@@ -143,10 +225,20 @@ export default (): void => {
           },
         ]);
 
-        expect(policy.evaluate({principal:'rogger', action: 'read', resource: 'books:horror:The Call of Cthulhu'}))
-          .toBe(false);
-        expect(policy.evaluate({principal: 'andre', action: 'read', resource: 'books:fantasy:Brisingr'}))
-          .toBe(true);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'books:horror:The Call of Cthulhu',
+          })
+        ).toBe(false);
+        expect(
+          policy.evaluate({
+            principal: 'andre',
+            action: 'read',
+            resource: 'books:fantasy:Brisingr',
+          })
+        ).toBe(true);
       });
     });
 
@@ -154,29 +246,62 @@ export default (): void => {
       it('returns true or false', () => {
         const policy = new ResourceBasedPolicy([
           {
-            principal:{id: 'rogger'},
+            principal: { id: 'rogger' },
             resource: ['secrets:${user.id}:*'],
             action: ['read', 'write'],
           },
           {
-            principal:{id: 'rogger'},
+            principal: { id: 'rogger' },
             resource: ['secrets:${user.bestfriends}:*'],
             action: 'read',
           },
         ]);
 
-        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
-          .toBe(true);
-        expect(policy.evaluate({principal: 'rogger', action: 'write', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
-          .toBe(true);
-        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 456 } }}))
-          .toBe(false);
-        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'secrets:563:sshhh', principalType: 'id', context: {
-            user: { id: 456, bestfriends: [123, 563, 1211] },
-          }}))
-          .toBe(true);
-        expect(policy.evaluate({principal: 'rogger', action: 'write', resource: 'secrets:123:sshhh'}))
-          .toBe(false);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'secrets:123:sshhh',
+            principalType: 'id',
+            context: { user: { id: 123 } },
+          })
+        ).toBe(true);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'write',
+            resource: 'secrets:123:sshhh',
+            principalType: 'id',
+            context: { user: { id: 123 } },
+          })
+        ).toBe(true);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'secrets:123:sshhh',
+            principalType: 'id',
+            context: { user: { id: 456 } },
+          })
+        ).toBe(false);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'secrets:563:sshhh',
+            principalType: 'id',
+            context: {
+              user: { id: 456, bestfriends: [123, 563, 1211] },
+            },
+          })
+        ).toBe(true);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'write',
+            resource: 'secrets:123:sshhh',
+          })
+        ).toBe(false);
       });
     });
 
@@ -187,16 +312,16 @@ export default (): void => {
             return data > expected;
           },
         };
-  
+
         const policy = new ResourceBasedPolicy(
           [
             {
-              principal:{id: 'rogger'},
+              principal: { id: 'rogger' },
               resource: 'secrets:*',
               action: ['read', 'write'],
             },
             {
-              principal:{id: 'rogger'},
+              principal: { id: 'rogger' },
               resource: ['posts:${user.id}:*'],
               action: ['write', 'read', 'update'],
               condition: {
@@ -208,51 +333,94 @@ export default (): void => {
           ],
           conditions
         );
-  
-        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'secrets:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
-          .toBe(true);
-        expect(policy.evaluate({principal: 'rogger', action: 'write', resource: 'posts:123:sshhh', principalType: 'id', context: { user: { id: 123, age: 17 } }}))
-          .toBe(false);
-        expect(policy.evaluate({principal: 'rogger', action: 'read', resource: 'posts:456:sshhh', principalType: 'id', context: { user: { id: 456, age: 19 } }}))
-          .toBe(true);
+
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'secrets:123:sshhh',
+            principalType: 'id',
+            context: { user: { id: 123 } },
+          })
+        ).toBe(true);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'write',
+            resource: 'posts:123:sshhh',
+            principalType: 'id',
+            context: { user: { id: 123, age: 17 } },
+          })
+        ).toBe(false);
+        expect(
+          policy.evaluate({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'posts:456:sshhh',
+            principalType: 'id',
+            context: { user: { id: 456, age: 19 } },
+          })
+        ).toBe(true);
       });
     });
     describe('can and cannot', () => {
-
       it('can should return false when not found and true for when matched with allow', () => {
-        const policy = new ResourceBasedPolicy(
-            [
-              {
-                effect: 'allow',
-                principal:{id: 'rogger'},
-                resource: ['posts:${user.id}:*'],
-                action: ['write', 'read', 'update'],
-              },
-            ],
-        );
-        expect(policy.can({principal: 'rogger', action: 'read', resource: 'posts:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
-        .toBe(true);
-        expect(policy.can({principal: 'rogger', action: 'read', resource: 'posts:000:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
-        .toBe(false);
+        const policy = new ResourceBasedPolicy([
+          {
+            effect: 'allow',
+            principal: { id: 'rogger' },
+            resource: ['posts:${user.id}:*'],
+            action: ['write', 'read', 'update'],
+          },
+        ]);
+        expect(
+          policy.can({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'posts:123:sshhh',
+            principalType: 'id',
+            context: { user: { id: 123 } },
+          })
+        ).toBe(true);
+        expect(
+          policy.can({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'posts:000:sshhh',
+            principalType: 'id',
+            context: { user: { id: 123 } },
+          })
+        ).toBe(false);
       });
 
       it('cannot should return false when not found and true for when matched with deny', () => {
-        const policy = new ResourceBasedPolicy(
-            [
-              {
-                effect: 'deny',
-                principal:{id: 'rogger'},
-                resource: ['posts:${user.id}:*'],
-                action: ['write', 'read', 'update'],
-              },
-            ],
-        );
-        expect(policy.cannot({principal: 'rogger', action: 'read', resource: 'posts:123:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
-        .toBe(true);
-        expect(policy.cannot({principal: 'rogger', action: 'read', resource: 'posts:000:sshhh', principalType: 'id', context: { user: { id: 123 } }}))
-        .toBe(false);
+        const policy = new ResourceBasedPolicy([
+          {
+            effect: 'deny',
+            principal: { id: 'rogger' },
+            resource: ['posts:${user.id}:*'],
+            action: ['write', 'read', 'update'],
+          },
+        ]);
+        expect(
+          policy.cannot({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'posts:123:sshhh',
+            principalType: 'id',
+            context: { user: { id: 123 } },
+          })
+        ).toBe(true);
+        expect(
+          policy.cannot({
+            principal: 'rogger',
+            action: 'read',
+            resource: 'posts:000:sshhh',
+            principalType: 'id',
+            context: { user: { id: 123 } },
+          })
+        ).toBe(false);
       });
-
     });
   });
 };

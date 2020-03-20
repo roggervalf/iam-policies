@@ -29,7 +29,7 @@ interface NotResourceBlock {
   notResource: Patterns;
 }
 
-export type ConditionKey = string | number | boolean
+export type ConditionKey = string | number | boolean;
 
 export interface ConditionMap {
   [key: string]: ConditionKey[] | ConditionKey;
@@ -43,7 +43,7 @@ export interface StatementInterface {
   sid?: string;
   effect?: EffectBlock;
   condition?: ConditionBlock;
-};
+}
 
 export interface Balance {
   start: number;
@@ -64,42 +64,55 @@ export interface Context {
 }
 
 export interface MatchConditionInterface {
-  context?: Context,
-  conditionResolver?: ConditionResolver
+  context?: Context;
+  conditionResolver?: ConditionResolver;
 }
 
 export interface MatchIdentityBasedInterface extends MatchConditionInterface {
-  action: string,
-  resource: string
+  action: string;
+  resource: string;
 }
 
-export interface MatchResourceBasedInterface extends MatchIdentityBasedInterface {
-  principal: string,
-  principalType?: string
+export interface MatchResourceBasedInterface
+  extends MatchIdentityBasedInterface {
+  principal: string;
+  principalType?: string;
 }
 
 export interface EvaluateIdentityBasedInterface {
-  action: string,
-  resource: string,
-  context?: Context
+  action: string;
+  resource: string;
+  context?: Context;
 }
 
-export interface EvaluateResourceBasedInterface extends EvaluateIdentityBasedInterface{
-  principal: string,
-  principalType?: string,
-  action: string,
-  resource: string,
-  context?: Context
+export interface EvaluateResourceBasedInterface
+  extends EvaluateIdentityBasedInterface {
+  principal: string;
+  principalType?: string;
+  action: string;
+  resource: string;
+  context?: Context;
 }
 
-type IdentityBasedType = StatementInterface & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock)
+type IdentityBasedType = StatementInterface &
+  (ActionBlock | NotActionBlock) &
+  (ResourceBlock | NotResourceBlock);
 
-type ResourceBasedType = StatementInterface & (PrincipalBlock | NotPrincipalBlock) & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock | {})
+type ResourceBasedType = StatementInterface &
+  (PrincipalBlock | NotPrincipalBlock) &
+  (ActionBlock | NotActionBlock) &
+  (ResourceBlock | NotResourceBlock | {});
 
-//type PermissionsBoundariesType = StatementInterface & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock)
-//type OrganizationsSCPsType = StatementInterface & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock)
-
-export { IdentityBasedType, ResourceBasedType, PrincipalMap, Patterns, ResourceBlock, NotResourceBlock, ActionBlock, PrincipalBlock};
+export {
+  IdentityBasedType,
+  ResourceBasedType,
+  PrincipalMap,
+  Patterns,
+  ResourceBlock,
+  NotResourceBlock,
+  ActionBlock,
+  PrincipalBlock,
+};
 
 /*
 type Message = MessageWithText | MessageWithAttachment | (MessageWithText & MessageWithAttachment);*/
@@ -118,64 +131,4 @@ condition: {//ConditionMap
                 },
               }
 
-*/
-
-const IdentityBasedExample1: IdentityBasedType = {
-  "effect": "allow",
-  "action": "s3:ListBucket",
-  "resource": "arn:aws:s3:::example_bucket"
-}
-
-const IdentityBasedExample2: IdentityBasedType = {
-  "effect": "allow",
-  "notAction": "s3:ListBucket",
-  "resource": "arn:aws:s3:::example_bucket"
-}
-
-const IdentityBasedExample3: IdentityBasedType = {
-  "effect": "allow",
-  "notAction": "s3:ListBucket",
-  "notResource": "arn:aws:s3:::example_bucket"
-}
-
-const ResourceBasedExample1: ResourceBasedType = {
-  "sid": "1",
-  "effect": "allow",
-  "principal": {"AWS": ["arn:aws:iam::ACCOUNT-ID-WITHOUT-HYPHENS:root"]},
-  "action": "s3:*",
-  "resource": [
-    "arn:aws:s3:::mybucket",
-    "arn:aws:s3:::mybucket/*"
-  ]
-}
-
-const ResourceBasedExample2: ResourceBasedType = {
-  "sid": "1",
-  "effect": "allow",
-  "principal": {"AWS": ["arn:aws:iam::ACCOUNT-ID-WITHOUT-HYPHENS:root"]},
-  "action": "s3:*"
-}
-
-/*const PermissionBoundaryExample1: PermissionsBoundariesType = {
-  "effect": "allow",
-  "action": [
-      "s3:*",
-      "cloudwatch:*",
-      "ec2:*"
-  ],
-  "resource": "*"
-}
-
-const PermissionBoundaryExample2: PermissionsBoundariesType = {
-  "effect": "allow",
-  "action": [
-      "s3:*",
-      "cloudwatch:*",
-      "ec2:*"
-  ],
-  "resource": "*",
-  "condition": {
-    "NumericLessThanEquals": {"aws:MultiFactorAuthAge": "3600"}
-  }
-}
 */

@@ -7,15 +7,15 @@ export default (): void => {
           user: { id: 456, bestfriends: [123, 532] },
         };
         expect(getValueFromPath(context, 'user.bestfriends')).toBe('{123,532}');
-        expect(getValueFromPath(context, 'user.id')).toBe('456');
+        expect(getValueFromPath(context, 'user.id')).toBe(456);
       });
 
       it('get undefined from non existed path', () => {
         const context = {
           user: { id: 456, bestfriends: [123] },
         };
-        expect(getValueFromPath(context, 'user.id.pets')).toBe('undefined');
-        expect(getValueFromPath(context, 'company')).toBe('undefined');
+        expect(getValueFromPath(context, 'user.id.pets')).toBe(undefined);
+        expect(getValueFromPath(context, 'company')).toBe(undefined);
         expect(getValueFromPath(context, 'user')).toBe('undefined');
       });
     });
@@ -66,12 +66,15 @@ export default (): void => {
         };
         const secondStatementConfig = {
           condition: {
-            greatherThan: { 'user.age': [30, 40] },
+            lessThan: { 'user.age': [30, 40] },
           },
         };
         const conditionResolver = {
           greatherThan: (data: number, expected: number): boolean => {
             return data > expected;
+          },
+          lessThan: (data: number, expected: number): boolean => {
+            return data < expected;
           },
         };
         expect(
@@ -82,7 +85,7 @@ export default (): void => {
         ).toBe(true);
         expect(
           new Statement(secondStatementConfig).matchConditions({
-            context: { user: { age: 42 } },
+            context: { user: { age: 35 } },
             conditionResolver,
           })
         ).toBe(true);
@@ -96,12 +99,15 @@ export default (): void => {
         };
         const secondStatementConfig = {
           condition: {
-            greatherThan: { 'user.age': [50, 45] },
+            lessThan: { 'user.age': [50, 45] },
           },
         };
         const conditionResolver = {
           greatherThan: (data: number, expected: number): boolean => {
             return data > expected;
+          },
+          lessThan: (data: number, expected: number): boolean => {
+            return data < expected;
           },
         };
         expect(
@@ -112,7 +118,7 @@ export default (): void => {
         ).toBe(false);
         expect(
           new Statement(secondStatementConfig).matchConditions({
-            context: { user: { age: 42 } },
+            context: { user: { age: 60 } },
             conditionResolver,
           })
         ).toBe(false);

@@ -1,10 +1,16 @@
+## [3.0.2](https://github.com/Rogger794/iam-policies/compare/v3.0.1...v3.0.2) (2020-03-20)
+
+### Bug Fixes
+
+- **getvaluefrompath:** return ConditionKey type values ([febbcb7](https://github.com/Rogger794/iam-policies/commit/febbcb7ae552ae29779899ab0b474218b1490f3f)), closes [#14](https://github.com/Rogger794/iam-policies/issues/14)
+
 ## [3.0.1](https://github.com/Rogger794/iam-policies/compare/v3.0.0...v3.0.1) (2020-03-06)
 
 ### Bug Fixes
 
 - **semantic-release:** trying semantic-release from travis ([91e0384](https://github.com/Rogger794/iam-policies/commit/91e0384e56af1b0bbaf8d031f2aa8a2158487f80))
 
-# 3.0.0 (2020-03-06)
+# 1.0.0 (2020-03-06)
 
 ### Bug Fixes
 

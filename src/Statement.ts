@@ -2,6 +2,7 @@ import {
   EffectBlock,
   ConditionBlock,
   StatementInterface,
+  ConditionKey,
   Context,
   MatchConditionInterface,
 } from './types';
@@ -9,7 +10,7 @@ import {
 const reDelimiters = /\${([^}])*}/g;
 const trim = / +(?= )|^\s+|\s+$/g;
 
-export function getValueFromPath(data: any, path: string): string {
+export function getValueFromPath(data: any, path: string): ConditionKey {
   let value = data;
   path.split('.').forEach(step => {
     if (value) value = value[step];
@@ -18,7 +19,7 @@ export function getValueFromPath(data: any, path: string): string {
   if (Array.isArray(value)) return `{${value}}`;
   if (value instanceof Object) return 'undefined';
 
-  return `${value}`;
+  return value;
 }
 
 const specialTrim = (str: string): string => str.replace(trim, '');

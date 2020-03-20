@@ -1,4 +1,9 @@
-import {ResourceBlock, ActionBlock, NotResourceBlock, PrincipalBlock} from './types';
+import {
+  ResourceBlock,
+  ActionBlock,
+  NotResourceBlock,
+  PrincipalBlock,
+} from './types';
 export function instanceOfResourceBlock(object: any): object is ResourceBlock {
   return 'resource' in object;
 }
@@ -7,11 +12,15 @@ export function instanceOfActionBlock(object: any): object is ActionBlock {
   return 'action' in object;
 }
 
-export function instanceOfNotResourceBlock(object: any): object is NotResourceBlock {
+export function instanceOfNotResourceBlock(
+  object: any
+): object is NotResourceBlock {
   return 'notResource' in object;
 }
 
-export function instanceOfPrincipalBlock(object: any): object is PrincipalBlock {
+export function instanceOfPrincipalBlock(
+  object: any
+): object is PrincipalBlock {
   return 'principal' in object;
 }
 

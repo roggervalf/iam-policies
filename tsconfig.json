@@ -5,12 +5,8 @@
     "declaration": true,
     "outDir": "./dist",
     "strict": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "tests",
-    "dist"
-  ]
+  "exclude": ["node_modules", "tests", "dist"]
 }

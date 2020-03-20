@@ -24,14 +24,8 @@
       "classes": true
     }
   },
-  "plugins": [
-    "promise",
-    "prettier"
-  ],
-  "extends": [
-    "prettier",
-    "eslint:recommended"
-  ],
+  "plugins": ["promise", "prettier"],
+  "extends": ["prettier", "eslint:recommended"],
   "rules": {
     // Removed rule "disallow the use of console" from recommended eslint rules
     "no-console": "off",
@@ -43,7 +37,7 @@
       }
     ],
     // Removed rule "disallow the use of camelcase" from recommended eslint rules
-    "camelcase": [2, {"properties": "always"}],
+    "camelcase": [2, { "properties": "always" }],
 
     // Removed rule "disallow multiple spaces in regular expressions" from recommended eslint rules
     "no-regex-spaces": "off",
@@ -87,7 +81,7 @@
     // Warn against unnecessary calls to .bind()
     "no-extra-bind": 1,
 
-    // Warn against unnecessary labels    
+    // Warn against unnecessary labels
     "no-extra-label": 1,
 
     // Disallow leading or trailing decimal points in numeric literals
@@ -143,20 +137,7 @@
     // Prefer using arrow functions for callbacks
     "prefer-arrow-callback": 1,
 
-    "max-len": [2, {"code":120,"ignoreComments":true}],
-
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true,
-        "trailingComma": "es5",
-        "tabWidth": 2,
-        "printWidth": 80,
-        "semi": true,
-        "bracketSpacing": true,
-        "jsxBracketSameLine": false
-      }
-    ]
+    "max-len": [2, { "code": 120, "ignoreComments": true }]
   },
   "overrides": [
     {
@@ -175,11 +156,7 @@
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
       ],
-      "plugins": [
-        "promise",
-        "prettier",
-        "@typescript-eslint/eslint-plugin"
-      ],
+      "plugins": ["promise", "prettier", "@typescript-eslint/eslint-plugin"],
       "rules": {
         "@typescript-eslint/no-empty-interface": [
           "error",
@@ -187,7 +164,7 @@
             "allowSingleExtends": false
           }
         ],
-        "@typescript-eslint/no-explicit-any":"off"
+        "@typescript-eslint/no-explicit-any": "off"
       }
     }
   ]

@@ -2,22 +2,19 @@ import {
   EffectBlock,
   ConditionBlock,
   StatementInterface,
-  ConditionKey,
+  // ConditionKey,
   Context,
-  MatchConditionInterface,
+  MatchConditionInterface
 } from './types';
 
 const reDelimiters = /\${([^}])*}/g;
 const trim = / +(?= )|^\s+|\s+$/g;
 
-export function getValueFromPath(data: any, path: string): ConditionKey {
+export function getValueFromPath(data: any, path: string): any {
   let value = data;
   path.split('.').forEach(step => {
     if (value) value = value[step];
   });
-
-  if (Array.isArray(value)) return `{${value}}`;
-  if (value instanceof Object) return 'undefined';
 
   return value;
 }
@@ -30,8 +27,11 @@ export function applyContext(str: string, context?: Context): string {
   return specialTrim(
     str.replace(reDelimiters, match => {
       const path = match.substr(2, match.length - 3);
+      let value = getValueFromPath(context, path);
+      if (Array.isArray(value)) value = `{${value}}`;
+      if (value instanceof Object) value = undefined;
 
-      return match ? String(getValueFromPath(context, path)) : '';
+      return match ? String(value) : '';
     })
   );
 }
@@ -47,7 +47,7 @@ class Statement {
 
   matchConditions({
     context,
-    conditionResolver,
+    conditionResolver
   }: MatchConditionInterface): boolean {
     return conditionResolver && this.condition && context
       ? Object.keys(this.condition).every(condition =>

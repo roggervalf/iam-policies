@@ -27,8 +27,8 @@ We are using semantic-release instead of this:
 - update the version number in `package.json`
   - Fixes update the patch number, features update the minor number.
   - Major version update is reserved for API breaking changes, not just additions.
-- `yarn github-changes -- -n 3.X.Y` to update the changelog
 - `git add`, `git commit` and `git push` to get the version to master.
+- update changelog following the commits format.
 - `git tag -a 3.X.Y -m 3.X.Y` `git push --tags`
 - `npm publish`
 - add a version on the github release page, based on the tag

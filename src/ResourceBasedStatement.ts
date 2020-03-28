@@ -2,13 +2,13 @@ import {
   PrincipalMap,
   Context,
   ResourceBasedType,
-  MatchResourceBasedInterface,
+  MatchResourceBasedInterface
 } from './types';
 import {
   instanceOfPrincipalBlock,
   instanceOfResourceBlock,
   instanceOfNotResourceBlock,
-  instanceOfActionBlock,
+  instanceOfActionBlock
 } from './utils';
 import { Matcher } from './Matcher';
 import { Statement, applyContext } from './Statement';
@@ -64,7 +64,7 @@ class ResourceBased extends Statement {
     resource,
     principalType,
     context,
-    conditionResolver,
+    conditionResolver
   }: MatchResourceBasedInterface): boolean {
     return (
       this.matchPrincipals(principal, principalType, context) &&

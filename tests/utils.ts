@@ -2,7 +2,7 @@ import {
   instanceOfPrincipalBlock,
   instanceOfResourceBlock,
   instanceOfActionBlock,
-  instanceOfNotResourceBlock,
+  instanceOfNotResourceBlock
 } from '../src/utils';
 
 export default (): void => {
@@ -11,7 +11,7 @@ export default (): void => {
       it("don't throw an error", () => {
         expect(() =>
           instanceOfPrincipalBlock({
-            principal: 'something',
+            principal: 'something'
           })
         ).not.toThrow();
         expect(instanceOfPrincipalBlock({ principal: 'something' })).toBe(true);
@@ -25,7 +25,7 @@ export default (): void => {
       it("don't throw an error", () => {
         expect(() =>
           instanceOfResourceBlock({
-            resource: 'something',
+            resource: 'something'
           })
         ).not.toThrow();
         expect(instanceOfResourceBlock({ resource: 'something' })).toBe(true);
@@ -39,7 +39,7 @@ export default (): void => {
       it("don't throw an error", () => {
         expect(() =>
           instanceOfActionBlock({
-            action: 'something',
+            action: 'something'
           })
         ).not.toThrow();
         expect(instanceOfActionBlock({ action: 'something' })).toBe(true);
@@ -51,7 +51,7 @@ export default (): void => {
       it("don't throw an error", () => {
         expect(() =>
           instanceOfNotResourceBlock({
-            notResource: 'something',
+            notResource: 'something'
           })
         ).not.toThrow();
         expect(instanceOfNotResourceBlock({ notResource: 'something' })).toBe(

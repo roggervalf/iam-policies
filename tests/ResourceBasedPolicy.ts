@@ -9,8 +9,8 @@ export default (): void => {
               {
                 principal: 'rogger',
                 resource: 'some:glob:*:string/wqweqw',
-                action: ['read', 'write'],
-              },
+                action: ['read', 'write']
+              }
             ])
         ).not.toThrow();
       });
@@ -21,8 +21,8 @@ export default (): void => {
             {
               notPrincipal: 'rogger',
               resource: 'some:glob:*:string/wqweqw',
-              action: ['read', 'write'],
-            },
+              action: ['read', 'write']
+            }
           ])
         ).toBeInstanceOf(ResourceBasedPolicy);
       });
@@ -34,34 +34,34 @@ export default (): void => {
           {
             principal: 'andre',
             resource: 'books:horror:*',
-            action: ['read'],
+            action: ['read']
           },
           {
             principal: { id: '1' },
             resource: ['books:horror:*'],
-            action: 'write',
-          },
+            action: 'write'
+          }
         ]);
 
         expect(
           policy.evaluate({
             principal: 'andre',
             action: 'read',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(true);
         expect(
           policy.evaluate({
             principal: 'rogger',
             action: 'read',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(false);
         expect(
           policy.evaluate({
             principal: '1',
             action: 'read',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(false);
         expect(
@@ -69,14 +69,14 @@ export default (): void => {
             principal: '1',
             action: 'write',
             resource: 'books:horror:The Call of Cthulhu',
-            principalType: 'id',
+            principalType: 'id'
           })
         ).toBe(true);
         expect(
           policy.evaluate({
             principal: '1',
             action: 'write',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(false);
       });
@@ -88,27 +88,27 @@ export default (): void => {
           {
             notPrincipal: 'andre',
             resource: 'books:horror:*',
-            action: ['read'],
+            action: ['read']
           },
           {
             notPrincipal: { id: 'rogger' },
             resource: 'secrets:admin:*',
-            action: 'read',
-          },
+            action: 'read'
+          }
         ]);
 
         expect(
           policy.evaluate({
             principal: 'andre',
             action: 'read',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(false);
         expect(
           policy.evaluate({
             principal: 'rogger',
             action: 'read',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(true);
         expect(
@@ -116,7 +116,7 @@ export default (): void => {
             principal: 'rogger',
             action: 'read',
             resource: 'secrets:admin:friends',
-            principalType: 'id',
+            principalType: 'id'
           })
         ).toBe(false);
         expect(
@@ -124,7 +124,7 @@ export default (): void => {
             principal: 'andre',
             action: 'read',
             resource: 'secrets:admin:friends',
-            principalType: 'id',
+            principalType: 'id'
           })
         ).toBe(true);
       });
@@ -136,8 +136,8 @@ export default (): void => {
           {
             principal: { id: '123' },
             resource: ['books:horror:*'],
-            action: ['read'],
-          },
+            action: ['read']
+          }
         ]);
 
         expect(
@@ -145,7 +145,7 @@ export default (): void => {
             principal: '123',
             action: 'read',
             resource: 'books:horror:The Call of Cthulhu',
-            principalType: 'id',
+            principalType: 'id'
           })
         ).toBe(true);
         expect(
@@ -153,7 +153,7 @@ export default (): void => {
             principal: '123',
             action: 'write',
             resource: 'books:horror:The Call of Cthulhu',
-            principalType: 'id',
+            principalType: 'id'
           })
         ).toBe(false);
       });
@@ -165,8 +165,8 @@ export default (): void => {
           {
             principal: { id: '123' },
             resource: ['books:horror:*'],
-            notAction: 'get*',
-          },
+            notAction: 'get*'
+          }
         ]);
 
         expect(
@@ -174,7 +174,7 @@ export default (): void => {
             principal: '123',
             action: 'getAuthor',
             resource: 'books:horror:The Call of Cthulhu',
-            principalType: 'id',
+            principalType: 'id'
           })
         ).toBe(false);
         expect(
@@ -182,7 +182,7 @@ export default (): void => {
             principal: '123',
             action: 'write',
             resource: 'books:horror:The Call of Cthulhu',
-            principalType: 'id',
+            principalType: 'id'
           })
         ).toBe(true);
       });
@@ -194,22 +194,22 @@ export default (): void => {
           {
             principal: ['rogger', 'andre'],
             resource: 'books:horror:*',
-            action: ['read'],
-          },
+            action: ['read']
+          }
         ]);
 
         expect(
           policy.evaluate({
             principal: 'rogger',
             action: 'read',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(true);
         expect(
           policy.evaluate({
             principal: 'andre',
             action: 'read',
-            resource: 'books:fantasy:Brisingr',
+            resource: 'books:fantasy:Brisingr'
           })
         ).toBe(false);
       });
@@ -221,22 +221,22 @@ export default (): void => {
           {
             principal: ['rogger', 'andre'],
             notResource: 'books:horror:*',
-            action: ['read'],
-          },
+            action: ['read']
+          }
         ]);
 
         expect(
           policy.evaluate({
             principal: 'rogger',
             action: 'read',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(false);
         expect(
           policy.evaluate({
             principal: 'andre',
             action: 'read',
-            resource: 'books:fantasy:Brisingr',
+            resource: 'books:fantasy:Brisingr'
           })
         ).toBe(true);
       });
@@ -248,13 +248,13 @@ export default (): void => {
           {
             principal: { id: 'rogger' },
             resource: ['secrets:${user.id}:*'],
-            action: ['read', 'write'],
+            action: ['read', 'write']
           },
           {
             principal: { id: 'rogger' },
             resource: ['secrets:${user.bestfriends}:*'],
-            action: 'read',
-          },
+            action: 'read'
+          }
         ]);
 
         expect(
@@ -263,7 +263,7 @@ export default (): void => {
             action: 'read',
             resource: 'secrets:123:sshhh',
             principalType: 'id',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(true);
         expect(
@@ -272,7 +272,7 @@ export default (): void => {
             action: 'write',
             resource: 'secrets:123:sshhh',
             principalType: 'id',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(true);
         expect(
@@ -281,7 +281,7 @@ export default (): void => {
             action: 'read',
             resource: 'secrets:123:sshhh',
             principalType: 'id',
-            context: { user: { id: 456 } },
+            context: { user: { id: 456 } }
           })
         ).toBe(false);
         expect(
@@ -291,15 +291,15 @@ export default (): void => {
             resource: 'secrets:563:sshhh',
             principalType: 'id',
             context: {
-              user: { id: 456, bestfriends: [123, 563, 1211] },
-            },
+              user: { id: 456, bestfriends: [123, 563, 1211] }
+            }
           })
         ).toBe(true);
         expect(
           policy.evaluate({
             principal: 'rogger',
             action: 'write',
-            resource: 'secrets:123:sshhh',
+            resource: 'secrets:123:sshhh'
           })
         ).toBe(false);
       });
@@ -310,7 +310,7 @@ export default (): void => {
         const conditions = {
           greatherThan: (data: number, expected: number): boolean => {
             return data > expected;
-          },
+          }
         };
 
         const policy = new ResourceBasedPolicy(
@@ -318,7 +318,7 @@ export default (): void => {
             {
               principal: { id: 'rogger' },
               resource: 'secrets:*',
-              action: ['read', 'write'],
+              action: ['read', 'write']
             },
             {
               principal: { id: 'rogger' },
@@ -326,10 +326,10 @@ export default (): void => {
               action: ['write', 'read', 'update'],
               condition: {
                 greatherThan: {
-                  'user.age': 18,
-                },
-              },
-            },
+                  'user.age': 18
+                }
+              }
+            }
           ],
           conditions
         );
@@ -340,7 +340,7 @@ export default (): void => {
             action: 'read',
             resource: 'secrets:123:sshhh',
             principalType: 'id',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(true);
         expect(
@@ -349,7 +349,7 @@ export default (): void => {
             action: 'write',
             resource: 'posts:123:sshhh',
             principalType: 'id',
-            context: { user: { id: 123, age: 17 } },
+            context: { user: { id: 123, age: 17 } }
           })
         ).toBe(false);
         expect(
@@ -358,7 +358,7 @@ export default (): void => {
             action: 'read',
             resource: 'posts:456:sshhh',
             principalType: 'id',
-            context: { user: { id: 456, age: 19 } },
+            context: { user: { id: 456, age: 19 } }
           })
         ).toBe(true);
       });
@@ -370,8 +370,8 @@ export default (): void => {
             effect: 'allow',
             principal: { id: 'rogger' },
             resource: ['posts:${user.id}:*'],
-            action: ['write', 'read', 'update'],
-          },
+            action: ['write', 'read', 'update']
+          }
         ]);
         expect(
           policy.can({
@@ -379,7 +379,7 @@ export default (): void => {
             action: 'read',
             resource: 'posts:123:sshhh',
             principalType: 'id',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(true);
         expect(
@@ -388,7 +388,7 @@ export default (): void => {
             action: 'read',
             resource: 'posts:000:sshhh',
             principalType: 'id',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(false);
       });
@@ -399,8 +399,8 @@ export default (): void => {
             effect: 'deny',
             principal: { id: 'rogger' },
             resource: ['posts:${user.id}:*'],
-            action: ['write', 'read', 'update'],
-          },
+            action: ['write', 'read', 'update']
+          }
         ]);
         expect(
           policy.cannot({
@@ -408,7 +408,7 @@ export default (): void => {
             action: 'read',
             resource: 'posts:123:sshhh',
             principalType: 'id',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(true);
         expect(
@@ -417,7 +417,7 @@ export default (): void => {
             action: 'read',
             resource: 'posts:000:sshhh',
             principalType: 'id',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(false);
       });

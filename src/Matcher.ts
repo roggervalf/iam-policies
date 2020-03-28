@@ -19,7 +19,7 @@ function balanced(a: string, b: string, str: string): Balance {
     end: r[1],
     pre: r[0] >= 0 ? str.slice(0, r[0]) : '',
     body: r[0] >= 0 ? str.slice(r[0] + a.length, r[1]) : '',
-    post: r[0] >= 0 ? str.slice(r[1] + b.length) : '',
+    post: r[0] >= 0 ? str.slice(r[1] + b.length) : ''
   };
 }
 

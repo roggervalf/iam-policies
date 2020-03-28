@@ -1,7 +1,7 @@
 import {
   Context,
   IdentityBasedType,
-  MatchIdentityBasedInterface,
+  MatchIdentityBasedInterface
 } from './types';
 import { instanceOfResourceBlock, instanceOfActionBlock } from './utils';
 import { Matcher } from './Matcher';
@@ -43,7 +43,7 @@ class IdentityBased extends Statement {
     action,
     resource,
     context,
-    conditionResolver,
+    conditionResolver
   }: MatchIdentityBasedInterface): boolean {
     return (
       this.matchActions(action, context) &&

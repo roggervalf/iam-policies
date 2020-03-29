@@ -111,7 +111,7 @@ denyExample.evaluate({
 });// false
 ```
 
-#### 没有动作的属性
+#### 排除的行为属性
 
 ```js
 const notActionExample = new IdentityBasedPolicy([
@@ -131,7 +131,7 @@ notActionExample.evaluate({
 });// false
 ```
 
-#### 没有资源的属性
+#### 排除的资源属性
 
 ```js
 const notResourceExample = new IdentityBasedPolicy([

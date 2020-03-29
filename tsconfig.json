@@ -5,8 +5,16 @@
     "declaration": true,
     "outDir": "./dist",
     "strict": true,
+    "noUnusedParameters": true,
     "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "tests", "dist"]
+  "exclude": [
+    "node_modules",
+    "tests",
+    "build",
+    "dist",
+    "example",
+    "rollup.config.js"
+  ]
 }

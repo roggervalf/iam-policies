@@ -24,9 +24,11 @@
     "npm": ">=6.13.4"
   },
   "scripts": {
-    "format": "prettier **/*.{ts,js,json,yml,md} -l --ignore-path ./.gitignore",
-    "format:fix": "prettier **/*.{ts,js,json,yml,md} --write --ignore-path ./.gitignore",
-    "pretest": "./node_modules/.bin/eslint . --fix",
+    "prettier:format": "./node_modules/.bin/prettier **/*.{ts,js,json,yml,md} -l --ignore-path ./.gitignore",
+    "prettier:fix": "./node_modules/.bin/prettier **/*.{ts,js,json,yml,md} --write --ignore-path ./.gitignore",
+    "eslint:format": "./node_modules/.bin/eslint **/*.{ts,js} --ignore-path ./.gitignore",
+    "eslint:fix": "./node_modules/.bin/eslint **/*.{ts,js} --fix --ignore-path ./.gitignore",
+    "pretest": "npm-run-all prettier:fix eslint:fix",
     "prepublishOnly": "yarn build",
     "test": "jest /tests",
     "test:watch": "jest /tests --watch",

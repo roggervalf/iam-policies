@@ -22,7 +22,10 @@ export default {
     }
   ],
   plugins: [
-    typescript(),
+    typescript({
+      rollupCommonJSResolveHack: true,
+      clean: true
+    }),
     external(),
     babel({
       exclude: 'node_modules/**',

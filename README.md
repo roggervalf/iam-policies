@@ -30,6 +30,7 @@ Supports these glob features:
 
 - Policies creation ([IdentityBasedPolicy and ResourceBasedPolicy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policy-types))
 - Permission verifications
+- Translations: [Chinese docs](./translations/README.zh-CN.md) by [@mickymao1110](https://github.com/mickymao1110)
 
 ## Usage
 

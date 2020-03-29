@@ -6,12 +6,12 @@ const allowExample = new IdentityBasedPolicy([
   {
     effect: 'allow', // optional, defaults to allow
     resource: ['secrets:${user.id}:*'], // embedded value by context
-    action: ['read', 'write'],
+    action: ['read', 'write']
   },
   {
     resource: ['bd:company:*'],
-    action: 'create',
-  },
+    action: 'create'
+  }
 ]);
 
 const contextForAllowExample = { user: { id: 456 } };
@@ -21,7 +21,7 @@ console.log(
   allowExample.evaluate({
     action: 'read',
     resource: 'secrets:456:ultrasecret',
-    context: contextForAllowExample,
+    context: contextForAllowExample
   })
 );
 // false
@@ -29,7 +29,7 @@ console.log(
   allowExample.evaluate({
     action: 'create',
     resource: 'secrets:456:ultrasecret',
-    context: contextForAllowExample,
+    context: contextForAllowExample
   })
 );
 // true
@@ -37,7 +37,7 @@ console.log(
   allowExample.evaluate({
     action: 'create',
     resource: 'bd:company:account',
-    context: contextForAllowExample,
+    context: contextForAllowExample
   })
 );
 // false
@@ -45,7 +45,7 @@ console.log(
   allowExample.evaluate({
     action: 'read',
     resource: 'bd:company:account',
-    context: contextForAllowExample,
+    context: contextForAllowExample
   })
 );
 
@@ -54,21 +54,21 @@ console.log('Deny Example');
 const denyExample = new IdentityBasedPolicy([
   {
     resource: ['secrets:${user.bestfriends}:*'],
-    action: 'read',
+    action: 'read'
   },
   {
     effect: 'deny',
     resource: 'secrets:123:*',
-    action: 'read',
+    action: 'read'
   },
   {
     resource: 'bd:company:*',
-    notAction: 'update',
+    notAction: 'update'
   },
   {
     notResource: ['bd:roles:*'],
-    action: 'update',
-  },
+    action: 'update'
+  }
 ]);
 
 const contextForDenyExample = { user: { bestfriends: [123, 563, 1211] } };
@@ -78,7 +78,7 @@ console.log(
   denyExample.evaluate({
     action: 'read',
     resource: 'secrets:563:super-secret',
-    context: contextForDenyExample,
+    context: contextForDenyExample
   })
 );
 // false
@@ -86,7 +86,7 @@ console.log(
   denyExample.evaluate({
     action: 'read',
     resource: 'secrets:123:super-secret',
-    context: contextForDenyExample,
+    context: contextForDenyExample
   })
 );
 
@@ -95,22 +95,22 @@ console.log('Not Action Example');
 const notActionExample = new IdentityBasedPolicy([
   {
     resource: 'bd:company:*',
-    notAction: 'update',
-  },
+    notAction: 'update'
+  }
 ]);
 
 // true
 console.log(
   notActionExample.evaluate({
     action: 'delete',
-    resource: 'bd:company:account',
+    resource: 'bd:company:account'
   })
 );
 // false
 console.log(
   notActionExample.evaluate({
     action: 'update',
-    resource: 'bd:company:account',
+    resource: 'bd:company:account'
   })
 );
 
@@ -119,8 +119,8 @@ console.log('Not Resource Example');
 const notResourceExample = new IdentityBasedPolicy([
   {
     notResource: ['bd:roles:*'],
-    action: 'update',
-  },
+    action: 'update'
+  }
 ]);
 
 // true
@@ -131,7 +131,7 @@ console.log(
 console.log(
   notResourceExample.evaluate({
     action: 'update',
-    resource: 'bd:roles:admin',
+    resource: 'bd:roles:admin'
   })
 );
 
@@ -140,8 +140,8 @@ console.log('Admin Example');
 const adminExample = new IdentityBasedPolicy([
   {
     resource: '*',
-    action: '*',
-  },
+    action: '*'
+  }
 ]);
 
 // true
@@ -158,7 +158,7 @@ console.log('Conditions Example');
 const conditions = {
   greatherThan: function(data, expected) {
     return data > expected;
-  },
+  }
 };
 
 const conditionExample = new IdentityBasedPolicy(
@@ -169,10 +169,10 @@ const conditionExample = new IdentityBasedPolicy(
       action: ['read', 'write'],
       condition: {
         greatherThan: {
-          'user.age': 18,
-        },
-      },
-    },
+          'user.age': 18
+        }
+      }
+    }
   ],
   conditions
 );
@@ -182,7 +182,7 @@ console.log(
   conditionExample.evaluate({
     action: 'read',
     resource: 'secrets:sshhh',
-    context: { user: { age: 19 } },
+    context: { user: { age: 19 } }
   })
 );
 // false
@@ -191,8 +191,8 @@ console.log(
     action: 'read',
     resource: 'secrets:admin:super-secret',
     context: {
-      user: { age: 18 },
-    },
+      user: { age: 18 }
+    }
   })
 );
 
@@ -203,13 +203,13 @@ const principalExample = new ResourceBasedPolicy([
     principal: '1',
     effect: 'allow',
     resource: ['secrets:user:*'],
-    action: ['read', 'write'],
+    action: ['read', 'write']
   },
   {
     principal: { id: '2' },
     resource: 'bd:company:*',
-    notAction: 'update',
-  },
+    notAction: 'update'
+  }
 ]);
 
 // true
@@ -217,7 +217,7 @@ console.log(
   principalExample.evaluate({
     principal: '1',
     action: 'read',
-    resource: 'secrets:user:name',
+    resource: 'secrets:user:name'
   })
 );
 // false
@@ -225,7 +225,7 @@ console.log(
   principalExample.evaluate({
     principal: '2',
     action: 'read',
-    resource: 'secrets:user:super-secret',
+    resource: 'secrets:user:super-secret'
   })
 );
 // true
@@ -234,7 +234,7 @@ console.log(
     principal: '2',
     action: 'read',
     resource: 'bd:company:name',
-    principalType: 'id',
+    principalType: 'id'
   })
 );
 // false
@@ -243,7 +243,7 @@ console.log(
     principal: '2',
     action: 'update',
     resource: 'bd:company:name',
-    principalType: 'id',
+    principalType: 'id'
   })
 );
 
@@ -253,13 +253,13 @@ const notPrincipalExample = new ResourceBasedPolicy([
   {
     notPrincipal: ['1', '2'],
     resource: ['secrets:bd:*'],
-    action: 'read',
+    action: 'read'
   },
   {
     notPrincipal: { id: '3' },
     resource: 'secrets:admin:*',
-    action: 'read',
-  },
+    action: 'read'
+  }
 ]);
 
 // true
@@ -267,7 +267,7 @@ console.log(
   notPrincipalExample.evaluate({
     principal: '3',
     action: 'read',
-    resource: 'secrets:bd:tables',
+    resource: 'secrets:bd:tables'
   })
 );
 // false
@@ -275,7 +275,7 @@ console.log(
   notPrincipalExample.evaluate({
     principal: '1',
     action: 'read',
-    resource: 'secrets:bd:tables',
+    resource: 'secrets:bd:tables'
   })
 );
 // true
@@ -284,7 +284,7 @@ console.log(
     principal: '1',
     action: 'read',
     resource: 'secrets:admin:friends',
-    principalType: 'id',
+    principalType: 'id'
   })
 );
 // false
@@ -293,7 +293,7 @@ console.log(
     principal: '3',
     action: 'read',
     resource: 'secrets:admin:friends',
-    principalType: 'id',
+    principalType: 'id'
   })
 );
 
@@ -303,13 +303,13 @@ const canAndCannotStatements = [
   {
     effect: 'allow', // again, this is optional, as it already defaults to allow
     resource: ['website:${division.companyId}:${division.countryId}:*/*'],
-    action: ['create', 'update', 'delete'],
+    action: ['create', 'update', 'delete']
   },
   {
     effect: 'deny',
     resource: ['website:${division.companyId}:${division.countryId}:city/lima'],
-    action: 'delete',
-  },
+    action: 'delete'
+  }
 ];
 
 const inclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements);
@@ -317,14 +317,14 @@ const inclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements);
 const contextCanAndCannot = {
   division: {
     companyId: 123,
-    countryId: 456,
-  },
+    countryId: 456
+  }
 };
 
 const canAndCannotDeniedArgument = {
   action: 'delete',
   resource: 'website:123:456:city/lima',
-  context: contextCanAndCannot,
+  context: contextCanAndCannot
 };
 
 // false
@@ -342,7 +342,7 @@ console.log(inclusivePolicy.cannot(canAndCannotDeniedArgument));
 const canAndCannotNotPresentArgument = {
   action: 'read',
   resource: 'website:123:456:}city/lima',
-  context: contextCanAndCannot,
+  context: contextCanAndCannot
 };
 
 // false

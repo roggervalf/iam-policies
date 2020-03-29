@@ -2,7 +2,7 @@ import {
   ResourceBlock,
   ActionBlock,
   NotResourceBlock,
-  PrincipalBlock,
+  PrincipalBlock
 } from './types';
 export function instanceOfResourceBlock(object: any): object is ResourceBlock {
   return 'resource' in object;

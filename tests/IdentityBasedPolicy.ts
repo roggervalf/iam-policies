@@ -8,8 +8,8 @@ export default (): void => {
             new IdentityBasedPolicy([
               {
                 resource: 'some:glob:*:string/wqweqw',
-                action: ['read', 'write'],
-              },
+                action: ['read', 'write']
+              }
             ])
         ).not.toThrow();
       });
@@ -19,8 +19,8 @@ export default (): void => {
           new IdentityBasedPolicy([
             {
               resource: 'some:glob:*:string/wqweqw',
-              action: ['read', 'write'],
-            },
+              action: ['read', 'write']
+            }
           ])
         ).toBeInstanceOf(IdentityBasedPolicy);
       });
@@ -31,20 +31,20 @@ export default (): void => {
         const policy = new IdentityBasedPolicy([
           {
             resource: ['books:horror:*'],
-            action: ['read'],
-          },
+            action: ['read']
+          }
         ]);
 
         expect(
           policy.evaluate({
             action: 'read',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(true);
         expect(
           policy.evaluate({
             action: 'write',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(false);
       });
@@ -55,20 +55,20 @@ export default (): void => {
         const policy = new IdentityBasedPolicy([
           {
             resource: 'books:horror:*',
-            notAction: 'read',
-          },
+            notAction: 'read'
+          }
         ]);
 
         expect(
           policy.evaluate({
             action: 'read',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(false);
         expect(
           policy.evaluate({
             action: 'write',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(true);
       });
@@ -79,20 +79,20 @@ export default (): void => {
         const policy = new IdentityBasedPolicy([
           {
             resource: 'books:horror:*',
-            action: 'read',
-          },
+            action: 'read'
+          }
         ]);
 
         expect(
           policy.evaluate({
             action: 'read',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(true);
         expect(
           policy.evaluate({
             action: 'read',
-            resource: 'books:fantasy:Brisingr',
+            resource: 'books:fantasy:Brisingr'
           })
         ).toBe(false);
       });
@@ -103,20 +103,20 @@ export default (): void => {
         const policy = new IdentityBasedPolicy([
           {
             notResource: 'books:horror:*',
-            action: 'read',
-          },
+            action: 'read'
+          }
         ]);
 
         expect(
           policy.evaluate({
             action: 'read',
-            resource: 'books:horror:The Call of Cthulhu',
+            resource: 'books:horror:The Call of Cthulhu'
           })
         ).toBe(false);
         expect(
           policy.evaluate({
             action: 'read',
-            resource: 'books:fantasy:Brisingr',
+            resource: 'books:fantasy:Brisingr'
           })
         ).toBe(true);
       });
@@ -127,33 +127,33 @@ export default (): void => {
         const policy = new IdentityBasedPolicy([
           {
             resource: ['secrets:${user.id}:*'],
-            action: ['read', 'write'],
+            action: ['read', 'write']
           },
           {
             resource: ['secrets:${user.bestfriends}:*'],
-            action: 'read',
-          },
+            action: 'read'
+          }
         ]);
 
         expect(
           policy.evaluate({
             action: 'read',
             resource: 'secrets:123:sshhh',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(true);
         expect(
           policy.evaluate({
             action: 'write',
             resource: 'secrets:123:sshhh',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(true);
         expect(
           policy.evaluate({
             action: 'read',
             resource: 'secrets:123:sshhh',
-            context: { user: { id: 456 } },
+            context: { user: { id: 456 } }
           })
         ).toBe(false);
         expect(
@@ -161,8 +161,8 @@ export default (): void => {
             action: 'read',
             resource: 'secrets:563:sshhh',
             context: {
-              user: { id: 456, bestfriends: [123, 563, 1211] },
-            },
+              user: { id: 456, bestfriends: [123, 563, 1211] }
+            }
           })
         ).toBe(true);
         expect(
@@ -176,24 +176,24 @@ export default (): void => {
         const conditions = {
           greatherThan: (data: number, expected: number): boolean => {
             return data > expected;
-          },
+          }
         };
 
         const policy = new IdentityBasedPolicy(
           [
             {
               resource: 'secrets:*',
-              action: ['read', 'write'],
+              action: ['read', 'write']
             },
             {
               resource: ['posts:${user.id}:*'],
               action: ['write', 'read', 'update'],
               condition: {
                 greatherThan: {
-                  'user.age': 18,
-                },
-              },
-            },
+                  'user.age': 18
+                }
+              }
+            }
           ],
           conditions
         );
@@ -202,21 +202,21 @@ export default (): void => {
           policy.evaluate({
             action: 'read',
             resource: 'secrets:123:sshhh',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(true);
         expect(
           policy.evaluate({
             action: 'write',
             resource: 'posts:123:sshhh',
-            context: { user: { id: 123, age: 17 } },
+            context: { user: { id: 123, age: 17 } }
           })
         ).toBe(false);
         expect(
           policy.evaluate({
             action: 'read',
             resource: 'posts:456:sshhh',
-            context: { user: { id: 456, age: 19 } },
+            context: { user: { id: 456, age: 19 } }
           })
         ).toBe(true);
       });
@@ -227,21 +227,21 @@ export default (): void => {
           {
             effect: 'allow',
             resource: ['posts:${user.id}:*'],
-            action: ['write', 'read', 'update'],
-          },
+            action: ['write', 'read', 'update']
+          }
         ]);
         expect(
           policy.can({
             action: 'read',
             resource: 'posts:123:sshhh',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(true);
         expect(
           policy.can({
             action: 'read',
             resource: 'posts:000:sshhh',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(false);
       });
@@ -251,21 +251,21 @@ export default (): void => {
           {
             effect: 'deny',
             resource: ['posts:${user.id}:*'],
-            action: ['write', 'read', 'update'],
-          },
+            action: ['write', 'read', 'update']
+          }
         ]);
         expect(
           policy.cannot({
             action: 'read',
             resource: 'posts:123:sshhh',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(true);
         expect(
           policy.cannot({
             action: 'read',
             resource: 'posts:000:sshhh',
-            context: { user: { id: 123 } },
+            context: { user: { id: 123 } }
           })
         ).toBe(false);
       });

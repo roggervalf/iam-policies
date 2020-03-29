@@ -1,9 +1,8 @@
 {
   "default": true,
-  "MD007": { "indent": 2},
+  "MD007": { "indent": 2 },
   "MD013": false,
-  "MD024": { "siblings_only": false,
-    "allow_different_nesting": true },
+  "MD024": { "siblings_only": false, "allow_different_nesting": true },
   "no-hard-tabs": false,
   "whitespace": false
 }

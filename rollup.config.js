@@ -1,6 +1,6 @@
 import babel from 'rollup-plugin-babel';
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import external from 'rollup-plugin-peer-deps-external';
 
 import typescript from 'rollup-plugin-typescript2';
@@ -13,22 +13,25 @@ export default {
     {
       file: pkg.main,
       format: 'cjs',
-      sourcemap: true,
+      sourcemap: true
     },
     {
       file: pkg.module,
       format: 'es',
-      sourcemap: true,
-    },
+      sourcemap: true
+    }
   ],
   plugins: [
-    typescript(),
+    typescript({
+      rollupCommonJSResolveHack: true,
+      clean: true
+    }),
     external(),
     babel({
       exclude: 'node_modules/**',
-      plugins: ['external-helpers'],
+      plugins: ['external-helpers']
     }),
     resolve(),
-    commonjs(),
-  ],
+    commonjs()
+  ]
 };

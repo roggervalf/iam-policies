@@ -53,7 +53,7 @@ export interface Balance {
   post: string;
 }
 
-type Resolver = (data: ConditionKey, expected: ConditionKey) => boolean;
+type Resolver = (data: any, expected: any) => boolean;
 
 export interface ConditionResolver {
   [key: string]: Resolver;
@@ -111,7 +111,7 @@ export {
   ResourceBlock,
   NotResourceBlock,
   ActionBlock,
-  PrincipalBlock,
+  PrincipalBlock
 };
 
 /*

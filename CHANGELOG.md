@@ -1,3 +1,10 @@
+## [3.0.3](https://github.com/Rogger794/iam-policies/compare/v3.0.2...v3.0.3) (2020-03-30)
+
+
+### Bug Fixes
+
+* **rollup:** deleting unused external-helpers plugin ([2b829de](https://github.com/Rogger794/iam-policies/commit/2b829de1baa2dc3aa774688654a0f8c9065d79c4))
+
 ## [3.0.2](https://github.com/Rogger794/iam-policies/compare/v3.0.1...v3.0.2) (2020-03-20)
 
 ### Bug Fixes

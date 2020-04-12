@@ -1,10 +1,10 @@
 {
   "author": {
-    "name": "Rogger794",
+    "name": "roggervalf",
     "email": "rogger.valverde@uni.pe"
   },
   "license": "MIT",
-  "repository": "Rogger794/iam-policies",
+  "repository": "roggervalf/iam-policies",
   "description": "Identity based policies library",
   "version": "3.0.3",
   "keywords": [
@@ -16,9 +16,9 @@
   ],
   "name": "iam-policies",
   "bugs": {
-    "url": "https://github.com/Rogger794/iam-policies/issues"
+    "url": "https://github.com/roggervalf/iam-policies/issues"
   },
-  "homepage": "https://github.com/Rogger794/iam-policies#readme",
+  "homepage": "https://github.com/roggervalf/iam-policies#readme",
   "engines": {
     "node": ">=10.18.1",
     "npm": ">=6.13.4"

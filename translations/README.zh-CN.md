@@ -518,4 +518,4 @@ const embeddedStr = applyContext(str, context);
 
 ## License
 
-MIT © [Rogger794](https://github.com/Rogger794)
+MIT © [roggervalf](https://github.com/roggervalf)

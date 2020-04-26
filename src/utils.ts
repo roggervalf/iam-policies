@@ -1,27 +1,66 @@
 import {
-  ResourceBlock,
   ActionBlock,
+  PrincipalBlock,
   NotResourceBlock,
-  PrincipalBlock
+  ResourceBlock
 } from './types';
-export function instanceOfResourceBlock(object: any): object is ResourceBlock {
-  return 'resource' in object;
-}
 
-export function instanceOfActionBlock(object: any): object is ActionBlock {
+/**
+ * Validate if an `object` is an instance of `ActionBlock`.
+ * @param {Object} object Object to validate
+ * @returns {boolean} Returns true if `object` has `action` attribute.
+ * @example
+ * ```javascript
+ * instanceOfActionBlock({ action: 'something' }) => true
+ * ```
+ */
+export function instanceOfActionBlock(object: object): object is ActionBlock {
   return 'action' in object;
 }
 
+/**
+ * Validate if an `object` is an instance of `PrincipalBlock`.
+ * @param {Object} object Object to validate
+ * @returns {boolean} Returns true if `object` has `principal` attribute.
+ * @example
+ * ```javascript
+ * instanceOfPrincipalBlock({ principal: 'something' }) => true
+ * ```
+ */
+export function instanceOfPrincipalBlock(
+  object: object
+): object is PrincipalBlock {
+  return 'principal' in object;
+}
+
+/**
+ * Validate if an `object` is an instance of `NotResourceBlock`.
+ * @param {Object} object Object to validate
+ * @returns {boolean} Returns true if `object` has `notResource` attribute.
+ * @example
+ * ```javascript
+ * instanceOfNotResourceBlock({ notResource: 'something' }) => true
+ * ```
+ */
 export function instanceOfNotResourceBlock(
-  object: any
+  object: object
 ): object is NotResourceBlock {
   return 'notResource' in object;
 }
 
-export function instanceOfPrincipalBlock(
-  object: any
-): object is PrincipalBlock {
-  return 'principal' in object;
+/**
+ * Validate if an `object` is an instance of `ResourceBlock`.
+ * @param {Object} object Object to validate
+ * @returns {boolean} Returns true if `object` has `resource` attribute.
+ * @example
+ * ```javascript
+ * instanceOfResourceBlock({ resource: 'something' }) => true
+ * ```
+ */
+export function instanceOfResourceBlock(
+  object: object
+): object is ResourceBlock {
+  return 'resource' in object;
 }
 
 //export { IdentityBasedType, ResourceBasedType, PrincipalMap, Patterns, ResourceBlock, ActionBlock};

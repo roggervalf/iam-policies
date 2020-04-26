@@ -1,9 +1,8 @@
 ## [3.0.4](https://github.com/roggervalf/iam-policies/compare/v3.0.3...v3.0.4) (2020-04-12)
 
-
 ### Bug Fixes
 
-* **github:** updating github references ([974d818](https://github.com/roggervalf/iam-policies/commit/974d818e6a22c985c3c612f25c034b54f1076724))
+- **github:** updating github references ([974d818](https://github.com/roggervalf/iam-policies/commit/974d818e6a22c985c3c612f25c034b54f1076724))
 
 ## [3.0.3](https://github.com/roggervalf/iam-policies/compare/v3.0.2...v3.0.3) (2020-03-30)
 
@@ -23,7 +22,7 @@
 
 - **semantic-release:** trying semantic-release from travis ([91e0384](https://github.com/roggervalf/iam-policies/commit/91e0384e56af1b0bbaf8d031f2aa8a2158487f80))
 
-# 1.0.0 (2020-03-06)
+# 3.0.0 (https://github.com/roggervalf/iam-policies/compare/v2.0.1...v3.0.0) (2020-03-06)
 
 ### Bug Fixes
 

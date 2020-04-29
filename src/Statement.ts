@@ -10,8 +10,8 @@ import {
 const reDelimiters = /\${([^}])*}/g;
 const trim = / +(?= )|^\s+|\s+$/g;
 
-export function getValueFromPath(data: any, path: string): any {
-  let value = data;
+export function getValueFromPath(object: any, path: string): any {
+  let value = object;
   path.split('.').forEach(step => {
     if (value) value = value[step];
   });

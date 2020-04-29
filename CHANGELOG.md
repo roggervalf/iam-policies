@@ -22,7 +22,7 @@
 
 - **semantic-release:** trying semantic-release from travis ([91e0384](https://github.com/roggervalf/iam-policies/commit/91e0384e56af1b0bbaf8d031f2aa8a2158487f80))
 
-# 3.0.0 (https://github.com/roggervalf/iam-policies/compare/v2.0.1...v3.0.0) (2020-03-06)
+# [3.0.0](https://github.com/roggervalf/iam-policies/compare/v2.0.1...v3.0.0) (2020-03-06)
 
 ### Bug Fixes
 

@@ -1,7 +1,6 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "env": { "browser": true, "es6": true, "node": true },
-  "globals": { "Atomics": "readonly", "SharedArrayBuffer": "readonly" },
+  "parser": "babel-eslint",
+  "root": true,
   "parserOptions": {
     // Required for certain syntax usages
     "sourceType": "module",
@@ -26,22 +25,10 @@
       "classes": true
     }
   },
-  "plugins": ["promise", "prettier", "@typescript-eslint/eslint-plugin"],
-  "extends": [
-    "prettier",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "plugins": ["promise", "prettier"],
+  "extends": ["prettier", "eslint:recommended"],
   "rules": {
     // Removed rule "disallow the use of console" from recommended eslint rules
-    "@typescript-eslint/no-empty-interface": [
-      "error",
-      {
-        "allowSingleExtends": false
-      }
-    ],
-    "@typescript-eslint/no-explicit-any": "off",
     "no-console": "off",
 
     "no-param-reassign": [

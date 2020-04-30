@@ -11,7 +11,8 @@ import {
  * @returns {boolean} Returns true if `object` has `action` attribute.
  * @example
  * ```javascript
- * instanceOfActionBlock({ action: 'something' }) => true
+ * instanceOfActionBlock({ action: 'something' })
+ * // => true
  * ```
  */
 export function instanceOfActionBlock(object: object): object is ActionBlock {

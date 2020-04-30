@@ -13,7 +13,7 @@ import { MemoizeInterface } from './types';
  * @param {Function} [resolver] The function to resolve the cache key.
  * @returns {Function} Returns the new memoized function.
  * @example
- *
+ * ```javascript
  * const object = { 'a': 1, 'b': 2 }
  * const other = { 'c': 3, 'd': 4 }
  *
@@ -32,6 +32,7 @@ import { MemoizeInterface } from './types';
  * values.cache.set(object, ['a', 'b'])
  * values(object)
  * // => ['a', 'b']
+ * ```
  */
 export function memoize(func: Function, resolver?: Function): MemoizeInterface {
   const memoized = function(...args: any): MemoizeInterface {

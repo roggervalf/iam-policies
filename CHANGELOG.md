@@ -1,3 +1,10 @@
+## [3.0.5](https://github.com/roggervalf/iam-policies/compare/v3.0.4...v3.0.5) (2020-04-30)
+
+
+### Bug Fixes
+
+* **matcher:** allow passing / into string comparison for * ([94da308](https://github.com/roggervalf/iam-policies/commit/94da30873f2fc044bfaa890e7f2dd5fc1acede09)), closes [#18](https://github.com/roggervalf/iam-policies/issues/18)
+
 ## [3.0.4](https://github.com/roggervalf/iam-policies/compare/v3.0.3...v3.0.4) (2020-04-12)
 
 ### Bug Fixes

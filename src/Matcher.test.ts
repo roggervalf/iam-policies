@@ -1,5 +1,5 @@
 import { Matcher } from './Matcher';
-//export default (): void => {
+
 describe('Matcher Class', () => {
   describe('when creating identity based policy', () => {
     it("don't throw an error", () => {
@@ -13,10 +13,8 @@ describe('Matcher Class', () => {
 
   describe('when match strings', () => {
     it('returns true', () => {
+      expect(new Matcher('*').match('secrets::999/image')).toBe(true);
       expect(new Matcher('secrets:123').match('secrets:123')).toBe(true);
-      expect(new Matcher('secrets:123:*').match('secrets:123:something')).toBe(
-        true
-      );
       expect(
         new Matcher('secrets:*:something').match('secrets:123:something')
       ).toBe(true);
@@ -33,4 +31,3 @@ describe('Matcher Class', () => {
     });
   });
 });
-//};

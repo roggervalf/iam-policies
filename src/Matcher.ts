@@ -75,7 +75,7 @@ export class Matcher {
     ) {
       if (c === '*') {
         this.hasSpecialCharacter = true;
-        re += '[^/]*?';
+        re += '.*?';
       } else {
         re += c;
       }

@@ -1,5 +1,3 @@
-const toString = Object.prototype.toString;
-
 /**
  * Gets the `toStringTag` of `value`.
  * @private
@@ -15,7 +13,5 @@ const toString = Object.prototype.toString;
  * ```
  */
 export function getTag(value: any): string {
-  return toString.call(value);
+  return Object.prototype.toString.call(value);
 }
-
-export default getTag;

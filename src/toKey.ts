@@ -9,6 +9,13 @@ const INFINITY = 1 / 0;
  * @private
  * @param {*} value The value to inspect.
  * @returns {string|symbol} Returns the key.
+ * @example
+ *
+ * toKey(Symbol.iterator)
+ * // => true
+ *
+ * toKey('abc')
+ * // => false
  */
 export function toKey(value: any): string | symbol {
   if (typeof value === 'string' || isSymbol(value)) {

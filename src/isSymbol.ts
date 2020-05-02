@@ -9,7 +9,7 @@ import { getTag } from './getTag';
  * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
  * @example
  *
- * isSymbol(Symbol.iterator)
+ * isSymbol(Symbol())
  * // => true
  *
  * isSymbol('abc')

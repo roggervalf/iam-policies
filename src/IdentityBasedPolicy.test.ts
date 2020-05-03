@@ -1,4 +1,5 @@
 import { IdentityBasedPolicy } from './Policies';
+
 describe('IdentityBasedPolicy Class', () => {
   describe('when creating identity based policy', () => {
     it("don't throw an error", () => {

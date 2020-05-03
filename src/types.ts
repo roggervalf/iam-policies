@@ -94,6 +94,10 @@ export interface EvaluateResourceBasedInterface
   context?: Context;
 }
 
+export interface MemoizeInterface extends Function {
+  cache: Map<any, any>;
+}
+
 type IdentityBasedType = StatementInterface &
   (ActionBlock | NotActionBlock) &
   (ResourceBlock | NotResourceBlock);

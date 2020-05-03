@@ -3,7 +3,7 @@ import {
   instanceOfResourceBlock,
   instanceOfActionBlock,
   instanceOfNotResourceBlock
-} from './utils';
+} from './intanceOfInterfaces';
 
 describe('Util functions', () => {
   describe('instanceOfPrincipalBlock', () => {

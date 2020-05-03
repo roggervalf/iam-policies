@@ -490,15 +490,16 @@ Get object value from path.
 ```js
 const { getValueFromPath } = require('iam-policies');
 
-const value = getValueFromPath(data, path);
+const value = getValueFromPath(data, path, defaultValue);
 ```
 
 ### Params
 
-| Name   | Type   | Default   | Required | Description                                                             |
-| ------ | ------ | --------- | -------- | ----------------------------------------------------------------------- |
-| `data` | object | undefined | `true`   | It is our context.                                                      |
-| `path` | string | undefined | `true`   | It is the value path from data. Separate attribute names by dots (`.`). |
+| Name           | Type            | Default   | Required | Description                                                             |
+| -------------- | --------------- | --------- | -------- | ----------------------------------------------------------------------- |
+| `data`         | object          | undefined | `true`   | It is our context.                                                      |
+| `path`         | Array or string | undefined | `true`   | It is the value path from data. Separate attribute names by dots (`.`). |
+| `defaultValue` | any             | undefined | `false`  | It is the value returned for `undefined` resolved values.               |
 
 ## applyContext(str, context) Function
 

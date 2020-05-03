@@ -1,4 +1,5 @@
 import { ResourceBasedPolicy } from './Policies';
+
 describe('ResourceBasedPolicy Class', () => {
   describe('when creating resource based policy', () => {
     it("don't throw an error", () => {

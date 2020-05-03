@@ -6,18 +6,10 @@ import {
   Context,
   MatchConditionInterface
 } from './types';
+import { getValueFromPath } from './utils/getValueFromPath';
 
 const reDelimiters = /\${([^}])*}/g;
 const trim = / +(?= )|^\s+|\s+$/g;
-
-export function getValueFromPath(object: any, path: string): any {
-  let value = object;
-  path.split('.').forEach(step => {
-    if (value) value = value[step];
-  });
-
-  return value;
-}
 
 const specialTrim = (str: string): string => str.replace(trim, '');
 

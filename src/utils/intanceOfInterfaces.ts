@@ -3,7 +3,7 @@ import {
   PrincipalBlock,
   NotResourceBlock,
   ResourceBlock
-} from './types';
+} from '../types';
 
 /**
  * Validate if an `object` is an instance of `ActionBlock`.
@@ -11,7 +11,8 @@ import {
  * @returns {boolean} Returns true if `object` has `action` attribute.
  * @example
  * ```javascript
- * instanceOfActionBlock({ action: 'something' }) => true
+ * instanceOfActionBlock({ action: 'something' })
+ * // => true
  * ```
  */
 export function instanceOfActionBlock(object: object): object is ActionBlock {
@@ -24,7 +25,8 @@ export function instanceOfActionBlock(object: object): object is ActionBlock {
  * @returns {boolean} Returns true if `object` has `principal` attribute.
  * @example
  * ```javascript
- * instanceOfPrincipalBlock({ principal: 'something' }) => true
+ * instanceOfPrincipalBlock({ principal: 'something' })
+ * // => true
  * ```
  */
 export function instanceOfPrincipalBlock(
@@ -39,7 +41,8 @@ export function instanceOfPrincipalBlock(
  * @returns {boolean} Returns true if `object` has `notResource` attribute.
  * @example
  * ```javascript
- * instanceOfNotResourceBlock({ notResource: 'something' }) => true
+ * instanceOfNotResourceBlock({ notResource: 'something' })
+ * // => true
  * ```
  */
 export function instanceOfNotResourceBlock(
@@ -54,7 +57,8 @@ export function instanceOfNotResourceBlock(
  * @returns {boolean} Returns true if `object` has `resource` attribute.
  * @example
  * ```javascript
- * instanceOfResourceBlock({ resource: 'something' }) => true
+ * instanceOfResourceBlock({ resource: 'something' })
+ * // => true
  * ```
  */
 export function instanceOfResourceBlock(

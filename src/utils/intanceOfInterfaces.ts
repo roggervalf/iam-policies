@@ -3,7 +3,7 @@ import {
   PrincipalBlock,
   NotResourceBlock,
   ResourceBlock
-} from './types';
+} from '../types';
 
 /**
  * Validate if an `object` is an instance of `ActionBlock`.

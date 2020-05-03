@@ -1,3 +1,4 @@
+export * from './src/utils/getValueFromPath';
 export * from './src/Statement';
 export * from './src/IdentityBasedStatement';
 export * from './src/ResourceBasedStatement';

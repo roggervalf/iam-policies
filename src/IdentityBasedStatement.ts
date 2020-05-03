@@ -3,7 +3,10 @@ import {
   IdentityBasedType,
   MatchIdentityBasedInterface
 } from './types';
-import { instanceOfResourceBlock, instanceOfActionBlock } from './utils';
+import {
+  instanceOfResourceBlock,
+  instanceOfActionBlock
+} from './utils/intanceOfInterfaces';
 import { Matcher } from './Matcher';
 import { Statement, applyContext } from './Statement';
 

@@ -1,5 +1,5 @@
 import { memoize } from './memoize';
-import { MemoizeInterface } from './types';
+import { MemoizeInterface } from '../types';
 
 /** Used as the maximum memoize cache size. */
 export const MAX_MEMOIZE_SIZE = 500;

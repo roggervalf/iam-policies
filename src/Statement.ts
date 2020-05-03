@@ -6,7 +6,7 @@ import {
   Context,
   MatchConditionInterface
 } from './types';
-import { getValueFromPath } from './getValueFromPath';
+import { getValueFromPath } from './utils/getValueFromPath';
 
 const reDelimiters = /\${([^}])*}/g;
 const trim = / +(?= )|^\s+|\s+$/g;

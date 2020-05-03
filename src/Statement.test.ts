@@ -1,27 +1,6 @@
-import { getValueFromPath, applyContext, Statement } from './Statement';
+import { applyContext, Statement } from './Statement';
+
 describe('Statement Class', () => {
-  describe('getValueFromPath function', () => {
-    it('get value from existed path', () => {
-      const context = {
-        user: { id: 456, bestfriends: [123, 532] }
-      };
-      expect(getValueFromPath(context, 'user.bestfriends')).toEqual([123, 532]);
-      expect(getValueFromPath(context, 'user.id')).toBe(456);
-      expect(getValueFromPath(context, 'user')).toEqual({
-        id: 456,
-        bestfriends: [123, 532]
-      });
-    });
-
-    it('get undefined from non existed path', () => {
-      const context = {
-        user: { id: 456, bestfriends: [123] }
-      };
-      expect(getValueFromPath(context, 'user.id.pets')).toBe(undefined);
-      expect(getValueFromPath(context, 'company')).toBe(undefined);
-    });
-  });
-
   describe('applyContext function', () => {
     it('can match based on context', () => {
       const context = {

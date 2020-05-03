@@ -1,3 +1,21 @@
+# [3.1.0](https://github.com/roggervalf/iam-policies/compare/v3.0.5...v3.1.0) (2020-05-03)
+
+
+### Features
+
+* **gettag:** adding util function to get to string tag of a value ([29c981f](https://github.com/roggervalf/iam-policies/commit/29c981f66bad15d66efde7705839d83825ab5dcd))
+* **iskey:** adding new util to match property names and paths ([97e60ed](https://github.com/roggervalf/iam-policies/commit/97e60eddee79e970efa640e03e0582758555e6bd))
+* **issymbol:** adding new util for checking if a value is a symbol ([6ddf3d1](https://github.com/roggervalf/iam-policies/commit/6ddf3d12e9d336f4441b25050acca85163e025c3))
+* **memoize:** adding new util function to memoize results ([c55032d](https://github.com/roggervalf/iam-policies/commit/c55032d4ec45039e8a558f959e569934ccd7f328))
+* **memoizecapped:** adding specialized memoize function version ([4e88c35](https://github.com/roggervalf/iam-policies/commit/4e88c3590a02d8345e167e534aabb0c02b4be68e))
+* **stringtopath:** add util to convert string to a property path array ([c4d0dd4](https://github.com/roggervalf/iam-policies/commit/c4d0dd43fbc2612f28960ede973c2ba5e12885b4))
+* **tokey:** adding util to convert value to a string key ([8d19068](https://github.com/roggervalf/iam-policies/commit/8d19068b6775289ca785dc8f3128ae9e102a9222))
+
+
+### Performance Improvements
+
+* **dependencies:** upgrading deprecated dev-dependencies ([a6f09a9](https://github.com/roggervalf/iam-policies/commit/a6f09a95c1d2e560f4c01c23a28f8fbf38eaf26b))
+
 ## [3.0.5](https://github.com/roggervalf/iam-policies/compare/v3.0.4...v3.0.5) (2020-04-30)
 
 ### Bug Fixes

@@ -6,7 +6,7 @@ import {
 import {
   instanceOfResourceBlock,
   instanceOfActionBlock
-} from './utils/intanceOfInterfaces';
+} from './utils/instanceOfInterfaces';
 import { Matcher } from './Matcher';
 import { Statement, applyContext } from './Statement';
 

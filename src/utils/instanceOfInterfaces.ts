@@ -81,7 +81,7 @@ type Message = MessageWithText | MessageWithAttachment | (MessageWithText & Mess
 
 //ConditionBlock
 condition: {//ConditionMap
-        ConditionTypeString        greatherThan: {
+        ConditionTypeString        greaterThan: {
         ConditionKeyString          'user.age': 18 //ConditionValueList,
                 },
               }

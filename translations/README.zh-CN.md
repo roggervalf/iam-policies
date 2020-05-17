@@ -85,7 +85,7 @@ allowExample.evaluate({
 ```js
 const denyExample = new IdentityBasedPolicy([
   {
-    resource: ['secrets:${user.bestfriends}:*'],
+    resource: ['secrets:${user.bestFriends}:*'],
     action: 'read'
   },
   {
@@ -95,7 +95,7 @@ const denyExample = new IdentityBasedPolicy([
   }
 ]);
 
-const contextForDenyExample = { user: { bestfriends: [123, 563, 1211] } };
+const contextForDenyExample = { user: { bestFriends: [123, 563, 1211] } };
 
 denyExample.evaluate({
   action: 'read',
@@ -173,7 +173,7 @@ adminExample.evaluate({
 
 ```js
 const conditions = {
-  greatherThan: function(data, expected) {
+  greaterThan: function(data, expected) {
     return data > expected;
   }
 };
@@ -184,7 +184,7 @@ const conditionExample = new IdentityBasedPolicy(
       resource: 'secrets:*',
       action: ['read', 'write'],
       condition: {
-        greatherThan: {
+        greaterThan: {
           'user.age': 18
         }
       }
@@ -195,7 +195,7 @@ const conditionExample = new IdentityBasedPolicy(
 
 conditionExample.evaluate({
   action: 'read',
-  resource: 'secrets:sshhh',
+  resource: 'secrets:code',
   context: { user: { age: 19 } }
 }); // true
 conditionExample.evaluate({

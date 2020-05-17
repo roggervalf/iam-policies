@@ -9,7 +9,7 @@ import {
   instanceOfResourceBlock,
   instanceOfNotResourceBlock,
   instanceOfActionBlock
-} from './utils/intanceOfInterfaces';
+} from './utils/instanceOfInterfaces';
 import { Matcher } from './Matcher';
 import { Statement, applyContext } from './Statement';
 

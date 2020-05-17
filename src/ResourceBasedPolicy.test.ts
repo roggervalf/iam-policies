@@ -8,7 +8,7 @@ describe('ResourceBasedPolicy Class', () => {
           new ResourceBasedPolicy([
             {
               principal: 'rogger',
-              resource: 'some:glob:*:string/wqweqw',
+              resource: 'some:glob:*:string/example',
               action: ['read', 'write']
             }
           ])
@@ -20,7 +20,7 @@ describe('ResourceBasedPolicy Class', () => {
         new ResourceBasedPolicy([
           {
             notPrincipal: 'rogger',
-            resource: 'some:glob:*:string/wqweqw',
+            resource: 'some:glob:*:string/example',
             action: ['read', 'write']
           }
         ])
@@ -252,7 +252,7 @@ describe('ResourceBasedPolicy Class', () => {
         },
         {
           principal: { id: 'rogger' },
-          resource: ['secrets:${user.bestfriends}:*'],
+          resource: ['secrets:${user.bestFriends}:*'],
           action: 'read'
         }
       ]);
@@ -261,7 +261,7 @@ describe('ResourceBasedPolicy Class', () => {
         policy.evaluate({
           principal: 'rogger',
           action: 'read',
-          resource: 'secrets:123:sshhh',
+          resource: 'secrets:123:code',
           principalType: 'id',
           context: { user: { id: 123 } }
         })
@@ -270,7 +270,7 @@ describe('ResourceBasedPolicy Class', () => {
         policy.evaluate({
           principal: 'rogger',
           action: 'write',
-          resource: 'secrets:123:sshhh',
+          resource: 'secrets:123:code',
           principalType: 'id',
           context: { user: { id: 123 } }
         })
@@ -291,7 +291,7 @@ describe('ResourceBasedPolicy Class', () => {
           resource: 'secrets:563:sshhh',
           principalType: 'id',
           context: {
-            user: { id: 456, bestfriends: [123, 563, 1211] }
+            user: { id: 456, bestFriends: [123, 563, 1211] }
           }
         })
       ).toBe(true);
@@ -308,7 +308,7 @@ describe('ResourceBasedPolicy Class', () => {
   describe('when match based on conditions', () => {
     it('returns true or false', () => {
       const conditions = {
-        greatherThan: (data: number, expected: number): boolean => {
+        greaterThan: (data: number, expected: number): boolean => {
           return data > expected;
         }
       };
@@ -325,7 +325,7 @@ describe('ResourceBasedPolicy Class', () => {
             resource: ['posts:${user.id}:*'],
             action: ['write', 'read', 'update'],
             condition: {
-              greatherThan: {
+              greaterThan: {
                 'user.age': 18
               }
             }

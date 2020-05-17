@@ -130,7 +130,7 @@ describe('IdentityBasedPolicy Class', () => {
           action: ['read', 'write']
         },
         {
-          resource: ['secrets:${user.bestfriends}:*'],
+          resource: ['secrets:${user.bestFriends}:*'],
           action: 'read'
         }
       ]);
@@ -138,14 +138,14 @@ describe('IdentityBasedPolicy Class', () => {
       expect(
         policy.evaluate({
           action: 'read',
-          resource: 'secrets:123:sshhh',
+          resource: 'secrets:123:code',
           context: { user: { id: 123 } }
         })
       ).toBe(true);
       expect(
         policy.evaluate({
           action: 'write',
-          resource: 'secrets:123:sshhh',
+          resource: 'secrets:123:code',
           context: { user: { id: 123 } }
         })
       ).toBe(true);
@@ -161,7 +161,7 @@ describe('IdentityBasedPolicy Class', () => {
           action: 'read',
           resource: 'secrets:563:sshhh',
           context: {
-            user: { id: 456, bestfriends: [123, 563, 1211] }
+            user: { id: 456, bestFriends: [123, 563, 1211] }
           }
         })
       ).toBe(true);
@@ -174,7 +174,7 @@ describe('IdentityBasedPolicy Class', () => {
   describe('when match based on conditions', () => {
     it('returns true or false', () => {
       const conditions = {
-        greatherThan: (data: number, expected: number): boolean => {
+        greaterThan: (data: number, expected: number): boolean => {
           return data > expected;
         }
       };
@@ -189,7 +189,7 @@ describe('IdentityBasedPolicy Class', () => {
             resource: ['posts:${user.id}:*'],
             action: ['write', 'read', 'update'],
             condition: {
-              greatherThan: {
+              greaterThan: {
                 'user.age': 18
               }
             }

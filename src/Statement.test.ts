@@ -4,24 +4,24 @@ describe('Statement Class', () => {
   describe('applyContext function', () => {
     it('can match based on context', () => {
       const context = {
-        user: { id: 456, bestfriends: [123, 532, 987] }
+        user: { id: 456, bestFriends: [123, 532, 987] }
       };
       expect(applyContext('secrets:${user.id}:*', context)).toBe(
         'secrets:456:*'
       );
 
-      expect(applyContext('secrets:${user.bestfriends}:*', context)).toBe(
+      expect(applyContext('secrets:${user.bestFriends}:*', context)).toBe(
         'secrets:{123,532,987}:*'
       );
 
-      expect(applyContext('secrets:${user.bestfriends}:account', context)).toBe(
+      expect(applyContext('secrets:${user.bestFriends}:account', context)).toBe(
         'secrets:{123,532,987}:account'
       );
     });
 
     it('can match undefined path', () => {
       const context = {
-        user: { id: 456, bestfriends: [123, 987] }
+        user: { id: 456, bestFriends: [123, 987] }
       };
 
       expect(applyContext('secrets:${}:account', context)).toBe(
@@ -34,7 +34,7 @@ describe('Statement Class', () => {
     expect(new Statement({})).toBeInstanceOf(Statement);
     expect(new Statement({ effect: 'deny' })).toBeInstanceOf(Statement);
     expect(
-      new Statement({ condition: { greatherThan: { 'user.age': 30 } } })
+      new Statement({ condition: { greaterThan: { 'user.age': 30 } } })
     ).toBeInstanceOf(Statement);
   });
 
@@ -42,7 +42,7 @@ describe('Statement Class', () => {
     it('returns true', () => {
       const firstStatementConfig = {
         condition: {
-          greatherThan: { 'user.age': 30 }
+          greaterThan: { 'user.age': 30 }
         }
       };
       const secondStatementConfig = {
@@ -51,7 +51,7 @@ describe('Statement Class', () => {
         }
       };
       const conditionResolver = {
-        greatherThan: (data: number, expected: number): boolean => {
+        greaterThan: (data: number, expected: number): boolean => {
           return data > expected;
         },
         lessThan: (data: number, expected: number): boolean => {
@@ -75,7 +75,7 @@ describe('Statement Class', () => {
     it('returns false', () => {
       const firstStatementConfig = {
         condition: {
-          greatherThan: { 'user.age': 35 }
+          greaterThan: { 'user.age': 35 }
         }
       };
       const secondStatementConfig = {
@@ -84,7 +84,7 @@ describe('Statement Class', () => {
         }
       };
       const conditionResolver = {
-        greatherThan: (data: number, expected: number): boolean => {
+        greaterThan: (data: number, expected: number): boolean => {
           return data > expected;
         },
         lessThan: (data: number, expected: number): boolean => {

@@ -1,6 +1,7 @@
 /**
  * Gets the `toStringTag` of `value`.
  *
+ * @since 3.1.0
  * @private
  * @param {*} value The value to query.
  * @returns {string} Returns the `toStringTag`.

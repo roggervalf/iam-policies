@@ -44,7 +44,7 @@ export function baseGet<T>(object: object, path: Array<T> | string): any {
  * Gets the value at `path` of `object`. If the resolved value is
  * `undefined`, the `defaultValue` is returned in its place.
  *
- * @since 3.0.5
+ * @since 3.1.0
  * @category Object
  * @param {Object} object The object to query.
  * @param {Array|string} path The path of the property to get.

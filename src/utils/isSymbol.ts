@@ -3,7 +3,7 @@ import { getTag } from './getTag';
 /**
  * Checks if `value` is classified as a `Symbol` primitive or object.
  *
- * @since 3.0.5
+ * @since 3.1.0
  * @category Lang
  * @param {*} value The value to check.
  * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.

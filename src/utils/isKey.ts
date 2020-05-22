@@ -7,6 +7,7 @@ const reIsPlainProp = /^\w*$/; //maches any word caracter (alphanumeric and unde
 /**
  * Checks if `value` is a property name and not a property path.
  *
+ * @since 3.1.0
  * @private
  * @param {*} value The value to check.
  * @param {Object} [object] The object to query keys on.

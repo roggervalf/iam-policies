@@ -8,6 +8,7 @@ export const MAX_MEMOIZE_SIZE = 500;
  * A specialized version of `memoize` which clears the memoized function's
  * cache when it exceeds `MAX_MEMOIZE_SIZE`.
  *
+ * @since 3.1.0
  * @private
  * @param {Function} func The function to have its output memoized.
  * @returns {Function} Returns the new memoized function.

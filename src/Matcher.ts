@@ -1,27 +1,4 @@
-import { Balance } from './types';
-
-function range(a: string, b: string, str: string): number[] {
-  const left = str.indexOf(a);
-  const right = str.indexOf(b, left + 1);
-
-  if (left >= 0 && right > 0) {
-    return [left, right];
-  }
-
-  return [-1, -1];
-}
-
-function balanced(a: string, b: string, str: string): Balance {
-  const r = range(a, b, str);
-
-  return {
-    start: r[0],
-    end: r[1],
-    pre: r[0] >= 0 ? str.slice(0, r[0]) : '',
-    body: r[0] >= 0 ? str.slice(r[0] + a.length, r[1]) : '',
-    post: r[0] >= 0 ? str.slice(r[1] + b.length) : ''
-  };
-}
+import { decomposeString } from './utils/decomposeString';
 
 export class Matcher {
   private readonly pattern: string;
@@ -108,7 +85,7 @@ export class Matcher {
 
   private expand(str: string, isTop?: boolean): string[] {
     const expansions = [] as string[];
-    const balance = balanced('{', '}', str);
+    const balance = decomposeString('{', '}', str);
     if (balance.start < 0 || /\$$/.test(balance.pre)) return [str];
     let parts;
 

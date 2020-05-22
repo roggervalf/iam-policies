@@ -45,7 +45,7 @@ export interface StatementInterface {
   condition?: ConditionBlock;
 }
 
-export interface Balance {
+export interface DecomposeString {
   start: number;
   end: number;
   pre: string;

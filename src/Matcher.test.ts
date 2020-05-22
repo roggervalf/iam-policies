@@ -22,11 +22,15 @@ describe('Matcher Class', () => {
 
     it('returns false', () => {
       expect(new Matcher('secrets:123').match('secrets:124')).toBe(false);
+      expect(new Matcher('secrets:123:*').match('secrets:123')).toBe(false);
       expect(new Matcher('secrets:123:*').match('secrets:124:something')).toBe(
         false
       );
       expect(
         new Matcher('secrets:*:something').match('secrets:123:other')
+      ).toBe(false);
+      expect(
+        new Matcher('secrets:*:something').match('secrets::something')
       ).toBe(false);
     });
   });

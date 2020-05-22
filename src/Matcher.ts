@@ -4,13 +4,11 @@ export class Matcher {
   private readonly pattern: string;
   private readonly set: (string | RegExp)[];
   private readonly empty: boolean;
-  private hasSpecialCharacter: boolean;
 
   constructor(pattern: string) {
     this.set = [];
     this.pattern = pattern.trim();
     this.empty = !this.pattern ? true : false;
-    this.hasSpecialCharacter = false;
 
     const set = this.braceExpand();
     this.set = set.map(val => this.parse(val));
@@ -41,34 +39,19 @@ export class Matcher {
     if (pattern.length > 1024 * 64) {
       throw new TypeError('pattern is too long');
     }
-    let regExp,
-      re = '';
+    let regExp;
+    let hasSpecialCharacter = false;
     if (pattern === '') return '';
 
-    for (
-      let i = 0, len = pattern.length, c;
-      i < len && (c = pattern.charAt(i));
-      i++
-    ) {
-      if (c === '*') {
-        this.hasSpecialCharacter = true;
-        re += '.*?';
-      } else {
-        re += c;
-      }
-    }
-
-    // if the re is not '' at this point, then we need to make sure
-    // it doesn't match against an empty path part.
-    // Otherwise a/* will match a/, which it should not.
-    if (re !== '' && this.hasSpecialCharacter) {
-      re = '(?=.)' + re;
-    }
+    const re = pattern.replace(/\*/g, () => {
+      hasSpecialCharacter = true;
+      return '.+?';
+    });
 
     // skip the regexp for non-* patterns
     // unescape anything in it, though, so that it'll be
     // an exact match.
-    if (!this.hasSpecialCharacter) {
+    if (!hasSpecialCharacter) {
       return pattern.replace(/\\(.)/g, '$1');
     }
 

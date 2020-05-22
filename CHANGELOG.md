@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/roggervalf/iam-policies/compare/v3.1.0...v3.1.1) (2020-05-22)
+
+
+### Bug Fixes
+
+* **matcher:** * should match at least one character ([5a42b66](https://github.com/roggervalf/iam-policies/commit/5a42b66250784b5e66b6ee8f616129eae99a57df))
+
 # [3.1.0](https://github.com/roggervalf/iam-policies/compare/v3.0.5...v3.1.0) (2020-05-03)
 
 

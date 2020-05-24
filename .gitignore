@@ -11,7 +11,6 @@ build/Release
 node_modules/
 
 build
-dist
 
 # Optional npm cache directory
 .npm

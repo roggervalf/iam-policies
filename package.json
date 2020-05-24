@@ -24,10 +24,10 @@
     "npm": ">=6.13.4"
   },
   "scripts": {
-    "prettier:format": "./node_modules/.bin/prettier **/*.{ts,js,json,yml,md} -l --ignore-path ./.gitignore",
-    "prettier:fix": "./node_modules/.bin/prettier **/*.{ts,js,json,yml,md} --write --ignore-path ./.gitignore",
-    "eslint:format": "./node_modules/.bin/eslint **/*.{ts,js} --ignore-path ./.gitignore",
-    "eslint:fix": "./node_modules/.bin/eslint . --ignore-path ./.gitignore",
+    "prettier:format": "./node_modules/.bin/prettier **/*.{ts,js,json,yml} -l --ignore-path ./.eslintignore",
+    "prettier:fix": "./node_modules/.bin/prettier **/*.{ts,js,json,yml} --write --ignore-path ./.eslintignore",
+    "eslint:format": "./node_modules/.bin/eslint **/*.{ts,js} --ignore-path ./.eslintignore",
+    "eslint:fix": "./node_modules/.bin/eslint . --ignore-path ./.eslintignore",
     "prepublishOnly": "yarn build",
     "test": "jest --config .unit.jest.config.js",
     "test:watch": "jest --config .unit.jest.config.js --watch",

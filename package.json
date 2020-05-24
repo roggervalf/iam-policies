@@ -31,8 +31,10 @@
     "prepublishOnly": "yarn build",
     "test": "jest --config .unit.jest.config.js",
     "test:watch": "jest --config .unit.jest.config.js --watch",
-    "clean": "rimraf dist",
-    "build": "rollup -c",
+    "clean": "rimraf dist temp",
+    "clean:temp": "rimraf temp",
+    "build:c": "rollup -c",
+    "build": "npm-run-all build:c clean:temp",
     "build:watch": "rollup -c -w",
     "start": "npm-run-all clean build:watch",
     "prepare": "yarn build",
@@ -83,11 +85,12 @@
     "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
     "rollup": "^1.26.4",
+    "rollup-plugin-dts": "^1.4.7",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-typescript2": "^0.25.3",
     "semantic-release": "^17.0.4",
     "tslib": "^1.10.0",
-    "typescript": "^3.7.2"
+    "typescript": "^3.9.3"
   },
   "files": [
     "dist"

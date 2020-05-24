@@ -24,6 +24,16 @@ Or
 yarn add iam-policies
 ```
 
+## Deno import
+
+```js
+// @deno-types="https://raw.githubusercontent.com/roggervalf/iam-policies/master/dist/main.d.ts"
+import {
+  IdentityBasedPolicy,
+  ResourceBasedPolicy
+} from 'https://raw.githubusercontent.com/roggervalf/iam-policies/master/dist/main.es.js';
+```
+
 ## Features
 
 Supports these glob features:

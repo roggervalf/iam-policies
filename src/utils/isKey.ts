@@ -2,7 +2,7 @@ import { isSymbol } from './isSymbol';
 
 /** Used to match property names within property paths. */
 const reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
-const reIsPlainProp = /^\w*$/; //maches any word caracter (alphanumeric and underscore)
+const reIsPlainProp = /^\w*$/; //matches any word caracter (alphanumeric and underscore)
 
 /**
  * Checks if `value` is a property name and not a property path.

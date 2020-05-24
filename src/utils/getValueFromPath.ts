@@ -33,7 +33,7 @@ export function baseGet<T>(object: object, path: Array<T> | string): any {
   const length = newPath.length;
 
   let value: any = object;
-  while (value !== null && index < length) {
+  while (value instanceof Object && index < length) {
     value = value[toKey(newPath[index++])];
   }
 

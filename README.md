@@ -61,12 +61,12 @@ const contextForAllowExample = { user: { id: 456 } };
 
 allowExample.evaluate({
   action: 'read',
-  resource: 'secrets:456:ultrasecret',
+  resource: 'secrets:456:ultraSecret',
   context: contextForAllowExample
 }); // true
 allowExample.evaluate({
   action: 'create',
-  resource: 'secrets:456:ultrasecret',
+  resource: 'secrets:456:ultraSecret',
   context: contextForAllowExample
 }); // false
 allowExample.evaluate({

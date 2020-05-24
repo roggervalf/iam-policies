@@ -81,7 +81,7 @@ export class Matcher {
       ? this.expand(balance.post, false)
       : [''];
 
-    parts.forEach(part => {
+    parts.forEach((part: string) => {
       postParts.forEach(postPart => {
         const expansion = pre + part + postPart;
         if (!isTop || expansion) expansions.push(expansion);

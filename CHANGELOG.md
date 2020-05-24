@@ -1,3 +1,20 @@
+# [3.2.0](https://github.com/roggervalf/iam-policies/compare/v3.1.1...v3.2.0) (2020-05-24)
+
+
+### Bug Fixes
+
+* **baseget:** validate value as object instead of null ([6998f6d](https://github.com/roggervalf/iam-policies/commit/6998f6d1399dfd32ef90d04acc95e64b7522a7e4))
+
+
+### Features
+
+* **standalone:** keep standalone files in dist directory ([72962d3](https://github.com/roggervalf/iam-policies/commit/72962d37c413bd5c7b90e6aca44c2d773612fdd6))
+
+
+### Performance Improvements
+
+* **types:** bundle d.ts files using rollup-plugin-dts ([ea3a17e](https://github.com/roggervalf/iam-policies/commit/ea3a17ec3212c742c056ed4f1685bbc85fd8e303))
+
 ## [3.1.1](https://github.com/roggervalf/iam-policies/compare/v3.1.0...v3.1.1) (2020-05-22)
 
 

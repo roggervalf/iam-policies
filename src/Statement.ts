@@ -2,13 +2,12 @@ import {
   EffectBlock,
   ConditionBlock,
   StatementInterface,
-  // ConditionKey,
   Context,
   MatchConditionInterface
 } from './types';
 import { getValueFromPath } from './utils/getValueFromPath';
 
-const reDelimiters = /\${([^}])*}/g;
+const reDelimiters = /\${([^}]*)}/g;
 const trim = / +(?= )|^\s+|\s+$/g;
 
 const specialTrim = (str: string): string => str.replace(trim, '');
@@ -17,13 +16,12 @@ export function applyContext(str: string, context?: Context): string {
   if (!context) return str;
 
   return specialTrim(
-    str.replace(reDelimiters, match => {
-      const path = match.substr(2, match.length - 3);
-      let value = getValueFromPath(context, path);
-      if (Array.isArray(value)) value = `{${value}}`;
-      if (value instanceof Object) value = undefined;
+    str.replace(reDelimiters, (_, path: string) => {
+      const value = getValueFromPath(context, path);
+      if (Array.isArray(value)) return `{${value}}`;
+      if (value instanceof Object) return String(undefined);
 
-      return match ? String(value) : '';
+      return String(value);
     })
   );
 }

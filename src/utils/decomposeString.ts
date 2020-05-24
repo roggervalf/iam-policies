@@ -4,6 +4,7 @@ import { DecomposeString } from '../types';
  * Get index range where separators are found.
  *
  * @private
+ * @since 3.1.1
  * @param {string} initialSeparator First string to be found.
  * @param {string} finalSeparator Second string to be found.
  * @param {string} str String to be decomposed.
@@ -47,6 +48,7 @@ function getIndexRange(
  * Decompose string in pre, body and post strings by using separators.
  *
  * @private
+ * @since 3.1.1
  * @param {string} initialSeparator First string to be found.
  * @param {string} finalSeparator Second string to be found.
  * @param {string} str String to be decomposed.

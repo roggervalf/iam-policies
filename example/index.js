@@ -20,7 +20,7 @@ const contextForAllowExample = { user: { id: 456 } };
 console.log(
   allowExample.evaluate({
     action: 'read',
-    resource: 'secrets:456:ultrasecret',
+    resource: 'secrets:456:ultraSecret',
     context: contextForAllowExample
   })
 );
@@ -28,7 +28,7 @@ console.log(
 console.log(
   allowExample.evaluate({
     action: 'create',
-    resource: 'secrets:456:ultrasecret',
+    resource: 'secrets:456:ultraSecret',
     context: contextForAllowExample
   })
 );

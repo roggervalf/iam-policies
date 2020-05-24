@@ -42,6 +42,7 @@ describe('getValueFromPath', () => {
         };
         expect(getValueFromPath(context, 'user.id.pets')).toBe(undefined);
         expect(getValueFromPath(context, 'company')).toBe(undefined);
+        expect(getValueFromPath(context, 'company.address')).toBe(undefined);
       });
     });
 

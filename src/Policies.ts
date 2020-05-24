@@ -1,4 +1,3 @@
-//import { Statement, StatementInterface, ConditionResolver } from './Statement';
 import {
   IdentityBasedType,
   ResourceBasedType,

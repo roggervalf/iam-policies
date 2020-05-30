@@ -646,8 +646,12 @@ var IdentityBased = /** @class */ (function (_super) {
                     ? [identity.notAction]
                     : identity.notAction;
         }
+        _this.statement = identity;
         return _this;
     }
+    IdentityBased.prototype.getStatement = function () {
+        return this.statement;
+    };
     IdentityBased.prototype.matches = function (_a) {
         var action = _a.action, resource = _a.resource, context = _a.context, conditionResolver = _a.conditionResolver;
         return (this.matchActions(action, context) &&
@@ -727,8 +731,12 @@ var ResourceBased = /** @class */ (function (_super) {
                     ? [identity.notPrincipal]
                     : identity.notPrincipal;
         }
+        _this.statement = identity;
         return _this;
     }
+    ResourceBased.prototype.getStatement = function () {
+        return this.statement;
+    };
     ResourceBased.prototype.matches = function (_a) {
         var principal = _a.principal, action = _a.action, resource = _a.resource, principalType = _a.principalType, context = _a.context, conditionResolver = _a.conditionResolver;
         return (this.matchPrincipals(principal, principalType, context) &&
@@ -828,11 +836,15 @@ var ResourceBased = /** @class */ (function (_super) {
 
 var IdentityBasedPolicy = /** @class */ (function () {
     function IdentityBasedPolicy(config, conditionResolver) {
-        var statements = config.map(function (s) { return new IdentityBased(s); });
-        this.allowStatements = statements.filter(function (s) { return s.effect === 'allow'; });
-        this.denyStatements = statements.filter(function (s) { return s.effect === 'deny'; });
+        var statementInstances = config.map(function (s) { return new IdentityBased(s); });
+        this.allowStatements = statementInstances.filter(function (s) { return s.effect === 'allow'; });
+        this.denyStatements = statementInstances.filter(function (s) { return s.effect === 'deny'; });
         this.conditionResolver = conditionResolver;
+        this.statements = config;
     }
+    IdentityBasedPolicy.prototype.getStatements = function () {
+        return this.statements;
+    };
     IdentityBasedPolicy.prototype.evaluate = function (_a) {
         var action = _a.action, resource = _a.resource, context = _a.context;
         var args = { action: action, resource: resource, context: context };
@@ -866,11 +878,15 @@ var IdentityBasedPolicy = /** @class */ (function () {
 }());
 var ResourceBasedPolicy = /** @class */ (function () {
     function ResourceBasedPolicy(config, conditionResolver) {
-        var statements = config.map(function (s) { return new ResourceBased(s); });
-        this.allowStatements = statements.filter(function (s) { return s.effect === 'allow'; });
-        this.denyStatements = statements.filter(function (s) { return s.effect === 'deny'; });
+        var statementInstances = config.map(function (s) { return new ResourceBased(s); });
+        this.allowStatements = statementInstances.filter(function (s) { return s.effect === 'allow'; });
+        this.denyStatements = statementInstances.filter(function (s) { return s.effect === 'deny'; });
         this.conditionResolver = conditionResolver;
+        this.statements = config;
     }
+    ResourceBasedPolicy.prototype.getStatements = function () {
+        return this.statements;
+    };
     ResourceBasedPolicy.prototype.evaluate = function (_a) {
         var principal = _a.principal, action = _a.action, resource = _a.resource, principalType = _a.principalType, context = _a.context;
         var args = { principal: principal, action: action, resource: resource, principalType: principalType, context: context };

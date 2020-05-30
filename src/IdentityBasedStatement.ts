@@ -15,6 +15,7 @@ class IdentityBased extends Statement {
   private action?: string[];
   private notResource?: string[];
   private notAction?: string[];
+  private statement: IdentityBasedType;
 
   constructor(identity: IdentityBasedType) {
     super(identity);
@@ -40,6 +41,11 @@ class IdentityBased extends Statement {
           ? [identity.notAction]
           : identity.notAction;
     }
+    this.statement = identity;
+  }
+
+  getStatement(): IdentityBasedType {
+    return this.statement;
   }
 
   matches({

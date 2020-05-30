@@ -28,6 +28,20 @@ describe('ResourceBasedPolicy Class', () => {
     });
   });
 
+  describe('when get statements', () => {
+    it('returns those statements', () => {
+      const statements = [
+        {
+          principal: 'andre',
+          resource: ['books:horror:*'],
+          action: ['read']
+        }
+      ];
+      const policy = new ResourceBasedPolicy(statements);
+      expect(policy.getStatements()).toEqual(statements);
+    });
+  });
+
   describe('when match principal', () => {
     it('returns true or false', () => {
       const policy = new ResourceBasedPolicy([

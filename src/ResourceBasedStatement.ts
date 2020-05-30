@@ -20,6 +20,7 @@ class ResourceBased extends Statement {
   private notPrincipal?: PrincipalMap | string[];
   private notResource?: string[];
   private notAction?: string[];
+  private statement: ResourceBasedType;
 
   constructor(identity: ResourceBasedType) {
     super(identity);
@@ -56,6 +57,11 @@ class ResourceBased extends Statement {
           ? [identity.notPrincipal]
           : identity.notPrincipal;
     }
+    this.statement = identity;
+  }
+
+  getStatement(): ResourceBasedType {
+    return this.statement;
   }
 
   matches({

@@ -27,7 +27,7 @@
     "prettier:format": "./node_modules/.bin/prettier **/*.{ts,js,json,yml} -l --ignore-path ./.eslintignore",
     "prettier:fix": "./node_modules/.bin/prettier **/*.{ts,js,json,yml} --write --ignore-path ./.eslintignore",
     "eslint:format": "./node_modules/.bin/eslint **/*.{ts,js} --ignore-path ./.eslintignore",
-    "eslint:fix": "./node_modules/.bin/eslint . --ignore-path ./.eslintignore",
+    "eslint:fix": "./node_modules/.bin/eslint . --ignore-path ./.eslintignore --fix",
     "prepublishOnly": "yarn build",
     "test": "jest --config .unit.jest.config.js",
     "test:watch": "jest --config .unit.jest.config.js --watch",

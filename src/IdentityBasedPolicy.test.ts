@@ -7,7 +7,7 @@ describe('IdentityBasedPolicy Class', () => {
         () =>
           new IdentityBasedPolicy([
             {
-              resource: 'some:glob:*:string/wqweqw',
+              resource: 'some:glob:*:string/word',
               action: ['read', 'write']
             }
           ])
@@ -18,11 +18,24 @@ describe('IdentityBasedPolicy Class', () => {
       expect(
         new IdentityBasedPolicy([
           {
-            resource: 'some:glob:*:string/wqweqw',
+            resource: 'some:glob:*:string/word',
             action: ['read', 'write']
           }
         ])
       ).toBeInstanceOf(IdentityBasedPolicy);
+    });
+  });
+
+  describe('when get statements', () => {
+    it('returns those statements', () => {
+      const statements = [
+        {
+          resource: ['books:horror:*'],
+          action: ['read']
+        }
+      ];
+      const policy = new IdentityBasedPolicy(statements);
+      expect(policy.getStatements()).toEqual(statements);
     });
   });
 

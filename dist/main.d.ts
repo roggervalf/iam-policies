@@ -123,7 +123,9 @@ declare class IdentityBased extends Statement {
     private action?;
     private notResource?;
     private notAction?;
+    private statement;
     constructor(identity: IdentityBasedType);
+    getStatement(): IdentityBasedType;
     matches({ action, resource, context, conditionResolver }: MatchIdentityBasedInterface): boolean;
     private matchActions;
     private matchNotActions;
@@ -138,7 +140,9 @@ declare class ResourceBased extends Statement {
     private notPrincipal?;
     private notResource?;
     private notAction?;
+    private statement;
     constructor(identity: ResourceBasedType);
+    getStatement(): ResourceBasedType;
     matches({ principal, action, resource, principalType, context, conditionResolver }: MatchResourceBasedInterface): boolean;
     matchPrincipals(principal: string, principalType?: string, context?: Context): boolean;
     matchNotPrincipals(principal: string, principalType?: string, context?: Context): boolean;
@@ -152,7 +156,9 @@ declare class IdentityBasedPolicy {
     private denyStatements;
     private allowStatements;
     private conditionResolver?;
+    private statements;
     constructor(config: IdentityBasedType[], conditionResolver?: ConditionResolver);
+    getStatements(): IdentityBasedType[];
     evaluate({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
     can({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
     cannot({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
@@ -161,7 +167,9 @@ declare class ResourceBasedPolicy {
     private denyStatements;
     private allowStatements;
     private conditionResolver?;
+    private statements;
     constructor(config: ResourceBasedType[], conditionResolver?: ConditionResolver);
+    getStatements(): ResourceBasedType[];
     evaluate({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
     can({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
     cannot({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;

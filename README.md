@@ -26,12 +26,22 @@ yarn add iam-policies
 
 ## Deno import
 
-```js
+```ts
 // @deno-types="https://raw.githubusercontent.com/roggervalf/iam-policies/master/dist/main.d.ts"
 import {
   IdentityBasedPolicy,
   ResourceBasedPolicy
 } from 'https://raw.githubusercontent.com/roggervalf/iam-policies/master/dist/main.es.js';
+```
+
+or
+
+```ts
+// @deno-types="https://deno.land/x/iam_policies@master/dist/main.d.ts"
+import {
+  IdentityBasedPolicy,
+  ResourceBasedPolicy
+} from 'https://deno.land/x/iam_policies@master/dist/main.es.js';
 ```
 
 ## Features
@@ -384,6 +394,10 @@ const identityBasedPolicy = new IdentityBasedPolicy(
 
 ### Methods
 
+#### identityBasedPolicy.getStatements()
+
+_public_: Returns `Statement[]` (statements array).
+
 #### identityBasedPolicy.evaluate({action, resource, context})
 
 _public_: Verify if action for specific resource is allowed (`true`) or denied (`false`).
@@ -450,6 +464,10 @@ const resourceBasedPolicy = new ResourceBasedPolicy(
 | `Statement[].condition["conditionType"]["conditionKey"]` | (string or number or boolean) or (string or number or boolean)[] | undefined | `false`  | The **_conditionKey_** should be a custom string path attribute for a specific context attribute. Note: attributes must be separated but dots (`.`).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
 ### Methods
+
+#### resourceBasedPolicy.getStatements()
+
+_public_: Returns `Statement[]` (statements array).
 
 #### resourceBasedPolicy.evaluate({principal, action, resource, context, principalType})
 

@@ -56,6 +56,8 @@ Supports these glob features:
 
 ### Examples
 
+* Here is an example of using it into a (GraphQL project)[https://github.com/roggerval/tech-insiders-nodejs] (step 7).
+
 First, we should get our policies classes:
 
 ```js

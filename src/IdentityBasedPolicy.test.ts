@@ -105,7 +105,7 @@ describe('IdentityBasedPolicy Class', () => {
       expect(
         policy.evaluate({
           action: 'read',
-          resource: 'books:fantasy:Brisingr'
+          resource: 'books:fantasy:Jumanji'
         })
       ).toBe(false);
     });
@@ -165,21 +165,21 @@ describe('IdentityBasedPolicy Class', () => {
       expect(
         policy.evaluate({
           action: 'read',
-          resource: 'secrets:123:sshhh',
+          resource: 'secrets:123:secret',
           context: { user: { id: 456 } }
         })
       ).toBe(false);
       expect(
         policy.evaluate({
           action: 'read',
-          resource: 'secrets:563:sshhh',
+          resource: 'secrets:563:secret',
           context: {
             user: { id: 456, bestFriends: [123, 563, 1211] }
           }
         })
       ).toBe(true);
       expect(
-        policy.evaluate({ action: 'write', resource: 'secrets:123:sshhh' })
+        policy.evaluate({ action: 'write', resource: 'secrets:123:secret' })
       ).toBe(false);
     });
   });

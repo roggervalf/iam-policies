@@ -1,0 +1,921 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><style data-href="/styles.6c40adf9e6bde6b9b3f2.css">code[class*=language-],pre[class*=language-]{color:#f8f8f2;background:none;text-shadow:0 1px rgba(0,0,0,.3);font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;font-size:1em;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#272822}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#708090}.token.punctuation{color:#f8f8f2}.token.namespace{opacity:.7}.token.constant,.token.deleted,.token.property,.token.symbol,.token.tag{color:#f92672}.token.boolean,.token.number{color:#ae81ff}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a6e22e}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url,.token.variable{color:#f8f8f2}.token.atrule,.token.attr-value,.token.class-name,.token.function{color:#e6db74}.token.keyword{color:#66d9ef}.token.important,.token.regex{color:#fd971f}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}*,:after,:before{box-sizing:border-box}ol[class],ul[class]{padding:0}blockquote,body,dd,dl,figcaption,figure,h1,h2,h3,h4,li,ol[class],p,ul[class]{margin:0}body{min-height:100vh;scroll-behavior:smooth;text-rendering:optimizeSpeed;line-height:1.5}ol[class],ul[class]{list-style:none}a:not([class]){-webkit-text-decoration-skip:ink;text-decoration-skip-ink:auto}img{max-width:100%;display:block}article>*+*{margin-top:1em}button,input,select,textarea{font:inherit}@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}@font-face{font-family:Nunito Sans;font-style:normal;font-display:swap;font-weight:200;src:local("Nunito Sans Extra Light "),local("Nunito Sans-Extra Light"),url(/static/nunito-sans-latin-200-3f69f8c78eb965be709fada6e9326097.woff2) format("woff2"),url(/static/nunito-sans-latin-200-0aa9029aa5c94ee0245428787ff2aa8b.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:italic;font-display:swap;font-weight:200;src:local("Nunito Sans Extra Light italic"),local("Nunito Sans-Extra Lightitalic"),url(/static/nunito-sans-latin-200italic-6efd102c0b004908b9454b4e4610d693.woff2) format("woff2"),url(/static/nunito-sans-latin-200italic-da7c09610c91ac990644a19f2d713357.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:normal;font-display:swap;font-weight:300;src:local("Nunito Sans Light "),local("Nunito Sans-Light"),url(/static/nunito-sans-latin-300-f16977f35222a4cce7d6f4336732a67a.woff2) format("woff2"),url(/static/nunito-sans-latin-300-e7a891b0ad0ce9050b19e3d0cdfcd860.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:italic;font-display:swap;font-weight:300;src:local("Nunito Sans Light italic"),local("Nunito Sans-Lightitalic"),url(/static/nunito-sans-latin-300italic-246f6e2b70f0b23e366947c975effa65.woff2) format("woff2"),url(/static/nunito-sans-latin-300italic-1a3d2422361712bf569edf8b2e1f6d90.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:normal;font-display:swap;font-weight:400;src:local("Nunito Sans Regular "),local("Nunito Sans-Regular"),url(/static/nunito-sans-latin-400-9c6a1ff29aaba0c21496eac04be062df.woff2) format("woff2"),url(/static/nunito-sans-latin-400-8ace450709844437a579d4f4c7c37b42.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:italic;font-display:swap;font-weight:400;src:local("Nunito Sans Regular italic"),local("Nunito Sans-Regularitalic"),url(/static/nunito-sans-latin-400italic-d44697ce7f31cee44f701572fb38cab5.woff2) format("woff2"),url(/static/nunito-sans-latin-400italic-e14ffefb3a60e5d5a9a47519882f92e8.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:normal;font-display:swap;font-weight:600;src:local("Nunito Sans SemiBold "),local("Nunito Sans-SemiBold"),url(/static/nunito-sans-latin-600-b56c7e1dd3d7a5fad61e46f4dd553294.woff2) format("woff2"),url(/static/nunito-sans-latin-600-5a71131c00b436beb97dd2c570768f05.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:italic;font-display:swap;font-weight:600;src:local("Nunito Sans SemiBold italic"),local("Nunito Sans-SemiBolditalic"),url(/static/nunito-sans-latin-600italic-0de4a8bace81fc8b1f570af06a28e385.woff2) format("woff2"),url(/static/nunito-sans-latin-600italic-9db53e390a5327462f45889e249f84d6.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:normal;font-display:swap;font-weight:700;src:local("Nunito Sans Bold "),local("Nunito Sans-Bold"),url(/static/nunito-sans-latin-700-d0b6d0f05c00552a21519d6bdb3e5ed7.woff2) format("woff2"),url(/static/nunito-sans-latin-700-1aa5d63eca4940fbbb5181895e9bc008.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:italic;font-display:swap;font-weight:700;src:local("Nunito Sans Bold italic"),local("Nunito Sans-Bolditalic"),url(/static/nunito-sans-latin-700italic-c7569232f38ac2b1b3211151127b1ed3.woff2) format("woff2"),url(/static/nunito-sans-latin-700italic-ffc1f5c22dc4b08f710c027976972de1.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:normal;font-display:swap;font-weight:800;src:local("Nunito Sans ExtraBold "),local("Nunito Sans-ExtraBold"),url(/static/nunito-sans-latin-800-6a4c29ad18bd8072a9a9d2443d0e340e.woff2) format("woff2"),url(/static/nunito-sans-latin-800-a28845a6196298dad6dc0b2ba0b6de55.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:italic;font-display:swap;font-weight:800;src:local("Nunito Sans ExtraBold italic"),local("Nunito Sans-ExtraBolditalic"),url(/static/nunito-sans-latin-800italic-0117d6315806b392f7da0d5d3aa9c7ca.woff2) format("woff2"),url(/static/nunito-sans-latin-800italic-4f4e7a921cc52e9458245f66eb550004.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:normal;font-display:swap;font-weight:900;src:local("Nunito Sans Black "),local("Nunito Sans-Black"),url(/static/nunito-sans-latin-900-e22a661eeed6baa960d645c48de5a00f.woff2) format("woff2"),url(/static/nunito-sans-latin-900-412c6f01c1eb3a9135d53bc4fd220a35.woff) format("woff")}@font-face{font-family:Nunito Sans;font-style:italic;font-display:swap;font-weight:900;src:local("Nunito Sans Black italic"),local("Nunito Sans-Blackitalic"),url(/static/nunito-sans-latin-900italic-0dc1055cf601fe66514482613ebdf168.woff2) format("woff2"),url(/static/nunito-sans-latin-900italic-708845e875a3b08640369bf84fd65472.woff) format("woff")}</style><meta name="generator" content="Gatsby 2.22.15"/><style data-styled="" data-styled-version="5.1.1">.iuvvNq{grid-area:header;background:#5553FF;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:0.5rem 2rem;border:0 solid #dae1e7;box-shadow:0 2px 1px rgba(50,50,93,0.03),0 1px 1px rgba(0,0,0,0.03);z-index:10;}/*!sc*/
+.iuvvNq .title{color:white;-webkit-text-decoration:none;text-decoration:none;}/*!sc*/
+.iuvvNq .menu{display:none;}/*!sc*/
+.iuvvNq .github{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}/*!sc*/
+@media (max-width:600px){.iuvvNq{padding:0.5rem 1.2rem;position:-webkit-sticky;position:sticky;top:0;}.iuvvNq .github{display:none;}.iuvvNq .title{font-size:2.2rem;}.iuvvNq .menu{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}@media (max-width:600px){.iuvvNq{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}}}/*!sc*/
+data-styled.g1[id="header__HeaderStyled-sc-31ozxh-0"]{content:"iuvvNq,"}/*!sc*/
+.jLTGxT{grid-area:sidebar;background-color:#f4f5f7;-webkit-transition:all 0.2s;transition:all 0.2s;border-right:1px solid #dae1e7;overflow-y:auto;height:100vh;position:-webkit-sticky;position:sticky;top:0;z-index:100;}/*!sc*/
+.jLTGxT h2{font-size:1rem;padding:0.8rem 1.6rem;}/*!sc*/
+.jLTGxT h2 a{color:#3d4852;-webkit-text-decoration:none;text-decoration:none;}/*!sc*/
+.jLTGxT ul{padding:0;margin:1.6rem 0;}/*!sc*/
+.jLTGxT ul a[href$="#iam-policies"]{padding:0 2rem;font-size:2.4rem;color:black;}/*!sc*/
+.jLTGxT ul li{list-style:none;}/*!sc*/
+.jLTGxT ul li p{margin:0;}/*!sc*/
+.jLTGxT ul li a{padding:0.6rem 2rem;color:#8795a1;-webkit-text-decoration:none;text-decoration:none;display:block;}/*!sc*/
+.jLTGxT ul li ul li{-webkit-transition:background-color 0.2s;transition:background-color 0.2s;}/*!sc*/
+.jLTGxT ul li ul li:hover{background-color:#5553FF;}/*!sc*/
+.jLTGxT ul li ul li:hover a{color:white;}/*!sc*/
+.jLTGxT .sidebar-menu{display:none;}/*!sc*/
+@media (max-width:600px){.jLTGxT{display:none;position:relative;}.jLTGxT .sidebar-menu{display:none;position:absolute;top:2.4rem;right:1rem;}.jLTGxT ul li a{padding:0.6rem 1.5rem;}.jLTGxT ul a[href$="#iam-policies"]{padding:0.6rem 1.5rem;margin-top:0;}}/*!sc*/
+data-styled.g2[id="sidebar__SidebarStyled-dru0ie-0"]{content:"jLTGxT,"}/*!sc*/
+.eJkglU{background-color:#5553FF;height:80px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;color:white;}/*!sc*/
+.eJkglU a{color:white;-webkit-text-decoration:none;text-decoration:none;}/*!sc*/
+data-styled.g3[id="footer__FooterStyled-r54yyk-0"]{content:"eJkglU,"}/*!sc*/
+.dttZPt{grid-area:content;border:0 solid #dae1e7;background-color:rgb(254,254,254);}/*!sc*/
+.dttZPt main{min-height:calc(100vh - 160px);padding:3rem 2rem;max-width:960px;margin-left:auto;margin-right:auto;}/*!sc*/
+@media (max-width:600px){.dttZPt main{padding:2rem 1.6rem;}}/*!sc*/
+.dttZPt main td code{word-wrap:break-word;}/*!sc*/
+data-styled.g4[id="content__ContentStyled-sc-5d8xcj-0"]{content:"dttZPt,"}/*!sc*/
+.bPjKXA{min-height:100vh;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}/*!sc*/
+@media (min-width:600px){.bPjKXA{display:grid;grid-template-columns:280px auto;grid-template-rows:80px auto;gap:1px 1px;grid-template-areas:"header header" "sidebar content";}}/*!sc*/
+data-styled.g5[id="layout__LayoutStyled-ii2kc2-0"]{content:"bPjKXA,"}/*!sc*/
+.kJUvbk blockquote p{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}/*!sc*/
+.kJUvbk blockquote p a{margin-right:1rem;}/*!sc*/
+.kJUvbk a{color:#5553FF;-webkit-text-decoration:none;text-decoration:none;}/*!sc*/
+.kJUvbk table{border-collapse:collapse;overflow-x:auto;display:block;white-space:nowrap;}/*!sc*/
+.kJUvbk tr:nth-of-type(odd){background:rgba(0,0,0,0.05);}/*!sc*/
+.kJUvbk th{background:#5553FF;color:white;font-weight:bold;}/*!sc*/
+.kJUvbk td,.kJUvbk th{padding:10px;border:1px solid #ccc;text-align:left;font-size:16px;}/*!sc*/
+data-styled.g6[id="documentation__DocumentationStyled-sc-1iu6os0-0"]{content:"kJUvbk,"}/*!sc*/
+html{font-size:100%;}/*!sc*/
+body{box-sizing:border-box;font-family:'Nunito Sans',sans-serif;margin:0 auto;overflow-x:hidden;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-font-smoothing:subpixel-antialiased;-webkit-scroll-behavior:smooth;-moz-scroll-behavior:smooth;-ms-scroll-behavior:smooth;scroll-behavior:smooth;font-weight:400;line-height:1.65;color:#333;}/*!sc*/
+body p{margin-bottom:1.15rem;}/*!sc*/
+body h1,body h2,body h3,body h4,body h5{margin:1.6rem 0 1.2rem 0;font-family:'Nunito Sans',sans-serif;font-weight:400;line-height:1.15;word-wrap:break-word;}/*!sc*/
+body h1{font-size:2.852rem;}/*!sc*/
+body h2{font-size:2.241rem;}/*!sc*/
+body h3{font-size:1.753rem;}/*!sc*/
+body h4{font-size:1.363rem;}/*!sc*/
+body h5{font-size:1.05rem;}/*!sc*/
+data-styled.g7[id="sc-global-BndOP1"]{content:"sc-global-BndOP1,"}/*!sc*/
+</style><title data-react-helmet="true">Home | IAM-policies</title><meta data-react-helmet="true" name="description" content="Define custom IAM Policies by allowed or denied set of actions against a set of resources with optional context and conditions."/><meta data-react-helmet="true" property="og:title" content="Home"/><meta data-react-helmet="true" property="og:description" content="Define custom IAM Policies by allowed or denied set of actions against a set of resources with optional context and conditions."/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" name="twitter:card" content="summary"/><meta data-react-helmet="true" name="twitter:creator" content="@roggervalf"/><meta data-react-helmet="true" name="twitter:title" content="Home"/><meta data-react-helmet="true" name="twitter:description" content="Define custom IAM Policies by allowed or denied set of actions against a set of resources with optional context and conditions."/><link rel="icon" href="/favicon-32x32.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="manifest" href="/manifest.webmanifest"/><meta name="theme-color" content="#663399"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=edf3d310d67f8284a562bc3a58c3e761"/><style type="text/css">
+    .anchor.before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-100%);
+      padding-right: 4px;
+    }
+    .anchor.after {
+      display: inline-block;
+      padding-left: 4px;
+    }
+    h1 .anchor svg,
+    h2 .anchor svg,
+    h3 .anchor svg,
+    h4 .anchor svg,
+    h5 .anchor svg,
+    h6 .anchor svg {
+      visibility: hidden;
+    }
+    h1:hover .anchor svg,
+    h2:hover .anchor svg,
+    h3:hover .anchor svg,
+    h4:hover .anchor svg,
+    h5:hover .anchor svg,
+    h6:hover .anchor svg,
+    h1 .anchor:focus svg,
+    h2 .anchor:focus svg,
+    h3 .anchor:focus svg,
+    h4 .anchor:focus svg,
+    h5 .anchor:focus svg,
+    h6 .anchor:focus svg {
+      visibility: visible;
+    }
+  </style><script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      var hash = window.decodeURI(location.hash.replace('#', ''))
+      if (hash !== '') {
+        var element = document.getElementById(hash)
+        if (element) {
+          var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+          var clientTop = document.documentElement.clientTop || document.body.clientTop || 0
+          var offset = element.getBoundingClientRect().top + scrollTop - clientTop
+          // Wait for the browser to finish rendering before scrolling.
+          setTimeout((function() {
+            window.scrollTo(0, offset - 0)
+          }), 0)
+        }
+      }
+    })
+  </script><link as="script" rel="preload" href="/webpack-runtime-37d9a2dcc8fb6805988b.js"/><link as="script" rel="preload" href="/framework-75da9754c2a76bbaf08a.js"/><link as="script" rel="preload" href="/app-f0778e977be9f2010ecc.js"/><link as="script" rel="preload" href="/styles-823ae8103e36ae8a7f9f.js"/><link as="script" rel="preload" href="/d7eeaac4-839221d70e2b73e3a6c9.js"/><link as="script" rel="preload" href="/545f34e4-699a489d72ce4efc69d8.js"/><link as="script" rel="preload" href="/187aa136b9f9f85b0685af15177d72ed6124793f-3215ee24c8467ab8c6bb.js"/><link as="script" rel="preload" href="/component---src-templates-index-js-9e528b38e5c786f271b2.js"/><link as="fetch" rel="preload" href="/page-data/zh-CN/page-data.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/app-data.json" crossorigin="anonymous"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="layout__LayoutStyled-ii2kc2-0 bPjKXA"><header class="header__HeaderStyled-sc-31ozxh-0 iuvvNq"><h1 style="margin:0"><a class="title" href="/">IAM-policies</a></h1><div class="github"><a rel="noreferrer" target="_blank" href="https://github.com/roggervalf/iam-policies"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" style="color:white;font-size:2rem" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M511.6 76.3C264.3 76.2 64 276.4 64 523.5 64 718.9 189.3 885 363.8 946c23.5 5.9 19.9-10.8 19.9-22.2v-77.5c-135.7 15.9-141.2-73.9-150.3-88.9C215 726 171.5 718 184.5 703c30.9-15.9 62.4 4 98.9 57.9 26.4 39.1 77.9 32.5 104 26 5.7-23.5 17.9-44.5 34.7-60.8-140.6-25.2-199.2-111-199.2-213 0-49.5 16.3-95 48.3-131.7-20.4-60.5 1.9-112.3 4.9-120 58.1-5.2 118.5 41.6 123.2 45.3 33-8.9 70.7-13.6 112.9-13.6 42.4 0 80.2 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.3-43.9 2.9 7.7 24.7 58.3 5.5 118 32.4 36.8 48.9 82.7 48.9 132.3 0 102.2-59 188.1-200 212.9a127.5 127.5 0 0 1 38.1 91v112.5c.8 9 0 17.9 15 17.9 177.1-59.7 304.6-227 304.6-424.1 0-247.2-200.4-447.3-447.5-447.3z"></path></svg></a></div><div class="menu"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" style="color:white;font-size:2rem" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z"></path></svg></div></header><aside class="sidebar__SidebarStyled-dru0ie-0 jLTGxT"><div class="sidebar-menu"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" style="color:black;font-size:2rem" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path></svg></div><div id="list-of-contents"><ul>
+<li>
+<p><a href="#iam-policies">iam-policies</a></p>
+<ul>
+<li><a href="#%E4%BB%8B%E7%BB%8D">介绍</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E5%8A%9F%E8%83%BD">功能</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8">使用</a></li>
+<li><a href="#identitybasedpolicy-%E7%B1%BB">IdentityBasedPolicy 类</a></li>
+<li><a href="#resourcebasedpolicy-%E7%B1%BB">ResourceBasedPolicy 类</a></li>
+<li><a href="#getvaluefrompathdata-path-function">getValueFromPath(data, path) Function</a></li>
+<li><a href="#applycontextstr-context-function">applyContext(str, context) Function</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+</li>
+</ul></div></aside><div class="content__ContentStyled-sc-5d8xcj-0 dttZPt"><main><section class="documentation__DocumentationStyled-sc-1iu6os0-0 kJUvbk"><div id="main-content"><h1 id="iam-policies" style="position:relative;"><a href="#iam-policies" aria-label="iam policies permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>iam-policies</h1>
+<blockquote>
+<p><a href="https://www.npmjs.com/package/iam-policies" target="_blank" rel="nofollow"><img src="https://img.shields.io/npm/v/iam-policies.svg" alt="NPM"></a> <a href="https://standardjs.com" target="_blank" rel="nofollow"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="JavaScript Style Guide"></a> <a href="https://travis-ci.com/github/roggervalf/iam-policies" target="_blank" rel="nofollow"><img src="https://travis-ci.com/roggervalf/iam-policies.svg?branch=master" alt="Build Status"></a> <a href="https://github.com/semantic-release/semantic-release" target="_blank" rel="nofollow"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release"></a></p>
+</blockquote>
+<h2 id="介绍" style="position:relative;"><a href="#%E4%BB%8B%E7%BB%8D" aria-label="介绍 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>介绍</h2>
+<p>自定义 IAM 政策来提供对资源访问的控制，并且可以设置可选的上下文几条件</p>
+<p>拒绝政策高于认许政策</p>
+<p>基于 <a href="https://www.npmjs.com/package/@ddt/iam" target="_blank" rel="nofollow">@ddt/iam</a> 和 <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html" target="_blank" rel="nofollow">AWS Reference Policies </a>.</p>
+<h2 id="安装" style="position:relative;"><a href="#%E5%AE%89%E8%A3%85" aria-label="安装 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>安装</h2>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> --save iam-policies</code></pre></div>
+<p>或者</p>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">yarn</span> <span class="token function">add</span> iam-policies</code></pre></div>
+<h2 id="功能" style="position:relative;"><a href="#%E5%8A%9F%E8%83%BD" aria-label="功能 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>功能</h2>
+<p>提供以下功能:</p>
+<ul>
+<li>创建政策 (<a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policy-types" target="_blank" rel="nofollow">IdentityBasedPolicy and ResourceBasedPolicy</a>)</li>
+<li>权限验证</li>
+</ul>
+<h2 id="使用" style="position:relative;"><a href="#%E4%BD%BF%E7%94%A8" aria-label="使用 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>使用</h2>
+<h3 id="例子" style="position:relative;"><a href="#%E4%BE%8B%E5%AD%90" aria-label="例子 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>例子</h3>
+<p>首先需要得到政策类:</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> IdentityBasedPolicy<span class="token punctuation">,</span> ResourceBasedPolicy <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"iam-policies"</span><span class="token punctuation">)</span></code></pre></div>
+<h4 id="设置允许属性" style="position:relative;"><a href="#%E8%AE%BE%E7%BD%AE%E5%85%81%E8%AE%B8%E5%B1%9E%E6%80%A7" aria-label="设置允许属性 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>设置允许属性</h4>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> allowExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    effect<span class="token operator">:</span> <span class="token string">"allow"</span><span class="token punctuation">,</span> <span class="token comment">// 可选的， 默认值'allow'</span>
+    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:${user.id}:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// 嵌入值</span>
+    action<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"read"</span><span class="token punctuation">,</span> <span class="token string">"write"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"bd:company:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    action<span class="token operator">:</span> <span class="token string">"create"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> contextForAllowExample <span class="token operator">=</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token number">456</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
+
+allowExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:456:ultraSecret"</span><span class="token punctuation">,</span>
+  context<span class="token operator">:</span> contextForAllowExample
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+allowExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"create"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:456:ultraSecret"</span><span class="token punctuation">,</span>
+  context<span class="token operator">:</span> contextForAllowExample
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span>
+allowExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"create"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"bd:company:account"</span><span class="token punctuation">,</span>
+  context<span class="token operator">:</span> contextForAllowExample
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+allowExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"bd:company:account"</span><span class="token punctuation">,</span>
+  context<span class="token operator">:</span> contextForAllowExample
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
+<h4 id="设置拒绝属性" style="position:relative;"><a href="#%E8%AE%BE%E7%BD%AE%E6%8B%92%E7%BB%9D%E5%B1%9E%E6%80%A7" aria-label="设置拒绝属性 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>设置拒绝属性</h4>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> denyExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:${user.bestFriends}:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    action<span class="token operator">:</span> <span class="token string">"read"</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    effect<span class="token operator">:</span> <span class="token string">"deny"</span><span class="token punctuation">,</span>
+    resource<span class="token operator">:</span> <span class="token string">"secrets:123:*"</span><span class="token punctuation">,</span>
+    action<span class="token operator">:</span> <span class="token string">"read"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> contextForDenyExample <span class="token operator">=</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> <span class="token punctuation">{</span> bestFriends<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">123</span><span class="token punctuation">,</span> <span class="token number">563</span><span class="token punctuation">,</span> <span class="token number">1211</span><span class="token punctuation">]</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
+
+denyExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:563:super-secret"</span><span class="token punctuation">,</span>
+  context<span class="token operator">:</span> contextForDenyExample
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+denyExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:123:super-secret"</span><span class="token punctuation">,</span>
+  context<span class="token operator">:</span> contextForDenyExample
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
+<h4 id="排除的行为属性" style="position:relative;"><a href="#%E6%8E%92%E9%99%A4%E7%9A%84%E8%A1%8C%E4%B8%BA%E5%B1%9E%E6%80%A7" aria-label="排除的行为属性 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>排除的行为属性</h4>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> notActionExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    resource<span class="token operator">:</span> <span class="token string">"bd:company:*"</span><span class="token punctuation">,</span>
+    notAction<span class="token operator">:</span> <span class="token string">"update"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+notActionExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"delete"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"bd:company:account"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+notActionExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"update"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"bd:company:account"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
+<h4 id="排除的资源属性" style="position:relative;"><a href="#%E6%8E%92%E9%99%A4%E7%9A%84%E8%B5%84%E6%BA%90%E5%B1%9E%E6%80%A7" aria-label="排除的资源属性 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>排除的资源属性</h4>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> notResourceExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    notResource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"bd:roles:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    action<span class="token operator">:</span> <span class="token string">"update"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+notResourceExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"update"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"photos"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+notResourceExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"update"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"bd:roles:admin"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
+<h4 id="允许一切" style="position:relative;"><a href="#%E5%85%81%E8%AE%B8%E4%B8%80%E5%88%87" aria-label="允许一切 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>允许一切</h4>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> adminExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    resource<span class="token operator">:</span> <span class="token string">"*"</span><span class="token punctuation">,</span>
+    action<span class="token operator">:</span> <span class="token string">"*"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+adminExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"someResource"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+adminExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"write"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"otherResource"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span></code></pre></div>
+<h4 id="条件属性" style="position:relative;"><a href="#%E6%9D%A1%E4%BB%B6%E5%B1%9E%E6%80%A7" aria-label="条件属性 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>条件属性</h4>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> conditions <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">greaterThan</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data<span class="token punctuation">,</span> expected</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> data <span class="token operator">></span> expected
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> conditionExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span>
+  <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      resource<span class="token operator">:</span> <span class="token string">"secrets:*"</span><span class="token punctuation">,</span>
+      action<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"read"</span><span class="token punctuation">,</span> <span class="token string">"write"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      condition<span class="token operator">:</span> <span class="token punctuation">{</span>
+        greaterThan<span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token string">"user.age"</span><span class="token operator">:</span> <span class="token number">18</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  conditions
+<span class="token punctuation">)</span>
+
+conditionExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:code"</span><span class="token punctuation">,</span>
+  context<span class="token operator">:</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> <span class="token punctuation">{</span> age<span class="token operator">:</span> <span class="token number">19</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+conditionExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:admin:super-secret"</span><span class="token punctuation">,</span>
+  context<span class="token operator">:</span> <span class="token punctuation">{</span>
+    user<span class="token operator">:</span> <span class="token punctuation">{</span> age<span class="token operator">:</span> <span class="token number">18</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
+<h4 id="主要的属性" style="position:relative;"><a href="#%E4%B8%BB%E8%A6%81%E7%9A%84%E5%B1%9E%E6%80%A7" aria-label="主要的属性 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>主要的属性</h4>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> principalExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResourceBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    principal<span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+    effect<span class="token operator">:</span> <span class="token string">"allow"</span><span class="token punctuation">,</span>
+    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:user:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    action<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"read"</span><span class="token punctuation">,</span> <span class="token string">"write"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    principal<span class="token operator">:</span> <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token string">"2"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    resource<span class="token operator">:</span> <span class="token string">"bd:company:*"</span><span class="token punctuation">,</span>
+    notAction<span class="token operator">:</span> <span class="token string">"update"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+principalExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  principal<span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:user:name"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+principalExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  principal<span class="token operator">:</span> <span class="token string">"2"</span><span class="token punctuation">,</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:user:super-secret"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span>
+principalExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  principal<span class="token operator">:</span> <span class="token string">"2"</span><span class="token punctuation">,</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"bd:company:name"</span><span class="token punctuation">,</span>
+  principalType<span class="token operator">:</span> <span class="token string">"id"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+principalExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  principal<span class="token operator">:</span> <span class="token string">"2"</span><span class="token punctuation">,</span>
+  action<span class="token operator">:</span> <span class="token string">"update"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"bd:company:name"</span><span class="token punctuation">,</span>
+  principalType<span class="token operator">:</span> <span class="token string">"id"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
+<h4 id="非主要属性" style="position:relative;"><a href="#%E9%9D%9E%E4%B8%BB%E8%A6%81%E5%B1%9E%E6%80%A7" aria-label="非主要属性 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>非主要属性</h4>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> notPrincipalExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResourceBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    notPrincipal<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"1"</span><span class="token punctuation">,</span> <span class="token string">"2"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:bd:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    action<span class="token operator">:</span> <span class="token string">"read"</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    notPrincipal<span class="token operator">:</span> <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token string">"3"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    resource<span class="token operator">:</span> <span class="token string">"secrets:admin:*"</span><span class="token punctuation">,</span>
+    action<span class="token operator">:</span> <span class="token string">"read"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+notPrincipalExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  principal<span class="token operator">:</span> <span class="token string">"3"</span><span class="token punctuation">,</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:bd:tables"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+notPrincipalExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  principal<span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:bd:tables"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span>
+notPrincipalExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  principal<span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:admin:friends"</span><span class="token punctuation">,</span>
+  principalType<span class="token operator">:</span> <span class="token string">"id"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+notPrincipalExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  principal<span class="token operator">:</span> <span class="token string">"3"</span><span class="token punctuation">,</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"secrets:admin:friends"</span><span class="token punctuation">,</span>
+  principalType<span class="token operator">:</span> <span class="token string">"id"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
+<h4 id="使用-can-和-cannot" style="position:relative;"><a href="#%E4%BD%BF%E7%94%A8-can-%E5%92%8C-cannot" aria-label="使用 can 和 cannot permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>使用 <code class="language-text">can</code> 和 <code class="language-text">cannot</code></h4>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> canAndCannotStatements <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    effect<span class="token operator">:</span> <span class="token string">"allow"</span><span class="token punctuation">,</span> <span class="token comment">// 可选的， 默认值'allow</span>
+    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"website:${division.companyId}:${division.countryId}:*/*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    action<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"create"</span><span class="token punctuation">,</span> <span class="token string">"update"</span><span class="token punctuation">,</span> <span class="token string">"delete"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    effect<span class="token operator">:</span> <span class="token string">"deny"</span><span class="token punctuation">,</span>
+    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"website:${division.companyId}:${division.countryId}:city/lima"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    action<span class="token operator">:</span> <span class="token string">"delete"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+
+<span class="token keyword">const</span> inclusivePolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span>canAndCannotStatements<span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> contextCanAndCannot <span class="token operator">=</span> <span class="token punctuation">{</span>
+  division<span class="token operator">:</span> <span class="token punctuation">{</span>
+    companyId<span class="token operator">:</span> <span class="token number">123</span><span class="token punctuation">,</span>
+    countryId<span class="token operator">:</span> <span class="token number">456</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> canAndCannotDeniedArgument <span class="token operator">=</span> <span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"delete"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"website:123:456:city/lima"</span><span class="token punctuation">,</span>
+  context<span class="token operator">:</span> contextCanAndCannot
+<span class="token punctuation">}</span>
+
+inclusivePolicy<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span>canAndCannotDeniedArgument<span class="token punctuation">)</span> <span class="token comment">// false</span>
+<span class="token operator">/</span><span class="token operator">/</span> 到这里， 我们还不确定参数是被拒绝还是不存在
+
+inclusivePolicy<span class="token punctuation">.</span><span class="token function">can</span><span class="token punctuation">(</span>canAndCannotDeniedArgument<span class="token punctuation">)</span> <span class="token operator">/</span><span class="token operator">/</span> <span class="token boolean">true</span>
+<span class="token operator">/</span><span class="token operator">/</span> 是一个存在的允许政策， 所以应该是被拒绝了， 是吧？
+
+inclusivePolicy<span class="token punctuation">.</span><span class="token function">cannot</span><span class="token punctuation">(</span>canAndCannotDeniedArgument<span class="token punctuation">)</span> <span class="token operator">/</span><span class="token operator">/</span> <span class="token boolean">true</span>
+<span class="token operator">/</span><span class="token operator">/</span> 事实证明， 我是对的。
+
+<span class="token keyword">const</span> canAndCannotNotPresentArgument <span class="token operator">=</span> <span class="token punctuation">{</span>
+  action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
+  resource<span class="token operator">:</span> <span class="token string">"website:123:456:}city/lima"</span><span class="token punctuation">,</span>
+  context<span class="token operator">:</span> contextCanAndCannot
+<span class="token punctuation">}</span>
+
+inclusivePolicy<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span>canAndCannotNotPresentArgument<span class="token punctuation">)</span> <span class="token operator">/</span><span class="token operator">/</span> <span class="token boolean">false</span>
+<span class="token operator">/</span><span class="token operator">/</span> 在这里用户没有访问权限， 但是为什么呐， 我们看看
+
+inclusivePolicy<span class="token punctuation">.</span><span class="token function">can</span><span class="token punctuation">(</span>canAndCannotNotPresentArgument<span class="token punctuation">)</span> <span class="token operator">/</span><span class="token operator">/</span> <span class="token boolean">false</span>
+<span class="token operator">/</span><span class="token operator">/</span> 这不是一个存在的允许政策， 但是是被拒绝了吗？
+
+inclusivePolicy<span class="token punctuation">.</span><span class="token function">cannot</span><span class="token punctuation">(</span>canAndCannotNotPresentArgument<span class="token punctuation">)</span> <span class="token operator">/</span><span class="token operator">/</span> <span class="token boolean">false</span>
+<span class="token operator">/</span><span class="token operator">/</span> 不是的， 它不在那。</code></pre></div>
+<h2 id="identitybasedpolicy-类" style="position:relative;"><a href="#identitybasedpolicy-%E7%B1%BB" aria-label="identitybasedpolicy 类 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IdentityBasedPolicy 类</h2>
+<p>附加托管和内联政策到个体资源(用户，群， 或者规则)。 基于个体的政策授予权限给个体。</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> IdentityBasedPolicy <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"iam-policies"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> identityBasedPolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span>
+  Statement<span class="token punctuation">,</span>
+  conditionResolver
+<span class="token punctuation">)</span></code></pre></div>
+<h3 id="properties" style="position:relative;"><a href="#properties" aria-label="properties permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties</h3>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>默认值</th>
+<th>必须的</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">Statement</code></td>
+<td>object[]</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td><strong><em>Statement</em></strong> 是政策对象中主要的元素，Statement 元素可以包含单个 statement 或者是包含一组 statement.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].effect</code></td>
+<td>string</td>
+<td>allow</td>
+<td><code class="language-text">false</code></td>
+<td><strong><em>effect</em></strong> 元素指明是被允许还是拒绝。 有效的值是 <code class="language-text">allow</code> 和 <code class="language-text">deny</code>.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].action</code></td>
+<td>string or string[]</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td><strong><em>action</em></strong>元素描述行为， Statements 中必须包含<code class="language-text">action</code> 或者 <code class="language-text">notAction</code> 元素.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].notAction</code></td>
+<td>string or string[]</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td><strong><em>notAction</em></strong> 元素是一个高级的政策元素， 它使得 statement 取匹配所有除了列出的所有行为。Statements 必须包含<code class="language-text">action</code> 或者 <code class="language-text">notAction</code> 元素. 通过使用 <code class="language-text">notAction</code>，可以只列出少量的需要匹配的行为, 而不需要列出一个超长的列表。 当使用 <code class="language-text">notAction</code> 的时候, 你需要注意，如果指明允许， 那么所有行为没有在这个元素中列出的将被允许，如果指明拒绝，那么所有不在这个属性里的行为将被拒绝。</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].resource</code></td>
+<td>string or string[]</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td><strong><em>resource</em></strong> 元素指明 statement 包含的对象。Statements 必须包含 <code class="language-text">resource</code> 或者 <code class="language-text">notResource</code> 元素.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].notResource</code></td>
+<td>string or string[]</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td><strong><em>notResource</em></strong> 元素是一个高级政策元素， 它将匹配除了列表指定的所有的资源。Statements 必须包含 <code class="language-text">resource</code> 或 <code class="language-text">notResource</code> 元素。 通过使用 <code class="language-text">notResource</code> 你可以制定相对短的不匹配资源列表。</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].condition</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td><strong><em>condition</em></strong> 元素 (或者条件块) 可以让你指定当政策生效时候的条件。 在<code class="language-text">condition</code> 元素里边, 你可以通过条件运算符来创建表达式(equal, less than...) 来匹配在政策中的 keys，values 和在请求中的 keys， values.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].condition[&quot;conditionType&quot;]</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>对于特定条件的 conditionResolver 元素， <strong><em>conditionType</em></strong> 应该被替换成一个自定义的字符串</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
+<td>(string or number or boolean) or (string or number or boolean)[]</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>对于自定义的 context，<strong><em>conditionKey</em></strong> 应该是一个自定义的字符串路径。 备注： 属性必须以<code class="language-text">.</code>分隔。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="方法" style="position:relative;"><a href="#%E6%96%B9%E6%B3%95" aria-label="方法 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>方法</h3>
+<h4 id="identitybasedpolicyevaluateaction-resource-context" style="position:relative;"><a href="#identitybasedpolicyevaluateaction-resource-context" aria-label="identitybasedpolicyevaluateaction resource context permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>identityBasedPolicy.evaluate({action, resource, context})</h4>
+<p><em>public</em>: 验证针对特定资源的行为是被允许 (<code class="language-text">true</code>) 还是拒绝 (<code class="language-text">false</code>).</p>
+<h5 id="params" style="position:relative;"><a href="#params" aria-label="params permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>默认值</th>
+<th>必须的</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">action</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述行为。</td>
+</tr>
+<tr>
+<td><code class="language-text">resource</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述资源。</td>
+</tr>
+<tr>
+<td><code class="language-text">context</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>描述资源中嵌入的属性。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="identitybasedpolicycanaction-resource-context" style="position:relative;"><a href="#identitybasedpolicycanaction-resource-context" aria-label="identitybasedpolicycanaction resource context permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>identityBasedPolicy.can({action, resource, context})</h4>
+<p><em>public</em>: 验证针对特定资源的行为是被允许 (<code class="language-text">true</code>) 还是拒绝 (<code class="language-text">false</code>).</p>
+<h5 id="params-1" style="position:relative;"><a href="#params-1" aria-label="params 1 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>默认值</th>
+<th>必须的</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">action</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述行为。</td>
+</tr>
+<tr>
+<td><code class="language-text">resource</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述资源。</td>
+</tr>
+<tr>
+<td><code class="language-text">context</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>描述资源中嵌入的属性。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="identitybasedpolicycannotaction-resource-context" style="position:relative;"><a href="#identitybasedpolicycannotaction-resource-context" aria-label="identitybasedpolicycannotaction resource context permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>identityBasedPolicy.cannot({action, resource, context})</h4>
+<p><em>public</em>: 验证针对特定资源的行为是被拒绝 (<code class="language-text">true</code>) 还是不存在 (<code class="language-text">false</code>)。</p>
+<h5 id="参数" style="position:relative;"><a href="#%E5%8F%82%E6%95%B0" aria-label="参数 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>参数</h5>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>默认值</th>
+<th>必须的</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">action</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述行为。</td>
+</tr>
+<tr>
+<td><code class="language-text">resource</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述资源。</td>
+</tr>
+<tr>
+<td><code class="language-text">context</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>描述资源中嵌入的属性。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="resourcebasedpolicy-类" style="position:relative;"><a href="#resourcebasedpolicy-%E7%B1%BB" aria-label="resourcebasedpolicy 类 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ResourceBasedPolicy 类</h2>
+<p>附加内联政策到个体资源。 Resource-based 政策授权给 principal.</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> ResourceBasedPolicy <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"iam-policies"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> resourceBasedPolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResourceBasedPolicy</span><span class="token punctuation">(</span>
+  Statement<span class="token punctuation">,</span>
+  conditionResolver
+<span class="token punctuation">)</span></code></pre></div>
+<h3 id="属性" style="position:relative;"><a href="#%E5%B1%9E%E6%80%A7" aria-label="属性 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>属性</h3>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>默认值</th>
+<th>必须的</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">Statement</code></td>
+<td>object[]</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td><strong><em>Statement</em></strong> 是政策对象中主要的元素，Statement 元素可以包含单个 statement 或者是包含一组 statement.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].effect</code></td>
+<td>string</td>
+<td>allow</td>
+<td><code class="language-text">false</code></td>
+<td><strong><em>effect</em></strong> 元素指明是被允许还是拒绝。 有效的值是 <code class="language-text">allow</code> 和 <code class="language-text">deny</code>.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].principal</code></td>
+<td>string or string[]</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td><strong><em>principal</em></strong>元素描述针对资源是允许或是拒绝行为， Statements 中必须包含<code class="language-text">principal</code> 或者 <code class="language-text">notPrincipal</code> 元素.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].notPrincipal</code></td>
+<td>string or string[]</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td><strong><em>notPrincipal</em></strong> 元素指定 principal 不被允许或拒绝访问. <code class="language-text">notPrincipal</code> 元素可以让你指定例外。使用这个元素， 可以拒绝所有 principal, 除了指定在<code class="language-text">notPrincipal</code> 元素里边的.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].action</code></td>
+<td>string or string[]</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td><strong><em>action</em></strong>元素描述行为， Statements 中必须包含<code class="language-text">action</code> 或者 <code class="language-text">notAction</code> 元素.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].notAction</code></td>
+<td>string or string[]</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td><strong><em>notAction</em></strong> 元素是一个高级的政策元素， 它使得 statement 取匹配所有除了列出的所有行为。Statements 必须包含<code class="language-text">action</code> 或者 <code class="language-text">notAction</code> 元素. 通过使用 <code class="language-text">notAction</code>，可以只列出少量的需要匹配的行为, 而不需要列出一个超长的列表。 当使用 <code class="language-text">notAction</code> 的时候, 你需要注意，如果指明允许， 那么所有行为没有在这个元素中列出的将被允许，如果指明拒绝，那么所有不在这个属性里的行为将被拒绝。</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].resource</code></td>
+<td>string or string[]</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td><strong><em>resource</em></strong> 元素指明 statement 包含的对象。Statements 必须包含 <code class="language-text">resource</code> 或者 <code class="language-text">notResource</code> 元素.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].notResource</code></td>
+<td>string or string[]</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td><strong><em>notResource</em></strong> 元素是一个高级政策元素， 它将匹配除了列表指定的所有的资源。Statements 必须包含 <code class="language-text">resource</code> 或 <code class="language-text">notResource</code> 元素。 通过使用 <code class="language-text">notResource</code> 你可以制定相对短的不匹配资源列表。</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].condition</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td><strong><em>condition</em></strong> 元素 (或者条件块) 可以让你指定当政策生效时候的条件。 在<code class="language-text">condition</code> 元素里边, 你可以通过条件运算符来创建表达式(equal, less than...) 来匹配在政策中的 keys，values 和在请求中的 keys， values.</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].condition[&quot;conditionType&quot;]</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>对于特定条件的 conditionResolver 元素， <strong><em>conditionType</em></strong> 应该被替换成一个自定义的字符串</td>
+</tr>
+<tr>
+<td><code class="language-text">Statement[].condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
+<td>(string or number or boolean) or (string or number or boolean)[]</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>对于自定义的 context，<strong><em>conditionKey</em></strong> 应该是一个自定义的字符串路径。 备注： 属性必须以<code class="language-text">.</code>分隔。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="方法-1" style="position:relative;"><a href="#%E6%96%B9%E6%B3%95-1" aria-label="方法 1 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>方法</h3>
+<h4 id="resourcebasedpolicyevaluateprincipal-action-resource-context-principaltype" style="position:relative;"><a href="#resourcebasedpolicyevaluateprincipal-action-resource-context-principaltype" aria-label="resourcebasedpolicyevaluateprincipal action resource context principaltype permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.evaluate({principal, action, resource, context, principalType})</h4>
+<p><em>public</em>: 验证针对特定资源的行为是被允许 (<code class="language-text">true</code>) 还是拒绝 (<code class="language-text">false</code>).</p>
+<h5 id="参数-1" style="position:relative;"><a href="#%E5%8F%82%E6%95%B0-1" aria-label="参数 1 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>参数</h5>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>默认值</th>
+<th>必须的</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">principal</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述 principal。</td>
+</tr>
+<tr>
+<td><code class="language-text">action</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述行为。</td>
+</tr>
+<tr>
+<td><code class="language-text">resource</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述资源。</td>
+</tr>
+<tr>
+<td><code class="language-text">context</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>描述资源中嵌入的属性。</td>
+</tr>
+<tr>
+<td><code class="language-text">principalType</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述 principal 类型 (principal 的属性， 如果 statement 包含 principal 对象)。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="resourcebasedpolicycanprincipal-action-resource-context-principaltype" style="position:relative;"><a href="#resourcebasedpolicycanprincipal-action-resource-context-principaltype" aria-label="resourcebasedpolicycanprincipal action resource context principaltype permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.can({principal, action, resource, context, principalType})</h4>
+<p><em>public</em>: 验证针对特定资源的行为是被允许 (<code class="language-text">true</code>) 还是不存在 (<code class="language-text">false</code>)。</p>
+<h5 id="参数-2" style="position:relative;"><a href="#%E5%8F%82%E6%95%B0-2" aria-label="参数 2 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>参数</h5>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>默认值</th>
+<th>必须的</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">principal</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述 principal。</td>
+</tr>
+<tr>
+<td><code class="language-text">action</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述行为。</td>
+</tr>
+<tr>
+<td><code class="language-text">resource</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述资源。</td>
+</tr>
+<tr>
+<td><code class="language-text">context</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>描述资源中嵌入的属性。</td>
+</tr>
+<tr>
+<td><code class="language-text">principalType</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述 principal 类型 (principal 的属性， 如果 statement 包含 principal 对象)。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="resourcebasedpolicycannotprincipal-action-resource-context-principaltype" style="position:relative;"><a href="#resourcebasedpolicycannotprincipal-action-resource-context-principaltype" aria-label="resourcebasedpolicycannotprincipal action resource context principaltype permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.cannot({principal, action, resource, context, principalType})</h4>
+<p><em>public</em>: 验证针对特定资源的行为是被拒绝 (<code class="language-text">true</code>) 还是不存在 (<code class="language-text">false</code>)。</p>
+<h5 id="参数-3" style="position:relative;"><a href="#%E5%8F%82%E6%95%B0-3" aria-label="参数 3 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>参数</h5>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>默认值</th>
+<th>必须的</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">principal</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述 principal。</td>
+</tr>
+<tr>
+<td><code class="language-text">action</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述行为。</td>
+</tr>
+<tr>
+<td><code class="language-text">resource</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述资源。</td>
+</tr>
+<tr>
+<td><code class="language-text">context</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>描述资源中嵌入的属性。</td>
+</tr>
+<tr>
+<td><code class="language-text">principalType</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>描述 principal 类型 (principal 的属性， 如果 statement 包含 principal 对象)。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="getvaluefrompathdata-path-function" style="position:relative;"><a href="#getvaluefrompathdata-path-function" aria-label="getvaluefrompathdata path function permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getValueFromPath(data, path) Function</h2>
+<p>通过路径获取对象。</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> getValueFromPath <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"iam-policies"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> value <span class="token operator">=</span> <span class="token function">getValueFromPath</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> path<span class="token punctuation">)</span></code></pre></div>
+<h3 id="参数-4" style="position:relative;"><a href="#%E5%8F%82%E6%95%B0-4" aria-label="参数 4 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>参数</h3>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>默认值</th>
+<th>必须的</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">data</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>上下文。</td>
+</tr>
+<tr>
+<td><code class="language-text">path</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>数据中的路径。属性名通过<code class="language-text">.</code>分隔。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="applycontextstr-context-function" style="position:relative;"><a href="#applycontextstr-context-function" aria-label="applycontextstr context function permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>applyContext(str, context) Function</h2>
+<p>获取嵌入到上下文的字符串</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> applyContext <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"iam-policies"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> embeddedStr <span class="token operator">=</span> <span class="token function">applyContext</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> context<span class="token punctuation">)</span></code></pre></div>
+<h3 id="参数-5" style="position:relative;"><a href="#%E5%8F%82%E6%95%B0-5" aria-label="参数 5 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>参数</h3>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>默认值</th>
+<th>必须的</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">str</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>它可能包含嵌入的路径， 通过使用 (<code class="language-text">${}</code>).</td>
+</tr>
+<tr>
+<td><code class="language-text">context</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>指定上下文， 它应该被嵌入到 <code class="language-text">str</code> 里边.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="license" style="position:relative;"><a href="#license" aria-label="license permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>License</h2>
+<p>MIT © <a href="https://github.com/roggervalf" target="_blank" rel="nofollow">roggervalf</a></p></div></section></main><footer class="footer__FooterStyled-r54yyk-0 eJkglU">© <!-- -->2020<!-- -->, Built with<!-- --> <span style="color:red;margin:0 0.4rem">♥</span> <!-- --> <!-- --> by<a rel="noreferrer" style="margin-left:0.4rem" target="_blank" href="https://github.com/gersongams">@gersongams</a></footer></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/zh-CN/";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-f0778e977be9f2010ecc.js"],"component---src-pages-404-js":["/component---src-pages-404-js-1f1540510b3c13e5b207.js"],"component---src-pages-index-js":["/component---src-pages-index-js-64358014b0933a9438b7.js"],"component---src-templates-index-js":["/component---src-templates-index-js-9e528b38e5c786f271b2.js"]};/*]]>*/</script><script src="/component---src-templates-index-js-9e528b38e5c786f271b2.js" async=""></script><script src="/187aa136b9f9f85b0685af15177d72ed6124793f-3215ee24c8467ab8c6bb.js" async=""></script><script src="/545f34e4-699a489d72ce4efc69d8.js" async=""></script><script src="/d7eeaac4-839221d70e2b73e3a6c9.js" async=""></script><script src="/styles-823ae8103e36ae8a7f9f.js" async=""></script><script src="/app-f0778e977be9f2010ecc.js" async=""></script><script src="/framework-75da9754c2a76bbaf08a.js" async=""></script><script src="/webpack-runtime-37d9a2dcc8fb6805988b.js" async=""></script></body></html>

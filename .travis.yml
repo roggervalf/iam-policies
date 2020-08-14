@@ -28,7 +28,7 @@ after_success:
 
 deploy:
   provider: pages
-  local_dir: wwww/public
+  local_dir: www/public
   skip_cleanup: true
   token: $GH_TOKEN
   keep_history: true

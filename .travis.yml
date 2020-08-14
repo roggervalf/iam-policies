@@ -17,10 +17,23 @@ script:
   - yarn build
   - git config --global user.name "Travis CI"
   - git config --global user.email $GH_EMAIL
+  - cd www
+  - yarn
+  - yarn build
+  - cd ..
   - commitlint-travis
 
 after_success:
   - yarn semantic-release
+
+deploy:
+  provider: pages
+  local_dir: wwww/public
+  skip_cleanup: true
+  token: $GH_TOKEN
+  keep_history: true
+  on:
+    branch: master
 
 branches:
   except:

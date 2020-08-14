@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `IAM-policies`,
     description: `Define custom IAM Policies by allowed or denied set of actions against a set of resources with optional context and conditions.`,
-    author: `@gersongams`,
+    author: `@roggervalf`
   },
   plugins: [
     `gatsby-plugin-styled-components`,
@@ -11,15 +11,15 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/docs`,
-        name: `docs`,
-      },
+        name: `docs`
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
-      },
+        path: `${__dirname}/src/images`
+      }
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -32,8 +32,8 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
-      },
+        icon: `src/images/gatsby-icon.png` // This path is relative to the root of the site.
+      }
     },
     {
       resolve: `gatsby-transformer-remark`,
@@ -51,7 +51,7 @@ module.exports = {
               tight: false,
               fromHeading: 1,
               toHeading: 3
-            },
+            }
           },
           {
             resolve: "gatsby-remark-external-links",
@@ -73,28 +73,28 @@ module.exports = {
                   language: "superscript",
                   extend: "javascript",
                   definition: {
-                    superscript_types: /(SuperType)/,
+                    superscript_types: /(SuperType)/
                   },
                   insertBefore: {
                     function: {
-                      superscript_keywords: /(superif|superelse)/,
-                    },
-                  },
-                },
+                      superscript_keywords: /(superif|superelse)/
+                    }
+                  }
+                }
               ],
               prompt: {
                 user: "root",
                 host: "localhost",
-                global: false,
+                global: false
               },
-              escapeEntities: {},
-            },
-          },
-        ],
-      },
-    },
+              escapeEntities: {}
+            }
+          }
+        ]
+      }
+    }
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
-  ],
+  ]
 }

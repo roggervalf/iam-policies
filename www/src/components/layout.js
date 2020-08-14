@@ -27,18 +27,10 @@ const LayoutStyled = styled.div`
   }
 `
 
-const Layout = ({ children }) => {
+const Layout = ({ data, children }) => {
   const [menuOpen, triggerMenu] = useState(false)
-  const data = useStaticQuery(graphql`
+  const newData = useStaticQuery(graphql`
     query SiteTitleQuery {
-      allMarkdownRemark {
-        edges {
-          node {
-            html
-            tableOfContents(absolute: false, heading: "", maxDepth: 2)
-          }
-        }
-      }
       site {
         siteMetadata {
           title
@@ -46,9 +38,6 @@ const Layout = ({ children }) => {
       }
     }
   `)
-  const {
-    allMarkdownRemark: { edges },
-  } = data
 
   const toggleMenu = () => {
     triggerMenu(!menuOpen)
@@ -62,13 +51,9 @@ const Layout = ({ children }) => {
         <Header
           triggerMenu={toggleMenu}
           menuOpen={menuOpen}
-          siteTitle={data.site.siteMetadata.title}
+          siteTitle={newData.site.siteMetadata.title}
         />
-        <Sidebar
-          triggerMenu={toggleMenu}
-          menuOpen={menuOpen}
-          data={edges[0].node}
-        />
+        <Sidebar triggerMenu={toggleMenu} menuOpen={menuOpen} data={data} />
         <Content content={children} />
       </LayoutStyled>
     </ThemeProvider>
@@ -76,7 +61,7 @@ const Layout = ({ children }) => {
 }
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default Layout

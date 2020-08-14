@@ -1,11 +1,11 @@
 ---
-title: "documentation"
-date: "14-06-2020"
+title: "en"
+date: "14-08-2020"
 ---
 
 # iam-policies
 
-> [![NPM](https://img.shields.io/npm/v/iam-policies.svg)](https://www.npmjs.com/package/iam-policies) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+> [![NPM](https://img.shields.io/npm/v/iam-policies.svg)](https://www.npmjs.com/package/iam-policies) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://travis-ci.com/roggervalf/iam-policies.svg?branch=master)](https://travis-ci.com/github/roggervalf/iam-policies) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 ## About
 
@@ -33,7 +33,7 @@ yarn add iam-policies
 // @deno-types="https://raw.githubusercontent.com/roggervalf/iam-policies/master/dist/main.d.ts"
 import {
   IdentityBasedPolicy,
-  ResourceBasedPolicy,
+  ResourceBasedPolicy
 } from "https://raw.githubusercontent.com/roggervalf/iam-policies/master/dist/main.es.js"
 ```
 
@@ -43,7 +43,7 @@ or
 // @deno-types="https://deno.land/x/iam_policies@master/dist/main.d.ts"
 import {
   IdentityBasedPolicy,
-  ResourceBasedPolicy,
+  ResourceBasedPolicy
 } from "https://deno.land/x/iam_policies@master/dist/main.es.js"
 ```
 
@@ -59,6 +59,8 @@ Supports these glob features:
 
 ### Examples
 
+- Here is an example of using it into a [GraphQL project](https://github.com/roggerval/tech-insiders-nodejs) (step 7).
+
 First, we should get our policies classes:
 
 ```js
@@ -72,12 +74,12 @@ const allowExample = new IdentityBasedPolicy([
   {
     effect: "allow", // optional, defaults to allow
     resource: ["secrets:${user.id}:*"], // embedded value by context
-    action: ["read", "write"],
+    action: ["read", "write"]
   },
   {
     resource: ["bd:company:*"],
-    action: "create",
-  },
+    action: "create"
+  }
 ])
 
 const contextForAllowExample = { user: { id: 456 } }
@@ -85,22 +87,22 @@ const contextForAllowExample = { user: { id: 456 } }
 allowExample.evaluate({
   action: "read",
   resource: "secrets:456:ultraSecret",
-  context: contextForAllowExample,
+  context: contextForAllowExample
 }) // true
 allowExample.evaluate({
   action: "create",
   resource: "secrets:456:ultraSecret",
-  context: contextForAllowExample,
+  context: contextForAllowExample
 }) // false
 allowExample.evaluate({
   action: "create",
   resource: "bd:company:account",
-  context: contextForAllowExample,
+  context: contextForAllowExample
 }) // true
 allowExample.evaluate({
   action: "read",
   resource: "bd:company:account",
-  context: contextForAllowExample,
+  context: contextForAllowExample
 }) // false
 ```
 
@@ -110,13 +112,13 @@ allowExample.evaluate({
 const denyExample = new IdentityBasedPolicy([
   {
     resource: ["secrets:${user.bestFriends}:*"],
-    action: "read",
+    action: "read"
   },
   {
     effect: "deny",
     resource: "secrets:123:*",
-    action: "read",
-  },
+    action: "read"
+  }
 ])
 
 const contextForDenyExample = { user: { bestFriends: [123, 563, 1211] } }
@@ -124,12 +126,12 @@ const contextForDenyExample = { user: { bestFriends: [123, 563, 1211] } }
 denyExample.evaluate({
   action: "read",
   resource: "secrets:563:super-secret",
-  context: contextForDenyExample,
+  context: contextForDenyExample
 }) // true
 denyExample.evaluate({
   action: "read",
   resource: "secrets:123:super-secret",
-  context: contextForDenyExample,
+  context: contextForDenyExample
 }) // false
 ```
 
@@ -139,17 +141,17 @@ denyExample.evaluate({
 const notActionExample = new IdentityBasedPolicy([
   {
     resource: "bd:company:*",
-    notAction: "update",
-  },
+    notAction: "update"
+  }
 ])
 
 notActionExample.evaluate({
   action: "delete",
-  resource: "bd:company:account",
+  resource: "bd:company:account"
 }) // true
 notActionExample.evaluate({
   action: "update",
-  resource: "bd:company:account",
+  resource: "bd:company:account"
 }) // false
 ```
 
@@ -159,17 +161,17 @@ notActionExample.evaluate({
 const notResourceExample = new IdentityBasedPolicy([
   {
     notResource: ["bd:roles:*"],
-    action: "update",
-  },
+    action: "update"
+  }
 ])
 
 notResourceExample.evaluate({
   action: "update",
-  resource: "photos",
+  resource: "photos"
 }) // true
 notResourceExample.evaluate({
   action: "update",
-  resource: "bd:roles:admin",
+  resource: "bd:roles:admin"
 }) // false
 ```
 
@@ -179,17 +181,17 @@ notResourceExample.evaluate({
 const adminExample = new IdentityBasedPolicy([
   {
     resource: "*",
-    action: "*",
-  },
+    action: "*"
+  }
 ])
 
 adminExample.evaluate({
   action: "read",
-  resource: "someResource",
+  resource: "someResource"
 }) // true
 adminExample.evaluate({
   action: "write",
-  resource: "otherResource",
+  resource: "otherResource"
 }) // true
 ```
 
@@ -197,9 +199,9 @@ adminExample.evaluate({
 
 ```js
 const conditions = {
-  greaterThan: function (data, expected) {
+  greaterThan: function(data, expected) {
     return data > expected
-  },
+  }
 }
 
 const conditionExample = new IdentityBasedPolicy(
@@ -209,10 +211,10 @@ const conditionExample = new IdentityBasedPolicy(
       action: ["read", "write"],
       condition: {
         greaterThan: {
-          "user.age": 18,
-        },
-      },
-    },
+          "user.age": 18
+        }
+      }
+    }
   ],
   conditions
 )
@@ -220,14 +222,14 @@ const conditionExample = new IdentityBasedPolicy(
 conditionExample.evaluate({
   action: "read",
   resource: "secrets:code",
-  context: { user: { age: 19 } },
+  context: { user: { age: 19 } }
 }) // true
 conditionExample.evaluate({
   action: "read",
   resource: "secrets:admin:super-secret",
   context: {
-    user: { age: 18 },
-  },
+    user: { age: 18 }
+  }
 }) // false
 ```
 
@@ -239,36 +241,36 @@ const principalExample = new ResourceBasedPolicy([
     principal: "1",
     effect: "allow",
     resource: ["secrets:user:*"],
-    action: ["read", "write"],
+    action: ["read", "write"]
   },
   {
     principal: { id: "2" },
     resource: "bd:company:*",
-    notAction: "update",
-  },
+    notAction: "update"
+  }
 ])
 
 principalExample.evaluate({
   principal: "1",
   action: "read",
-  resource: "secrets:user:name",
+  resource: "secrets:user:name"
 }) // true
 principalExample.evaluate({
   principal: "2",
   action: "read",
-  resource: "secrets:user:super-secret",
+  resource: "secrets:user:super-secret"
 }) // false
 principalExample.evaluate({
   principal: "2",
   action: "read",
   resource: "bd:company:name",
-  principalType: "id",
+  principalType: "id"
 }) // true
 principalExample.evaluate({
   principal: "2",
   action: "update",
   resource: "bd:company:name",
-  principalType: "id",
+  principalType: "id"
 }) // false
 ```
 
@@ -279,36 +281,36 @@ const notPrincipalExample = new ResourceBasedPolicy([
   {
     notPrincipal: ["1", "2"],
     resource: ["secrets:bd:*"],
-    action: "read",
+    action: "read"
   },
   {
     notPrincipal: { id: "3" },
     resource: "secrets:admin:*",
-    action: "read",
-  },
+    action: "read"
+  }
 ])
 
 notPrincipalExample.evaluate({
   principal: "3",
   action: "read",
-  resource: "secrets:bd:tables",
+  resource: "secrets:bd:tables"
 }) // true
 notPrincipalExample.evaluate({
   principal: "1",
   action: "read",
-  resource: "secrets:bd:tables",
+  resource: "secrets:bd:tables"
 }) // false
 notPrincipalExample.evaluate({
   principal: "1",
   action: "read",
   resource: "secrets:admin:friends",
-  principalType: "id",
+  principalType: "id"
 }) // true
 notPrincipalExample.evaluate({
   principal: "3",
   action: "read",
   resource: "secrets:admin:friends",
-  principalType: "id",
+  principalType: "id"
 }) // false
 ```
 
@@ -319,13 +321,13 @@ const canAndCannotStatements = [
   {
     effect: "allow", // again, this is optional, as it already defaults to allow
     resource: ["website:${division.companyId}:${division.countryId}:*/*"],
-    action: ["create", "update", "delete"],
+    action: ["create", "update", "delete"]
   },
   {
     effect: "deny",
     resource: ["website:${division.companyId}:${division.countryId}:city/lima"],
-    action: "delete",
-  },
+    action: "delete"
+  }
 ]
 
 const inclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements)
@@ -333,14 +335,14 @@ const inclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements)
 const contextCanAndCannot = {
   division: {
     companyId: 123,
-    countryId: 456,
-  },
+    countryId: 456
+  }
 }
 
 const canAndCannotDeniedArgument = {
   action: "delete",
   resource: "website:123:456:city/lima",
-  context: contextCanAndCannot,
+  context: contextCanAndCannot
 }
 
 inclusivePolicy.evaluate(canAndCannotDeniedArgument) // false
@@ -355,7 +357,7 @@ inclusivePolicy.cannot(canAndCannotDeniedArgument) // true
 const canAndCannotNotPresentArgument = {
   action: "read",
   resource: "website:123:456:}city/lima",
-  context: contextCanAndCannot,
+  context: contextCanAndCannot
 }
 
 inclusivePolicy.evaluate(canAndCannotNotPresentArgument) // false
@@ -548,10 +550,6 @@ const embeddedStr = applyContext(str, context)
 | --------- | ------ | --------- | -------- | --------------------------------------------------------------- |
 | `str`     | string | undefined | `true`   | It could contain embedded path values into it by using (`${}`). |
 | `context` | object | undefined | `false`  | It represents the context that should be embedded into `str`.   |
-
-## Contributing
-
-Fork the repo, make some changes, submit a pull-request! Here is the [contributing](contributing.md) doc that has some details.
 
 ## License
 

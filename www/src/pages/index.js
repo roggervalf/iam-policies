@@ -1,33 +1,45 @@
 import React from "react"
-import { graphql, useStaticQuery } from "gatsby"
+import { Link, graphql } from "gatsby" // highlight-line
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-import Documentation from "../components/documentation"
-
-const IndexPage = () => {
-  const data = useStaticQuery(graphql`
-    query pageQuery {
-      allMarkdownRemark {
-        edges {
-          node {
-            html
-          }
-        }
-      }
-    }
-  `)
-
-  const {
-    allMarkdownRemark: { edges },
-  } = data
-
+export default function Home({ data }) {
   return (
-    <Layout>
-      <SEO title="Home" />
-      <Documentation data={edges[0].node.html} />
-    </Layout>
+    <div>
+      <h1>IAM Policies</h1>
+      <h4>{data.allMarkdownRemark.totalCount} Translations</h4>
+      {data.allMarkdownRemark.edges.map(({ node }) => (
+        <div key={node.id}>
+          {/* highlight-start */}
+          <Link to={node.fields.slug}>
+            {/* highlight-end */}
+            <h3>
+              {node.frontmatter.title} <span>— {node.frontmatter.date}</span>
+            </h3>
+          </Link>{" "}
+          {/* highlight-line */}
+        </div>
+      ))}
+    </div>
   )
 }
 
-export default IndexPage
+export const query = graphql`
+  query {
+    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+      totalCount
+      edges {
+        node {
+          id
+          html
+          frontmatter {
+            title
+            date
+          }
+          fields {
+            slug
+          }
+          excerpt
+        }
+      }
+    }
+  }
+`

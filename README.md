@@ -1,11 +1,6 @@
 # iam-policies
 
->
-
-[![NPM](https://img.shields.io/npm/v/iam-policies.svg)](https://www.npmjs.com/package/iam-policies)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Build Status](https://travis-ci.com/roggervalf/iam-policies.svg?branch=master)](https://travis-ci.com/github/roggervalf/iam-policies)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+> [![NPM](https://img.shields.io/npm/v/iam-policies.svg)](https://www.npmjs.com/package/iam-policies) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://travis-ci.com/roggervalf/iam-policies.svg?branch=master)](https://travis-ci.com/github/roggervalf/iam-policies) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 ## About
 
@@ -53,7 +48,9 @@ Supports these glob features:
 
 - Policies creation ([IdentityBasedPolicy and ResourceBasedPolicy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policy-types))
 - Permission verifications
-- Translations: [Chinese docs](./translations/README.zh-CN.md) by [@mickymao1110](https://github.com/mickymao1110)
+- Translations:
+  - [Chinese docs](https://roggervalf.github.io/iam-policies/zh-CN/) by [@mickymao1110](https://github.com/mickymao1110)
+  - [English docs](https://roggervalf.github.io/iam-policies/en/) by [@roggervalf](https://github.com/roggervalf)
 
 ## Usage
 

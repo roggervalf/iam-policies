@@ -1,4 +1,4 @@
-import { ResourceBasedPolicy } from './Policies';
+import { ResourceBasedPolicy } from './ResourceBasedPolicy';
 
 describe('ResourceBasedPolicy Class', () => {
   describe('when creating resource based policy', () => {

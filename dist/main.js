@@ -19,7 +19,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
  * ```
  */
 function getTag(value) {
-    return Object.prototype.toString.call(value);
+  return Object.prototype.toString.call(value);
 }
 
 /**
@@ -38,9 +38,11 @@ function getTag(value) {
  * // => false
  */
 function isSymbol(value) {
-    var type = typeof value;
-    return (type === 'symbol' ||
-        (type === 'object' && value !== null && getTag(value) === '[object Symbol]'));
+  var type = typeof value;
+  return (
+    type === 'symbol' ||
+    (type === 'object' && value !== null && getTag(value) === '[object Symbol]')
+  );
 }
 
 /** Used as references for various `Number` constants. */
@@ -61,11 +63,11 @@ var INFINITY = 1 / 0;
  * // => false
  */
 function toKey(value) {
-    if (typeof value === 'string' || isSymbol(value)) {
-        return value;
-    }
-    var result = "" + value;
-    return result === '0' && 1 / value === -INFINITY ? '-0' : result;
+  if (typeof value === 'string' || isSymbol(value)) {
+    return value;
+  }
+  var result = '' + value;
+  return result === '0' && 1 / value === -INFINITY ? '-0' : result;
 }
 
 /** Used to match property names within property paths. */
@@ -103,19 +105,23 @@ var reIsPlainProp = /^\w*$/; //matches any word caracter (alphanumeric and under
  * ```
  */
 function isKey(value, object) {
-    if (Array.isArray(value)) {
-        return false;
-    }
-    var type = typeof value;
-    if (type === 'number' ||
-        type === 'boolean' ||
-        value === null ||
-        isSymbol(value)) {
-        return true;
-    }
-    return (reIsPlainProp.test(value) ||
-        !reIsDeepProp.test(value) ||
-        (object !== null && value in Object(object)));
+  if (Array.isArray(value)) {
+    return false;
+  }
+  var type = typeof value;
+  if (
+    type === 'number' ||
+    type === 'boolean' ||
+    value === null ||
+    isSymbol(value)
+  ) {
+    return true;
+  }
+  return (
+    reIsPlainProp.test(value) ||
+    !reIsDeepProp.test(value) ||
+    (object !== null && value in Object(object))
+  );
 }
 
 /**
@@ -153,22 +159,22 @@ function isKey(value, object) {
  * ```
  */
 function memoize(func, resolver) {
-    var memoized = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var key = resolver ? resolver.apply(this, args) : args[0];
-        var cache = memoized.cache;
-        if (cache.has(key)) {
-            return cache.get(key);
-        }
-        var result = func.apply(this, args);
-        memoized.cache = cache.set(key, result) || cache;
-        return result;
-    };
-    memoized.cache = new Map();
-    return memoized;
+  var memoized = function() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      args[_i] = arguments[_i];
+    }
+    var key = resolver ? resolver.apply(this, args) : args[0];
+    var cache = memoized.cache;
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    var result = func.apply(this, args);
+    memoized.cache = cache.set(key, result) || cache;
+    return result;
+  };
+  memoized.cache = new Map();
+  return memoized;
 }
 /*const memoize = (fn: Function): Function => {
   const cache = {};
@@ -194,21 +200,21 @@ var MAX_MEMOIZE_SIZE = 500;
  * @returns {Function} Returns the new memoized function.
  */
 function memoizeCapped(func) {
-    var result = memoize(func, function (key) {
-        var cache = result.cache;
-        if (cache.size === MAX_MEMOIZE_SIZE) {
-            cache.clear();
-        }
-        return key;
-    });
-    return result;
+  var result = memoize(func, function(key) {
+    var cache = result.cache;
+    if (cache.size === MAX_MEMOIZE_SIZE) {
+      cache.clear();
+    }
+    return key;
+  });
+  return result;
 }
 
 var charCodeOfDot = '.'.charCodeAt(0);
 var reEscapeChar = /\\(\\)?/g;
 var rePropName = RegExp(
-// Match anything that isn't a dot or bracket.
-'[^.[\\]]+' +
+  // Match anything that isn't a dot or bracket.
+  '[^.[\\]]+' +
     '|' +
     // Or match property names within brackets.
     '\\[(?:' +
@@ -220,7 +226,9 @@ var rePropName = RegExp(
     ')\\]' +
     '|' +
     // Or match "" as the space between consecutive dots or empty brackets.
-    '(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))', 'g');
+    '(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))',
+  'g'
+);
 /**
  * Converts `string` to a property path array.
  *
@@ -229,23 +237,22 @@ var rePropName = RegExp(
  * @param {string} string The string to convert.
  * @returns {Array} Returns the property path array.
  */
-var stringToPath = memoizeCapped(function (string) {
-    var result = [];
-    if (string.charCodeAt(0) === charCodeOfDot) {
-        result.push('');
+var stringToPath = memoizeCapped(function(string) {
+  var result = [];
+  if (string.charCodeAt(0) === charCodeOfDot) {
+    result.push('');
+  }
+  string.replace(rePropName, function(match, expression, quote, subString) {
+    var key = match;
+    if (quote) {
+      key = subString.replace(reEscapeChar, '$1');
+    } else if (expression) {
+      key = expression.trim();
     }
-    string.replace(rePropName, function (match, expression, quote, subString) {
-        var key = match;
-        if (quote) {
-            key = subString.replace(reEscapeChar, '$1');
-        }
-        else if (expression) {
-            key = expression.trim();
-        }
-        result.push(key);
-        return '';
-    });
-    return result;
+    result.push(key);
+    return '';
+  });
+  return result;
 });
 
 /**
@@ -257,10 +264,10 @@ var stringToPath = memoizeCapped(function (string) {
  * @returns {Array} Returns the cast property path array.
  */
 function castPath(value, object) {
-    if (Array.isArray(value)) {
-        return value;
-    }
-    return isKey(value, object) ? [value] : stringToPath(value);
+  if (Array.isArray(value)) {
+    return value;
+  }
+  return isKey(value, object) ? [value] : stringToPath(value);
 }
 /**
  * The base implementation of `get` without support for default values.
@@ -271,14 +278,14 @@ function castPath(value, object) {
  * @returns {*} Returns the resolved value.
  */
 function baseGet(object, path) {
-    var newPath = castPath(path, object);
-    var index = 0;
-    var length = newPath.length;
-    var value = object;
-    while (value instanceof Object && index < length) {
-        value = value[toKey(newPath[index++])];
-    }
-    return index && index === length ? value : undefined;
+  var newPath = castPath(path, object);
+  var index = 0;
+  var length = newPath.length;
+  var value = object;
+  while (value instanceof Object && index < length) {
+    value = value[toKey(newPath[index++])];
+  }
+  return index && index === length ? value : undefined;
 }
 /**
  * Gets the value at `path` of `object`. If the resolved value is
@@ -304,53 +311,68 @@ function baseGet(object, path) {
  * // => 'default'
  */
 function getValueFromPath(object, path, defaultValue) {
-    var result = object === null ? undefined : baseGet(object, path);
-    return result === undefined ? defaultValue : result;
+  var result = object === null ? undefined : baseGet(object, path);
+  return result === undefined ? defaultValue : result;
 }
 
 var reDelimiters = /\${([^}]*)}/g;
 var trim = / +(?= )|^\s+|\s+$/g;
-var specialTrim = function (str) { return str.replace(trim, ''); };
+var specialTrim = function(str) {
+  return str.replace(trim, '');
+};
 function applyContext(str, context) {
-    if (!context)
-        return str;
-    return specialTrim(str.replace(reDelimiters, function (_, path) {
-        var value = getValueFromPath(context, path);
-        if (Array.isArray(value))
-            return "{" + value + "}";
-        if (value instanceof Object)
-            return String(undefined);
-        return String(value);
-    }));
+  if (!context) return str;
+  return specialTrim(
+    str.replace(reDelimiters, function(_, path) {
+      var value = getValueFromPath(context, path);
+      if (Array.isArray(value)) return '{' + value + '}';
+      if (value instanceof Object) return String(undefined);
+      return String(value);
+    })
+  );
 }
-var Statement = /** @class */ (function () {
-    function Statement(_a) {
-        var _b = _a.effect, effect = _b === void 0 ? 'allow' : _b, condition = _a.condition;
-        this.effect = effect;
-        this.condition = condition;
-    }
-    Statement.prototype.matchConditions = function (_a) {
-        var _this = this;
-        var context = _a.context, conditionResolver = _a.conditionResolver;
-        return conditionResolver && this.condition && context
-            ? Object.keys(this.condition).every(function (condition) {
-                return Object.keys(_this.condition ? _this.condition[condition] : {}).every(function (path) {
-                    if (_this.condition) {
-                        var conditionValues = _this.condition[condition][path];
-                        if (conditionValues instanceof Array) {
-                            return conditionValues.some(function (value) {
-                                return conditionResolver[condition](getValueFromPath(context, path), value);
-                            });
-                        }
-                        return conditionResolver[condition](getValueFromPath(context, path), conditionValues);
-                    }
-                    return conditionResolver[condition](getValueFromPath(context, path), '');
+var Statement = /** @class */ (function() {
+  function Statement(_a) {
+    var _b = _a.effect,
+      effect = _b === void 0 ? 'allow' : _b,
+      condition = _a.condition;
+    this.effect = effect;
+    this.condition = condition;
+  }
+  Statement.prototype.matchConditions = function(_a) {
+    var _this = this;
+    var context = _a.context,
+      conditionResolver = _a.conditionResolver;
+    return conditionResolver && this.condition && context
+      ? Object.keys(this.condition).every(function(condition) {
+          return Object.keys(
+            _this.condition ? _this.condition[condition] : {}
+          ).every(function(path) {
+            if (_this.condition) {
+              var conditionValues = _this.condition[condition][path];
+              if (conditionValues instanceof Array) {
+                return conditionValues.some(function(value) {
+                  return conditionResolver[condition](
+                    getValueFromPath(context, path),
+                    value
+                  );
                 });
-            })
-            : true;
-    };
-    return Statement;
-}());
+              }
+              return conditionResolver[condition](
+                getValueFromPath(context, path),
+                conditionValues
+              );
+            }
+            return conditionResolver[condition](
+              getValueFromPath(context, path),
+              ''
+            );
+          });
+        })
+      : true;
+  };
+  return Statement;
+})();
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -369,16 +391,25 @@ and limitations under the License.
 /* global Reflect, Promise */
 
 var extendStatics = function(d, b) {
-    extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return extendStatics(d, b);
+  extendStatics =
+    Object.setPrototypeOf ||
+    ({ __proto__: [] } instanceof Array &&
+      function(d, b) {
+        d.__proto__ = b;
+      }) ||
+    function(d, b) {
+      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    };
+  return extendStatics(d, b);
 };
 
 function __extends(d, b) {
-    extendStatics(d, b);
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  extendStatics(d, b);
+  function __() {
+    this.constructor = d;
+  }
+  d.prototype =
+    b === null ? Object.create(b) : ((__.prototype = b.prototype), new __());
 }
 
 /**
@@ -392,7 +423,7 @@ function __extends(d, b) {
  * ```
  */
 function instanceOfActionBlock(object) {
-    return 'action' in object;
+  return 'action' in object;
 }
 /**
  * Validate if an `object` is an instance of `PrincipalBlock`.
@@ -405,7 +436,7 @@ function instanceOfActionBlock(object) {
  * ```
  */
 function instanceOfPrincipalBlock(object) {
-    return 'principal' in object;
+  return 'principal' in object;
 }
 /**
  * Validate if an `object` is an instance of `NotResourceBlock`.
@@ -418,7 +449,7 @@ function instanceOfPrincipalBlock(object) {
  * ```
  */
 function instanceOfNotResourceBlock(object) {
-    return 'notResource' in object;
+  return 'notResource' in object;
 }
 /**
  * Validate if an `object` is an instance of `ResourceBlock`.
@@ -431,7 +462,7 @@ function instanceOfNotResourceBlock(object) {
  * ```
  */
 function instanceOfResourceBlock(object) {
-    return 'resource' in object;
+  return 'resource' in object;
 }
 //export { IdentityBasedType, ResourceBasedType, PrincipalMap, Patterns, ResourceBlock, ActionBlock};
 /*
@@ -472,12 +503,12 @@ condition: {//ConditionMap
  * ```
  */
 function getIndexRange(initialSeparator, finalSeparator, str) {
-    var beginningIndex = str.indexOf(initialSeparator);
-    var finalIndex = str.indexOf(finalSeparator, beginningIndex + 1);
-    if (beginningIndex >= 0 && finalIndex > 0) {
-        return [beginningIndex, finalIndex];
-    }
-    return [-1, -1];
+  var beginningIndex = str.indexOf(initialSeparator);
+  var finalIndex = str.indexOf(finalSeparator, beginningIndex + 1);
+  if (beginningIndex >= 0 && finalIndex > 0) {
+    return [beginningIndex, finalIndex];
+  }
+  return [-1, -1];
 }
 /**
  * Object returned by decomposeString function
@@ -508,421 +539,582 @@ function getIndexRange(initialSeparator, finalSeparator, str) {
  * ```
  */
 function decomposeString(initialSeparator, finalSeparator, str) {
-    var _a = getIndexRange(initialSeparator, finalSeparator, str), beginningIndex = _a[0], finalIndex = _a[1];
-    return {
-        start: beginningIndex,
-        end: finalIndex,
-        pre: beginningIndex >= 0 ? str.slice(0, beginningIndex) : '',
-        body: beginningIndex >= 0
-            ? str.slice(beginningIndex + initialSeparator.length, finalIndex)
-            : '',
-        post: beginningIndex >= 0 ? str.slice(finalIndex + finalSeparator.length) : ''
-    };
+  var _a = getIndexRange(initialSeparator, finalSeparator, str),
+    beginningIndex = _a[0],
+    finalIndex = _a[1];
+  return {
+    start: beginningIndex,
+    end: finalIndex,
+    pre: beginningIndex >= 0 ? str.slice(0, beginningIndex) : '',
+    body:
+      beginningIndex >= 0
+        ? str.slice(beginningIndex + initialSeparator.length, finalIndex)
+        : '',
+    post:
+      beginningIndex >= 0 ? str.slice(finalIndex + finalSeparator.length) : ''
+  };
 }
 
-var Matcher = /** @class */ (function () {
-    function Matcher(pattern) {
-        var _this = this;
-        this.set = [];
-        this.pattern = pattern.trim();
-        this.empty = !this.pattern ? true : false;
-        var set = this.braceExpand();
-        this.set = set.map(function (val) { return _this.parse(val); });
-        this.set = this.set.filter(function (s) {
-            return Boolean(s);
-        });
+var Matcher = /** @class */ (function() {
+  function Matcher(pattern) {
+    var _this = this;
+    this.set = [];
+    this.pattern = pattern.trim();
+    this.empty = !this.pattern ? true : false;
+    var set = this.braceExpand();
+    this.set = set.map(function(val) {
+      return _this.parse(val);
+    });
+    this.set = this.set.filter(function(s) {
+      return Boolean(s);
+    });
+  }
+  Matcher.prototype.braceExpand = function() {
+    var pattern = this.pattern;
+    if (!pattern.match(/{.*}/)) {
+      return [pattern];
     }
-    Matcher.prototype.braceExpand = function () {
-        var pattern = this.pattern;
-        if (!pattern.match(/{.*}/)) {
-            return [pattern];
-        }
-        // I don't know why Bash 4.3 does this, but it does.
-        // Anything starting with {} will have the first two bytes preserved
-        // but only at the top level, so {},a}b will not expand to anything,
-        // but a{},b}c will be expanded to [a}c,abc].
-        // One could argue that this is a bug in Bash, but since the goal of
-        // this module is to match Bash's rules, we escape a leading {}
-        if (pattern.substr(0, 2) === '{}') {
-            pattern = '\\{\\}' + pattern.substr(2);
-        }
-        return this.expand(pattern, true);
-    };
-    Matcher.prototype.parse = function (pattern) {
-        if (pattern.length > 1024 * 64) {
-            throw new TypeError('pattern is too long');
-        }
-        var regExp;
-        var hasSpecialCharacter = false;
-        if (pattern === '')
-            return '';
-        var re = pattern.replace(/\*/g, function () {
-            hasSpecialCharacter = true;
-            return '.+?';
-        });
-        // skip the regexp for non-* patterns
-        // unescape anything in it, though, so that it'll be
-        // an exact match.
-        if (!hasSpecialCharacter) {
-            return pattern.replace(/\\(.)/g, '$1');
-        }
-        try {
-            regExp = new RegExp('^' + re + '$');
-        }
-        catch (error) {
-            // If it was an invalid regular expression, then it can't match
-            // anything.
-            return new RegExp('$.');
-        }
-        return regExp;
-    };
-    Matcher.prototype.expand = function (str, isTop) {
-        var expansions = [];
-        var balance = decomposeString('{', '}', str);
-        if (balance.start < 0 || /\$$/.test(balance.pre))
-            return [str];
-        var parts;
-        if (!balance.body)
-            parts = [''];
-        else
-            parts = balance.body.split(',');
-        // no need to expand pre, since it is guaranteed to be free of brace-sets
-        var pre = balance.pre;
-        var postParts = balance.post.length
-            ? this.expand(balance.post, false)
-            : [''];
-        parts.forEach(function (part) {
-            postParts.forEach(function (postPart) {
-                var expansion = pre + part + postPart;
-                if (!isTop || expansion)
-                    expansions.push(expansion);
-            });
-        });
-        return expansions;
-    };
-    Matcher.prototype.match = function (str) {
-        var _this = this;
-        if (this.empty)
-            return str === '';
-        var set = this.set;
-        return set.some(function (pattern) { return _this.matchOne(str, pattern); });
-    };
-    Matcher.prototype.matchOne = function (str, pattern) {
-        if (!pattern)
-            return false;
-        if (typeof pattern === 'string') {
-            return str === pattern;
-        }
-        return Boolean(str.match(pattern));
-    };
-    return Matcher;
-}());
+    // I don't know why Bash 4.3 does this, but it does.
+    // Anything starting with {} will have the first two bytes preserved
+    // but only at the top level, so {},a}b will not expand to anything,
+    // but a{},b}c will be expanded to [a}c,abc].
+    // One could argue that this is a bug in Bash, but since the goal of
+    // this module is to match Bash's rules, we escape a leading {}
+    if (pattern.substr(0, 2) === '{}') {
+      pattern = '\\{\\}' + pattern.substr(2);
+    }
+    return this.expand(pattern, true);
+  };
+  Matcher.prototype.parse = function(pattern) {
+    if (pattern.length > 1024 * 64) {
+      throw new TypeError('pattern is too long');
+    }
+    var regExp;
+    var hasSpecialCharacter = false;
+    if (pattern === '') return '';
+    var re = pattern.replace(/\*/g, function() {
+      hasSpecialCharacter = true;
+      return '.+?';
+    });
+    // skip the regexp for non-* patterns
+    // unescape anything in it, though, so that it'll be
+    // an exact match.
+    if (!hasSpecialCharacter) {
+      return pattern.replace(/\\(.)/g, '$1');
+    }
+    try {
+      regExp = new RegExp('^' + re + '$');
+    } catch (error) {
+      // If it was an invalid regular expression, then it can't match
+      // anything.
+      return new RegExp('$.');
+    }
+    return regExp;
+  };
+  Matcher.prototype.expand = function(str, isTop) {
+    var expansions = [];
+    var balance = decomposeString('{', '}', str);
+    if (balance.start < 0 || /\$$/.test(balance.pre)) return [str];
+    var parts;
+    if (!balance.body) parts = [''];
+    else parts = balance.body.split(',');
+    // no need to expand pre, since it is guaranteed to be free of brace-sets
+    var pre = balance.pre;
+    var postParts = balance.post.length
+      ? this.expand(balance.post, false)
+      : [''];
+    parts.forEach(function(part) {
+      postParts.forEach(function(postPart) {
+        var expansion = pre + part + postPart;
+        if (!isTop || expansion) expansions.push(expansion);
+      });
+    });
+    return expansions;
+  };
+  Matcher.prototype.match = function(str) {
+    var _this = this;
+    if (this.empty) return str === '';
+    var set = this.set;
+    return set.some(function(pattern) {
+      return _this.matchOne(str, pattern);
+    });
+  };
+  Matcher.prototype.matchOne = function(str, pattern) {
+    if (!pattern) return false;
+    if (typeof pattern === 'string') {
+      return str === pattern;
+    }
+    return Boolean(str.match(pattern));
+  };
+  return Matcher;
+})();
 
-var IdentityBased = /** @class */ (function (_super) {
-    __extends(IdentityBased, _super);
-    function IdentityBased(identity) {
-        var _this = _super.call(this, identity) || this;
-        if (instanceOfResourceBlock(identity)) {
-            _this.resource =
-                typeof identity.resource === 'string'
-                    ? [identity.resource]
-                    : identity.resource;
-        }
-        else {
-            _this.notResource =
-                typeof identity.notResource === 'string'
-                    ? [identity.notResource]
-                    : identity.notResource;
-        }
-        if (instanceOfActionBlock(identity)) {
-            _this.action =
-                typeof identity.action === 'string'
-                    ? [identity.action]
-                    : identity.action;
-        }
-        else {
-            _this.notAction =
-                typeof identity.notAction === 'string'
-                    ? [identity.notAction]
-                    : identity.notAction;
-        }
-        _this.statement = identity;
-        return _this;
+var ActionBased = /** @class */ (function(_super) {
+  __extends(ActionBased, _super);
+  function ActionBased(action) {
+    var _this = _super.call(this, action) || this;
+    if (instanceOfActionBlock(action)) {
+      _this.action =
+        typeof action.action === 'string' ? [action.action] : action.action;
+    } else {
+      _this.notAction =
+        typeof action.notAction === 'string'
+          ? [action.notAction]
+          : action.notAction;
     }
-    IdentityBased.prototype.getStatement = function () {
-        return this.statement;
-    };
-    IdentityBased.prototype.matches = function (_a) {
-        var action = _a.action, resource = _a.resource, context = _a.context, conditionResolver = _a.conditionResolver;
-        return (this.matchActions(action, context) &&
-            this.matchNotActions(action, context) &&
-            this.matchResources(resource, context) &&
-            this.matchNotResources(resource, context) &&
-            this.matchConditions({ context: context, conditionResolver: conditionResolver }));
-    };
-    IdentityBased.prototype.matchActions = function (action, context) {
-        return this.action
-            ? this.action.some(function (a) {
-                return new Matcher(applyContext(a, context)).match(action);
-            })
-            : true;
-    };
-    IdentityBased.prototype.matchNotActions = function (action, context) {
-        return this.notAction
-            ? !this.notAction.some(function (a) {
-                return new Matcher(applyContext(a, context)).match(action);
-            })
-            : true;
-    };
-    IdentityBased.prototype.matchResources = function (resource, context) {
-        return this.resource
-            ? this.resource.some(function (a) {
-                return new Matcher(applyContext(a, context)).match(resource);
-            })
-            : true;
-    };
-    IdentityBased.prototype.matchNotResources = function (resource, context) {
-        return this.notResource
-            ? !this.notResource.some(function (a) {
-                return new Matcher(applyContext(a, context)).match(resource);
-            })
-            : true;
-    };
-    return IdentityBased;
-}(Statement));
+    _this.statement = action;
+    return _this;
+  }
+  ActionBased.prototype.getStatement = function() {
+    return this.statement;
+  };
+  ActionBased.prototype.matches = function(_a) {
+    var action = _a.action,
+      context = _a.context,
+      conditionResolver = _a.conditionResolver;
+    return (
+      this.matchActions(action, context) &&
+      this.matchNotActions(action, context) &&
+      this.matchConditions({
+        context: context,
+        conditionResolver: conditionResolver
+      })
+    );
+  };
+  ActionBased.prototype.matchActions = function(action, context) {
+    return this.action
+      ? this.action.some(function(a) {
+          return new Matcher(applyContext(a, context)).match(action);
+        })
+      : true;
+  };
+  ActionBased.prototype.matchNotActions = function(action, context) {
+    return this.notAction
+      ? !this.notAction.some(function(a) {
+          return new Matcher(applyContext(a, context)).match(action);
+        })
+      : true;
+  };
+  return ActionBased;
+})(Statement);
 
-var ResourceBased = /** @class */ (function (_super) {
-    __extends(ResourceBased, _super);
-    function ResourceBased(identity) {
-        var _this = _super.call(this, identity) || this;
-        if (instanceOfResourceBlock(identity)) {
-            _this.resource =
-                typeof identity.resource === 'string'
-                    ? [identity.resource]
-                    : identity.resource;
-        }
-        else if (instanceOfNotResourceBlock(identity)) {
-            _this.notResource =
-                typeof identity.notResource === 'string'
-                    ? [identity.notResource]
-                    : identity.notResource;
-        }
-        if (instanceOfActionBlock(identity)) {
-            _this.action =
-                typeof identity.action === 'string'
-                    ? [identity.action]
-                    : identity.action;
-        }
-        else {
-            _this.notAction =
-                typeof identity.notAction === 'string'
-                    ? [identity.notAction]
-                    : identity.notAction;
-        }
-        if (instanceOfPrincipalBlock(identity)) {
-            _this.principal =
-                typeof identity.principal === 'string'
-                    ? [identity.principal]
-                    : identity.principal;
-        }
-        else {
-            _this.notPrincipal =
-                typeof identity.notPrincipal === 'string'
-                    ? [identity.notPrincipal]
-                    : identity.notPrincipal;
-        }
-        _this.statement = identity;
-        return _this;
+var IdentityBased = /** @class */ (function(_super) {
+  __extends(IdentityBased, _super);
+  function IdentityBased(identity) {
+    var _this = _super.call(this, identity) || this;
+    if (instanceOfResourceBlock(identity)) {
+      _this.resource =
+        typeof identity.resource === 'string'
+          ? [identity.resource]
+          : identity.resource;
+    } else {
+      _this.notResource =
+        typeof identity.notResource === 'string'
+          ? [identity.notResource]
+          : identity.notResource;
     }
-    ResourceBased.prototype.getStatement = function () {
-        return this.statement;
-    };
-    ResourceBased.prototype.matches = function (_a) {
-        var principal = _a.principal, action = _a.action, resource = _a.resource, principalType = _a.principalType, context = _a.context, conditionResolver = _a.conditionResolver;
-        return (this.matchPrincipals(principal, principalType, context) &&
-            this.matchNotPrincipals(principal, principalType, context) &&
-            this.matchActions(action, context) &&
-            this.matchNotActions(action, context) &&
-            this.matchResources(resource, context) &&
-            this.matchNotResources(resource, context) &&
-            this.matchConditions({ context: context, conditionResolver: conditionResolver }));
-    };
-    ResourceBased.prototype.matchPrincipals = function (principal, principalType, context) {
-        if (this.principal) {
-            if (this.principal instanceof Array) {
-                return principalType
-                    ? false
-                    : this.principal.some(function (a) {
-                        return new Matcher(applyContext(a, context)).match(principal);
-                    });
-            }
-            else {
-                if (principalType) {
-                    var principalValues = this.principal[principalType];
-                    if (principalValues instanceof Array) {
-                        return typeof principalValues === 'string'
-                            ? [principalValues].some(function (a) {
-                                return new Matcher(applyContext(a, context)).match(principal);
-                            })
-                            : principalValues.some(function (a) {
-                                return new Matcher(applyContext(a, context)).match(principal);
-                            });
-                    }
-                    return new Matcher(applyContext(principalValues, context)).match(principal);
-                }
-                return false;
-            }
-        }
-        return true;
-    };
-    ResourceBased.prototype.matchNotPrincipals = function (principal, principalType, context) {
-        if (this.notPrincipal) {
-            if (this.notPrincipal instanceof Array) {
-                return principalType
-                    ? true
-                    : !this.notPrincipal.some(function (a) {
-                        return new Matcher(applyContext(a, context)).match(principal);
-                    });
-            }
-            else {
-                if (principalType) {
-                    var principalValues = this.notPrincipal[principalType];
-                    if (principalValues instanceof Array) {
-                        return typeof principalValues === 'string'
-                            ? ![principalValues].some(function (a) {
-                                return new Matcher(applyContext(a, context)).match(principal);
-                            })
-                            : !principalValues.some(function (a) {
-                                return new Matcher(applyContext(a, context)).match(principal);
-                            });
-                    }
-                    return !new Matcher(applyContext(principalValues, context)).match(principal);
-                }
-                return false;
-            }
-        }
-        return true;
-    };
-    ResourceBased.prototype.matchActions = function (action, context) {
-        return this.action
-            ? this.action.some(function (a) {
-                return new Matcher(applyContext(a, context)).match(action);
-            })
-            : true;
-    };
-    ResourceBased.prototype.matchNotActions = function (action, context) {
-        return this.notAction
-            ? !this.notAction.some(function (a) {
-                return new Matcher(applyContext(a, context)).match(action);
-            })
-            : true;
-    };
-    ResourceBased.prototype.matchResources = function (resource, context) {
-        return this.resource
-            ? this.resource.some(function (a) {
-                return new Matcher(applyContext(a, context)).match(resource);
-            })
-            : true;
-    };
-    ResourceBased.prototype.matchNotResources = function (resource, context) {
-        return this.notResource
-            ? !this.notResource.some(function (a) {
-                return new Matcher(applyContext(a, context)).match(resource);
-            })
-            : true;
-    };
-    return ResourceBased;
-}(Statement));
+    if (instanceOfActionBlock(identity)) {
+      _this.action =
+        typeof identity.action === 'string'
+          ? [identity.action]
+          : identity.action;
+    } else {
+      _this.notAction =
+        typeof identity.notAction === 'string'
+          ? [identity.notAction]
+          : identity.notAction;
+    }
+    _this.statement = identity;
+    return _this;
+  }
+  IdentityBased.prototype.getStatement = function() {
+    return this.statement;
+  };
+  IdentityBased.prototype.matches = function(_a) {
+    var action = _a.action,
+      resource = _a.resource,
+      context = _a.context,
+      conditionResolver = _a.conditionResolver;
+    return (
+      this.matchActions(action, context) &&
+      this.matchNotActions(action, context) &&
+      this.matchResources(resource, context) &&
+      this.matchNotResources(resource, context) &&
+      this.matchConditions({
+        context: context,
+        conditionResolver: conditionResolver
+      })
+    );
+  };
+  IdentityBased.prototype.matchActions = function(action, context) {
+    return this.action
+      ? this.action.some(function(a) {
+          return new Matcher(applyContext(a, context)).match(action);
+        })
+      : true;
+  };
+  IdentityBased.prototype.matchNotActions = function(action, context) {
+    return this.notAction
+      ? !this.notAction.some(function(a) {
+          return new Matcher(applyContext(a, context)).match(action);
+        })
+      : true;
+  };
+  IdentityBased.prototype.matchResources = function(resource, context) {
+    return this.resource
+      ? this.resource.some(function(a) {
+          return new Matcher(applyContext(a, context)).match(resource);
+        })
+      : true;
+  };
+  IdentityBased.prototype.matchNotResources = function(resource, context) {
+    return this.notResource
+      ? !this.notResource.some(function(a) {
+          return new Matcher(applyContext(a, context)).match(resource);
+        })
+      : true;
+  };
+  return IdentityBased;
+})(Statement);
 
-var IdentityBasedPolicy = /** @class */ (function () {
-    function IdentityBasedPolicy(config, conditionResolver) {
-        var statementInstances = config.map(function (s) { return new IdentityBased(s); });
-        this.allowStatements = statementInstances.filter(function (s) { return s.effect === 'allow'; });
-        this.denyStatements = statementInstances.filter(function (s) { return s.effect === 'deny'; });
-        this.conditionResolver = conditionResolver;
-        this.statements = config;
+var ResourceBased = /** @class */ (function(_super) {
+  __extends(ResourceBased, _super);
+  function ResourceBased(identity) {
+    var _this = _super.call(this, identity) || this;
+    if (instanceOfResourceBlock(identity)) {
+      _this.resource =
+        typeof identity.resource === 'string'
+          ? [identity.resource]
+          : identity.resource;
+    } else if (instanceOfNotResourceBlock(identity)) {
+      _this.notResource =
+        typeof identity.notResource === 'string'
+          ? [identity.notResource]
+          : identity.notResource;
     }
-    IdentityBasedPolicy.prototype.getStatements = function () {
-        return this.statements;
-    };
-    IdentityBasedPolicy.prototype.evaluate = function (_a) {
-        var action = _a.action, resource = _a.resource, context = _a.context;
-        var args = { action: action, resource: resource, context: context };
-        return !this.cannot(args) && this.can(args);
-    };
-    IdentityBasedPolicy.prototype.can = function (_a) {
-        var _this = this;
-        var action = _a.action, resource = _a.resource, context = _a.context;
-        return this.allowStatements.some(function (s) {
-            return s.matches({
-                action: action,
-                resource: resource,
-                context: context,
-                conditionResolver: _this.conditionResolver
-            });
-        });
-    };
-    IdentityBasedPolicy.prototype.cannot = function (_a) {
-        var _this = this;
-        var action = _a.action, resource = _a.resource, context = _a.context;
-        return this.denyStatements.some(function (s) {
-            return s.matches({
-                action: action,
-                resource: resource,
-                context: context,
-                conditionResolver: _this.conditionResolver
-            });
-        });
-    };
-    return IdentityBasedPolicy;
-}());
-var ResourceBasedPolicy = /** @class */ (function () {
-    function ResourceBasedPolicy(config, conditionResolver) {
-        var statementInstances = config.map(function (s) { return new ResourceBased(s); });
-        this.allowStatements = statementInstances.filter(function (s) { return s.effect === 'allow'; });
-        this.denyStatements = statementInstances.filter(function (s) { return s.effect === 'deny'; });
-        this.conditionResolver = conditionResolver;
-        this.statements = config;
+    if (instanceOfActionBlock(identity)) {
+      _this.action =
+        typeof identity.action === 'string'
+          ? [identity.action]
+          : identity.action;
+    } else {
+      _this.notAction =
+        typeof identity.notAction === 'string'
+          ? [identity.notAction]
+          : identity.notAction;
     }
-    ResourceBasedPolicy.prototype.getStatements = function () {
-        return this.statements;
-    };
-    ResourceBasedPolicy.prototype.evaluate = function (_a) {
-        var principal = _a.principal, action = _a.action, resource = _a.resource, principalType = _a.principalType, context = _a.context;
-        var args = { principal: principal, action: action, resource: resource, principalType: principalType, context: context };
-        return !this.cannot(args) && this.can(args);
-    };
-    ResourceBasedPolicy.prototype.can = function (_a) {
-        var _this = this;
-        var principal = _a.principal, action = _a.action, resource = _a.resource, principalType = _a.principalType, context = _a.context;
-        return this.allowStatements.some(function (s) {
-            return s.matches({
-                principal: principal,
-                action: action,
-                resource: resource,
-                principalType: principalType,
-                context: context,
-                conditionResolver: _this.conditionResolver
+    if (instanceOfPrincipalBlock(identity)) {
+      _this.principal =
+        typeof identity.principal === 'string'
+          ? [identity.principal]
+          : identity.principal;
+    } else {
+      _this.notPrincipal =
+        typeof identity.notPrincipal === 'string'
+          ? [identity.notPrincipal]
+          : identity.notPrincipal;
+    }
+    _this.statement = identity;
+    return _this;
+  }
+  ResourceBased.prototype.getStatement = function() {
+    return this.statement;
+  };
+  ResourceBased.prototype.matches = function(_a) {
+    var principal = _a.principal,
+      action = _a.action,
+      resource = _a.resource,
+      principalType = _a.principalType,
+      context = _a.context,
+      conditionResolver = _a.conditionResolver;
+    return (
+      this.matchPrincipals(principal, principalType, context) &&
+      this.matchNotPrincipals(principal, principalType, context) &&
+      this.matchActions(action, context) &&
+      this.matchNotActions(action, context) &&
+      this.matchResources(resource, context) &&
+      this.matchNotResources(resource, context) &&
+      this.matchConditions({
+        context: context,
+        conditionResolver: conditionResolver
+      })
+    );
+  };
+  ResourceBased.prototype.matchPrincipals = function(
+    principal,
+    principalType,
+    context
+  ) {
+    if (this.principal) {
+      if (this.principal instanceof Array) {
+        return principalType
+          ? false
+          : this.principal.some(function(a) {
+              return new Matcher(applyContext(a, context)).match(principal);
             });
-        });
-    };
-    ResourceBasedPolicy.prototype.cannot = function (_a) {
-        var _this = this;
-        var principal = _a.principal, action = _a.action, resource = _a.resource, principalType = _a.principalType, context = _a.context;
-        return this.denyStatements.some(function (s) {
-            return s.matches({
-                principal: principal,
-                action: action,
-                resource: resource,
-                principalType: principalType,
-                context: context,
-                conditionResolver: _this.conditionResolver
+      } else {
+        if (principalType) {
+          var principalValues = this.principal[principalType];
+          if (principalValues instanceof Array) {
+            return typeof principalValues === 'string'
+              ? [principalValues].some(function(a) {
+                  return new Matcher(applyContext(a, context)).match(principal);
+                })
+              : principalValues.some(function(a) {
+                  return new Matcher(applyContext(a, context)).match(principal);
+                });
+          }
+          return new Matcher(applyContext(principalValues, context)).match(
+            principal
+          );
+        }
+        return false;
+      }
+    }
+    return true;
+  };
+  ResourceBased.prototype.matchNotPrincipals = function(
+    principal,
+    principalType,
+    context
+  ) {
+    if (this.notPrincipal) {
+      if (this.notPrincipal instanceof Array) {
+        return principalType
+          ? true
+          : !this.notPrincipal.some(function(a) {
+              return new Matcher(applyContext(a, context)).match(principal);
             });
-        });
-    };
-    return ResourceBasedPolicy;
-}());
+      } else {
+        if (principalType) {
+          var principalValues = this.notPrincipal[principalType];
+          if (principalValues instanceof Array) {
+            return typeof principalValues === 'string'
+              ? ![principalValues].some(function(a) {
+                  return new Matcher(applyContext(a, context)).match(principal);
+                })
+              : !principalValues.some(function(a) {
+                  return new Matcher(applyContext(a, context)).match(principal);
+                });
+          }
+          return !new Matcher(applyContext(principalValues, context)).match(
+            principal
+          );
+        }
+        return false;
+      }
+    }
+    return true;
+  };
+  ResourceBased.prototype.matchActions = function(action, context) {
+    return this.action
+      ? this.action.some(function(a) {
+          return new Matcher(applyContext(a, context)).match(action);
+        })
+      : true;
+  };
+  ResourceBased.prototype.matchNotActions = function(action, context) {
+    return this.notAction
+      ? !this.notAction.some(function(a) {
+          return new Matcher(applyContext(a, context)).match(action);
+        })
+      : true;
+  };
+  ResourceBased.prototype.matchResources = function(resource, context) {
+    return this.resource
+      ? this.resource.some(function(a) {
+          return new Matcher(applyContext(a, context)).match(resource);
+        })
+      : true;
+  };
+  ResourceBased.prototype.matchNotResources = function(resource, context) {
+    return this.notResource
+      ? !this.notResource.some(function(a) {
+          return new Matcher(applyContext(a, context)).match(resource);
+        })
+      : true;
+  };
+  return ResourceBased;
+})(Statement);
 
+var ActionBasedPolicy = /** @class */ (function() {
+  function ActionBasedPolicy(config, conditionResolver) {
+    var statementInstances = config.map(function(s) {
+      return new ActionBased(s);
+    });
+    this.allowStatements = statementInstances.filter(function(s) {
+      return s.effect === 'allow';
+    });
+    this.denyStatements = statementInstances.filter(function(s) {
+      return s.effect === 'deny';
+    });
+    this.conditionResolver = conditionResolver;
+    this.statements = config;
+  }
+  ActionBasedPolicy.prototype.getStatements = function() {
+    return this.statements;
+  };
+  ActionBasedPolicy.prototype.evaluate = function(_a) {
+    var action = _a.action,
+      context = _a.context;
+    var args = { action: action, context: context };
+    return !this.cannot(args) && this.can(args);
+  };
+  ActionBasedPolicy.prototype.can = function(_a) {
+    var _this = this;
+    var action = _a.action,
+      context = _a.context;
+    return this.allowStatements.some(function(s) {
+      return s.matches({
+        action: action,
+        context: context,
+        conditionResolver: _this.conditionResolver
+      });
+    });
+  };
+  ActionBasedPolicy.prototype.cannot = function(_a) {
+    var _this = this;
+    var action = _a.action,
+      context = _a.context;
+    return this.denyStatements.some(function(s) {
+      return s.matches({
+        action: action,
+        context: context,
+        conditionResolver: _this.conditionResolver
+      });
+    });
+  };
+  return ActionBasedPolicy;
+})();
+
+var IdentityBasedPolicy = /** @class */ (function() {
+  function IdentityBasedPolicy(config, conditionResolver) {
+    var statementInstances = config.map(function(s) {
+      return new IdentityBased(s);
+    });
+    this.allowStatements = statementInstances.filter(function(s) {
+      return s.effect === 'allow';
+    });
+    this.denyStatements = statementInstances.filter(function(s) {
+      return s.effect === 'deny';
+    });
+    this.conditionResolver = conditionResolver;
+    this.statements = config;
+  }
+  IdentityBasedPolicy.prototype.getStatements = function() {
+    return this.statements;
+  };
+  IdentityBasedPolicy.prototype.evaluate = function(_a) {
+    var action = _a.action,
+      resource = _a.resource,
+      context = _a.context;
+    var args = { action: action, resource: resource, context: context };
+    return !this.cannot(args) && this.can(args);
+  };
+  IdentityBasedPolicy.prototype.can = function(_a) {
+    var _this = this;
+    var action = _a.action,
+      resource = _a.resource,
+      context = _a.context;
+    return this.allowStatements.some(function(s) {
+      return s.matches({
+        action: action,
+        resource: resource,
+        context: context,
+        conditionResolver: _this.conditionResolver
+      });
+    });
+  };
+  IdentityBasedPolicy.prototype.cannot = function(_a) {
+    var _this = this;
+    var action = _a.action,
+      resource = _a.resource,
+      context = _a.context;
+    return this.denyStatements.some(function(s) {
+      return s.matches({
+        action: action,
+        resource: resource,
+        context: context,
+        conditionResolver: _this.conditionResolver
+      });
+    });
+  };
+  return IdentityBasedPolicy;
+})();
+
+var ResourceBasedPolicy = /** @class */ (function() {
+  function ResourceBasedPolicy(config, conditionResolver) {
+    var statementInstances = config.map(function(s) {
+      return new ResourceBased(s);
+    });
+    this.allowStatements = statementInstances.filter(function(s) {
+      return s.effect === 'allow';
+    });
+    this.denyStatements = statementInstances.filter(function(s) {
+      return s.effect === 'deny';
+    });
+    this.conditionResolver = conditionResolver;
+    this.statements = config;
+  }
+  ResourceBasedPolicy.prototype.getStatements = function() {
+    return this.statements;
+  };
+  ResourceBasedPolicy.prototype.evaluate = function(_a) {
+    var principal = _a.principal,
+      action = _a.action,
+      resource = _a.resource,
+      principalType = _a.principalType,
+      context = _a.context;
+    var args = {
+      principal: principal,
+      action: action,
+      resource: resource,
+      principalType: principalType,
+      context: context
+    };
+    return !this.cannot(args) && this.can(args);
+  };
+  ResourceBasedPolicy.prototype.can = function(_a) {
+    var _this = this;
+    var principal = _a.principal,
+      action = _a.action,
+      resource = _a.resource,
+      principalType = _a.principalType,
+      context = _a.context;
+    return this.allowStatements.some(function(s) {
+      return s.matches({
+        principal: principal,
+        action: action,
+        resource: resource,
+        principalType: principalType,
+        context: context,
+        conditionResolver: _this.conditionResolver
+      });
+    });
+  };
+  ResourceBasedPolicy.prototype.cannot = function(_a) {
+    var _this = this;
+    var principal = _a.principal,
+      action = _a.action,
+      resource = _a.resource,
+      principalType = _a.principalType,
+      context = _a.context;
+    return this.denyStatements.some(function(s) {
+      return s.matches({
+        principal: principal,
+        action: action,
+        resource: resource,
+        principalType: principalType,
+        context: context,
+        conditionResolver: _this.conditionResolver
+      });
+    });
+  };
+  return ResourceBasedPolicy;
+})();
+
+exports.ActionBased = ActionBased;
+exports.ActionBasedPolicy = ActionBasedPolicy;
 exports.IdentityBased = IdentityBased;
 exports.IdentityBasedPolicy = IdentityBasedPolicy;
 exports.ResourceBased = ResourceBased;

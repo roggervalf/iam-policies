@@ -1,4 +1,4 @@
-import { IdentityBasedPolicy } from './Policies';
+import { IdentityBasedPolicy } from './IdentityBasedPolicy';
 
 describe('IdentityBasedPolicy Class', () => {
   describe('when creating identity based policy', () => {

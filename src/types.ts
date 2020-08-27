@@ -68,8 +68,11 @@ export interface MatchConditionInterface {
   conditionResolver?: ConditionResolver;
 }
 
-export interface MatchIdentityBasedInterface extends MatchConditionInterface {
+export interface MatchActionBasedInterface extends MatchConditionInterface {
   action: string;
+}
+
+export interface MatchIdentityBasedInterface extends MatchActionBasedInterface {
   resource: string;
 }
 
@@ -79,24 +82,27 @@ export interface MatchResourceBasedInterface
   principalType?: string;
 }
 
-export interface EvaluateIdentityBasedInterface {
+export interface EvaluateActionBasedInterface {
   action: string;
-  resource: string;
   context?: Context;
+}
+
+export interface EvaluateIdentityBasedInterface
+  extends EvaluateActionBasedInterface {
+  resource: string;
 }
 
 export interface EvaluateResourceBasedInterface
   extends EvaluateIdentityBasedInterface {
   principal: string;
   principalType?: string;
-  action: string;
-  resource: string;
-  context?: Context;
 }
 
 export interface MemoizeInterface extends Function {
   cache: Map<any, any>;
 }
+
+type ActionBasedType = StatementInterface & (ActionBlock | NotActionBlock);
 
 type IdentityBasedType = StatementInterface &
   (ActionBlock | NotActionBlock) &
@@ -108,6 +114,7 @@ type ResourceBasedType = StatementInterface &
   (ResourceBlock | NotResourceBlock | {});
 
 export {
+  ActionBasedType,
   IdentityBasedType,
   ResourceBasedType,
   PrincipalMap,

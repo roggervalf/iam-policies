@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/roggervalf/iam-policies/compare/v3.3.0...v3.4.0) (2020-08-28)
+
+
+### Features
+
+* **actionbasedpolicy:** adding new policy, just with actions ([994c0ff](https://github.com/roggervalf/iam-policies/commit/994c0ff4ab0720bf2a31e05dc0b533b44bc5507e))
+
 # [3.3.0](https://github.com/roggervalf/iam-policies/compare/v3.2.0...v3.3.0) (2020-05-30)
 
 

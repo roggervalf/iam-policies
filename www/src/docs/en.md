@@ -32,6 +32,7 @@ yarn add iam-policies
 ```ts
 // @deno-types="https://raw.githubusercontent.com/roggervalf/iam-policies/master/dist/main.d.ts"
 import {
+  ActionBasedPolicy,
   IdentityBasedPolicy,
   ResourceBasedPolicy
 } from "https://raw.githubusercontent.com/roggervalf/iam-policies/master/dist/main.es.js"
@@ -42,6 +43,7 @@ or
 ```ts
 // @deno-types="https://deno.land/x/iam_policies@master/dist/main.d.ts"
 import {
+  ActionBasedPolicy,
   IdentityBasedPolicy,
   ResourceBasedPolicy
 } from "https://deno.land/x/iam_policies@master/dist/main.es.js"
@@ -64,7 +66,11 @@ Supports these glob features:
 First, we should get our policies classes:
 
 ```js
-const { IdentityBasedPolicy, ResourceBasedPolicy } = require("iam-policies")
+const {
+  ActionBasedPolicy,
+  IdentityBasedPolicy,
+  ResourceBasedPolicy
+} = require("iam-policies")
 ```
 
 #### Effect property allow
@@ -369,6 +375,66 @@ inclusivePolicy.can(canAndCannotNotPresentArgument) // false
 inclusivePolicy.cannot(canAndCannotNotPresentArgument) // false
 // Nope, it just isn't there.
 ```
+
+## ActionBasedPolicy Class
+
+Attach managed and simple inline policies to grant actions only.
+
+```js
+const { ActionBasedPolicy } = require("iam-policies")
+
+const actionBasedPolicy = new ActionBasedPolicy(Statement, conditionResolver)
+```
+
+### Properties
+
+| Name                                                     | Type                                                             | Default   | Required | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| -------------------------------------------------------- | ---------------------------------------------------------------- | --------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Statement`                                              | object[]                                                         | undefined | `true`   | The **_Statement_** element is the main element for a policy. The Statement element can contain a single statement or an array of individual statements.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `Statement[].effect`                                     | string                                                           | allow     | `false`  | The **_effect_** element specifies whether the statement results in an allow or an explicit deny. Valid values for Effect are `allow` and `deny`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `Statement[].action`                                     | string or string[]                                               | undefined | `false`  | The **_action_** element describes the specific action or actions that will be allowed or denied. Statements must include either an `action` or `notAction` element.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `Statement[].notAction`                                  | string or string[]                                               | undefined | `false`  | The **_notAction_** element is an advanced policy element that explicitly matches everything except the specified list of actions. Statements must include either an `action` or `notAction` element. Using `notAction` can result in a shorter policy by listing only a few actions that should not match, rather than including a long list of actions that will match. When using `notAction`, you should keep in mind that actions specified in this element are the only actions in that are limited. This, in turn, means that all of the applicable actions or services that are not listed are allowed if you use the Allow effect. In addition, such unlisted actions or services are denied if you use the `deny` effect. When you use `notAction` with the `resource` element, you provide scope for the policy. |  | `Statement[].condition` | object | undefined | `false` | The **_condition_** element (or Condition block) lets you specify conditions for when a policy is in effect. In the `condition` element, you build expressions in which you use condition operators (equal, less than, etc.) to match the condition keys and values in the policy against keys and values in the request context. |
+| `Statement[].condition["conditionType"]`                 | object                                                           | undefined | `false`  | The **_conditionType_** name should be replaced with a custom string attribute for a specific condition that should be match with one conditionResolver element.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `Statement[].condition["conditionType"]["conditionKey"]` | (string or number or boolean) or (string or number or boolean)[] | undefined | `false`  | The **_conditionKey_** should be a custom string path attribute for a specific context attribute. Note: attributes must be separated but dots (`.`).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+
+### Methods
+
+#### actionBasedPolicy.getStatements()
+
+_public_: Returns `Statement[]` (statements array).
+
+#### actionBasedPolicy.evaluate({action, context})
+
+_public_: Verify if action is allowed (`true`) or denied (`false`).
+
+##### Params
+
+| Name      | Type   | Default   | Required | Description                                                           |
+| --------- | ------ | --------- | -------- | --------------------------------------------------------------------- |
+| `action`  | string | undefined | `true`   | It represents the action you are asking.                              |
+| `context` | object | undefined | `false`  | It represents the properties that will be embedded into your actions. |
+
+#### actionBasedPolicy.can({action, context})
+
+_public_: Verify if action is allowed (`true`) or not present (`false`).
+
+##### Params
+
+| Name      | Type   | Default   | Required | Description                                                           |
+| --------- | ------ | --------- | -------- | --------------------------------------------------------------------- |
+| `action`  | string | undefined | `true`   | It represents the action you are asking.                              |
+| `context` | object | undefined | `false`  | It represents the properties that will be embedded into your actions. |
+
+#### actionBasedPolicy.cannot({action, context})
+
+_public_: Verify if action for specific resource is denied (`true`) or not present (`false`).
+
+##### Params
+
+| Name      | Type   | Default   | Required | Description                                                           |
+| --------- | ------ | --------- | -------- | --------------------------------------------------------------------- |
+| `action`  | string | undefined | `true`   | It represents the action you are asking.                              |
+| `context` | object | undefined | `false`  | It represents the properties that will be embedded into your actions. |
 
 ## IdentityBasedPolicy Class
 

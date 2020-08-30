@@ -64,7 +64,7 @@ const SidebarStyled = styled.aside`
     .sidebar-menu {
       display: ${({ menuOpen }) => (!menuOpen ? "none" : "flex")};
       position: absolute;
-      top: 2.4rem;
+      top: 4.5rem;
       right: 1rem;
     }
     ul li a {
@@ -72,7 +72,7 @@ const SidebarStyled = styled.aside`
     }
     ul a[href$="#iam-policies"] {
       padding: 0.6rem 1.5rem;
-      margin-top: 0;
+      margin-top: 3rem;
     }
   }
 `

@@ -22,10 +22,6 @@
     "url": "https://github.com/roggervalf/iam-policies/issues"
   },
   "homepage": "https://github.com/roggervalf/iam-policies#readme",
-  "engines": {
-    "node": ">=10.18.1",
-    "npm": ">=6.13.4"
-  },
   "scripts": {
     "pretest": "npm-run-all pretty:quick lint:staged",
     "prettier:format": "./node_modules/.bin/prettier **/*.{ts,js,json,yml} -l --ignore-path ./.eslintignore",

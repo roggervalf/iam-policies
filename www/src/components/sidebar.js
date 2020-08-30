@@ -97,6 +97,7 @@ const Sidebar = ({ data, menuOpen, triggerMenu }) => {
       <div className="sidebar-menu">
         <AiOutlineClose
           onClick={triggerMenu}
+          onTouchEnd={triggerMenu}
           style={{ fontSize: "2rem", color: "black" }}
         />
       </div>

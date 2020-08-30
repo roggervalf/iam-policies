@@ -19,12 +19,12 @@ const HeaderStyled = styled.header`
     color: white;
     text-decoration: none;
   }
-  .menu {
-    display: none;
-  }
   .github {
     display: flex;
     align-items: center;
+  }
+  .menu {
+    display: none;
   }
   @media (max-width: 600px) {
     padding: 0.5rem 1.2rem;
@@ -64,6 +64,7 @@ const Header = ({ siteTitle, triggerMenu, menuOpen }) => (
     <div className="menu">
       <GiHamburgerMenu
         onClick={triggerMenu}
+        onTouchEnd={triggerMenu}
         style={{ fontSize: "2rem", color: "white" }}
       />
     </div>
@@ -71,11 +72,11 @@ const Header = ({ siteTitle, triggerMenu, menuOpen }) => (
 )
 
 Header.propTypes = {
-  siteTitle: PropTypes.string,
+  siteTitle: PropTypes.string
 }
 
 Header.defaultProps = {
-  siteTitle: ``,
+  siteTitle: ``
 }
 
 export default Header

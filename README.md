@@ -27,6 +27,7 @@ yarn add iam-policies
 ```ts
 // @deno-types="https://raw.githubusercontent.com/roggervalf/iam-policies/master/dist/main.d.ts"
 import {
+  ActionBasedPolicy,
   IdentityBasedPolicy,
   ResourceBasedPolicy
 } from 'https://raw.githubusercontent.com/roggervalf/iam-policies/master/dist/main.es.js';
@@ -37,6 +38,7 @@ or
 ```ts
 // @deno-types="https://deno.land/x/iam_policies@master/dist/main.d.ts"
 import {
+  ActionBasedPolicy,
   IdentityBasedPolicy,
   ResourceBasedPolicy
 } from 'https://deno.land/x/iam_policies@master/dist/main.es.js';

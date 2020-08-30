@@ -11,6 +11,7 @@ build/Release
 node_modules/
 
 build
+temp
 
 # Optional npm cache directory
 .npm

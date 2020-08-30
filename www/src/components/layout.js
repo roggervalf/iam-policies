@@ -18,8 +18,8 @@ const LayoutStyled = styled.div`
 
   @media (min-width: 600px) {
     display: grid;
-    grid-template-columns: 280px auto;
-    grid-template-rows: 80px auto;
+    grid-template-columns: 18rem minmax(12rem, 1fr);
+    grid-template-rows: 4rem auto;
     gap: 1px 1px;
     grid-template-areas:
       "header header"

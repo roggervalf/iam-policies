@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/iam-policies",
   siteMetadata: {
     title: `IAM-policies`,
     description: `Define custom IAM Policies by allowed or denied set of actions against a set of resources with optional context and conditions.`,

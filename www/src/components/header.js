@@ -64,7 +64,6 @@ const Header = ({ siteTitle, triggerMenu, menuOpen }) => (
     <div className="menu">
       <GiHamburgerMenu
         onClick={triggerMenu}
-        onTouchEnd={triggerMenu}
         style={{ fontSize: "2rem", color: "white" }}
       />
     </div>

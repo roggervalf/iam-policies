@@ -2,7 +2,7 @@
 
 ## Commit messages
 
-This package is using semantic-release to automate the release process, and this depends on a specific format for commit messages. Please run `yarn cm` to use `commitizen` to properly format your commit messages so they can be automatically processed and included in release notes. Also in travis process we should use `node >=10.18.1` and `npm >=6.13.4` since semantic-release requires this.
+This package is using semantic-release to automate the release process, and this depends on a specific format for commit messages. Please run `yarn cm` to use `commitizen` to properly format your commit messages so they can be automatically processed and included in release notes. Also in travis process we should use `node >=10.19.0` and `npm >=6.13.4` since semantic-release requires this.
 
 ## Pull request testing
 

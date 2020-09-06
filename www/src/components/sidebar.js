@@ -84,7 +84,10 @@ const Sidebar = ({ data, menuOpen, triggerMenu }) => {
       const parent = e.target.hasAttribute("href")
         ? e.target
         : e.target.parentElement
-      const linkId = parent.getAttribute("href").slice(1)
+      const linkId = parent.firstChild.nodeValue
+        .toLowerCase()
+        .replace(/\s/g, "-")
+        .replace(/[(),]/g, "")
       const sectionToScrollTo = document.getElementById(linkId)
       if (sectionToScrollTo) {
         sectionToScrollTo.scrollIntoView({ behavior: "smooth" })

@@ -1,3 +1,10 @@
+## [3.4.1](https://github.com/roggervalf/iam-policies/compare/v3.4.0...v3.4.1) (2020-09-06)
+
+
+### Bug Fixes
+
+* **github:** trying to publish on github ([#26](https://github.com/roggervalf/iam-policies/issues/26)) ([24d0672](https://github.com/roggervalf/iam-policies/commit/24d06720c57bfb9748e710f47246a9387324d0fe))
+
 # [3.4.0](https://github.com/roggervalf/iam-policies/compare/v3.3.0...v3.4.0) (2020-08-28)
 
 

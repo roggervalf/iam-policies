@@ -48,7 +48,7 @@ import {
 
 Supports these glob features:
 
-- Policies creation ([IdentityBasedPolicy and ResourceBasedPolicy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policy-types))
+- Policies creation (ActionBasedPolicy, [IdentityBasedPolicy and ResourceBasedPolicy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policy-types))
 - Permission verifications
 
 ## Documentation
@@ -58,6 +58,10 @@ Please click on the language that you prefer
 - Translations:
   - [Chinese docs](https://roggervalf.github.io/iam-policies/zh-CN/) by [@mickymao1110](https://github.com/mickymao1110)
   - [English docs](https://roggervalf.github.io/iam-policies/en/) by [@roggervalf](https://github.com/roggervalf)
+
+## Article
+
+[How to build a Deno module](https://medium.com/@rogger.valverde/how-to-build-a-deno-module-dc383eee8edb)
 
 ## Contributing
 

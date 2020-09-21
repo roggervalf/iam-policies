@@ -34,7 +34,7 @@ function getTag(value) {
  * // => false
  */
 function isSymbol(value) {
-  var type = typeof value;
+  const type = typeof value;
   return (
     type === 'symbol' ||
     (type === 'object' && value !== null && getTag(value) === '[object Symbol]')
@@ -42,7 +42,7 @@ function isSymbol(value) {
 }
 
 /** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0;
+const INFINITY = 1 / 0;
 /**
  * Converts `value` to a string key if it's not a string or symbol.
  *
@@ -62,13 +62,13 @@ function toKey(value) {
   if (typeof value === 'string' || isSymbol(value)) {
     return value;
   }
-  var result = '' + value;
+  const result = `${value}`;
   return result === '0' && 1 / value === -INFINITY ? '-0' : result;
 }
 
 /** Used to match property names within property paths. */
-var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
-var reIsPlainProp = /^\w*$/; //matches any word caracter (alphanumeric and underscore)
+const reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
+const reIsPlainProp = /^\w*$/; //matches any word caracter (alphanumeric and underscore)
 /**
  * Checks if `value` is a property name and not a property path.
  *
@@ -104,7 +104,7 @@ function isKey(value, object) {
   if (Array.isArray(value)) {
     return false;
   }
-  var type = typeof value;
+  const type = typeof value;
   if (
     type === 'number' ||
     type === 'boolean' ||
@@ -155,17 +155,13 @@ function isKey(value, object) {
  * ```
  */
 function memoize(func, resolver) {
-  var memoized = function() {
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-      args[_i] = arguments[_i];
-    }
-    var key = resolver ? resolver.apply(this, args) : args[0];
-    var cache = memoized.cache;
+  const memoized = function(...args) {
+    const key = resolver ? resolver.apply(this, args) : args[0];
+    const cache = memoized.cache;
     if (cache.has(key)) {
       return cache.get(key);
     }
-    var result = func.apply(this, args);
+    const result = func.apply(this, args);
     memoized.cache = cache.set(key, result) || cache;
     return result;
   };
@@ -185,7 +181,7 @@ function memoize(func, resolver) {
 };*/
 
 /** Used as the maximum memoize cache size. */
-var MAX_MEMOIZE_SIZE = 500;
+const MAX_MEMOIZE_SIZE = 500;
 /**
  * A specialized version of `memoize` which clears the memoized function's
  * cache when it exceeds `MAX_MEMOIZE_SIZE`.
@@ -196,8 +192,8 @@ var MAX_MEMOIZE_SIZE = 500;
  * @returns {Function} Returns the new memoized function.
  */
 function memoizeCapped(func) {
-  var result = memoize(func, function(key) {
-    var cache = result.cache;
+  const result = memoize(func, key => {
+    const { cache } = result;
     if (cache.size === MAX_MEMOIZE_SIZE) {
       cache.clear();
     }
@@ -206,9 +202,9 @@ function memoizeCapped(func) {
   return result;
 }
 
-var charCodeOfDot = '.'.charCodeAt(0);
-var reEscapeChar = /\\(\\)?/g;
-var rePropName = RegExp(
+const charCodeOfDot = '.'.charCodeAt(0);
+const reEscapeChar = /\\(\\)?/g;
+const rePropName = RegExp(
   // Match anything that isn't a dot or bracket.
   '[^.[\\]]+' +
     '|' +
@@ -233,13 +229,13 @@ var rePropName = RegExp(
  * @param {string} string The string to convert.
  * @returns {Array} Returns the property path array.
  */
-var stringToPath = memoizeCapped(function(string) {
-  var result = [];
+const stringToPath = memoizeCapped(string => {
+  const result = [];
   if (string.charCodeAt(0) === charCodeOfDot) {
     result.push('');
   }
-  string.replace(rePropName, function(match, expression, quote, subString) {
-    var key = match;
+  string.replace(rePropName, (match, expression, quote, subString) => {
+    let key = match;
     if (quote) {
       key = subString.replace(reEscapeChar, '$1');
     } else if (expression) {
@@ -274,10 +270,10 @@ function castPath(value, object) {
  * @returns {*} Returns the resolved value.
  */
 function baseGet(object, path) {
-  var newPath = castPath(path, object);
-  var index = 0;
-  var length = newPath.length;
-  var value = object;
+  const newPath = castPath(path, object);
+  let index = 0;
+  const length = newPath.length;
+  let value = object;
   while (value instanceof Object && index < length) {
     value = value[toKey(newPath[index++])];
   }
@@ -307,105 +303,58 @@ function baseGet(object, path) {
  * // => 'default'
  */
 function getValueFromPath(object, path, defaultValue) {
-  var result = object === null ? undefined : baseGet(object, path);
+  const result = object === null ? undefined : baseGet(object, path);
   return result === undefined ? defaultValue : result;
 }
 
-var reDelimiters = /\${([^}]*)}/g;
-var trim = / +(?= )|^\s+|\s+$/g;
-var specialTrim = function(str) {
-  return str.replace(trim, '');
-};
+const reDelimiters = /\${([^}]*)}/g;
+const trim = / +(?= )|^\s+|\s+$/g;
+const specialTrim = str => str.replace(trim, '');
 function applyContext(str, context) {
   if (!context) return str;
   return specialTrim(
-    str.replace(reDelimiters, function(_, path) {
-      var value = getValueFromPath(context, path);
-      if (Array.isArray(value)) return '{' + value + '}';
+    str.replace(reDelimiters, (_, path) => {
+      const value = getValueFromPath(context, path);
+      if (Array.isArray(value)) return `{${value}}`;
       if (value instanceof Object) return String(undefined);
       return String(value);
     })
   );
 }
-var Statement = /** @class */ (function() {
-  function Statement(_a) {
-    var _b = _a.effect,
-      effect = _b === void 0 ? 'allow' : _b,
-      condition = _a.condition;
+class Statement {
+  constructor({ effect = 'allow', condition }) {
     this.effect = effect;
     this.condition = condition;
   }
-  Statement.prototype.matchConditions = function(_a) {
-    var _this = this;
-    var context = _a.context,
-      conditionResolver = _a.conditionResolver;
+  matchConditions({ context, conditionResolver }) {
     return conditionResolver && this.condition && context
-      ? Object.keys(this.condition).every(function(condition) {
-          return Object.keys(
-            _this.condition ? _this.condition[condition] : {}
-          ).every(function(path) {
-            if (_this.condition) {
-              var conditionValues = _this.condition[condition][path];
-              if (conditionValues instanceof Array) {
-                return conditionValues.some(function(value) {
-                  return conditionResolver[condition](
-                    getValueFromPath(context, path),
-                    value
+      ? Object.keys(this.condition).every(condition =>
+          Object.keys(this.condition ? this.condition[condition] : {}).every(
+            path => {
+              if (this.condition) {
+                const conditionValues = this.condition[condition][path];
+                if (conditionValues instanceof Array) {
+                  return conditionValues.some(value =>
+                    conditionResolver[condition](
+                      getValueFromPath(context, path),
+                      value
+                    )
                   );
-                });
+                }
+                return conditionResolver[condition](
+                  getValueFromPath(context, path),
+                  conditionValues
+                );
               }
               return conditionResolver[condition](
                 getValueFromPath(context, path),
-                conditionValues
+                ''
               );
             }
-            return conditionResolver[condition](
-              getValueFromPath(context, path),
-              ''
-            );
-          });
-        })
+          )
+        )
       : true;
-  };
-  return Statement;
-})();
-
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-MERCHANTABLITY OR NON-INFRINGEMENT.
-
-See the Apache Version 2.0 License for specific language governing permissions
-and limitations under the License.
-***************************************************************************** */
-/* global Reflect, Promise */
-
-var extendStatics = function(d, b) {
-  extendStatics =
-    Object.setPrototypeOf ||
-    ({ __proto__: [] } instanceof Array &&
-      function(d, b) {
-        d.__proto__ = b;
-      }) ||
-    function(d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-  return extendStatics(d, b);
-};
-
-function __extends(d, b) {
-  extendStatics(d, b);
-  function __() {
-    this.constructor = d;
   }
-  d.prototype =
-    b === null ? Object.create(b) : ((__.prototype = b.prototype), new __());
 }
 
 /**
@@ -499,8 +448,8 @@ condition: {//ConditionMap
  * ```
  */
 function getIndexRange(initialSeparator, finalSeparator, str) {
-  var beginningIndex = str.indexOf(initialSeparator);
-  var finalIndex = str.indexOf(finalSeparator, beginningIndex + 1);
+  const beginningIndex = str.indexOf(initialSeparator);
+  const finalIndex = str.indexOf(finalSeparator, beginningIndex + 1);
   if (beginningIndex >= 0 && finalIndex > 0) {
     return [beginningIndex, finalIndex];
   }
@@ -535,9 +484,11 @@ function getIndexRange(initialSeparator, finalSeparator, str) {
  * ```
  */
 function decomposeString(initialSeparator, finalSeparator, str) {
-  var _a = getIndexRange(initialSeparator, finalSeparator, str),
-    beginningIndex = _a[0],
-    finalIndex = _a[1];
+  const [beginningIndex, finalIndex] = getIndexRange(
+    initialSeparator,
+    finalSeparator,
+    str
+  );
   return {
     start: beginningIndex,
     end: finalIndex,
@@ -551,22 +502,19 @@ function decomposeString(initialSeparator, finalSeparator, str) {
   };
 }
 
-var Matcher = /** @class */ (function() {
-  function Matcher(pattern) {
-    var _this = this;
+class Matcher {
+  constructor(pattern) {
     this.set = [];
     this.pattern = pattern.trim();
     this.empty = !this.pattern ? true : false;
-    var set = this.braceExpand();
-    this.set = set.map(function(val) {
-      return _this.parse(val);
-    });
-    this.set = this.set.filter(function(s) {
+    const set = this.braceExpand();
+    this.set = set.map(val => this.parse(val));
+    this.set = this.set.filter(s => {
       return Boolean(s);
     });
   }
-  Matcher.prototype.braceExpand = function() {
-    var pattern = this.pattern;
+  braceExpand() {
+    let pattern = this.pattern;
     if (!pattern.match(/{.*}/)) {
       return [pattern];
     }
@@ -580,15 +528,15 @@ var Matcher = /** @class */ (function() {
       pattern = '\\{\\}' + pattern.substr(2);
     }
     return this.expand(pattern, true);
-  };
-  Matcher.prototype.parse = function(pattern) {
+  }
+  parse(pattern) {
     if (pattern.length > 1024 * 64) {
       throw new TypeError('pattern is too long');
     }
-    var regExp;
-    var hasSpecialCharacter = false;
+    let regExp;
+    let hasSpecialCharacter = false;
     if (pattern === '') return '';
-    var re = pattern.replace(/\*/g, function() {
+    const re = pattern.replace(/\*/g, () => {
       hasSpecialCharacter = true;
       return '.+?';
     });
@@ -606,223 +554,199 @@ var Matcher = /** @class */ (function() {
       return new RegExp('$.');
     }
     return regExp;
-  };
-  Matcher.prototype.expand = function(str, isTop) {
-    var expansions = [];
-    var balance = decomposeString('{', '}', str);
+  }
+  expand(str, isTop) {
+    const expansions = [];
+    const balance = decomposeString('{', '}', str);
     if (balance.start < 0 || /\$$/.test(balance.pre)) return [str];
-    var parts;
+    let parts;
     if (!balance.body) parts = [''];
     else parts = balance.body.split(',');
     // no need to expand pre, since it is guaranteed to be free of brace-sets
-    var pre = balance.pre;
-    var postParts = balance.post.length
+    const pre = balance.pre;
+    const postParts = balance.post.length
       ? this.expand(balance.post, false)
       : [''];
-    parts.forEach(function(part) {
-      postParts.forEach(function(postPart) {
-        var expansion = pre + part + postPart;
+    parts.forEach(part => {
+      postParts.forEach(postPart => {
+        const expansion = pre + part + postPart;
         if (!isTop || expansion) expansions.push(expansion);
       });
     });
     return expansions;
-  };
-  Matcher.prototype.match = function(str) {
-    var _this = this;
+  }
+  match(str) {
     if (this.empty) return str === '';
-    var set = this.set;
-    return set.some(function(pattern) {
-      return _this.matchOne(str, pattern);
-    });
-  };
-  Matcher.prototype.matchOne = function(str, pattern) {
+    const set = this.set;
+    return set.some(pattern => this.matchOne(str, pattern));
+  }
+  matchOne(str, pattern) {
     if (!pattern) return false;
     if (typeof pattern === 'string') {
       return str === pattern;
     }
     return Boolean(str.match(pattern));
-  };
-  return Matcher;
-})();
+  }
+}
 
-var ActionBased = /** @class */ (function(_super) {
-  __extends(ActionBased, _super);
-  function ActionBased(action) {
-    var _this = _super.call(this, action) || this;
+class ActionBased extends Statement {
+  constructor(action) {
+    super(action);
     if (instanceOfActionBlock(action)) {
-      _this.action =
+      this.action =
         typeof action.action === 'string' ? [action.action] : action.action;
     } else {
-      _this.notAction =
+      this.notAction =
         typeof action.notAction === 'string'
           ? [action.notAction]
           : action.notAction;
     }
-    _this.statement = action;
-    return _this;
+    this.statement = action;
   }
-  ActionBased.prototype.getStatement = function() {
+  getStatement() {
     return this.statement;
-  };
-  ActionBased.prototype.matches = function(_a) {
-    var action = _a.action,
-      context = _a.context,
-      conditionResolver = _a.conditionResolver;
+  }
+  matches({ action, context, conditionResolver }) {
     return (
       this.matchActions(action, context) &&
       this.matchNotActions(action, context) &&
-      this.matchConditions({
-        context: context,
-        conditionResolver: conditionResolver
-      })
+      this.matchConditions({ context, conditionResolver })
     );
-  };
-  ActionBased.prototype.matchActions = function(action, context) {
+  }
+  matchActions(action, context) {
     return this.action
-      ? this.action.some(function(a) {
-          return new Matcher(applyContext(a, context)).match(action);
-        })
+      ? this.action.some(a =>
+          new Matcher(applyContext(a, context)).match(action)
+        )
       : true;
-  };
-  ActionBased.prototype.matchNotActions = function(action, context) {
+  }
+  matchNotActions(action, context) {
     return this.notAction
-      ? !this.notAction.some(function(a) {
-          return new Matcher(applyContext(a, context)).match(action);
-        })
+      ? !this.notAction.some(a =>
+          new Matcher(applyContext(a, context)).match(action)
+        )
       : true;
-  };
-  return ActionBased;
-})(Statement);
+  }
+}
 
-var IdentityBased = /** @class */ (function(_super) {
-  __extends(IdentityBased, _super);
-  function IdentityBased(identity) {
-    var _this = _super.call(this, identity) || this;
+class IdentityBased extends Statement {
+  constructor(identity) {
+    super(identity);
     if (instanceOfResourceBlock(identity)) {
-      _this.resource =
+      this.resource =
         typeof identity.resource === 'string'
           ? [identity.resource]
           : identity.resource;
     } else {
-      _this.notResource =
+      this.notResource =
         typeof identity.notResource === 'string'
           ? [identity.notResource]
           : identity.notResource;
     }
     if (instanceOfActionBlock(identity)) {
-      _this.action =
+      this.action =
         typeof identity.action === 'string'
           ? [identity.action]
           : identity.action;
     } else {
-      _this.notAction =
+      this.notAction =
         typeof identity.notAction === 'string'
           ? [identity.notAction]
           : identity.notAction;
     }
-    _this.statement = identity;
-    return _this;
+    this.statement = identity;
   }
-  IdentityBased.prototype.getStatement = function() {
+  getStatement() {
     return this.statement;
-  };
-  IdentityBased.prototype.matches = function(_a) {
-    var action = _a.action,
-      resource = _a.resource,
-      context = _a.context,
-      conditionResolver = _a.conditionResolver;
+  }
+  matches({ action, resource, context, conditionResolver }) {
     return (
       this.matchActions(action, context) &&
       this.matchNotActions(action, context) &&
       this.matchResources(resource, context) &&
       this.matchNotResources(resource, context) &&
-      this.matchConditions({
-        context: context,
-        conditionResolver: conditionResolver
-      })
+      this.matchConditions({ context, conditionResolver })
     );
-  };
-  IdentityBased.prototype.matchActions = function(action, context) {
+  }
+  matchActions(action, context) {
     return this.action
-      ? this.action.some(function(a) {
-          return new Matcher(applyContext(a, context)).match(action);
-        })
+      ? this.action.some(a =>
+          new Matcher(applyContext(a, context)).match(action)
+        )
       : true;
-  };
-  IdentityBased.prototype.matchNotActions = function(action, context) {
+  }
+  matchNotActions(action, context) {
     return this.notAction
-      ? !this.notAction.some(function(a) {
-          return new Matcher(applyContext(a, context)).match(action);
-        })
+      ? !this.notAction.some(a =>
+          new Matcher(applyContext(a, context)).match(action)
+        )
       : true;
-  };
-  IdentityBased.prototype.matchResources = function(resource, context) {
+  }
+  matchResources(resource, context) {
     return this.resource
-      ? this.resource.some(function(a) {
-          return new Matcher(applyContext(a, context)).match(resource);
-        })
+      ? this.resource.some(a =>
+          new Matcher(applyContext(a, context)).match(resource)
+        )
       : true;
-  };
-  IdentityBased.prototype.matchNotResources = function(resource, context) {
+  }
+  matchNotResources(resource, context) {
     return this.notResource
-      ? !this.notResource.some(function(a) {
-          return new Matcher(applyContext(a, context)).match(resource);
-        })
+      ? !this.notResource.some(a =>
+          new Matcher(applyContext(a, context)).match(resource)
+        )
       : true;
-  };
-  return IdentityBased;
-})(Statement);
+  }
+}
 
-var ResourceBased = /** @class */ (function(_super) {
-  __extends(ResourceBased, _super);
-  function ResourceBased(identity) {
-    var _this = _super.call(this, identity) || this;
+class ResourceBased extends Statement {
+  constructor(identity) {
+    super(identity);
     if (instanceOfResourceBlock(identity)) {
-      _this.resource =
+      this.resource =
         typeof identity.resource === 'string'
           ? [identity.resource]
           : identity.resource;
     } else if (instanceOfNotResourceBlock(identity)) {
-      _this.notResource =
+      this.notResource =
         typeof identity.notResource === 'string'
           ? [identity.notResource]
           : identity.notResource;
     }
     if (instanceOfActionBlock(identity)) {
-      _this.action =
+      this.action =
         typeof identity.action === 'string'
           ? [identity.action]
           : identity.action;
     } else {
-      _this.notAction =
+      this.notAction =
         typeof identity.notAction === 'string'
           ? [identity.notAction]
           : identity.notAction;
     }
     if (instanceOfPrincipalBlock(identity)) {
-      _this.principal =
+      this.principal =
         typeof identity.principal === 'string'
           ? [identity.principal]
           : identity.principal;
     } else {
-      _this.notPrincipal =
+      this.notPrincipal =
         typeof identity.notPrincipal === 'string'
           ? [identity.notPrincipal]
           : identity.notPrincipal;
     }
-    _this.statement = identity;
-    return _this;
+    this.statement = identity;
   }
-  ResourceBased.prototype.getStatement = function() {
+  getStatement() {
     return this.statement;
-  };
-  ResourceBased.prototype.matches = function(_a) {
-    var principal = _a.principal,
-      action = _a.action,
-      resource = _a.resource,
-      principalType = _a.principalType,
-      context = _a.context,
-      conditionResolver = _a.conditionResolver;
+  }
+  matches({
+    principal,
+    action,
+    resource,
+    principalType,
+    context,
+    conditionResolver
+  }) {
     return (
       this.matchPrincipals(principal, principalType, context) &&
       this.matchNotPrincipals(principal, principalType, context) &&
@@ -830,35 +754,28 @@ var ResourceBased = /** @class */ (function(_super) {
       this.matchNotActions(action, context) &&
       this.matchResources(resource, context) &&
       this.matchNotResources(resource, context) &&
-      this.matchConditions({
-        context: context,
-        conditionResolver: conditionResolver
-      })
+      this.matchConditions({ context, conditionResolver })
     );
-  };
-  ResourceBased.prototype.matchPrincipals = function(
-    principal,
-    principalType,
-    context
-  ) {
+  }
+  matchPrincipals(principal, principalType, context) {
     if (this.principal) {
       if (this.principal instanceof Array) {
         return principalType
           ? false
-          : this.principal.some(function(a) {
-              return new Matcher(applyContext(a, context)).match(principal);
-            });
+          : this.principal.some(a =>
+              new Matcher(applyContext(a, context)).match(principal)
+            );
       } else {
         if (principalType) {
-          var principalValues = this.principal[principalType];
+          const principalValues = this.principal[principalType];
           if (principalValues instanceof Array) {
             return typeof principalValues === 'string'
-              ? [principalValues].some(function(a) {
-                  return new Matcher(applyContext(a, context)).match(principal);
-                })
-              : principalValues.some(function(a) {
-                  return new Matcher(applyContext(a, context)).match(principal);
-                });
+              ? [principalValues].some(a =>
+                  new Matcher(applyContext(a, context)).match(principal)
+                )
+              : principalValues.some(a =>
+                  new Matcher(applyContext(a, context)).match(principal)
+                );
           }
           return new Matcher(applyContext(principalValues, context)).match(
             principal
@@ -868,30 +785,26 @@ var ResourceBased = /** @class */ (function(_super) {
       }
     }
     return true;
-  };
-  ResourceBased.prototype.matchNotPrincipals = function(
-    principal,
-    principalType,
-    context
-  ) {
+  }
+  matchNotPrincipals(principal, principalType, context) {
     if (this.notPrincipal) {
       if (this.notPrincipal instanceof Array) {
         return principalType
           ? true
-          : !this.notPrincipal.some(function(a) {
-              return new Matcher(applyContext(a, context)).match(principal);
-            });
+          : !this.notPrincipal.some(a =>
+              new Matcher(applyContext(a, context)).match(principal)
+            );
       } else {
         if (principalType) {
-          var principalValues = this.notPrincipal[principalType];
+          const principalValues = this.notPrincipal[principalType];
           if (principalValues instanceof Array) {
             return typeof principalValues === 'string'
-              ? ![principalValues].some(function(a) {
-                  return new Matcher(applyContext(a, context)).match(principal);
-                })
-              : !principalValues.some(function(a) {
-                  return new Matcher(applyContext(a, context)).match(principal);
-                });
+              ? ![principalValues].some(a =>
+                  new Matcher(applyContext(a, context)).match(principal)
+                )
+              : !principalValues.some(a =>
+                  new Matcher(applyContext(a, context)).match(principal)
+                );
           }
           return !new Matcher(applyContext(principalValues, context)).match(
             principal
@@ -901,213 +814,149 @@ var ResourceBased = /** @class */ (function(_super) {
       }
     }
     return true;
-  };
-  ResourceBased.prototype.matchActions = function(action, context) {
+  }
+  matchActions(action, context) {
     return this.action
-      ? this.action.some(function(a) {
-          return new Matcher(applyContext(a, context)).match(action);
-        })
+      ? this.action.some(a =>
+          new Matcher(applyContext(a, context)).match(action)
+        )
       : true;
-  };
-  ResourceBased.prototype.matchNotActions = function(action, context) {
+  }
+  matchNotActions(action, context) {
     return this.notAction
-      ? !this.notAction.some(function(a) {
-          return new Matcher(applyContext(a, context)).match(action);
-        })
+      ? !this.notAction.some(a =>
+          new Matcher(applyContext(a, context)).match(action)
+        )
       : true;
-  };
-  ResourceBased.prototype.matchResources = function(resource, context) {
+  }
+  matchResources(resource, context) {
     return this.resource
-      ? this.resource.some(function(a) {
-          return new Matcher(applyContext(a, context)).match(resource);
-        })
+      ? this.resource.some(a =>
+          new Matcher(applyContext(a, context)).match(resource)
+        )
       : true;
-  };
-  ResourceBased.prototype.matchNotResources = function(resource, context) {
+  }
+  matchNotResources(resource, context) {
     return this.notResource
-      ? !this.notResource.some(function(a) {
-          return new Matcher(applyContext(a, context)).match(resource);
-        })
+      ? !this.notResource.some(a =>
+          new Matcher(applyContext(a, context)).match(resource)
+        )
       : true;
-  };
-  return ResourceBased;
-})(Statement);
+  }
+}
 
-var ActionBasedPolicy = /** @class */ (function() {
-  function ActionBasedPolicy(config, conditionResolver) {
-    var statementInstances = config.map(function(s) {
-      return new ActionBased(s);
-    });
-    this.allowStatements = statementInstances.filter(function(s) {
-      return s.effect === 'allow';
-    });
-    this.denyStatements = statementInstances.filter(function(s) {
-      return s.effect === 'deny';
-    });
+class ActionBasedPolicy {
+  constructor(config, conditionResolver) {
+    const statementInstances = config.map(s => new ActionBased(s));
+    this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
+    this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
     this.conditionResolver = conditionResolver;
     this.statements = config;
   }
-  ActionBasedPolicy.prototype.getStatements = function() {
+  getStatements() {
     return this.statements;
-  };
-  ActionBasedPolicy.prototype.evaluate = function(_a) {
-    var action = _a.action,
-      context = _a.context;
-    var args = { action: action, context: context };
+  }
+  evaluate({ action, context }) {
+    const args = { action, context };
     return !this.cannot(args) && this.can(args);
-  };
-  ActionBasedPolicy.prototype.can = function(_a) {
-    var _this = this;
-    var action = _a.action,
-      context = _a.context;
-    return this.allowStatements.some(function(s) {
-      return s.matches({
-        action: action,
-        context: context,
-        conditionResolver: _this.conditionResolver
-      });
-    });
-  };
-  ActionBasedPolicy.prototype.cannot = function(_a) {
-    var _this = this;
-    var action = _a.action,
-      context = _a.context;
-    return this.denyStatements.some(function(s) {
-      return s.matches({
-        action: action,
-        context: context,
-        conditionResolver: _this.conditionResolver
-      });
-    });
-  };
-  return ActionBasedPolicy;
-})();
+  }
+  can({ action, context }) {
+    return this.allowStatements.some(s =>
+      s.matches({
+        action,
+        context,
+        conditionResolver: this.conditionResolver
+      })
+    );
+  }
+  cannot({ action, context }) {
+    return this.denyStatements.some(s =>
+      s.matches({
+        action,
+        context,
+        conditionResolver: this.conditionResolver
+      })
+    );
+  }
+}
 
-var IdentityBasedPolicy = /** @class */ (function() {
-  function IdentityBasedPolicy(config, conditionResolver) {
-    var statementInstances = config.map(function(s) {
-      return new IdentityBased(s);
-    });
-    this.allowStatements = statementInstances.filter(function(s) {
-      return s.effect === 'allow';
-    });
-    this.denyStatements = statementInstances.filter(function(s) {
-      return s.effect === 'deny';
-    });
+class IdentityBasedPolicy {
+  constructor(config, conditionResolver) {
+    const statementInstances = config.map(s => new IdentityBased(s));
+    this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
+    this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
     this.conditionResolver = conditionResolver;
     this.statements = config;
   }
-  IdentityBasedPolicy.prototype.getStatements = function() {
+  getStatements() {
     return this.statements;
-  };
-  IdentityBasedPolicy.prototype.evaluate = function(_a) {
-    var action = _a.action,
-      resource = _a.resource,
-      context = _a.context;
-    var args = { action: action, resource: resource, context: context };
+  }
+  evaluate({ action, resource, context }) {
+    const args = { action, resource, context };
     return !this.cannot(args) && this.can(args);
-  };
-  IdentityBasedPolicy.prototype.can = function(_a) {
-    var _this = this;
-    var action = _a.action,
-      resource = _a.resource,
-      context = _a.context;
-    return this.allowStatements.some(function(s) {
-      return s.matches({
-        action: action,
-        resource: resource,
-        context: context,
-        conditionResolver: _this.conditionResolver
-      });
-    });
-  };
-  IdentityBasedPolicy.prototype.cannot = function(_a) {
-    var _this = this;
-    var action = _a.action,
-      resource = _a.resource,
-      context = _a.context;
-    return this.denyStatements.some(function(s) {
-      return s.matches({
-        action: action,
-        resource: resource,
-        context: context,
-        conditionResolver: _this.conditionResolver
-      });
-    });
-  };
-  return IdentityBasedPolicy;
-})();
+  }
+  can({ action, resource, context }) {
+    return this.allowStatements.some(s =>
+      s.matches({
+        action,
+        resource,
+        context,
+        conditionResolver: this.conditionResolver
+      })
+    );
+  }
+  cannot({ action, resource, context }) {
+    return this.denyStatements.some(s =>
+      s.matches({
+        action,
+        resource,
+        context,
+        conditionResolver: this.conditionResolver
+      })
+    );
+  }
+}
 
-var ResourceBasedPolicy = /** @class */ (function() {
-  function ResourceBasedPolicy(config, conditionResolver) {
-    var statementInstances = config.map(function(s) {
-      return new ResourceBased(s);
-    });
-    this.allowStatements = statementInstances.filter(function(s) {
-      return s.effect === 'allow';
-    });
-    this.denyStatements = statementInstances.filter(function(s) {
-      return s.effect === 'deny';
-    });
+class ResourceBasedPolicy {
+  constructor(config, conditionResolver) {
+    const statementInstances = config.map(s => new ResourceBased(s));
+    this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
+    this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
     this.conditionResolver = conditionResolver;
     this.statements = config;
   }
-  ResourceBasedPolicy.prototype.getStatements = function() {
+  getStatements() {
     return this.statements;
-  };
-  ResourceBasedPolicy.prototype.evaluate = function(_a) {
-    var principal = _a.principal,
-      action = _a.action,
-      resource = _a.resource,
-      principalType = _a.principalType,
-      context = _a.context;
-    var args = {
-      principal: principal,
-      action: action,
-      resource: resource,
-      principalType: principalType,
-      context: context
-    };
+  }
+  evaluate({ principal, action, resource, principalType, context }) {
+    const args = { principal, action, resource, principalType, context };
     return !this.cannot(args) && this.can(args);
-  };
-  ResourceBasedPolicy.prototype.can = function(_a) {
-    var _this = this;
-    var principal = _a.principal,
-      action = _a.action,
-      resource = _a.resource,
-      principalType = _a.principalType,
-      context = _a.context;
-    return this.allowStatements.some(function(s) {
-      return s.matches({
-        principal: principal,
-        action: action,
-        resource: resource,
-        principalType: principalType,
-        context: context,
-        conditionResolver: _this.conditionResolver
-      });
-    });
-  };
-  ResourceBasedPolicy.prototype.cannot = function(_a) {
-    var _this = this;
-    var principal = _a.principal,
-      action = _a.action,
-      resource = _a.resource,
-      principalType = _a.principalType,
-      context = _a.context;
-    return this.denyStatements.some(function(s) {
-      return s.matches({
-        principal: principal,
-        action: action,
-        resource: resource,
-        principalType: principalType,
-        context: context,
-        conditionResolver: _this.conditionResolver
-      });
-    });
-  };
-  return ResourceBasedPolicy;
-})();
+  }
+  can({ principal, action, resource, principalType, context }) {
+    return this.allowStatements.some(s =>
+      s.matches({
+        principal,
+        action,
+        resource,
+        principalType,
+        context,
+        conditionResolver: this.conditionResolver
+      })
+    );
+  }
+  cannot({ principal, action, resource, principalType, context }) {
+    return this.denyStatements.some(s =>
+      s.matches({
+        principal,
+        action,
+        resource,
+        principalType,
+        context,
+        conditionResolver: this.conditionResolver
+      })
+    );
+  }
+}
 
 export {
   ActionBased,

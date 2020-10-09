@@ -2,7 +2,7 @@ import { Matcher } from './Matcher';
 
 describe('Matcher Class', () => {
   describe('when creating identity based policy', () => {
-    it("don't throw an error", () => {
+    it("doesn't throw an error", () => {
       expect(() => new Matcher('secrets:123:*')).not.toThrow();
     });
 

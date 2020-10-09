@@ -81,7 +81,6 @@ export class MersenneTwister {
 
   /* initializes mt[N] with a seed */
   /* origin name init_genrand */
-
   initSeed(seed: number): void {
     this.mt[0] = seed >>> 0;
     for (this.mti = 1; this.mti < this.N; this.mti++) {
@@ -103,7 +102,7 @@ export class MersenneTwister {
   /* init_key is the array for initializing keys */
   /* key_length is its length */
   /* slight change for C++, 2004/2/26 */
-  private initByArray(initKey: number[], keyLength: number): void {
+  initByArray(initKey: number[], keyLength: number): void {
     this.initSeed(19650218);
     let i = 1;
     let j = 0;
@@ -145,7 +144,7 @@ export class MersenneTwister {
 
   /* generates a random number on [0,0xffffffff]-interval */
   /* origin name genrand_int32 */
-  randomInt(): number {
+  randomInt32(): number {
     let y;
     const mag01 = [0x0, this.MATRIX_A];
     /* mag01[x] = x * MATRIX_A  for x=0,1 */
@@ -191,34 +190,35 @@ export class MersenneTwister {
   /* generates a random number on [0,0x7fffffff]-interval */
   /* origin name genrand_int31 */
   randomInt31(): number {
-    return this.randomInt() >>> 1;
+    return this.randomInt32() >>> 1;
   }
 
   /* generates a random number on [0,1]-real-interval */
   /* origin name genrand_real1 */
-  randomIncl(): number {
-    return this.randomInt() * (1.0 / 4294967295.0);
+  randomReal1(): number {
+    return this.randomInt32() * (1.0 / 4294967295.0);
     /* divided by 2^32-1 */
   }
 
   /* generates a random number on [0,1)-real-interval */
-  random(): number {
-    return this.randomInt() * (1.0 / 4294967296.0);
+  /* origin name genrand_real2 */
+  randomReal2(): number {
+    return this.randomInt32() * (1.0 / 4294967296.0);
     /* divided by 2^32 */
   }
 
   /* generates a random number on (0,1)-real-interval */
   /* origin name genrand_real3 */
-  randomExcl(): number {
-    return (this.randomInt() + 0.5) * (1.0 / 4294967296.0);
+  randomReal3(): number {
+    return (this.randomInt32() + 0.5) * (1.0 / 4294967296.0);
     /* divided by 2^32 */
   }
 
   /* generates a random number on [0,1) with 53-bit resolution*/
   /* origin name genrand_res53 */
-  randomLong(): number {
-    const a = this.randomInt() >>> 5;
-    const b = this.randomInt() >>> 6;
+  randomRes53(): number {
+    const a = this.randomInt32() >>> 5;
+    const b = this.randomInt32() >>> 6;
     return (a * 67108864.0 + b) * (1.0 / 9007199254740992.0);
   }
 }

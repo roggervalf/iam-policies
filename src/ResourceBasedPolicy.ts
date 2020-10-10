@@ -14,11 +14,15 @@ export class ResourceBasedPolicy {
     config: ResourceBasedType[],
     conditionResolver?: ConditionResolver
   ) {
-    const statementInstances = config.map(s => new ResourceBased(s));
+    const statementInstances = config.map(
+      statement => new ResourceBased(statement)
+    );
     this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
     this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
     this.conditionResolver = conditionResolver;
-    this.statements = config;
+    this.statements = statementInstances.map(statement =>
+      statement.getStatement()
+    );
   }
   getStatements(): ResourceBasedType[] {
     return this.statements;

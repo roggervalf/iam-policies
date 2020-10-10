@@ -8,12 +8,13 @@ import { getTag } from './getTag';
  * @param {*} value The value to check.
  * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
  * @example
- *
+ * ```javascript
  * isSymbol(Symbol())
  * // => true
  *
  * isSymbol('abc')
  * // => false
+ * ```
  */
 export function isSymbol(value?: any): boolean {
   const type = typeof value;

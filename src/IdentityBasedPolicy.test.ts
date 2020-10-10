@@ -35,7 +35,9 @@ describe('IdentityBasedPolicy Class', () => {
         }
       ];
       const policy = new IdentityBasedPolicy(statements);
-      expect(policy.getStatements()).toEqual(statements);
+      const exportedStatements = policy.getStatements();
+      expect(exportedStatements).toMatchObject(statements);
+      expect(exportedStatements[0].sid).not.toBeFalsy();
     });
   });
 

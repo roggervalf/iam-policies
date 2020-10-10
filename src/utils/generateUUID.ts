@@ -1,9 +1,9 @@
 import { MersenneTwister } from './mersenneTwister';
 
-const replacePlaceholders = (placeholder: string): string => {
-  const mersenne = new MersenneTwister();
-  const random = Math.floor(mersenne.randomInt32() * (1.0 / 4294967296.0) * 15);
-  // Workaround problem in Float point arithmetics for e.g. 6681493 / 0.01
+const replacePlaceholders = (mersenne: MersenneTwister) => (
+  placeholder: string
+): string => {
+  const random = Math.floor(mersenne.randomReal2() * 16);
 
   const value = placeholder === 'x' ? random : (random & 0x3) | 0x8;
   return value.toString(16);
@@ -18,14 +18,15 @@ const replacePlaceholders = (placeholder: string): string => {
  * @example
  * ```javascript
  * generateUUID()
- * // => 84cc8800-6000-4555-844b-bbb333888888
+ * // => 49e71c40-9b21-4371-9699-2def33f62e66
  *
  * generateUUID()
- * // => 3dd002aa-2111-4000-b333-777666666666
+ * // => da94f128-4247-48e3-bc73-d0cae46b5093
  * ```
  */
 export function generateUUID(): string {
+  const mersenne = new MersenneTwister();
   const RFC4122_TEMPLATE = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
 
-  return RFC4122_TEMPLATE.replace(/[xy]/g, replacePlaceholders);
+  return RFC4122_TEMPLATE.replace(/[xy]/g, replacePlaceholders(mersenne));
 }

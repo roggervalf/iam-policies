@@ -125,9 +125,10 @@ declare type ResourceBasedType = StatementInterface &
 
 declare function applyContext(str: string, context?: Context): string;
 declare class Statement {
-  effect: EffectBlock;
+  protected sid: string;
   protected readonly condition?: ConditionBlock;
-  constructor({ effect, condition }: StatementInterface);
+  effect: EffectBlock;
+  constructor({ sid, effect, condition }: StatementInterface);
   matchConditions({
     context,
     conditionResolver

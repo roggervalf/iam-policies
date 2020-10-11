@@ -1,6 +1,6 @@
 # iam-policies
 
-> [![NPM](https://img.shields.io/npm/v/iam-policies.svg)](https://www.npmjs.com/package/iam-policies) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://travis-ci.com/roggervalf/iam-policies.svg?branch=master)](https://travis-ci.com/github/roggervalf/iam-policies) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+> [![NPM](https://img.shields.io/npm/v/iam-policies.svg)](https://www.npmjs.com/package/iam-policies) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Build Status](https://travis-ci.com/roggervalf/iam-policies.svg?branch=master)](https://travis-ci.com/github/roggervalf/iam-policies) [![NPM downloads](https://img.shields.io/npm/dm/iam-policies)](https://www.npmjs.com/package/iam-policies) [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 ## About
 
@@ -43,6 +43,20 @@ import {
   ResourceBasedPolicy
 } from 'https://deno.land/x/iam_policies@master/dist/main.es.js';
 ```
+
+## Node import
+
+```js
+import {
+  ActionBasedPolicy,
+  IdentityBasedPolicy,
+  ResourceBasedPolicy
+} from 'iam-policies';
+```
+
+## Examples
+
+- Here is an example of using it into a [GraphQL project](https://github.com/roggerval/tech-insiders-nodejs) (step 7).
 
 ## Features
 

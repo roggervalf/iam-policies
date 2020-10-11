@@ -2,7 +2,7 @@ import { ActionBasedPolicy } from './ActionBasedPolicy';
 
 describe('ActionBasedPolicy Class', () => {
   describe('when creating action based policy', () => {
-    it("don't throw an error", () => {
+    it("doesn't throw an error", () => {
       expect(
         () =>
           new ActionBasedPolicy([
@@ -32,7 +32,9 @@ describe('ActionBasedPolicy Class', () => {
         }
       ];
       const policy = new ActionBasedPolicy(statements);
-      expect(policy.getStatements()).toEqual(statements);
+      const exportedStatements = policy.getStatements();
+      expect(exportedStatements).toMatchObject(statements);
+      expect(exportedStatements[0].sid).not.toBeFalsy();
     });
   });
 

@@ -14,11 +14,15 @@ export class ActionBasedPolicy {
     config: ActionBasedType[],
     conditionResolver?: ConditionResolver
   ) {
-    const statementInstances = config.map(s => new ActionBased(s));
+    const statementInstances = config.map(
+      statement => new ActionBased(statement)
+    );
     this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
     this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
     this.conditionResolver = conditionResolver;
-    this.statements = config;
+    this.statements = this.statements = statementInstances.map(statement =>
+      statement.getStatement()
+    );
   }
   getStatements(): ActionBasedType[] {
     return this.statements;

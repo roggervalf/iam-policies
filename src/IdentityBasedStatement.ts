@@ -41,7 +41,7 @@ class IdentityBased extends Statement {
           ? [identity.notAction]
           : identity.notAction;
     }
-    this.statement = identity;
+    this.statement = { ...identity, sid: this.sid };
   }
 
   getStatement(): IdentityBasedType {

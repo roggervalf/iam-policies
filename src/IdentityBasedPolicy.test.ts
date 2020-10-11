@@ -2,7 +2,7 @@ import { IdentityBasedPolicy } from './IdentityBasedPolicy';
 
 describe('IdentityBasedPolicy Class', () => {
   describe('when creating identity based policy', () => {
-    it("don't throw an error", () => {
+    it("doesn't throw an error", () => {
       expect(
         () =>
           new IdentityBasedPolicy([
@@ -35,7 +35,9 @@ describe('IdentityBasedPolicy Class', () => {
         }
       ];
       const policy = new IdentityBasedPolicy(statements);
-      expect(policy.getStatements()).toEqual(statements);
+      const exportedStatements = policy.getStatements();
+      expect(exportedStatements).toMatchObject(statements);
+      expect(exportedStatements[0].sid).not.toBeFalsy();
     });
   });
 

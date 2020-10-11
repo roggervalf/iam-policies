@@ -57,7 +57,7 @@ class ResourceBased extends Statement {
           ? [identity.notPrincipal]
           : identity.notPrincipal;
     }
-    this.statement = identity;
+    this.statement = { ...identity, sid: this.sid };
   }
 
   getStatement(): ResourceBasedType {

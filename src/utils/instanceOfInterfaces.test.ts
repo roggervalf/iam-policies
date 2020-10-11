@@ -7,7 +7,7 @@ import {
 
 describe('Util functions', () => {
   describe('instanceOfPrincipalBlock', () => {
-    it("don't throw an error", () => {
+    it("doesn't throw an error", () => {
       expect(() =>
         instanceOfPrincipalBlock({
           principal: 'something'
@@ -21,7 +21,7 @@ describe('Util functions', () => {
   });
 
   describe('instanceOfResourceBlock', () => {
-    it("don't throw an error", () => {
+    it("doesn't throw an error", () => {
       expect(() =>
         instanceOfResourceBlock({
           resource: 'something'
@@ -33,7 +33,7 @@ describe('Util functions', () => {
   });
 
   describe('instanceOfActionBlock', () => {
-    it("don't throw an error", () => {
+    it("doesn't throw an error", () => {
       expect(() =>
         instanceOfActionBlock({
           action: 'something'
@@ -45,7 +45,7 @@ describe('Util functions', () => {
   });
 
   describe('instanceOfNotResourceBlock', () => {
-    it("don't throw an error", () => {
+    it("doesn't throw an error", () => {
       expect(() =>
         instanceOfNotResourceBlock({
           notResource: 'something'

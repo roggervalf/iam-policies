@@ -6,6 +6,7 @@ import {
   MatchConditionInterface
 } from './types';
 import { getValueFromPath } from './utils/getValueFromPath';
+import { generateUUID } from './utils/generateUUID';
 
 const reDelimiters = /\${([^}]*)}/g;
 const trim = / +(?= )|^\s+|\s+$/g;
@@ -27,10 +28,16 @@ export function applyContext(str: string, context?: Context): string {
 }
 
 class Statement {
-  effect: EffectBlock;
+  protected sid: string;
   protected readonly condition?: ConditionBlock;
+  effect: EffectBlock;
 
-  constructor({ effect = 'allow', condition }: StatementInterface) {
+  constructor({ sid, effect = 'allow', condition }: StatementInterface) {
+    if (!sid) {
+      this.sid = generateUUID();
+    } else {
+      this.sid = sid;
+    }
     this.effect = effect;
     this.condition = condition;
   }

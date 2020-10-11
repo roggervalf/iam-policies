@@ -14,11 +14,15 @@ export class IdentityBasedPolicy {
     config: IdentityBasedType[],
     conditionResolver?: ConditionResolver
   ) {
-    const statementInstances = config.map(s => new IdentityBased(s));
+    const statementInstances = config.map(
+      statement => new IdentityBased(statement)
+    );
     this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
     this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
     this.conditionResolver = conditionResolver;
-    this.statements = config;
+    this.statements = statementInstances.map(statement =>
+      statement.getStatement()
+    );
   }
   getStatements(): IdentityBasedType[] {
     return this.statements;

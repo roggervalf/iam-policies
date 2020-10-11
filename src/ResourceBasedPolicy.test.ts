@@ -2,7 +2,7 @@ import { ResourceBasedPolicy } from './ResourceBasedPolicy';
 
 describe('ResourceBasedPolicy Class', () => {
   describe('when creating resource based policy', () => {
-    it("don't throw an error", () => {
+    it("doesn't throw an error", () => {
       expect(
         () =>
           new ResourceBasedPolicy([
@@ -38,7 +38,9 @@ describe('ResourceBasedPolicy Class', () => {
         }
       ];
       const policy = new ResourceBasedPolicy(statements);
-      expect(policy.getStatements()).toEqual(statements);
+      const exportedStatements = policy.getStatements();
+      expect(exportedStatements).toMatchObject(statements);
+      expect(exportedStatements[0].sid).not.toBeFalsy();
     });
   });
 

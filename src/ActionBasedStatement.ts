@@ -19,7 +19,7 @@ class ActionBased extends Statement {
           ? [action.notAction]
           : action.notAction;
     }
-    this.statement = action;
+    this.statement = { ...action, sid: this.sid };
   }
 
   getStatement(): ActionBasedType {

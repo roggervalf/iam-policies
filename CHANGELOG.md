@@ -1,3 +1,11 @@
+# [3.5.0](https://github.com/roggervalf/iam-policies/compare/v3.4.1...v3.5.0) (2020-10-11)
+
+
+### Features
+
+* **sid:** generating uuid to set sid in statements as default ([c23d6e6](https://github.com/roggervalf/iam-policies/commit/c23d6e66208df06f8d48702c6143252374c22deb)), closes [#27](https://github.com/roggervalf/iam-policies/issues/27)
+* **uuid:** adding util functions to generate uuid ([f7687e6](https://github.com/roggervalf/iam-policies/commit/f7687e698e2c28e95fe37e6a744bb6f49e9cd9bb))
+
 ## [3.4.1](https://github.com/roggervalf/iam-policies/compare/v3.4.0...v3.4.1) (2020-09-06)
 
 

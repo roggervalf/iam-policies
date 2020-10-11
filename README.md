@@ -44,6 +44,20 @@ import {
 } from 'https://deno.land/x/iam_policies@master/dist/main.es.js';
 ```
 
+## Node import
+
+```js
+import {
+  ActionBasedPolicy,
+  IdentityBasedPolicy,
+  ResourceBasedPolicy
+} from 'iam-policies';
+```
+
+## Examples
+
+- Here is an example of using it into a [GraphQL project](https://github.com/roggerval/tech-insiders-nodejs) (step 7).
+
 ## Features
 
 Supports these glob features:

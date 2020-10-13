@@ -18,6 +18,7 @@ script:
   - yarn build
   - git config --global user.name "Travis CI"
   - git config --global user.email $GH_EMAIL
+  - yarn test:coveralls
   - cd www
   - yarn
   - yarn build

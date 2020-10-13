@@ -27,3 +27,5 @@ temp
 
 # Editor config
 .idea/
+
+coverage/

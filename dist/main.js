@@ -19,7 +19,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
  * ```
  */
 function getTag(value) {
-  return Object.prototype.toString.call(value);
+    return Object.prototype.toString.call(value);
 }
 
 /**
@@ -39,11 +39,9 @@ function getTag(value) {
  * ```
  */
 function isSymbol(value) {
-  const type = typeof value;
-  return (
-    type === 'symbol' ||
-    (type === 'object' && value !== null && getTag(value) === '[object Symbol]')
-  );
+    const type = typeof value;
+    return (type === 'symbol' ||
+        (type === 'object' && value !== null && getTag(value) === '[object Symbol]'));
 }
 
 /** Used as references for various `Number` constants. */
@@ -64,11 +62,11 @@ const INFINITY = 1 / 0;
  * // => false
  */
 function toKey(value) {
-  if (typeof value === 'string' || isSymbol(value)) {
-    return value;
-  }
-  const result = `${value}`;
-  return result === '0' && 1 / value === -INFINITY ? '-0' : result;
+    if (typeof value === 'string' || isSymbol(value)) {
+        return value;
+    }
+    const result = `${value}`;
+    return result === '0' && 1 / value === -INFINITY ? '-0' : result;
 }
 
 /** Used to match property names within property paths. */
@@ -106,23 +104,19 @@ const reIsPlainProp = /^\w*$/; //matches any word caracter (alphanumeric and und
  * ```
  */
 function isKey(value, object) {
-  if (Array.isArray(value)) {
-    return false;
-  }
-  const type = typeof value;
-  if (
-    type === 'number' ||
-    type === 'boolean' ||
-    value === null ||
-    isSymbol(value)
-  ) {
-    return true;
-  }
-  return (
-    reIsPlainProp.test(value) ||
-    !reIsDeepProp.test(value) ||
-    (object !== null && value in Object(object))
-  );
+    if (Array.isArray(value)) {
+        return false;
+    }
+    const type = typeof value;
+    if (type === 'number' ||
+        type === 'boolean' ||
+        value === null ||
+        isSymbol(value)) {
+        return true;
+    }
+    return (reIsPlainProp.test(value) ||
+        !reIsDeepProp.test(value) ||
+        (object !== null && value in Object(object)));
 }
 
 /**
@@ -160,18 +154,18 @@ function isKey(value, object) {
  * ```
  */
 function memoize(func, resolver) {
-  const memoized = function(...args) {
-    const key = resolver ? resolver.apply(this, args) : args[0];
-    const cache = memoized.cache;
-    if (cache.has(key)) {
-      return cache.get(key);
-    }
-    const result = func.apply(this, args);
-    memoized.cache = cache.set(key, result) || cache;
-    return result;
-  };
-  memoized.cache = new Map();
-  return memoized;
+    const memoized = function (...args) {
+        const key = resolver ? resolver.apply(this, args) : args[0];
+        const cache = memoized.cache;
+        if (cache.has(key)) {
+            return cache.get(key);
+        }
+        const result = func.apply(this, args);
+        memoized.cache = cache.set(key, result) || cache;
+        return result;
+    };
+    memoized.cache = new Map();
+    return memoized;
 }
 /*const memoize = (fn: Function): Function => {
   const cache = {};
@@ -197,21 +191,21 @@ const MAX_MEMOIZE_SIZE = 500;
  * @returns {Function} Returns the new memoized function.
  */
 function memoizeCapped(func) {
-  const result = memoize(func, key => {
-    const { cache } = result;
-    if (cache.size === MAX_MEMOIZE_SIZE) {
-      cache.clear();
-    }
-    return key;
-  });
-  return result;
+    const result = memoize(func, (key) => {
+        const { cache } = result;
+        if (cache.size === MAX_MEMOIZE_SIZE) {
+            cache.clear();
+        }
+        return key;
+    });
+    return result;
 }
 
 const charCodeOfDot = '.'.charCodeAt(0);
 const reEscapeChar = /\\(\\)?/g;
 const rePropName = RegExp(
-  // Match anything that isn't a dot or bracket.
-  '[^.[\\]]+' +
+// Match anything that isn't a dot or bracket.
+'[^.[\\]]+' +
     '|' +
     // Or match property names within brackets.
     '\\[(?:' +
@@ -223,9 +217,7 @@ const rePropName = RegExp(
     ')\\]' +
     '|' +
     // Or match "" as the space between consecutive dots or empty brackets.
-    '(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))',
-  'g'
-);
+    '(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))', 'g');
 /**
  * Converts `string` to a property path array.
  *
@@ -234,22 +226,23 @@ const rePropName = RegExp(
  * @param {string} string The string to convert.
  * @returns {Array} Returns the property path array.
  */
-const stringToPath = memoizeCapped(string => {
-  const result = [];
-  if (string.charCodeAt(0) === charCodeOfDot) {
-    result.push('');
-  }
-  string.replace(rePropName, (match, expression, quote, subString) => {
-    let key = match;
-    if (quote) {
-      key = subString.replace(reEscapeChar, '$1');
-    } else if (expression) {
-      key = expression.trim();
+const stringToPath = memoizeCapped((string) => {
+    const result = [];
+    if (string.charCodeAt(0) === charCodeOfDot) {
+        result.push('');
     }
-    result.push(key);
-    return '';
-  });
-  return result;
+    string.replace(rePropName, (match, expression, quote, subString) => {
+        let key = match;
+        if (quote) {
+            key = subString.replace(reEscapeChar, '$1');
+        }
+        else if (expression) {
+            key = expression.trim();
+        }
+        result.push(key);
+        return '';
+    });
+    return result;
 });
 
 /**
@@ -261,10 +254,10 @@ const stringToPath = memoizeCapped(string => {
  * @returns {Array} Returns the cast property path array.
  */
 function castPath(value, object) {
-  if (Array.isArray(value)) {
-    return value;
-  }
-  return isKey(value, object) ? [value] : stringToPath(value);
+    if (Array.isArray(value)) {
+        return value;
+    }
+    return isKey(value, object) ? [value] : stringToPath(value);
 }
 /**
  * The base implementation of `get` without support for default values.
@@ -275,14 +268,14 @@ function castPath(value, object) {
  * @returns {*} Returns the resolved value.
  */
 function baseGet(object, path) {
-  const newPath = castPath(path, object);
-  let index = 0;
-  const length = newPath.length;
-  let value = object;
-  while (value instanceof Object && index < length) {
-    value = value[toKey(newPath[index++])];
-  }
-  return index && index === length ? value : undefined;
+    const newPath = castPath(path, object);
+    let index = 0;
+    const length = newPath.length;
+    let value = object;
+    while (value instanceof Object && index < length) {
+        value = value[toKey(newPath[index++])];
+    }
+    return index && index === length ? value : undefined;
 }
 /**
  * Gets the value at `path` of `object`. If the resolved value is
@@ -308,8 +301,8 @@ function baseGet(object, path) {
  * // => 'default'
  */
 function getValueFromPath(object, path, defaultValue) {
-  const result = object === null ? undefined : baseGet(object, path);
-  return result === undefined ? defaultValue : result;
+    const result = object === null ? undefined : baseGet(object, path);
+    return result === undefined ? defaultValue : result;
 }
 
 /*
@@ -361,159 +354,162 @@ function getValueFromPath(object, path, defaultValue) {
    email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
 */
 class MersenneTwister {
-  constructor(seed) {
-    /* Period parameters */
-    this.N = 624;
-    this.M = 397;
-    this.MATRIX_A = 0x9908b0df; /* constant vector a */
-    this.UPPER_MASK = 0x80000000; /* most significant w-r bits */
-    this.LOWER_MASK = 0x7fffffff; /* least significant r bits */
-    this.mt = new Array(this.N); /* the array for the state vector */
-    this.mti = this.N + 1; /* mti==N+1 means mt[N] is not initialized */
-    if (Array.isArray(seed)) {
-      this.initByArray(seed, seed.length);
-    } else {
-      if (seed === undefined) {
-        this.initSeed(new Date().getTime());
-      } else {
-        this.initSeed(seed);
-      }
+    constructor(seed) {
+        /* Period parameters */
+        this.N = 624;
+        this.M = 397;
+        this.MATRIX_A = 0x9908b0df; /* constant vector a */
+        this.UPPER_MASK = 0x80000000; /* most significant w-r bits */
+        this.LOWER_MASK = 0x7fffffff; /* least significant r bits */
+        this.mt = new Array(this.N); /* the array for the state vector */
+        this.mti = this.N + 1; /* mti==N+1 means mt[N] is not initialized */
+        if (Array.isArray(seed)) {
+            this.initByArray(seed, seed.length);
+        }
+        else {
+            if (seed === undefined) {
+                this.initSeed(new Date().getTime());
+            }
+            else {
+                this.initSeed(seed);
+            }
+        }
     }
-  }
-  /* initializes mt[N] with a seed */
-  /* origin name init_genrand */
-  initSeed(seed) {
-    this.mt[0] = seed >>> 0;
-    for (this.mti = 1; this.mti < this.N; this.mti++) {
-      const s = this.mt[this.mti - 1] ^ (this.mt[this.mti - 1] >>> 30);
-      this.mt[this.mti] =
-        ((((s & 0xffff0000) >>> 16) * 1812433253) << 16) +
-        (s & 0x0000ffff) * 1812433253 +
-        this.mti;
-      /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
-      /* In the previous versions, MSBs of the seed affect   */
-      /* only MSBs of the array mt[].                        */
-      /* 2002/01/09 modified by Makoto Matsumoto             */
-      this.mt[this.mti] >>>= 0;
-      /* for >32 bit machines */
+    /* initializes mt[N] with a seed */
+    /* origin name init_genrand */
+    initSeed(seed) {
+        this.mt[0] = seed >>> 0;
+        for (this.mti = 1; this.mti < this.N; this.mti++) {
+            const s = this.mt[this.mti - 1] ^ (this.mt[this.mti - 1] >>> 30);
+            this.mt[this.mti] =
+                ((((s & 0xffff0000) >>> 16) * 1812433253) << 16) +
+                    (s & 0x0000ffff) * 1812433253 +
+                    this.mti;
+            /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
+            /* In the previous versions, MSBs of the seed affect   */
+            /* only MSBs of the array mt[].                        */
+            /* 2002/01/09 modified by Makoto Matsumoto             */
+            this.mt[this.mti] >>>= 0;
+            /* for >32 bit machines */
+        }
     }
-  }
-  /* initialize by an array with array-length */
-  /* init_key is the array for initializing keys */
-  /* key_length is its length */
-  /* slight change for C++, 2004/2/26 */
-  initByArray(initKey, keyLength) {
-    this.initSeed(19650218);
-    let i = 1;
-    let j = 0;
-    let k = this.N > keyLength ? this.N : keyLength;
-    for (; k; k--) {
-      const s = this.mt[i - 1] ^ (this.mt[i - 1] >>> 30);
-      this.mt[i] =
-        (this.mt[i] ^
-          (((((s & 0xffff0000) >>> 16) * 1664525) << 16) +
-            (s & 0x0000ffff) * 1664525)) +
-        initKey[j] +
-        j; /* non linear */
-      this.mt[i] >>>= 0; /* for WORDSIZE > 32 machines */
-      i++;
-      j++;
-      if (i >= this.N) {
-        this.mt[0] = this.mt[this.N - 1];
-        i = 1;
-      }
-      if (j >= keyLength) j = 0;
+    /* initialize by an array with array-length */
+    /* init_key is the array for initializing keys */
+    /* key_length is its length */
+    /* slight change for C++, 2004/2/26 */
+    initByArray(initKey, keyLength) {
+        this.initSeed(19650218);
+        let i = 1;
+        let j = 0;
+        let k = this.N > keyLength ? this.N : keyLength;
+        for (; k; k--) {
+            const s = this.mt[i - 1] ^ (this.mt[i - 1] >>> 30);
+            this.mt[i] =
+                (this.mt[i] ^
+                    (((((s & 0xffff0000) >>> 16) * 1664525) << 16) +
+                        (s & 0x0000ffff) * 1664525)) +
+                    initKey[j] +
+                    j; /* non linear */
+            this.mt[i] >>>= 0; /* for WORDSIZE > 32 machines */
+            i++;
+            j++;
+            if (i >= this.N) {
+                this.mt[0] = this.mt[this.N - 1];
+                i = 1;
+            }
+            if (j >= keyLength)
+                j = 0;
+        }
+        for (k = this.N - 1; k; k--) {
+            const s = this.mt[i - 1] ^ (this.mt[i - 1] >>> 30);
+            this.mt[i] =
+                (this.mt[i] ^
+                    (((((s & 0xffff0000) >>> 16) * 1566083941) << 16) +
+                        (s & 0x0000ffff) * 1566083941)) -
+                    i; /* non linear */
+            this.mt[i] >>>= 0; /* for WORDSIZE > 32 machines */
+            i++;
+            if (i >= this.N) {
+                this.mt[0] = this.mt[this.N - 1];
+                i = 1;
+            }
+        }
+        this.mt[0] = 0x80000000; /* MSB is 1; assuring non-zero initial array */
     }
-    for (k = this.N - 1; k; k--) {
-      const s = this.mt[i - 1] ^ (this.mt[i - 1] >>> 30);
-      this.mt[i] =
-        (this.mt[i] ^
-          (((((s & 0xffff0000) >>> 16) * 1566083941) << 16) +
-            (s & 0x0000ffff) * 1566083941)) -
-        i; /* non linear */
-      this.mt[i] >>>= 0; /* for WORDSIZE > 32 machines */
-      i++;
-      if (i >= this.N) {
-        this.mt[0] = this.mt[this.N - 1];
-        i = 1;
-      }
+    /* generates a random number on [0,0xffffffff]-interval */
+    /* origin name genrand_int32 */
+    randomInt32() {
+        let y;
+        const mag01 = [0x0, this.MATRIX_A];
+        /* mag01[x] = x * MATRIX_A  for x=0,1 */
+        if (this.mti >= this.N) {
+            /* generate N words at one time */
+            let kk;
+            if (this.mti === this.N + 1)
+                /* if init_seed() has not been called, */
+                this.initSeed(5489); /* a default initial seed is used */
+            for (kk = 0; kk < this.N - this.M; kk++) {
+                y =
+                    (this.mt[kk] & this.UPPER_MASK) | (this.mt[kk + 1] & this.LOWER_MASK);
+                this.mt[kk] = this.mt[kk + this.M] ^ (y >>> 1) ^ mag01[y & 0x1];
+            }
+            for (; kk < this.N - 1; kk++) {
+                y =
+                    (this.mt[kk] & this.UPPER_MASK) | (this.mt[kk + 1] & this.LOWER_MASK);
+                this.mt[kk] =
+                    this.mt[kk + (this.M - this.N)] ^ (y >>> 1) ^ mag01[y & 0x1];
+            }
+            y =
+                (this.mt[this.N - 1] & this.UPPER_MASK) |
+                    (this.mt[0] & this.LOWER_MASK);
+            this.mt[this.N - 1] = this.mt[this.M - 1] ^ (y >>> 1) ^ mag01[y & 0x1];
+            this.mti = 0;
+        }
+        y = this.mt[this.mti++];
+        /* Tempering */
+        y ^= y >>> 11;
+        y ^= (y << 7) & 0x9d2c5680;
+        y ^= (y << 15) & 0xefc60000;
+        y ^= y >>> 18;
+        return y >>> 0;
     }
-    this.mt[0] = 0x80000000; /* MSB is 1; assuring non-zero initial array */
-  }
-  /* generates a random number on [0,0xffffffff]-interval */
-  /* origin name genrand_int32 */
-  randomInt32() {
-    let y;
-    const mag01 = [0x0, this.MATRIX_A];
-    /* mag01[x] = x * MATRIX_A  for x=0,1 */
-    if (this.mti >= this.N) {
-      /* generate N words at one time */
-      let kk;
-      if (this.mti === this.N + 1)
-        /* if init_seed() has not been called, */
-        this.initSeed(5489); /* a default initial seed is used */
-      for (kk = 0; kk < this.N - this.M; kk++) {
-        y =
-          (this.mt[kk] & this.UPPER_MASK) | (this.mt[kk + 1] & this.LOWER_MASK);
-        this.mt[kk] = this.mt[kk + this.M] ^ (y >>> 1) ^ mag01[y & 0x1];
-      }
-      for (; kk < this.N - 1; kk++) {
-        y =
-          (this.mt[kk] & this.UPPER_MASK) | (this.mt[kk + 1] & this.LOWER_MASK);
-        this.mt[kk] =
-          this.mt[kk + (this.M - this.N)] ^ (y >>> 1) ^ mag01[y & 0x1];
-      }
-      y =
-        (this.mt[this.N - 1] & this.UPPER_MASK) |
-        (this.mt[0] & this.LOWER_MASK);
-      this.mt[this.N - 1] = this.mt[this.M - 1] ^ (y >>> 1) ^ mag01[y & 0x1];
-      this.mti = 0;
+    /* generates a random number on [0,0x7fffffff]-interval */
+    /* origin name genrand_int31 */
+    randomInt31() {
+        return this.randomInt32() >>> 1;
     }
-    y = this.mt[this.mti++];
-    /* Tempering */
-    y ^= y >>> 11;
-    y ^= (y << 7) & 0x9d2c5680;
-    y ^= (y << 15) & 0xefc60000;
-    y ^= y >>> 18;
-    return y >>> 0;
-  }
-  /* generates a random number on [0,0x7fffffff]-interval */
-  /* origin name genrand_int31 */
-  randomInt31() {
-    return this.randomInt32() >>> 1;
-  }
-  /* generates a random number on [0,1]-real-interval */
-  /* origin name genrand_real1 */
-  randomReal1() {
-    return this.randomInt32() * (1.0 / 4294967295.0);
-    /* divided by 2^32-1 */
-  }
-  /* generates a random number on [0,1)-real-interval */
-  /* origin name genrand_real2 */
-  randomReal2() {
-    return this.randomInt32() * (1.0 / 4294967296.0);
-    /* divided by 2^32 */
-  }
-  /* generates a random number on (0,1)-real-interval */
-  /* origin name genrand_real3 */
-  randomReal3() {
-    return (this.randomInt32() + 0.5) * (1.0 / 4294967296.0);
-    /* divided by 2^32 */
-  }
-  /* generates a random number on [0,1) with 53-bit resolution*/
-  /* origin name genrand_res53 */
-  randomRes53() {
-    const a = this.randomInt32() >>> 5;
-    const b = this.randomInt32() >>> 6;
-    return (a * 67108864.0 + b) * (1.0 / 9007199254740992.0);
-  }
+    /* generates a random number on [0,1]-real-interval */
+    /* origin name genrand_real1 */
+    randomReal1() {
+        return this.randomInt32() * (1.0 / 4294967295.0);
+        /* divided by 2^32-1 */
+    }
+    /* generates a random number on [0,1)-real-interval */
+    /* origin name genrand_real2 */
+    randomReal2() {
+        return this.randomInt32() * (1.0 / 4294967296.0);
+        /* divided by 2^32 */
+    }
+    /* generates a random number on (0,1)-real-interval */
+    /* origin name genrand_real3 */
+    randomReal3() {
+        return (this.randomInt32() + 0.5) * (1.0 / 4294967296.0);
+        /* divided by 2^32 */
+    }
+    /* generates a random number on [0,1) with 53-bit resolution*/
+    /* origin name genrand_res53 */
+    randomRes53() {
+        const a = this.randomInt32() >>> 5;
+        const b = this.randomInt32() >>> 6;
+        return (a * 67108864.0 + b) * (1.0 / 9007199254740992.0);
+    }
 }
 /* These real versions are due to Isaku Wada, 2002/01/09 added */
 
-const replacePlaceholders = mersenne => placeholder => {
-  const random = Math.floor(mersenne.randomReal2() * 16);
-  const value = placeholder === 'x' ? random : (random & 0x3) | 0x8;
-  return value.toString(16);
+const replacePlaceholders = (mersenne) => (placeholder) => {
+    const random = Math.floor(mersenne.randomReal2() * 16);
+    const value = placeholder === 'x' ? random : (random & 0x3) | 0x8;
+    return value.toString(16);
 };
 /**
  * Generate a uuid.
@@ -531,64 +527,51 @@ const replacePlaceholders = mersenne => placeholder => {
  * ```
  */
 function generateUUID() {
-  const mersenne = new MersenneTwister();
-  const RFC4122_TEMPLATE = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
-  return RFC4122_TEMPLATE.replace(/[xy]/g, replacePlaceholders(mersenne));
+    const mersenne = new MersenneTwister();
+    const RFC4122_TEMPLATE = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+    return RFC4122_TEMPLATE.replace(/[xy]/g, replacePlaceholders(mersenne));
 }
 
 const reDelimiters = /\${([^}]*)}/g;
 const trim = / +(?= )|^\s+|\s+$/g;
-const specialTrim = str => str.replace(trim, '');
+const specialTrim = (str) => str.replace(trim, '');
 function applyContext(str, context) {
-  if (!context) return str;
-  return specialTrim(
-    str.replace(reDelimiters, (_, path) => {
-      const value = getValueFromPath(context, path);
-      if (Array.isArray(value)) return `{${value}}`;
-      if (value instanceof Object) return String(undefined);
-      return String(value);
-    })
-  );
+    if (!context)
+        return str;
+    return specialTrim(str.replace(reDelimiters, (_, path) => {
+        const value = getValueFromPath(context, path);
+        if (Array.isArray(value))
+            return `{${value}}`;
+        if (value instanceof Object)
+            return String(undefined);
+        return String(value);
+    }));
 }
 class Statement {
-  constructor({ sid, effect = 'allow', condition }) {
-    if (!sid) {
-      this.sid = generateUUID();
-    } else {
-      this.sid = sid;
+    constructor({ sid, effect = 'allow', condition }) {
+        if (!sid) {
+            this.sid = generateUUID();
+        }
+        else {
+            this.sid = sid;
+        }
+        this.effect = effect;
+        this.condition = condition;
     }
-    this.effect = effect;
-    this.condition = condition;
-  }
-  matchConditions({ context, conditionResolver }) {
-    return conditionResolver && this.condition && context
-      ? Object.keys(this.condition).every(condition =>
-          Object.keys(this.condition ? this.condition[condition] : {}).every(
-            path => {
-              if (this.condition) {
-                const conditionValues = this.condition[condition][path];
-                if (conditionValues instanceof Array) {
-                  return conditionValues.some(value =>
-                    conditionResolver[condition](
-                      getValueFromPath(context, path),
-                      value
-                    )
-                  );
+    matchConditions({ context, conditionResolver }) {
+        return conditionResolver && this.condition && context
+            ? Object.keys(this.condition).every(condition => Object.keys(this.condition ? this.condition[condition] : {}).every(path => {
+                if (this.condition) {
+                    const conditionValues = this.condition[condition][path];
+                    if (conditionValues instanceof Array) {
+                        return conditionValues.some(value => conditionResolver[condition](getValueFromPath(context, path), value));
+                    }
+                    return conditionResolver[condition](getValueFromPath(context, path), conditionValues);
                 }
-                return conditionResolver[condition](
-                  getValueFromPath(context, path),
-                  conditionValues
-                );
-              }
-              return conditionResolver[condition](
-                getValueFromPath(context, path),
-                ''
-              );
-            }
-          )
-        )
-      : true;
-  }
+                return conditionResolver[condition](getValueFromPath(context, path), '');
+            }))
+            : true;
+    }
 }
 
 /**
@@ -602,7 +585,7 @@ class Statement {
  * ```
  */
 function instanceOfActionBlock(object) {
-  return 'action' in object;
+    return 'action' in object;
 }
 /**
  * Validate if an `object` is an instance of `PrincipalBlock`.
@@ -615,7 +598,7 @@ function instanceOfActionBlock(object) {
  * ```
  */
 function instanceOfPrincipalBlock(object) {
-  return 'principal' in object;
+    return 'principal' in object;
 }
 /**
  * Validate if an `object` is an instance of `NotResourceBlock`.
@@ -628,7 +611,7 @@ function instanceOfPrincipalBlock(object) {
  * ```
  */
 function instanceOfNotResourceBlock(object) {
-  return 'notResource' in object;
+    return 'notResource' in object;
 }
 /**
  * Validate if an `object` is an instance of `ResourceBlock`.
@@ -641,7 +624,7 @@ function instanceOfNotResourceBlock(object) {
  * ```
  */
 function instanceOfResourceBlock(object) {
-  return 'resource' in object;
+    return 'resource' in object;
 }
 //export { IdentityBasedType, ResourceBasedType, PrincipalMap, Patterns, ResourceBlock, ActionBlock};
 /*
@@ -682,12 +665,12 @@ condition: {//ConditionMap
  * ```
  */
 function getIndexRange(initialSeparator, finalSeparator, str) {
-  const beginningIndex = str.indexOf(initialSeparator);
-  const finalIndex = str.indexOf(finalSeparator, beginningIndex + 1);
-  if (beginningIndex >= 0 && finalIndex > 0) {
-    return [beginningIndex, finalIndex];
-  }
-  return [-1, -1];
+    const beginningIndex = str.indexOf(initialSeparator);
+    const finalIndex = str.indexOf(finalSeparator, beginningIndex + 1);
+    if (beginningIndex >= 0 && finalIndex > 0) {
+        return [beginningIndex, finalIndex];
+    }
+    return [-1, -1];
 }
 /**
  * Object returned by decomposeString function
@@ -718,496 +701,427 @@ function getIndexRange(initialSeparator, finalSeparator, str) {
  * ```
  */
 function decomposeString(initialSeparator, finalSeparator, str) {
-  const [beginningIndex, finalIndex] = getIndexRange(
-    initialSeparator,
-    finalSeparator,
-    str
-  );
-  return {
-    start: beginningIndex,
-    end: finalIndex,
-    pre: beginningIndex >= 0 ? str.slice(0, beginningIndex) : '',
-    body:
-      beginningIndex >= 0
-        ? str.slice(beginningIndex + initialSeparator.length, finalIndex)
-        : '',
-    post:
-      beginningIndex >= 0 ? str.slice(finalIndex + finalSeparator.length) : ''
-  };
+    const [beginningIndex, finalIndex] = getIndexRange(initialSeparator, finalSeparator, str);
+    return {
+        start: beginningIndex,
+        end: finalIndex,
+        pre: beginningIndex >= 0 ? str.slice(0, beginningIndex) : '',
+        body: beginningIndex >= 0
+            ? str.slice(beginningIndex + initialSeparator.length, finalIndex)
+            : '',
+        post: beginningIndex >= 0 ? str.slice(finalIndex + finalSeparator.length) : ''
+    };
 }
 
 class Matcher {
-  constructor(pattern) {
-    this.set = [];
-    this.pattern = pattern.trim();
-    this.empty = !this.pattern ? true : false;
-    const set = this.braceExpand();
-    this.set = set.map(val => this.parse(val));
-    this.set = this.set.filter(s => {
-      return Boolean(s);
-    });
-  }
-  braceExpand() {
-    let pattern = this.pattern;
-    if (!pattern.match(/{.*}/)) {
-      return [pattern];
+    constructor(pattern) {
+        this.set = [];
+        this.pattern = pattern.trim();
+        this.empty = !this.pattern ? true : false;
+        const set = this.braceExpand();
+        this.set = set.map(val => this.parse(val));
+        this.set = this.set.filter(s => {
+            return Boolean(s);
+        });
     }
-    // I don't know why Bash 4.3 does this, but it does.
-    // Anything starting with {} will have the first two bytes preserved
-    // but only at the top level, so {},a}b will not expand to anything,
-    // but a{},b}c will be expanded to [a}c,abc].
-    // One could argue that this is a bug in Bash, but since the goal of
-    // this module is to match Bash's rules, we escape a leading {}
-    if (pattern.substr(0, 2) === '{}') {
-      pattern = '\\{\\}' + pattern.substr(2);
+    braceExpand() {
+        let pattern = this.pattern;
+        if (!pattern.match(/{.*}/)) {
+            return [pattern];
+        }
+        // I don't know why Bash 4.3 does this, but it does.
+        // Anything starting with {} will have the first two bytes preserved
+        // but only at the top level, so {},a}b will not expand to anything,
+        // but a{},b}c will be expanded to [a}c,abc].
+        // One could argue that this is a bug in Bash, but since the goal of
+        // this module is to match Bash's rules, we escape a leading {}
+        if (pattern.substr(0, 2) === '{}') {
+            pattern = '\\{\\}' + pattern.substr(2);
+        }
+        return this.expand(pattern, true);
     }
-    return this.expand(pattern, true);
-  }
-  parse(pattern) {
-    if (pattern.length > 1024 * 64) {
-      throw new TypeError('pattern is too long');
+    parse(pattern) {
+        if (pattern.length > 1024 * 64) {
+            throw new TypeError('pattern is too long');
+        }
+        let regExp;
+        let hasSpecialCharacter = false;
+        if (pattern === '')
+            return '';
+        const re = pattern.replace(/\*/g, () => {
+            hasSpecialCharacter = true;
+            return '.+?';
+        });
+        // skip the regexp for non-* patterns
+        // unescape anything in it, though, so that it'll be
+        // an exact match.
+        if (!hasSpecialCharacter) {
+            return pattern.replace(/\\(.)/g, '$1');
+        }
+        try {
+            regExp = new RegExp('^' + re + '$');
+        }
+        catch (error) {
+            // If it was an invalid regular expression, then it can't match
+            // anything.
+            return new RegExp('$.');
+        }
+        return regExp;
     }
-    let regExp;
-    let hasSpecialCharacter = false;
-    if (pattern === '') return '';
-    const re = pattern.replace(/\*/g, () => {
-      hasSpecialCharacter = true;
-      return '.+?';
-    });
-    // skip the regexp for non-* patterns
-    // unescape anything in it, though, so that it'll be
-    // an exact match.
-    if (!hasSpecialCharacter) {
-      return pattern.replace(/\\(.)/g, '$1');
+    expand(str, isTop) {
+        const expansions = [];
+        const balance = decomposeString('{', '}', str);
+        if (balance.start < 0 || /\$$/.test(balance.pre))
+            return [str];
+        let parts;
+        if (!balance.body)
+            parts = [''];
+        else
+            parts = balance.body.split(',');
+        // no need to expand pre, since it is guaranteed to be free of brace-sets
+        const pre = balance.pre;
+        const postParts = balance.post.length
+            ? this.expand(balance.post, false)
+            : [''];
+        parts.forEach((part) => {
+            postParts.forEach(postPart => {
+                const expansion = pre + part + postPart;
+                if (!isTop || expansion)
+                    expansions.push(expansion);
+            });
+        });
+        return expansions;
     }
-    try {
-      regExp = new RegExp('^' + re + '$');
-    } catch (error) {
-      // If it was an invalid regular expression, then it can't match
-      // anything.
-      return new RegExp('$.');
+    match(str) {
+        if (this.empty)
+            return str === '';
+        const set = this.set;
+        return set.some(pattern => this.matchOne(str, pattern));
     }
-    return regExp;
-  }
-  expand(str, isTop) {
-    const expansions = [];
-    const balance = decomposeString('{', '}', str);
-    if (balance.start < 0 || /\$$/.test(balance.pre)) return [str];
-    let parts;
-    if (!balance.body) parts = [''];
-    else parts = balance.body.split(',');
-    // no need to expand pre, since it is guaranteed to be free of brace-sets
-    const pre = balance.pre;
-    const postParts = balance.post.length
-      ? this.expand(balance.post, false)
-      : [''];
-    parts.forEach(part => {
-      postParts.forEach(postPart => {
-        const expansion = pre + part + postPart;
-        if (!isTop || expansion) expansions.push(expansion);
-      });
-    });
-    return expansions;
-  }
-  match(str) {
-    if (this.empty) return str === '';
-    const set = this.set;
-    return set.some(pattern => this.matchOne(str, pattern));
-  }
-  matchOne(str, pattern) {
-    if (!pattern) return false;
-    if (typeof pattern === 'string') {
-      return str === pattern;
+    matchOne(str, pattern) {
+        if (!pattern)
+            return false;
+        if (typeof pattern === 'string') {
+            return str === pattern;
+        }
+        return Boolean(str.match(pattern));
     }
-    return Boolean(str.match(pattern));
-  }
 }
 
 class ActionBased extends Statement {
-  constructor(action) {
-    super(action);
-    if (instanceOfActionBlock(action)) {
-      this.action =
-        typeof action.action === 'string' ? [action.action] : action.action;
-    } else {
-      this.notAction =
-        typeof action.notAction === 'string'
-          ? [action.notAction]
-          : action.notAction;
+    constructor(action) {
+        super(action);
+        if (instanceOfActionBlock(action)) {
+            this.action =
+                typeof action.action === 'string' ? [action.action] : action.action;
+        }
+        else {
+            this.notAction =
+                typeof action.notAction === 'string'
+                    ? [action.notAction]
+                    : action.notAction;
+        }
+        this.statement = Object.assign(Object.assign({}, action), { sid: this.sid });
     }
-    this.statement = Object.assign(Object.assign({}, action), {
-      sid: this.sid
-    });
-  }
-  getStatement() {
-    return this.statement;
-  }
-  matches({ action, context, conditionResolver }) {
-    return (
-      this.matchActions(action, context) &&
-      this.matchNotActions(action, context) &&
-      this.matchConditions({ context, conditionResolver })
-    );
-  }
-  matchActions(action, context) {
-    return this.action
-      ? this.action.some(a =>
-          new Matcher(applyContext(a, context)).match(action)
-        )
-      : true;
-  }
-  matchNotActions(action, context) {
-    return this.notAction
-      ? !this.notAction.some(a =>
-          new Matcher(applyContext(a, context)).match(action)
-        )
-      : true;
-  }
+    getStatement() {
+        return this.statement;
+    }
+    matches({ action, context, conditionResolver }) {
+        return (this.matchActions(action, context) &&
+            this.matchNotActions(action, context) &&
+            this.matchConditions({ context, conditionResolver }));
+    }
+    matchActions(action, context) {
+        return this.action
+            ? this.action.some(a => new Matcher(applyContext(a, context)).match(action))
+            : true;
+    }
+    matchNotActions(action, context) {
+        return this.notAction
+            ? !this.notAction.some(a => new Matcher(applyContext(a, context)).match(action))
+            : true;
+    }
 }
 
 class IdentityBased extends Statement {
-  constructor(identity) {
-    super(identity);
-    if (instanceOfResourceBlock(identity)) {
-      this.resource =
-        typeof identity.resource === 'string'
-          ? [identity.resource]
-          : identity.resource;
-    } else {
-      this.notResource =
-        typeof identity.notResource === 'string'
-          ? [identity.notResource]
-          : identity.notResource;
+    constructor(identity) {
+        super(identity);
+        if (instanceOfResourceBlock(identity)) {
+            this.resource =
+                typeof identity.resource === 'string'
+                    ? [identity.resource]
+                    : identity.resource;
+        }
+        else {
+            this.notResource =
+                typeof identity.notResource === 'string'
+                    ? [identity.notResource]
+                    : identity.notResource;
+        }
+        if (instanceOfActionBlock(identity)) {
+            this.action =
+                typeof identity.action === 'string'
+                    ? [identity.action]
+                    : identity.action;
+        }
+        else {
+            this.notAction =
+                typeof identity.notAction === 'string'
+                    ? [identity.notAction]
+                    : identity.notAction;
+        }
+        this.statement = Object.assign(Object.assign({}, identity), { sid: this.sid });
     }
-    if (instanceOfActionBlock(identity)) {
-      this.action =
-        typeof identity.action === 'string'
-          ? [identity.action]
-          : identity.action;
-    } else {
-      this.notAction =
-        typeof identity.notAction === 'string'
-          ? [identity.notAction]
-          : identity.notAction;
+    getStatement() {
+        return this.statement;
     }
-    this.statement = Object.assign(Object.assign({}, identity), {
-      sid: this.sid
-    });
-  }
-  getStatement() {
-    return this.statement;
-  }
-  matches({ action, resource, context, conditionResolver }) {
-    return (
-      this.matchActions(action, context) &&
-      this.matchNotActions(action, context) &&
-      this.matchResources(resource, context) &&
-      this.matchNotResources(resource, context) &&
-      this.matchConditions({ context, conditionResolver })
-    );
-  }
-  matchActions(action, context) {
-    return this.action
-      ? this.action.some(a =>
-          new Matcher(applyContext(a, context)).match(action)
-        )
-      : true;
-  }
-  matchNotActions(action, context) {
-    return this.notAction
-      ? !this.notAction.some(a =>
-          new Matcher(applyContext(a, context)).match(action)
-        )
-      : true;
-  }
-  matchResources(resource, context) {
-    return this.resource
-      ? this.resource.some(a =>
-          new Matcher(applyContext(a, context)).match(resource)
-        )
-      : true;
-  }
-  matchNotResources(resource, context) {
-    return this.notResource
-      ? !this.notResource.some(a =>
-          new Matcher(applyContext(a, context)).match(resource)
-        )
-      : true;
-  }
+    matches({ action, resource, context, conditionResolver }) {
+        return (this.matchActions(action, context) &&
+            this.matchNotActions(action, context) &&
+            this.matchResources(resource, context) &&
+            this.matchNotResources(resource, context) &&
+            this.matchConditions({ context, conditionResolver }));
+    }
+    matchActions(action, context) {
+        return this.action
+            ? this.action.some(a => new Matcher(applyContext(a, context)).match(action))
+            : true;
+    }
+    matchNotActions(action, context) {
+        return this.notAction
+            ? !this.notAction.some(a => new Matcher(applyContext(a, context)).match(action))
+            : true;
+    }
+    matchResources(resource, context) {
+        return this.resource
+            ? this.resource.some(a => new Matcher(applyContext(a, context)).match(resource))
+            : true;
+    }
+    matchNotResources(resource, context) {
+        return this.notResource
+            ? !this.notResource.some(a => new Matcher(applyContext(a, context)).match(resource))
+            : true;
+    }
 }
 
 class ResourceBased extends Statement {
-  constructor(identity) {
-    super(identity);
-    if (instanceOfResourceBlock(identity)) {
-      this.resource =
-        typeof identity.resource === 'string'
-          ? [identity.resource]
-          : identity.resource;
-    } else if (instanceOfNotResourceBlock(identity)) {
-      this.notResource =
-        typeof identity.notResource === 'string'
-          ? [identity.notResource]
-          : identity.notResource;
-    }
-    if (instanceOfActionBlock(identity)) {
-      this.action =
-        typeof identity.action === 'string'
-          ? [identity.action]
-          : identity.action;
-    } else {
-      this.notAction =
-        typeof identity.notAction === 'string'
-          ? [identity.notAction]
-          : identity.notAction;
-    }
-    if (instanceOfPrincipalBlock(identity)) {
-      this.principal =
-        typeof identity.principal === 'string'
-          ? [identity.principal]
-          : identity.principal;
-    } else {
-      this.notPrincipal =
-        typeof identity.notPrincipal === 'string'
-          ? [identity.notPrincipal]
-          : identity.notPrincipal;
-    }
-    this.statement = Object.assign(Object.assign({}, identity), {
-      sid: this.sid
-    });
-  }
-  getStatement() {
-    return this.statement;
-  }
-  matches({
-    principal,
-    action,
-    resource,
-    principalType,
-    context,
-    conditionResolver
-  }) {
-    return (
-      this.matchPrincipals(principal, principalType, context) &&
-      this.matchNotPrincipals(principal, principalType, context) &&
-      this.matchActions(action, context) &&
-      this.matchNotActions(action, context) &&
-      this.matchResources(resource, context) &&
-      this.matchNotResources(resource, context) &&
-      this.matchConditions({ context, conditionResolver })
-    );
-  }
-  matchPrincipals(principal, principalType, context) {
-    if (this.principal) {
-      if (this.principal instanceof Array) {
-        return principalType
-          ? false
-          : this.principal.some(a =>
-              new Matcher(applyContext(a, context)).match(principal)
-            );
-      } else {
-        if (principalType) {
-          const principalValues = this.principal[principalType];
-          if (principalValues instanceof Array) {
-            return typeof principalValues === 'string'
-              ? [principalValues].some(a =>
-                  new Matcher(applyContext(a, context)).match(principal)
-                )
-              : principalValues.some(a =>
-                  new Matcher(applyContext(a, context)).match(principal)
-                );
-          }
-          return new Matcher(applyContext(principalValues, context)).match(
-            principal
-          );
+    constructor(identity) {
+        super(identity);
+        if (instanceOfResourceBlock(identity)) {
+            this.resource =
+                typeof identity.resource === 'string'
+                    ? [identity.resource]
+                    : identity.resource;
         }
-        return false;
-      }
-    }
-    return true;
-  }
-  matchNotPrincipals(principal, principalType, context) {
-    if (this.notPrincipal) {
-      if (this.notPrincipal instanceof Array) {
-        return principalType
-          ? true
-          : !this.notPrincipal.some(a =>
-              new Matcher(applyContext(a, context)).match(principal)
-            );
-      } else {
-        if (principalType) {
-          const principalValues = this.notPrincipal[principalType];
-          if (principalValues instanceof Array) {
-            return typeof principalValues === 'string'
-              ? ![principalValues].some(a =>
-                  new Matcher(applyContext(a, context)).match(principal)
-                )
-              : !principalValues.some(a =>
-                  new Matcher(applyContext(a, context)).match(principal)
-                );
-          }
-          return !new Matcher(applyContext(principalValues, context)).match(
-            principal
-          );
+        else if (instanceOfNotResourceBlock(identity)) {
+            this.notResource =
+                typeof identity.notResource === 'string'
+                    ? [identity.notResource]
+                    : identity.notResource;
         }
-        return false;
-      }
+        if (instanceOfActionBlock(identity)) {
+            this.action =
+                typeof identity.action === 'string'
+                    ? [identity.action]
+                    : identity.action;
+        }
+        else {
+            this.notAction =
+                typeof identity.notAction === 'string'
+                    ? [identity.notAction]
+                    : identity.notAction;
+        }
+        if (instanceOfPrincipalBlock(identity)) {
+            this.principal =
+                typeof identity.principal === 'string'
+                    ? [identity.principal]
+                    : identity.principal;
+        }
+        else {
+            this.notPrincipal =
+                typeof identity.notPrincipal === 'string'
+                    ? [identity.notPrincipal]
+                    : identity.notPrincipal;
+        }
+        this.statement = Object.assign(Object.assign({}, identity), { sid: this.sid });
     }
-    return true;
-  }
-  matchActions(action, context) {
-    return this.action
-      ? this.action.some(a =>
-          new Matcher(applyContext(a, context)).match(action)
-        )
-      : true;
-  }
-  matchNotActions(action, context) {
-    return this.notAction
-      ? !this.notAction.some(a =>
-          new Matcher(applyContext(a, context)).match(action)
-        )
-      : true;
-  }
-  matchResources(resource, context) {
-    return this.resource
-      ? this.resource.some(a =>
-          new Matcher(applyContext(a, context)).match(resource)
-        )
-      : true;
-  }
-  matchNotResources(resource, context) {
-    return this.notResource
-      ? !this.notResource.some(a =>
-          new Matcher(applyContext(a, context)).match(resource)
-        )
-      : true;
-  }
+    getStatement() {
+        return this.statement;
+    }
+    matches({ principal, action, resource, principalType, context, conditionResolver }) {
+        return (this.matchPrincipals(principal, principalType, context) &&
+            this.matchNotPrincipals(principal, principalType, context) &&
+            this.matchActions(action, context) &&
+            this.matchNotActions(action, context) &&
+            this.matchResources(resource, context) &&
+            this.matchNotResources(resource, context) &&
+            this.matchConditions({ context, conditionResolver }));
+    }
+    matchPrincipals(principal, principalType, context) {
+        if (this.principal) {
+            if (this.principal instanceof Array) {
+                return principalType
+                    ? false
+                    : this.principal.some(a => new Matcher(applyContext(a, context)).match(principal));
+            }
+            else {
+                if (principalType) {
+                    const principalValues = this.principal[principalType];
+                    if (principalValues instanceof Array) {
+                        return typeof principalValues === 'string'
+                            ? [principalValues].some(a => new Matcher(applyContext(a, context)).match(principal))
+                            : principalValues.some(a => new Matcher(applyContext(a, context)).match(principal));
+                    }
+                    return new Matcher(applyContext(principalValues, context)).match(principal);
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+    matchNotPrincipals(principal, principalType, context) {
+        if (this.notPrincipal) {
+            if (this.notPrincipal instanceof Array) {
+                return principalType
+                    ? true
+                    : !this.notPrincipal.some(a => new Matcher(applyContext(a, context)).match(principal));
+            }
+            else {
+                if (principalType) {
+                    const principalValues = this.notPrincipal[principalType];
+                    if (principalValues instanceof Array) {
+                        return typeof principalValues === 'string'
+                            ? ![principalValues].some(a => new Matcher(applyContext(a, context)).match(principal))
+                            : !principalValues.some(a => new Matcher(applyContext(a, context)).match(principal));
+                    }
+                    return !new Matcher(applyContext(principalValues, context)).match(principal);
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+    matchActions(action, context) {
+        return this.action
+            ? this.action.some(a => new Matcher(applyContext(a, context)).match(action))
+            : true;
+    }
+    matchNotActions(action, context) {
+        return this.notAction
+            ? !this.notAction.some(a => new Matcher(applyContext(a, context)).match(action))
+            : true;
+    }
+    matchResources(resource, context) {
+        return this.resource
+            ? this.resource.some(a => new Matcher(applyContext(a, context)).match(resource))
+            : true;
+    }
+    matchNotResources(resource, context) {
+        return this.notResource
+            ? !this.notResource.some(a => new Matcher(applyContext(a, context)).match(resource))
+            : true;
+    }
 }
 
 class ActionBasedPolicy {
-  constructor(config, conditionResolver) {
-    const statementInstances = config.map(
-      statement => new ActionBased(statement)
-    );
-    this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
-    this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
-    this.conditionResolver = conditionResolver;
-    this.statements = this.statements = statementInstances.map(statement =>
-      statement.getStatement()
-    );
-  }
-  getStatements() {
-    return this.statements;
-  }
-  evaluate({ action, context }) {
-    const args = { action, context };
-    return !this.cannot(args) && this.can(args);
-  }
-  can({ action, context }) {
-    return this.allowStatements.some(s =>
-      s.matches({
-        action,
-        context,
-        conditionResolver: this.conditionResolver
-      })
-    );
-  }
-  cannot({ action, context }) {
-    return this.denyStatements.some(s =>
-      s.matches({
-        action,
-        context,
-        conditionResolver: this.conditionResolver
-      })
-    );
-  }
+    constructor(config, conditionResolver) {
+        const statementInstances = config.map(statement => new ActionBased(statement));
+        this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
+        this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
+        this.conditionResolver = conditionResolver;
+        this.statements = this.statements = statementInstances.map(statement => statement.getStatement());
+    }
+    getStatements() {
+        return this.statements;
+    }
+    evaluate({ action, context }) {
+        const args = { action, context };
+        return !this.cannot(args) && this.can(args);
+    }
+    can({ action, context }) {
+        return this.allowStatements.some(s => s.matches({
+            action,
+            context,
+            conditionResolver: this.conditionResolver
+        }));
+    }
+    cannot({ action, context }) {
+        return this.denyStatements.some(s => s.matches({
+            action,
+            context,
+            conditionResolver: this.conditionResolver
+        }));
+    }
 }
 
 class IdentityBasedPolicy {
-  constructor(config, conditionResolver) {
-    const statementInstances = config.map(
-      statement => new IdentityBased(statement)
-    );
-    this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
-    this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
-    this.conditionResolver = conditionResolver;
-    this.statements = statementInstances.map(statement =>
-      statement.getStatement()
-    );
-  }
-  getStatements() {
-    return this.statements;
-  }
-  evaluate({ action, resource, context }) {
-    const args = { action, resource, context };
-    return !this.cannot(args) && this.can(args);
-  }
-  can({ action, resource, context }) {
-    return this.allowStatements.some(s =>
-      s.matches({
-        action,
-        resource,
-        context,
-        conditionResolver: this.conditionResolver
-      })
-    );
-  }
-  cannot({ action, resource, context }) {
-    return this.denyStatements.some(s =>
-      s.matches({
-        action,
-        resource,
-        context,
-        conditionResolver: this.conditionResolver
-      })
-    );
-  }
+    constructor(config, conditionResolver) {
+        const statementInstances = config.map(statement => new IdentityBased(statement));
+        this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
+        this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
+        this.conditionResolver = conditionResolver;
+        this.statements = statementInstances.map(statement => statement.getStatement());
+    }
+    getStatements() {
+        return this.statements;
+    }
+    evaluate({ action, resource, context }) {
+        const args = { action, resource, context };
+        return !this.cannot(args) && this.can(args);
+    }
+    can({ action, resource, context }) {
+        return this.allowStatements.some(s => s.matches({
+            action,
+            resource,
+            context,
+            conditionResolver: this.conditionResolver
+        }));
+    }
+    cannot({ action, resource, context }) {
+        return this.denyStatements.some(s => s.matches({
+            action,
+            resource,
+            context,
+            conditionResolver: this.conditionResolver
+        }));
+    }
 }
 
 class ResourceBasedPolicy {
-  constructor(config, conditionResolver) {
-    const statementInstances = config.map(
-      statement => new ResourceBased(statement)
-    );
-    this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
-    this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
-    this.conditionResolver = conditionResolver;
-    this.statements = statementInstances.map(statement =>
-      statement.getStatement()
-    );
-  }
-  getStatements() {
-    return this.statements;
-  }
-  evaluate({ principal, action, resource, principalType, context }) {
-    const args = { principal, action, resource, principalType, context };
-    return !this.cannot(args) && this.can(args);
-  }
-  can({ principal, action, resource, principalType, context }) {
-    return this.allowStatements.some(s =>
-      s.matches({
-        principal,
-        action,
-        resource,
-        principalType,
-        context,
-        conditionResolver: this.conditionResolver
-      })
-    );
-  }
-  cannot({ principal, action, resource, principalType, context }) {
-    return this.denyStatements.some(s =>
-      s.matches({
-        principal,
-        action,
-        resource,
-        principalType,
-        context,
-        conditionResolver: this.conditionResolver
-      })
-    );
-  }
+    constructor(config, conditionResolver) {
+        const statementInstances = config.map(statement => new ResourceBased(statement));
+        this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
+        this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
+        this.conditionResolver = conditionResolver;
+        this.statements = statementInstances.map(statement => statement.getStatement());
+    }
+    getStatements() {
+        return this.statements;
+    }
+    evaluate({ principal, action, resource, principalType, context }) {
+        const args = { principal, action, resource, principalType, context };
+        return !this.cannot(args) && this.can(args);
+    }
+    can({ principal, action, resource, principalType, context }) {
+        return this.allowStatements.some(s => s.matches({
+            principal,
+            action,
+            resource,
+            principalType,
+            context,
+            conditionResolver: this.conditionResolver
+        }));
+    }
+    cannot({ principal, action, resource, principalType, context }) {
+        return this.denyStatements.some(s => s.matches({
+            principal,
+            action,
+            resource,
+            principalType,
+            context,
+            conditionResolver: this.conditionResolver
+        }));
+    }
 }
 
 exports.ActionBased = ActionBased;

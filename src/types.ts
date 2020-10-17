@@ -31,6 +31,10 @@ interface NotResourceBlock {
 
 export type ConditionKey = string | number | boolean;
 
+export interface Context {
+  [key: string]: ConditionKey | Context | string[] | number[];
+}
+
 export interface ConditionMap {
   [key: string]: ConditionKey[] | ConditionKey;
 }
@@ -45,6 +49,10 @@ export interface StatementInterface {
   condition?: ConditionBlock;
 }
 
+export interface PolicyInterface {
+  context?: Context;
+}
+
 export interface DecomposeString {
   start: number;
   end: number;
@@ -57,10 +65,6 @@ type Resolver = (data: any, expected: any) => boolean;
 
 export interface ConditionResolver {
   [key: string]: Resolver;
-}
-
-export interface Context {
-  [key: string]: ConditionKey | Context | string[] | number[];
 }
 
 export interface MatchConditionInterface {

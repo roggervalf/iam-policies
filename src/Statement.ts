@@ -47,13 +47,13 @@ class Statement {
     conditionResolver
   }: MatchConditionInterface): boolean {
     return conditionResolver && this.condition && context
-      ? Object.keys(this.condition).every(condition =>
+      ? Object.keys(this.condition).every((condition) =>
           Object.keys(this.condition ? this.condition[condition] : {}).every(
-            path => {
+            (path) => {
               if (this.condition) {
                 const conditionValues = this.condition[condition][path];
                 if (conditionValues instanceof Array) {
-                  return conditionValues.some(value =>
+                  return conditionValues.some((value) =>
                     conditionResolver[condition](
                       getValueFromPath(context, path),
                       value

@@ -5,21 +5,36 @@ describe('ActionBasedPolicy Class', () => {
     it("doesn't throw an error", () => {
       expect(
         () =>
-          new ActionBasedPolicy([
-            {
-              action: ['read', 'write']
-            }
-          ])
+          new ActionBasedPolicy({
+            statements: [
+              {
+                action: ['read', 'write']
+              }
+            ]
+          })
+      ).not.toThrow();
+      expect(
+        () =>
+          new ActionBasedPolicy({
+            statements: [
+              {
+                notAction: ['write']
+              }
+            ],
+            context: {}
+          })
       ).not.toThrow();
     });
 
     it('returns an ActionBasedPolicy instance', () => {
       expect(
-        new ActionBasedPolicy([
-          {
-            action: ['read', 'write']
-          }
-        ])
+        new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['read', 'write']
+            }
+          ]
+        })
       ).toBeInstanceOf(ActionBasedPolicy);
     });
   });
@@ -28,10 +43,10 @@ describe('ActionBasedPolicy Class', () => {
     it('returns those statements', () => {
       const statements = [
         {
-          action: ['read']
+          action: 'read'
         }
       ];
-      const policy = new ActionBasedPolicy(statements);
+      const policy = new ActionBasedPolicy({ statements });
       const exportedStatements = policy.getStatements();
       expect(exportedStatements).toMatchObject(statements);
       expect(exportedStatements[0].sid).not.toBeFalsy();
@@ -40,11 +55,13 @@ describe('ActionBasedPolicy Class', () => {
 
   describe('when match actions', () => {
     it('returns true or false', () => {
-      const policy = new ActionBasedPolicy([
-        {
-          action: ['read']
-        }
-      ]);
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            action: ['read']
+          }
+        ]
+      });
 
       expect(
         policy.evaluate({
@@ -61,11 +78,13 @@ describe('ActionBasedPolicy Class', () => {
 
   describe('when match not actions', () => {
     it('returns true or false', () => {
-      const policy = new ActionBasedPolicy([
-        {
-          notAction: 'read'
-        }
-      ]);
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            notAction: 'read'
+          }
+        ]
+      });
 
       expect(
         policy.evaluate({
@@ -82,19 +101,21 @@ describe('ActionBasedPolicy Class', () => {
 
   describe('when match based on context', () => {
     it('returns true or false', () => {
-      const policy = new ActionBasedPolicy([
-        {
-          action: ['getUser/${user.id}', 'updateUser/${user.id}']
-        },
-        {
-          action: 'getAllProjects'
-        }
-      ]);
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            action: ['getUser/${user.id}', 'updateUser/${user.id}']
+          },
+          {
+            action: 'getAllProjects'
+          }
+        ],
+        context: { user: { id: 123 } }
+      });
 
       expect(
         policy.evaluate({
-          action: 'getUser/123',
-          context: { user: { id: 123 } }
+          action: 'getUser/123'
         })
       ).toBe(true);
       expect(
@@ -123,14 +144,14 @@ describe('ActionBasedPolicy Class', () => {
 
   describe('when match based on conditions', () => {
     it('returns true or false', () => {
-      const conditions = {
+      const conditionResolver = {
         greaterThan: (data: number, expected: number): boolean => {
           return data > expected;
         }
       };
 
-      const policy = new ActionBasedPolicy(
-        [
+      const policy = new ActionBasedPolicy({
+        statements: [
           {
             action: ['read']
           },
@@ -143,8 +164,8 @@ describe('ActionBasedPolicy Class', () => {
             }
           }
         ],
-        conditions
-      );
+        conditionResolver
+      });
 
       expect(
         policy.evaluate({
@@ -169,16 +190,18 @@ describe('ActionBasedPolicy Class', () => {
 
   describe('can and cannot', () => {
     it('can should return false when not found and true for when matched with allow', () => {
-      const policy = new ActionBasedPolicy([
-        {
-          effect: 'allow',
-          action: [
-            'createProject',
-            'getUser/${user.id}',
-            'updateUser/${user.id}'
-          ]
-        }
-      ]);
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            effect: 'allow',
+            action: [
+              'createProject',
+              'getUser/${user.id}',
+              'updateUser/${user.id}'
+            ]
+          }
+        ]
+      });
       expect(
         policy.can({
           action: 'getUser/123',
@@ -199,16 +222,18 @@ describe('ActionBasedPolicy Class', () => {
     });
 
     it('cannot should return false when not found and true for when matched with deny', () => {
-      const policy = new ActionBasedPolicy([
-        {
-          effect: 'deny',
-          action: [
-            'createProject',
-            'getUser/${user.id}',
-            'updateUser/${user.id}'
-          ]
-        }
-      ]);
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            effect: 'deny',
+            action: [
+              'createProject',
+              'getUser/${user.id}',
+              'updateUser/${user.id}'
+            ]
+          }
+        ]
+      });
       expect(
         policy.cannot({
           action: 'getUser/123',

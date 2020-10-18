@@ -13,22 +13,7 @@ class ActionBased extends Statement {
 
   constructor(action: ActionBasedType) {
     super(action);
-    const hasAction = instanceOfActionBlock(action);
-    const hasNotAction = instanceOfNotActionBlock(action);
-    if (hasAction && hasNotAction) {
-      throw new TypeError(
-        'ActionBased statement should have an action or a notAction attribute, no both'
-      );
-    }
-    if (hasAction) {
-      this.action =
-        typeof action.action === 'string' ? [action.action] : action.action;
-    } else {
-      this.notAction =
-        typeof action.notAction === 'string'
-          ? [action.notAction]
-          : action.notAction;
-    }
+    this.checkAndAssignActions(action);
     this.statement = { ...action, sid: this.sid };
   }
 
@@ -46,6 +31,30 @@ class ActionBased extends Statement {
       this.matchNotActions(action, context) &&
       this.matchConditions({ context, conditionResolver })
     );
+  }
+
+  private checkAndAssignActions(action: ActionBasedType): void {
+    const hasAction = instanceOfActionBlock(action);
+    const hasNotAction = instanceOfNotActionBlock(action);
+    if (hasAction && hasNotAction) {
+      throw new TypeError(
+        'ActionBased statement should have an action or a notAction attribute, no both'
+      );
+    }
+    if (!hasAction && !hasNotAction) {
+      throw new TypeError(
+        'ActionBased statement should have an action or a notAction attribute'
+      );
+    }
+    if (instanceOfActionBlock(action)) {
+      this.action =
+        typeof action.action === 'string' ? [action.action] : action.action;
+    } else {
+      this.notAction =
+        typeof action.notAction === 'string'
+          ? [action.notAction]
+          : action.notAction;
+    }
   }
 
   private matchActions(action: string, context?: Context): boolean {

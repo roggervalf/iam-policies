@@ -5,13 +5,14 @@ import {
   MatchResourceBasedInterface
 } from './types';
 import {
-  instanceOfPrincipalBlock,
-  instanceOfResourceBlock,
+  instanceOfActionBlock,
+  instanceOfNotActionBlock,
   instanceOfNotResourceBlock,
-  instanceOfActionBlock
+  instanceOfPrincipalBlock,
+  instanceOfResourceBlock
 } from './utils/instanceOfInterfaces';
 import { Matcher } from './Matcher';
-import { Statement, applyContext } from './Statement';
+import { applyContext, Statement } from './Statement';
 
 class ResourceBased extends Statement {
   private principal?: PrincipalMap | string[];
@@ -24,6 +25,7 @@ class ResourceBased extends Statement {
 
   constructor(identity: ResourceBasedType) {
     super(identity);
+    this.checkAndAssignActions(identity);
     if (instanceOfResourceBlock(identity)) {
       this.resource =
         typeof identity.resource === 'string'
@@ -34,17 +36,6 @@ class ResourceBased extends Statement {
         typeof identity.notResource === 'string'
           ? [identity.notResource]
           : identity.notResource;
-    }
-    if (instanceOfActionBlock(identity)) {
-      this.action =
-        typeof identity.action === 'string'
-          ? [identity.action]
-          : identity.action;
-    } else {
-      this.notAction =
-        typeof identity.notAction === 'string'
-          ? [identity.notAction]
-          : identity.notAction;
     }
     if (instanceOfPrincipalBlock(identity)) {
       this.principal =
@@ -83,7 +74,33 @@ class ResourceBased extends Statement {
     );
   }
 
-  matchPrincipals(
+  private checkAndAssignActions(identity: ResourceBasedType): void {
+    const hasAction = instanceOfActionBlock(identity);
+    const hasNotAction = instanceOfNotActionBlock(identity);
+    if (hasAction && hasNotAction) {
+      throw new TypeError(
+        'ResourceBased statement should have an action or a notAction attribute, no both'
+      );
+    }
+    if (!hasAction && !hasNotAction) {
+      throw new TypeError(
+        'ResourceBased statement should have an action or a notAction attribute'
+      );
+    }
+    if (instanceOfActionBlock(identity)) {
+      this.action =
+        typeof identity.action === 'string'
+          ? [identity.action]
+          : identity.action;
+    } else {
+      this.notAction =
+        typeof identity.notAction === 'string'
+          ? [identity.notAction]
+          : identity.notAction;
+    }
+  }
+
+  private matchPrincipals(
     principal: string,
     principalType?: string,
     context?: Context
@@ -113,7 +130,7 @@ class ResourceBased extends Statement {
     return true;
   }
 
-  matchNotPrincipals(
+  private matchNotPrincipals(
     principal: string,
     principalType?: string,
     context?: Context
@@ -143,7 +160,7 @@ class ResourceBased extends Statement {
     return true;
   }
 
-  matchActions(action: string, context?: Context): boolean {
+  private matchActions(action: string, context?: Context): boolean {
     return this.action
       ? this.action.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
@@ -151,7 +168,7 @@ class ResourceBased extends Statement {
       : true;
   }
 
-  matchNotActions(action: string, context?: Context): boolean {
+  private matchNotActions(action: string, context?: Context): boolean {
     return this.notAction
       ? !this.notAction.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
@@ -159,7 +176,7 @@ class ResourceBased extends Statement {
       : true;
   }
 
-  matchResources(resource: string, context?: Context): boolean {
+  private matchResources(resource: string, context?: Context): boolean {
     return this.resource
       ? this.resource.some((a) =>
           new Matcher(applyContext(a, context)).match(resource)
@@ -167,7 +184,7 @@ class ResourceBased extends Statement {
       : true;
   }
 
-  matchNotResources(resource: string, context?: Context): boolean {
+  private matchNotResources(resource: string, context?: Context): boolean {
     return this.notResource
       ? !this.notResource.some((a) =>
           new Matcher(applyContext(a, context)).match(resource)

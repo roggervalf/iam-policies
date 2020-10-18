@@ -128,6 +128,7 @@ declare class ActionBased extends Statement {
     constructor(action: ActionBasedType);
     getStatement(): ActionBasedType;
     matches({ action, context, conditionResolver }: MatchActionBasedInterface): boolean;
+    private checkAndAssignActions;
     private matchActions;
     private matchNotActions;
 }
@@ -141,6 +142,8 @@ declare class IdentityBased extends Statement {
     constructor(identity: IdentityBasedType);
     getStatement(): IdentityBasedType;
     matches({ action, resource, context, conditionResolver }: MatchIdentityBasedInterface): boolean;
+    private checkAndAssignActions;
+    private checkAndAssignResources;
     private matchActions;
     private matchNotActions;
     private matchResources;
@@ -158,12 +161,13 @@ declare class ResourceBased extends Statement {
     constructor(identity: ResourceBasedType);
     getStatement(): ResourceBasedType;
     matches({ principal, action, resource, principalType, context, conditionResolver }: MatchResourceBasedInterface): boolean;
-    matchPrincipals(principal: string, principalType?: string, context?: Context): boolean;
-    matchNotPrincipals(principal: string, principalType?: string, context?: Context): boolean;
-    matchActions(action: string, context?: Context): boolean;
-    matchNotActions(action: string, context?: Context): boolean;
-    matchResources(resource: string, context?: Context): boolean;
-    matchNotResources(resource: string, context?: Context): boolean;
+    private checkAndAssignActions;
+    private matchPrincipals;
+    private matchNotPrincipals;
+    private matchActions;
+    private matchNotActions;
+    private matchResources;
+    private matchNotResources;
 }
 
 declare class Policy {

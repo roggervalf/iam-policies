@@ -581,10 +581,29 @@ class Statement {
  * ```javascript
  * instanceOfActionBlock({ action: 'something' })
  * // => true
+ *
+ * instanceOfActionBlock({ notAction: 'something' })
+ * // => false
  * ```
  */
 function instanceOfActionBlock(object) {
     return 'action' in object;
+}
+/**
+ * Validate if an `object` is an instance of `NotActionBlock`.
+ * @param {Object} object Object to validate
+ * @returns {boolean} Returns true if `object` has `notAction` attribute.
+ * @example
+ * ```javascript
+ * instanceOfNotActionBlock({ notAction: 'something' })
+ * // => true
+ *
+ * instanceOfNotActionBlock({ action: 'something' })
+ * // => false
+ * ```
+ */
+function instanceOfNotActionBlock(object) {
+    return 'notAction' in object;
 }
 /**
  * Validate if an `object` is an instance of `PrincipalBlock`.
@@ -607,6 +626,9 @@ function instanceOfPrincipalBlock(object) {
  * ```javascript
  * instanceOfNotResourceBlock({ notResource: 'something' })
  * // => true
+ *
+ * instanceOfNotResourceBlock({ resource: 'something' })
+ * // => false
  * ```
  */
 function instanceOfNotResourceBlock(object) {
@@ -620,6 +642,9 @@ function instanceOfNotResourceBlock(object) {
  * ```javascript
  * instanceOfResourceBlock({ resource: 'something' })
  * // => true
+ *
+ * instanceOfResourceBlock({ notResource: 'something' })
+ * // => false
  * ```
  */
 function instanceOfResourceBlock(object) {
@@ -810,16 +835,7 @@ class Matcher {
 class ActionBased extends Statement {
     constructor(action) {
         super(action);
-        if (instanceOfActionBlock(action)) {
-            this.action =
-                typeof action.action === 'string' ? [action.action] : action.action;
-        }
-        else {
-            this.notAction =
-                typeof action.notAction === 'string'
-                    ? [action.notAction]
-                    : action.notAction;
-        }
+        this.checkAndAssignActions(action);
         this.statement = Object.assign(Object.assign({}, action), { sid: this.sid });
     }
     getStatement() {
@@ -830,14 +846,34 @@ class ActionBased extends Statement {
             this.matchNotActions(action, context) &&
             this.matchConditions({ context, conditionResolver }));
     }
+    checkAndAssignActions(action) {
+        const hasAction = instanceOfActionBlock(action);
+        const hasNotAction = instanceOfNotActionBlock(action);
+        if (hasAction && hasNotAction) {
+            throw new TypeError('ActionBased statement should have an action or a notAction attribute, no both');
+        }
+        if (!hasAction && !hasNotAction) {
+            throw new TypeError('ActionBased statement should have an action or a notAction attribute');
+        }
+        if (instanceOfActionBlock(action)) {
+            this.action =
+                typeof action.action === 'string' ? [action.action] : action.action;
+        }
+        else {
+            this.notAction =
+                typeof action.notAction === 'string'
+                    ? [action.notAction]
+                    : action.notAction;
+        }
+    }
     matchActions(action, context) {
         return this.action
-            ? this.action.some(a => new Matcher(applyContext(a, context)).match(action))
+            ? this.action.some((a) => new Matcher(applyContext(a, context)).match(action))
             : true;
     }
     matchNotActions(action, context) {
         return this.notAction
-            ? !this.notAction.some(a => new Matcher(applyContext(a, context)).match(action))
+            ? !this.notAction.some((a) => new Matcher(applyContext(a, context)).match(action))
             : true;
     }
 }
@@ -845,30 +881,8 @@ class ActionBased extends Statement {
 class IdentityBased extends Statement {
     constructor(identity) {
         super(identity);
-        if (instanceOfResourceBlock(identity)) {
-            this.resource =
-                typeof identity.resource === 'string'
-                    ? [identity.resource]
-                    : identity.resource;
-        }
-        else {
-            this.notResource =
-                typeof identity.notResource === 'string'
-                    ? [identity.notResource]
-                    : identity.notResource;
-        }
-        if (instanceOfActionBlock(identity)) {
-            this.action =
-                typeof identity.action === 'string'
-                    ? [identity.action]
-                    : identity.action;
-        }
-        else {
-            this.notAction =
-                typeof identity.notAction === 'string'
-                    ? [identity.notAction]
-                    : identity.notAction;
-        }
+        this.checkAndAssignActions(identity);
+        this.checkAndAssignResources(identity);
         this.statement = Object.assign(Object.assign({}, identity), { sid: this.sid });
     }
     getStatement() {
@@ -881,42 +895,14 @@ class IdentityBased extends Statement {
             this.matchNotResources(resource, context) &&
             this.matchConditions({ context, conditionResolver }));
     }
-    matchActions(action, context) {
-        return this.action
-            ? this.action.some(a => new Matcher(applyContext(a, context)).match(action))
-            : true;
-    }
-    matchNotActions(action, context) {
-        return this.notAction
-            ? !this.notAction.some(a => new Matcher(applyContext(a, context)).match(action))
-            : true;
-    }
-    matchResources(resource, context) {
-        return this.resource
-            ? this.resource.some(a => new Matcher(applyContext(a, context)).match(resource))
-            : true;
-    }
-    matchNotResources(resource, context) {
-        return this.notResource
-            ? !this.notResource.some(a => new Matcher(applyContext(a, context)).match(resource))
-            : true;
-    }
-}
-
-class ResourceBased extends Statement {
-    constructor(identity) {
-        super(identity);
-        if (instanceOfResourceBlock(identity)) {
-            this.resource =
-                typeof identity.resource === 'string'
-                    ? [identity.resource]
-                    : identity.resource;
+    checkAndAssignActions(identity) {
+        const hasAction = instanceOfActionBlock(identity);
+        const hasNotAction = instanceOfNotActionBlock(identity);
+        if (hasAction && hasNotAction) {
+            throw new TypeError('IdentityBased statement should have an action or a notAction attribute, no both');
         }
-        else if (instanceOfNotResourceBlock(identity)) {
-            this.notResource =
-                typeof identity.notResource === 'string'
-                    ? [identity.notResource]
-                    : identity.notResource;
+        if (!hasAction && !hasNotAction) {
+            throw new TypeError('IdentityBased statement should have an action or a notAction attribute');
         }
         if (instanceOfActionBlock(identity)) {
             this.action =
@@ -929,6 +915,67 @@ class ResourceBased extends Statement {
                 typeof identity.notAction === 'string'
                     ? [identity.notAction]
                     : identity.notAction;
+        }
+    }
+    checkAndAssignResources(identity) {
+        const hasResource = instanceOfResourceBlock(identity);
+        const hasNotResource = instanceOfNotResourceBlock(identity);
+        if (hasResource && hasNotResource) {
+            throw new TypeError('IdentityBased statement should have a resource or a notResource attribute, no both');
+        }
+        if (!hasResource && !hasNotResource) {
+            throw new TypeError('IdentityBased statement should have a resource or a notResource attribute');
+        }
+        if (instanceOfResourceBlock(identity)) {
+            this.resource =
+                typeof identity.resource === 'string'
+                    ? [identity.resource]
+                    : identity.resource;
+        }
+        else {
+            this.notResource =
+                typeof identity.notResource === 'string'
+                    ? [identity.notResource]
+                    : identity.notResource;
+        }
+    }
+    matchActions(action, context) {
+        return this.action
+            ? this.action.some((a) => new Matcher(applyContext(a, context)).match(action))
+            : true;
+    }
+    matchNotActions(action, context) {
+        return this.notAction
+            ? !this.notAction.some((a) => new Matcher(applyContext(a, context)).match(action))
+            : true;
+    }
+    matchResources(resource, context) {
+        return this.resource
+            ? this.resource.some((a) => new Matcher(applyContext(a, context)).match(resource))
+            : true;
+    }
+    matchNotResources(resource, context) {
+        return this.notResource
+            ? !this.notResource.some((a) => new Matcher(applyContext(a, context)).match(resource))
+            : true;
+    }
+}
+
+class ResourceBased extends Statement {
+    constructor(identity) {
+        super(identity);
+        this.checkAndAssignActions(identity);
+        if (instanceOfResourceBlock(identity)) {
+            this.resource =
+                typeof identity.resource === 'string'
+                    ? [identity.resource]
+                    : identity.resource;
+        }
+        else if (instanceOfNotResourceBlock(identity)) {
+            this.notResource =
+                typeof identity.notResource === 'string'
+                    ? [identity.notResource]
+                    : identity.notResource;
         }
         if (instanceOfPrincipalBlock(identity)) {
             this.principal =
@@ -955,6 +1002,28 @@ class ResourceBased extends Statement {
             this.matchResources(resource, context) &&
             this.matchNotResources(resource, context) &&
             this.matchConditions({ context, conditionResolver }));
+    }
+    checkAndAssignActions(identity) {
+        const hasAction = instanceOfActionBlock(identity);
+        const hasNotAction = instanceOfNotActionBlock(identity);
+        if (hasAction && hasNotAction) {
+            throw new TypeError('ResourceBased statement should have an action or a notAction attribute, no both');
+        }
+        if (!hasAction && !hasNotAction) {
+            throw new TypeError('ResourceBased statement should have an action or a notAction attribute');
+        }
+        if (instanceOfActionBlock(identity)) {
+            this.action =
+                typeof identity.action === 'string'
+                    ? [identity.action]
+                    : identity.action;
+        }
+        else {
+            this.notAction =
+                typeof identity.notAction === 'string'
+                    ? [identity.notAction]
+                    : identity.notAction;
+        }
     }
     matchPrincipals(principal, principalType, context) {
         if (this.principal) {

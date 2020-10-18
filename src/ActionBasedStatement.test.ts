@@ -17,16 +17,29 @@ describe('ActionBased Class', () => {
       ).not.toThrow();
     });
 
-    it('throws a TypeError', () => {
-      const expectedError = new TypeError(
-        'ActionBased statement should have an action or a notAction attribute, no both'
-      );
-      expect(() => {
-        new ActionBased({
-          action: ['read', 'write'],
-          notAction: 'delete'
-        });
-      }).toThrow(expectedError);
+    describe('when creating action based statement with no actions', () => {
+      it('throws a TypeError', () => {
+        const expectedError = new TypeError(
+          'ActionBased statement should have an action or a notAction attribute'
+        );
+        expect(() => {
+          new ActionBased({});
+        }).toThrow(expectedError);
+      });
+    });
+
+    describe('when creating action based statement with action and notAction attributes', () => {
+      it('throws a TypeError', () => {
+        const expectedError = new TypeError(
+          'ActionBased statement should have an action or a notAction attribute, no both'
+        );
+        expect(() => {
+          new ActionBased({
+            action: ['read', 'write'],
+            notAction: 'delete'
+          });
+        }).toThrow(expectedError);
+      });
     });
   });
 });

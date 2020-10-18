@@ -66,6 +66,9 @@ export function instanceOfPrincipalBlock(
  * ```javascript
  * instanceOfNotResourceBlock({ notResource: 'something' })
  * // => true
+ *
+ * instanceOfNotResourceBlock({ resource: 'something' })
+ * // => false
  * ```
  */
 export function instanceOfNotResourceBlock(
@@ -82,6 +85,9 @@ export function instanceOfNotResourceBlock(
  * ```javascript
  * instanceOfResourceBlock({ resource: 'something' })
  * // => true
+ *
+ * instanceOfResourceBlock({ notResource: 'something' })
+ * // => false
  * ```
  */
 export function instanceOfResourceBlock(

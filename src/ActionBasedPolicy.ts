@@ -1,8 +1,8 @@
 import {
   ActionBasedType,
-  EvaluateActionBasedInterface,
   ConditionResolver,
-  Context
+  Context,
+  EvaluateActionBasedInterface
 } from './types';
 import { ActionBased } from './ActionBasedStatement';
 import { Policy } from './Policy';

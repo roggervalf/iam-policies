@@ -1,8 +1,8 @@
 import { MatchConditionInterface, ConditionResolver, Context } from './types';
 
 class Policy {
-  protected context: Context;
-  protected conditionResolver: ConditionResolver;
+  protected context?: Context;
+  protected conditionResolver?: ConditionResolver;
 
   constructor({ context, conditionResolver }: MatchConditionInterface) {
     this.context = context;
@@ -13,7 +13,7 @@ class Policy {
     this.context = context;
   }
 
-  getContext(): Context {
+  getContext(): Context | undefined {
     return this.context;
   }
 
@@ -21,7 +21,7 @@ class Policy {
     this.conditionResolver = conditionResolver;
   }
 
-  getConditionResolver(): ConditionResolver {
+  getConditionResolver(): ConditionResolver | undefined {
     return this.conditionResolver;
   }
 }

@@ -161,7 +161,7 @@ function memoize(func, resolver) {
             return cache.get(key);
         }
         const result = func.apply(this, args);
-        memoized.cache = cache.set(key, result) || cache;
+        cache.set(key, result);
         return result;
     };
     memoized.cache = new Map();
@@ -364,7 +364,8 @@ class MersenneTwister {
         this.mt = new Array(this.N); /* the array for the state vector */
         this.mti = this.N + 1; /* mti==N+1 means mt[N] is not initialized */
         if (Array.isArray(seed)) {
-            this.initByArray(seed, seed.length);
+            if (seed.length > 0)
+                this.initByArray(seed, seed.length);
         }
         else {
             if (seed === undefined) {
@@ -560,11 +561,11 @@ class Statement {
     }
     matchConditions({ context, conditionResolver }) {
         return conditionResolver && this.condition && context
-            ? Object.keys(this.condition).every(condition => Object.keys(this.condition ? this.condition[condition] : {}).every(path => {
+            ? Object.keys(this.condition).every((condition) => Object.keys(this.condition ? this.condition[condition] : {}).every((path) => {
                 if (this.condition) {
                     const conditionValues = this.condition[condition][path];
                     if (conditionValues instanceof Array) {
-                        return conditionValues.some(value => conditionResolver[condition](getValueFromPath(context, path), value));
+                        return conditionValues.some((value) => conditionResolver[condition](getValueFromPath(context, path), value));
                     }
                     return conditionResolver[condition](getValueFromPath(context, path), conditionValues);
                 }
@@ -1023,13 +1024,32 @@ class ResourceBased extends Statement {
     }
 }
 
-class ActionBasedPolicy {
-    constructor(config, conditionResolver) {
-        const statementInstances = config.map(statement => new ActionBased(statement));
-        this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
-        this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
+class Policy {
+    constructor({ context, conditionResolver }) {
+        this.context = context;
         this.conditionResolver = conditionResolver;
-        this.statements = this.statements = statementInstances.map(statement => statement.getStatement());
+    }
+    setContext(context) {
+        this.context = context;
+    }
+    getContext() {
+        return this.context;
+    }
+    setConditionResolver(conditionResolver) {
+        this.conditionResolver = conditionResolver;
+    }
+    getConditionResolver() {
+        return this.conditionResolver;
+    }
+}
+
+class ActionBasedPolicy extends Policy {
+    constructor({ statements, conditionResolver, context }) {
+        super({ context, conditionResolver });
+        const statementInstances = statements.map((statement) => new ActionBased(statement));
+        this.allowStatements = statementInstances.filter((s) => s.effect === 'allow');
+        this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
+        this.statements = this.statements = statementInstances.map((statement) => statement.getStatement());
     }
     getStatements() {
         return this.statements;
@@ -1039,16 +1059,16 @@ class ActionBasedPolicy {
         return !this.cannot(args) && this.can(args);
     }
     can({ action, context }) {
-        return this.allowStatements.some(s => s.matches({
+        return this.allowStatements.some((s) => s.matches({
             action,
-            context,
+            context: context || this.context,
             conditionResolver: this.conditionResolver
         }));
     }
     cannot({ action, context }) {
-        return this.denyStatements.some(s => s.matches({
+        return this.denyStatements.some((s) => s.matches({
             action,
-            context,
+            context: context || this.context,
             conditionResolver: this.conditionResolver
         }));
     }

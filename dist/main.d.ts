@@ -65,6 +65,9 @@ interface NotResourceBlock {
     notResource: Patterns;
 }
 declare type ConditionKey = string | number | boolean;
+interface Context {
+    [key: string]: ConditionKey | Context | string[] | number[];
+}
 interface ConditionMap {
     [key: string]: ConditionKey[] | ConditionKey;
 }
@@ -79,9 +82,6 @@ interface StatementInterface {
 declare type Resolver = (data: any, expected: any) => boolean;
 interface ConditionResolver {
     [key: string]: Resolver;
-}
-interface Context {
-    [key: string]: ConditionKey | Context | string[] | number[];
 }
 interface MatchConditionInterface {
     context?: Context;
@@ -166,12 +166,26 @@ declare class ResourceBased extends Statement {
     matchNotResources(resource: string, context?: Context): boolean;
 }
 
-declare class ActionBasedPolicy {
+declare class Policy {
+    protected context?: Context;
+    protected conditionResolver?: ConditionResolver;
+    constructor({ context, conditionResolver }: MatchConditionInterface);
+    setContext(context: Context): void;
+    getContext(): Context | undefined;
+    setConditionResolver(conditionResolver: ConditionResolver): void;
+    getConditionResolver(): ConditionResolver | undefined;
+}
+
+interface ActionBasedPolicyInterface {
+    statements: ActionBasedType[];
+    conditionResolver?: ConditionResolver;
+    context?: Context;
+}
+declare class ActionBasedPolicy extends Policy {
     private denyStatements;
     private allowStatements;
-    private conditionResolver?;
     private statements;
-    constructor(config: ActionBasedType[], conditionResolver?: ConditionResolver);
+    constructor({ statements, conditionResolver, context }: ActionBasedPolicyInterface);
     getStatements(): ActionBasedType[];
     evaluate({ action, context }: EvaluateActionBasedInterface): boolean;
     can({ action, context }: EvaluateActionBasedInterface): boolean;

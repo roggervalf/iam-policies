@@ -16,7 +16,6 @@ interface ActionBasedPolicyInterface {
 export class ActionBasedPolicy extends Policy {
   private denyStatements: ActionBased[];
   private allowStatements: ActionBased[];
-  private conditionResolver?: ConditionResolver;
   private statements: ActionBasedType[];
 
   constructor({
@@ -24,7 +23,7 @@ export class ActionBasedPolicy extends Policy {
     conditionResolver,
     context
   }: ActionBasedPolicyInterface) {
-    super({ context });
+    super({ context, conditionResolver });
     const statementInstances = statements.map(
       (statement) => new ActionBased(statement)
     );
@@ -32,7 +31,6 @@ export class ActionBasedPolicy extends Policy {
       (s) => s.effect === 'allow'
     );
     this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
-    this.conditionResolver = conditionResolver;
     this.statements = this.statements = statementInstances.map((statement) =>
       statement.getStatement()
     );

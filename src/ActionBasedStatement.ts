@@ -1,7 +1,10 @@
-import { Context, ActionBasedType, MatchActionBasedInterface } from './types';
-import { instanceOfActionBlock } from './utils/instanceOfInterfaces';
+import { ActionBasedType, Context, MatchActionBasedInterface } from './types';
+import {
+  instanceOfActionBlock,
+  instanceOfNotActionBlock
+} from './utils/instanceOfInterfaces';
 import { Matcher } from './Matcher';
-import { Statement, applyContext } from './Statement';
+import { applyContext, Statement } from './Statement';
 
 class ActionBased extends Statement {
   private action?: string[];
@@ -10,7 +13,14 @@ class ActionBased extends Statement {
 
   constructor(action: ActionBasedType) {
     super(action);
-    if (instanceOfActionBlock(action)) {
+    const hasAction = instanceOfActionBlock(action);
+    const hasNotAction = instanceOfNotActionBlock(action);
+    if (hasAction && hasNotAction) {
+      throw new TypeError(
+        'ActionBased statement should have an action or a notAction attribute, no both'
+      );
+    }
+    if (hasAction) {
       this.action =
         typeof action.action === 'string' ? [action.action] : action.action;
     } else {
@@ -40,7 +50,7 @@ class ActionBased extends Statement {
 
   private matchActions(action: string, context?: Context): boolean {
     return this.action
-      ? this.action.some(a =>
+      ? this.action.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
         )
       : true;
@@ -48,7 +58,7 @@ class ActionBased extends Statement {
 
   private matchNotActions(action: string, context?: Context): boolean {
     return this.notAction
-      ? !this.notAction.some(a =>
+      ? !this.notAction.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
         )
       : true;

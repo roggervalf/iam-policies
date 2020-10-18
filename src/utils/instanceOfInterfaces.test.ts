@@ -1,7 +1,8 @@
 import {
+  instanceOfActionBlock,
   instanceOfPrincipalBlock,
   instanceOfResourceBlock,
-  instanceOfActionBlock,
+  instanceOfNotActionBlock,
   instanceOfNotResourceBlock
 } from './instanceOfInterfaces';
 
@@ -41,6 +42,18 @@ describe('Util functions', () => {
       ).not.toThrow();
       expect(instanceOfActionBlock({ action: 'something' })).toBe(true);
       expect(instanceOfActionBlock({ notAction: 'something' })).toBe(false);
+    });
+  });
+
+  describe('instanceOfNotActionBlock', () => {
+    it("doesn't throw an error", () => {
+      expect(() =>
+        instanceOfNotActionBlock({
+          notAction: 'something'
+        })
+      ).not.toThrow();
+      expect(instanceOfNotActionBlock({ notAction: 'something' })).toBe(true);
+      expect(instanceOfNotActionBlock({ action: 'something' })).toBe(false);
     });
   });
 

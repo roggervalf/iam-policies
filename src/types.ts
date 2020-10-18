@@ -115,14 +115,15 @@ type ResourceBasedType = StatementInterface &
 
 export {
   ActionBasedType,
-  IdentityBasedType,
-  ResourceBasedType,
-  PrincipalMap,
-  Patterns,
-  ResourceBlock,
-  NotResourceBlock,
   ActionBlock,
-  PrincipalBlock
+  IdentityBasedType,
+  Patterns,
+  PrincipalBlock,
+  PrincipalMap,
+  ResourceBasedType,
+  ResourceBlock,
+  NotActionBlock,
+  NotResourceBlock
 };
 
 /*

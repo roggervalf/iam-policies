@@ -1,5 +1,6 @@
 import {
   ActionBlock,
+  NotActionBlock,
   PrincipalBlock,
   NotResourceBlock,
   ResourceBlock
@@ -13,10 +14,32 @@ import {
  * ```javascript
  * instanceOfActionBlock({ action: 'something' })
  * // => true
+ *
+ * instanceOfActionBlock({ notAction: 'something' })
+ * // => false
  * ```
  */
 export function instanceOfActionBlock(object: object): object is ActionBlock {
   return 'action' in object;
+}
+
+/**
+ * Validate if an `object` is an instance of `NotActionBlock`.
+ * @param {Object} object Object to validate
+ * @returns {boolean} Returns true if `object` has `notAction` attribute.
+ * @example
+ * ```javascript
+ * instanceOfNotActionBlock({ notAction: 'something' })
+ * // => true
+ *
+ * instanceOfNotActionBlock({ action: 'something' })
+ * // => false
+ * ```
+ */
+export function instanceOfNotActionBlock(
+  object: object
+): object is NotActionBlock {
+  return 'notAction' in object;
 }
 
 /**

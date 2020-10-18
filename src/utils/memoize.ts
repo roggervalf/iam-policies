@@ -35,7 +35,7 @@ import { MemoizeInterface } from '../types';
  * ```
  */
 export function memoize(func: Function, resolver?: Function): MemoizeInterface {
-  const memoized = function(this: Function, ...args: any): MemoizeInterface {
+  const memoized = function (this: Function, ...args: any): MemoizeInterface {
     const key = resolver ? resolver.apply(this, args) : args[0];
     const cache = memoized.cache;
 
@@ -43,7 +43,7 @@ export function memoize(func: Function, resolver?: Function): MemoizeInterface {
       return cache.get(key);
     }
     const result = func.apply(this, args);
-    memoized.cache = cache.set(key, result) || cache;
+    cache.set(key, result);
     return result;
   };
   memoized.cache = new Map();

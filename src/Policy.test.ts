@@ -23,4 +23,30 @@ describe('Policy Class', () => {
       expect(policy.getContext()).toBe(context);
     });
   });
+
+  describe('when getConditionResolver', () => {
+    it('returns conditionResolver attribute', () => {
+      const conditionResolver = {
+        greaterThan: (data: number, expected: number): boolean => {
+          return data > expected;
+        }
+      };
+      expect(new Policy({ conditionResolver }).getConditionResolver()).toBe(
+        conditionResolver
+      );
+    });
+  });
+
+  describe('when setConditionResolver', () => {
+    it('sets conditionResolver attribute', () => {
+      const conditionResolver = {
+        greaterThan: (data: number, expected: number): boolean => {
+          return data > expected;
+        }
+      };
+      const policy = new Policy({});
+      policy.setConditionResolver(conditionResolver);
+      expect(policy.getConditionResolver()).toBe(conditionResolver);
+    });
+  });
 });

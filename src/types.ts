@@ -49,10 +49,6 @@ export interface StatementInterface {
   condition?: ConditionBlock;
 }
 
-export interface PolicyInterface {
-  context?: Context;
-}
-
 export interface DecomposeString {
   start: number;
   end: number;

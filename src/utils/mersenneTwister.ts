@@ -69,7 +69,7 @@ export class MersenneTwister {
     this.mti = this.N + 1; /* mti==N+1 means mt[N] is not initialized */
 
     if (Array.isArray(seed)) {
-      this.initByArray(seed, seed.length);
+      if (seed.length > 0) this.initByArray(seed, seed.length);
     } else {
       if (seed === undefined) {
         this.initSeed(new Date().getTime());

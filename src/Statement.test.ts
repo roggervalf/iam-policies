@@ -51,6 +51,7 @@ describe('Statement Class', () => {
   describe('when match conditions', () => {
     it('returns true', () => {
       const firstStatementConfig = {
+        sid: 'first',
         condition: {
           greaterThan: { 'user.age': 30 }
         }

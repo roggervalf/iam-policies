@@ -20,8 +20,8 @@ describe('ResourceBasedPolicy Class', () => {
         new ResourceBasedPolicy([
           {
             notPrincipal: 'rogger',
-            resource: 'some:glob:*:string/example',
-            action: ['read', 'write']
+            notResource: 'some:glob:*:string/example',
+            notAction: ['read', 'write']
           }
         ])
       ).toBeInstanceOf(ResourceBasedPolicy);
@@ -102,12 +102,12 @@ describe('ResourceBasedPolicy Class', () => {
     it('returns true or false', () => {
       const policy = new ResourceBasedPolicy([
         {
-          notPrincipal: 'andre',
+          notPrincipal: { id: 'andre' },
           resource: 'books:horror:*',
           action: ['read']
         },
         {
-          notPrincipal: { id: 'rogger' },
+          notPrincipal: { id: ['rogger'] },
           resource: 'secrets:admin:*',
           action: 'read'
         }
@@ -119,7 +119,7 @@ describe('ResourceBasedPolicy Class', () => {
           action: 'read',
           resource: 'books:horror:The Call of Cthulhu'
         })
-      ).toBe(false);
+      ).toBe(true);
       expect(
         policy.evaluate({
           principal: 'rogger',
@@ -150,9 +150,14 @@ describe('ResourceBasedPolicy Class', () => {
     it('returns true or false', () => {
       const policy = new ResourceBasedPolicy([
         {
-          principal: { id: '123' },
+          principal: { id: ['123'] },
           resource: ['books:horror:*'],
           action: ['read']
+        },
+        {
+          notPrincipal: ['124'],
+          resource: ['books:science:*'],
+          action: ['write']
         }
       ]);
 
@@ -172,6 +177,13 @@ describe('ResourceBasedPolicy Class', () => {
           principalType: 'id'
         })
       ).toBe(false);
+      expect(
+        policy.evaluate({
+          principal: '125',
+          action: 'write',
+          resource: 'books:science:Chemistry'
+        })
+      ).toBe(true);
     });
   });
 
@@ -236,7 +248,7 @@ describe('ResourceBasedPolicy Class', () => {
       const policy = new ResourceBasedPolicy([
         {
           principal: ['rogger', 'andre'],
-          notResource: 'books:horror:*',
+          notResource: ['books:horror:*'],
           action: ['read']
         }
       ]);

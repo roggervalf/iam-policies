@@ -38,6 +38,16 @@ describe('Statement Class', () => {
         'secrets:undefined:account'
       );
     });
+
+    it('can match object values', () => {
+      const context = {
+        user: { id: 456, address: { lat: 11, long: 52 } }
+      };
+
+      expect(applyContext('secrets:${user.address}:account', context)).toBe(
+        'secrets:undefined:account'
+      );
+    });
   });
 
   it('returns a Statement instance', () => {

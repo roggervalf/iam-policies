@@ -92,20 +92,16 @@ class ResourceBased extends Statement {
       if (this.principal instanceof Array) {
         return principalType
           ? false
-          : this.principal.some(a =>
+          : this.principal.some((a) =>
               new Matcher(applyContext(a, context)).match(principal)
             );
       } else {
         if (principalType) {
           const principalValues = this.principal[principalType];
           if (principalValues instanceof Array) {
-            return typeof principalValues === 'string'
-              ? [principalValues].some(a =>
-                  new Matcher(applyContext(a, context)).match(principal)
-                )
-              : principalValues.some(a =>
-                  new Matcher(applyContext(a, context)).match(principal)
-                );
+            return principalValues.some((a) =>
+              new Matcher(applyContext(a, context)).match(principal)
+            );
           }
           return new Matcher(applyContext(principalValues, context)).match(
             principal
@@ -126,26 +122,22 @@ class ResourceBased extends Statement {
       if (this.notPrincipal instanceof Array) {
         return principalType
           ? true
-          : !this.notPrincipal.some(a =>
+          : !this.notPrincipal.some((a) =>
               new Matcher(applyContext(a, context)).match(principal)
             );
       } else {
         if (principalType) {
           const principalValues = this.notPrincipal[principalType];
           if (principalValues instanceof Array) {
-            return typeof principalValues === 'string'
-              ? ![principalValues].some(a =>
-                  new Matcher(applyContext(a, context)).match(principal)
-                )
-              : !principalValues.some(a =>
-                  new Matcher(applyContext(a, context)).match(principal)
-                );
+            return !principalValues.some((a) =>
+              new Matcher(applyContext(a, context)).match(principal)
+            );
           }
           return !new Matcher(applyContext(principalValues, context)).match(
             principal
           );
         }
-        return false;
+        return true;
       }
     }
     return true;
@@ -153,7 +145,7 @@ class ResourceBased extends Statement {
 
   matchActions(action: string, context?: Context): boolean {
     return this.action
-      ? this.action.some(a =>
+      ? this.action.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
         )
       : true;
@@ -161,7 +153,7 @@ class ResourceBased extends Statement {
 
   matchNotActions(action: string, context?: Context): boolean {
     return this.notAction
-      ? !this.notAction.some(a =>
+      ? !this.notAction.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
         )
       : true;
@@ -169,7 +161,7 @@ class ResourceBased extends Statement {
 
   matchResources(resource: string, context?: Context): boolean {
     return this.resource
-      ? this.resource.some(a =>
+      ? this.resource.some((a) =>
           new Matcher(applyContext(a, context)).match(resource)
         )
       : true;
@@ -177,7 +169,7 @@ class ResourceBased extends Statement {
 
   matchNotResources(resource: string, context?: Context): boolean {
     return this.notResource
-      ? !this.notResource.some(a =>
+      ? !this.notResource.some((a) =>
           new Matcher(applyContext(a, context)).match(resource)
         )
       : true;

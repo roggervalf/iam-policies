@@ -544,7 +544,7 @@ function applyContext(str, context) {
         if (Array.isArray(value))
             return `{${value}}`;
         if (value instanceof Object)
-            return String(undefined);
+            return 'undefined';
         return String(value);
     }));
 }
@@ -560,16 +560,14 @@ class Statement {
         this.condition = condition;
     }
     matchConditions({ context, conditionResolver }) {
-        return conditionResolver && this.condition && context
-            ? Object.keys(this.condition).every((condition) => Object.keys(this.condition ? this.condition[condition] : {}).every((path) => {
-                if (this.condition) {
-                    const conditionValues = this.condition[condition][path];
-                    if (conditionValues instanceof Array) {
-                        return conditionValues.some((value) => conditionResolver[condition](getValueFromPath(context, path), value));
-                    }
-                    return conditionResolver[condition](getValueFromPath(context, path), conditionValues);
+        const { condition: conditions } = this;
+        return conditionResolver && conditions && context
+            ? Object.keys(conditions).every((condition) => Object.keys(conditions[condition]).every((path) => {
+                const conditionValues = conditions[condition][path];
+                if (conditionValues instanceof Array) {
+                    return conditionValues.some((value) => conditionResolver[condition](getValueFromPath(context, path), value));
                 }
-                return conditionResolver[condition](getValueFromPath(context, path), '');
+                return conditionResolver[condition](getValueFromPath(context, path), conditionValues);
             }))
             : true;
     }
@@ -963,15 +961,13 @@ class ResourceBased extends Statement {
             if (this.principal instanceof Array) {
                 return principalType
                     ? false
-                    : this.principal.some(a => new Matcher(applyContext(a, context)).match(principal));
+                    : this.principal.some((a) => new Matcher(applyContext(a, context)).match(principal));
             }
             else {
                 if (principalType) {
                     const principalValues = this.principal[principalType];
                     if (principalValues instanceof Array) {
-                        return typeof principalValues === 'string'
-                            ? [principalValues].some(a => new Matcher(applyContext(a, context)).match(principal))
-                            : principalValues.some(a => new Matcher(applyContext(a, context)).match(principal));
+                        return principalValues.some((a) => new Matcher(applyContext(a, context)).match(principal));
                     }
                     return new Matcher(applyContext(principalValues, context)).match(principal);
                 }
@@ -985,41 +981,39 @@ class ResourceBased extends Statement {
             if (this.notPrincipal instanceof Array) {
                 return principalType
                     ? true
-                    : !this.notPrincipal.some(a => new Matcher(applyContext(a, context)).match(principal));
+                    : !this.notPrincipal.some((a) => new Matcher(applyContext(a, context)).match(principal));
             }
             else {
                 if (principalType) {
                     const principalValues = this.notPrincipal[principalType];
                     if (principalValues instanceof Array) {
-                        return typeof principalValues === 'string'
-                            ? ![principalValues].some(a => new Matcher(applyContext(a, context)).match(principal))
-                            : !principalValues.some(a => new Matcher(applyContext(a, context)).match(principal));
+                        return !principalValues.some((a) => new Matcher(applyContext(a, context)).match(principal));
                     }
                     return !new Matcher(applyContext(principalValues, context)).match(principal);
                 }
-                return false;
+                return true;
             }
         }
         return true;
     }
     matchActions(action, context) {
         return this.action
-            ? this.action.some(a => new Matcher(applyContext(a, context)).match(action))
+            ? this.action.some((a) => new Matcher(applyContext(a, context)).match(action))
             : true;
     }
     matchNotActions(action, context) {
         return this.notAction
-            ? !this.notAction.some(a => new Matcher(applyContext(a, context)).match(action))
+            ? !this.notAction.some((a) => new Matcher(applyContext(a, context)).match(action))
             : true;
     }
     matchResources(resource, context) {
         return this.resource
-            ? this.resource.some(a => new Matcher(applyContext(a, context)).match(resource))
+            ? this.resource.some((a) => new Matcher(applyContext(a, context)).match(resource))
             : true;
     }
     matchNotResources(resource, context) {
         return this.notResource
-            ? !this.notResource.some(a => new Matcher(applyContext(a, context)).match(resource))
+            ? !this.notResource.some((a) => new Matcher(applyContext(a, context)).match(resource))
             : true;
     }
 }

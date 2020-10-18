@@ -18,8 +18,8 @@ describe('IdentityBasedPolicy Class', () => {
       expect(
         new IdentityBasedPolicy([
           {
-            resource: 'some:glob:*:string/word',
-            action: ['read', 'write']
+            notResource: ['some:glob:*:string/word'],
+            notAction: ['read', 'write']
           }
         ])
       ).toBeInstanceOf(IdentityBasedPolicy);

@@ -16,13 +16,13 @@ interface ResourceBasedPolicyInterface {
 export class ResourceBasedPolicy extends Policy {
   private denyStatements: ResourceBased[];
   private allowStatements: ResourceBased[];
-  private conditionResolver?: ConditionResolver;
   private statements: ResourceBasedType[];
+
   constructor({
     statements,
     conditionResolver,
     context
-  }: IdentityBasedPolicyInterface) {
+  }: ResourceBasedPolicyInterface) {
     super({ context, conditionResolver });
     const statementInstances = statements.map(
       (statement) => new ResourceBased(statement)
@@ -31,7 +31,6 @@ export class ResourceBasedPolicy extends Policy {
       (s) => s.effect === 'allow'
     );
     this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
-    this.conditionResolver = conditionResolver;
     this.statements = statementInstances.map((statement) =>
       statement.getStatement()
     );

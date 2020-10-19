@@ -1168,7 +1168,7 @@ class ActionBasedPolicy extends Policy {
         const statementInstances = statements.map((statement) => new ActionBased(statement));
         this.allowStatements = statementInstances.filter((s) => s.effect === 'allow');
         this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
-        this.statements = this.statements = statementInstances.map((statement) => statement.getStatement());
+        this.statements = statementInstances.map((statement) => statement.getStatement());
     }
     getStatements() {
         return this.statements;
@@ -1193,13 +1193,13 @@ class ActionBasedPolicy extends Policy {
     }
 }
 
-class IdentityBasedPolicy {
-    constructor(config, conditionResolver) {
-        const statementInstances = config.map(statement => new IdentityBased(statement));
-        this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
-        this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
-        this.conditionResolver = conditionResolver;
-        this.statements = statementInstances.map(statement => statement.getStatement());
+class IdentityBasedPolicy extends Policy {
+    constructor({ statements, conditionResolver, context }) {
+        super({ context, conditionResolver });
+        const statementInstances = statements.map((statement) => new IdentityBased(statement));
+        this.allowStatements = statementInstances.filter((s) => s.effect === 'allow');
+        this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
+        this.statements = statementInstances.map((statement) => statement.getStatement());
     }
     getStatements() {
         return this.statements;
@@ -1209,7 +1209,7 @@ class IdentityBasedPolicy {
         return !this.cannot(args) && this.can(args);
     }
     can({ action, resource, context }) {
-        return this.allowStatements.some(s => s.matches({
+        return this.allowStatements.some((s) => s.matches({
             action,
             resource,
             context,
@@ -1217,7 +1217,7 @@ class IdentityBasedPolicy {
         }));
     }
     cannot({ action, resource, context }) {
-        return this.denyStatements.some(s => s.matches({
+        return this.denyStatements.some((s) => s.matches({
             action,
             resource,
             context,
@@ -1226,13 +1226,13 @@ class IdentityBasedPolicy {
     }
 }
 
-class ResourceBasedPolicy {
-    constructor(config, conditionResolver) {
-        const statementInstances = config.map(statement => new ResourceBased(statement));
-        this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
-        this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
-        this.conditionResolver = conditionResolver;
-        this.statements = statementInstances.map(statement => statement.getStatement());
+class ResourceBasedPolicy extends Policy {
+    constructor({ statements, conditionResolver, context }) {
+        super({ context, conditionResolver });
+        const statementInstances = statements.map((statement) => new ResourceBased(statement));
+        this.allowStatements = statementInstances.filter((s) => s.effect === 'allow');
+        this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
+        this.statements = statementInstances.map((statement) => statement.getStatement());
     }
     getStatements() {
         return this.statements;
@@ -1242,7 +1242,7 @@ class ResourceBasedPolicy {
         return !this.cannot(args) && this.can(args);
     }
     can({ principal, action, resource, principalType, context }) {
-        return this.allowStatements.some(s => s.matches({
+        return this.allowStatements.some((s) => s.matches({
             principal,
             action,
             resource,
@@ -1252,7 +1252,7 @@ class ResourceBasedPolicy {
         }));
     }
     cannot({ principal, action, resource, principalType, context }) {
-        return this.denyStatements.some(s => s.matches({
+        return this.denyStatements.some((s) => s.matches({
             principal,
             action,
             resource,

@@ -16,8 +16,8 @@ interface IdentityBasedPolicyInterface {
 export class IdentityBasedPolicy extends Policy {
   private denyStatements: IdentityBased[];
   private allowStatements: IdentityBased[];
-  private conditionResolver?: ConditionResolver;
   private statements: IdentityBasedType[];
+
   constructor({
     statements,
     conditionResolver,
@@ -31,7 +31,6 @@ export class IdentityBasedPolicy extends Policy {
       (s) => s.effect === 'allow'
     );
     this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
-    this.conditionResolver = conditionResolver;
     this.statements = statementInstances.map((statement) =>
       statement.getStatement()
     );

@@ -202,24 +202,32 @@ declare class ActionBasedPolicy extends Policy {
     cannot({ action, context }: EvaluateActionBasedInterface): boolean;
 }
 
-declare class IdentityBasedPolicy {
+interface IdentityBasedPolicyInterface {
+    statements: IdentityBasedType[];
+    conditionResolver?: ConditionResolver;
+    context?: Context;
+}
+declare class IdentityBasedPolicy extends Policy {
     private denyStatements;
     private allowStatements;
-    private conditionResolver?;
     private statements;
-    constructor(config: IdentityBasedType[], conditionResolver?: ConditionResolver);
+    constructor({ statements, conditionResolver, context }: IdentityBasedPolicyInterface);
     getStatements(): IdentityBasedType[];
     evaluate({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
     can({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
     cannot({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
 }
 
-declare class ResourceBasedPolicy {
+interface ResourceBasedPolicyInterface {
+    statements: ResourceBasedType[];
+    conditionResolver?: ConditionResolver;
+    context?: Context;
+}
+declare class ResourceBasedPolicy extends Policy {
     private denyStatements;
     private allowStatements;
-    private conditionResolver?;
     private statements;
-    constructor(config: ResourceBasedType[], conditionResolver?: ConditionResolver);
+    constructor({ statements, conditionResolver, context }: ResourceBasedPolicyInterface);
     getStatements(): ResourceBasedType[];
     evaluate({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
     can({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;

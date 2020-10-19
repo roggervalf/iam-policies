@@ -2,17 +2,19 @@ const { IdentityBasedPolicy, ResourceBasedPolicy } = require('iam-policies');
 
 console.log('Allow Example');
 
-const allowExample = new IdentityBasedPolicy([
-  {
-    effect: 'allow', // optional, defaults to allow
-    resource: ['secrets:${user.id}:*'], // embedded value by context
-    action: ['read', 'write']
-  },
-  {
-    resource: ['bd:company:*'],
-    action: 'create'
-  }
-]);
+const allowExample = new IdentityBasedPolicy({
+  statements: [
+    {
+      effect: 'allow', // optional, defaults to allow
+      resource: ['secrets:${user.id}:*'], // embedded value by context
+      action: ['read', 'write']
+    },
+    {
+      resource: ['bd:company:*'],
+      action: 'create'
+    }
+  ]
+});
 
 const contextForAllowExample = { user: { id: 456 } };
 
@@ -51,25 +53,27 @@ console.log(
 
 console.log('Deny Example');
 
-const denyExample = new IdentityBasedPolicy([
-  {
-    resource: ['secrets:${user.bestFriends}:*'],
-    action: 'read'
-  },
-  {
-    effect: 'deny',
-    resource: 'secrets:123:*',
-    action: 'read'
-  },
-  {
-    resource: 'bd:company:*',
-    notAction: 'update'
-  },
-  {
-    notResource: ['bd:roles:*'],
-    action: 'update'
-  }
-]);
+const denyExample = new IdentityBasedPolicy({
+  statements: [
+    {
+      resource: ['secrets:${user.bestFriends}:*'],
+      action: 'read'
+    },
+    {
+      effect: 'deny',
+      resource: 'secrets:123:*',
+      action: 'read'
+    },
+    {
+      resource: 'bd:company:*',
+      notAction: 'update'
+    },
+    {
+      notResource: ['bd:roles:*'],
+      action: 'update'
+    }
+  ]
+});
 
 const contextForDenyExample = { user: { bestFriends: [123, 563, 1211] } };
 
@@ -92,12 +96,14 @@ console.log(
 
 console.log('Not Action Example');
 
-const notActionExample = new IdentityBasedPolicy([
-  {
-    resource: 'bd:company:*',
-    notAction: 'update'
-  }
-]);
+const notActionExample = new IdentityBasedPolicy({
+  statements: [
+    {
+      resource: 'bd:company:*',
+      notAction: 'update'
+    }
+  ]
+});
 
 // true
 console.log(
@@ -116,12 +122,14 @@ console.log(
 
 console.log('Not Resource Example');
 
-const notResourceExample = new IdentityBasedPolicy([
-  {
-    notResource: ['bd:roles:*'],
-    action: 'update'
-  }
-]);
+const notResourceExample = new IdentityBasedPolicy({
+  statements: [
+    {
+      notResource: ['bd:roles:*'],
+      action: 'update'
+    }
+  ]
+});
 
 // true
 console.log(
@@ -137,12 +145,14 @@ console.log(
 
 console.log('Admin Example');
 
-const adminExample = new IdentityBasedPolicy([
-  {
-    resource: '*',
-    action: '*'
-  }
-]);
+const adminExample = new IdentityBasedPolicy({
+  statements: [
+    {
+      resource: '*',
+      action: '*'
+    }
+  ]
+});
 
 // true
 console.log(
@@ -155,14 +165,14 @@ console.log(
 
 console.log('Conditions Example');
 
-const conditions = {
-  greaterThan: function(data, expected) {
+const conditionResolver = {
+  greaterThan: function (data, expected) {
     return data > expected;
   }
 };
 
-const conditionExample = new IdentityBasedPolicy(
-  [
+const conditionExample = new IdentityBasedPolicy({
+  statements: [
     {
       effect: 'allow', // optional, defaults to allow
       resource: 'secrets:*',
@@ -174,8 +184,8 @@ const conditionExample = new IdentityBasedPolicy(
       }
     }
   ],
-  conditions
-);
+  conditionResolver
+});
 
 // true
 console.log(
@@ -198,19 +208,21 @@ console.log(
 
 console.log('Principal Example');
 
-const principalExample = new ResourceBasedPolicy([
-  {
-    principal: '1',
-    effect: 'allow',
-    resource: ['secrets:user:*'],
-    action: ['read', 'write']
-  },
-  {
-    principal: { id: '2' },
-    resource: 'bd:company:*',
-    notAction: 'update'
-  }
-]);
+const principalExample = new ResourceBasedPolicy({
+  statements: [
+    {
+      principal: '1',
+      effect: 'allow',
+      resource: ['secrets:user:*'],
+      action: ['read', 'write']
+    },
+    {
+      principal: { id: '2' },
+      resource: 'bd:company:*',
+      notAction: 'update'
+    }
+  ]
+});
 
 // true
 console.log(
@@ -249,18 +261,20 @@ console.log(
 
 console.log('Not Principal Example');
 
-const notPrincipalExample = new ResourceBasedPolicy([
-  {
-    notPrincipal: ['1', '2'],
-    resource: ['secrets:bd:*'],
-    action: 'read'
-  },
-  {
-    notPrincipal: { id: '3' },
-    resource: 'secrets:admin:*',
-    action: 'read'
-  }
-]);
+const notPrincipalExample = new ResourceBasedPolicy({
+  statements: [
+    {
+      notPrincipal: ['1', '2'],
+      resource: ['secrets:bd:*'],
+      action: 'read'
+    },
+    {
+      notPrincipal: { id: '3' },
+      resource: 'secrets:admin:*',
+      action: 'read'
+    }
+  ]
+});
 
 // true
 console.log(
@@ -312,7 +326,9 @@ const canAndCannotStatements = [
   }
 ];
 
-const inclusivePolicy = new IdentityBasedPolicy(canAndCannotStatements);
+const inclusivePolicy = new IdentityBasedPolicy({
+  statements: canAndCannotStatements
+});
 
 const contextCanAndCannot = {
   division: {

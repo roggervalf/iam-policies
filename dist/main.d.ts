@@ -158,10 +158,16 @@ declare class ResourceBased extends Statement {
     private notResource?;
     private notAction?;
     private statement;
+    private hasPrincipals;
+    private hasResources;
     constructor(identity: ResourceBasedType);
     getStatement(): ResourceBasedType;
     matches({ principal, action, resource, principalType, context, conditionResolver }: MatchResourceBasedInterface): boolean;
+    private matchPrincipalAndNotPrincipal;
+    private matchResourceAndNotResource;
     private checkAndAssignActions;
+    private checkAndAssignPrincipals;
+    private checkAndAssignResources;
     private matchPrincipals;
     private matchNotPrincipals;
     private matchActions;

@@ -2,42 +2,35 @@ import { decomposeString } from './utils/decomposeString';
 
 export class Matcher {
   private readonly pattern: string;
+  private readonly maxLength: number;
   private readonly set: (string | RegExp)[];
   private readonly empty: boolean;
 
-  constructor(pattern: string) {
+  constructor(pattern: string, maxLength = 1024 * 64) {
     this.set = [];
     this.pattern = pattern.trim();
+    this.maxLength = maxLength;
     this.empty = !this.pattern ? true : false;
 
     const set = this.braceExpand();
-    this.set = set.map(val => this.parse(val));
-    this.set = this.set.filter(s => {
+    this.set = set.map((val) => this.parse(val));
+    this.set = this.set.filter((s) => {
       return Boolean(s);
     });
   }
 
   private braceExpand(): string[] {
-    let pattern = this.pattern;
+    const pattern = this.pattern;
     if (!pattern.match(/{.*}/)) {
       return [pattern];
-    }
-    // I don't know why Bash 4.3 does this, but it does.
-    // Anything starting with {} will have the first two bytes preserved
-    // but only at the top level, so {},a}b will not expand to anything,
-    // but a{},b}c will be expanded to [a}c,abc].
-    // One could argue that this is a bug in Bash, but since the goal of
-    // this module is to match Bash's rules, we escape a leading {}
-    if (pattern.substr(0, 2) === '{}') {
-      pattern = '\\{\\}' + pattern.substr(2);
     }
 
     return this.expand(pattern, true);
   }
 
   private parse(pattern: string): string | RegExp {
-    if (pattern.length > 1024 * 64) {
-      throw new TypeError('pattern is too long');
+    if (pattern.length > this.maxLength) {
+      throw new TypeError('Pattern is too long');
     }
     let regExp;
     let hasSpecialCharacter = false;
@@ -70,11 +63,8 @@ export class Matcher {
     const expansions = [] as string[];
     const balance = decomposeString('{', '}', str);
     if (balance.start < 0 || /\$$/.test(balance.pre)) return [str];
-    let parts;
 
-    if (!balance.body) parts = [''];
-    else parts = balance.body.split(',');
-
+    const parts = balance.body.split(',');
     // no need to expand pre, since it is guaranteed to be free of brace-sets
     const pre = balance.pre;
     const postParts = balance.post.length
@@ -82,7 +72,7 @@ export class Matcher {
       : [''];
 
     parts.forEach((part: string) => {
-      postParts.forEach(postPart => {
+      postParts.forEach((postPart) => {
         const expansion = pre + part + postPart;
         if (!isTop || expansion) expansions.push(expansion);
       });
@@ -94,14 +84,10 @@ export class Matcher {
   match(str: string): boolean {
     if (this.empty) return str === '';
 
-    const set = this.set;
-
-    return set.some(pattern => this.matchOne(str, pattern));
+    return this.set.some((pattern) => this.matchOne(str, pattern));
   }
 
   private matchOne(str: string, pattern: string | RegExp): boolean {
-    if (!pattern) return false;
-
     if (typeof pattern === 'string') {
       return str === pattern;
     }

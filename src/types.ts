@@ -123,6 +123,7 @@ export {
   ResourceBasedType,
   ResourceBlock,
   NotActionBlock,
+  NotPrincipalBlock,
   NotResourceBlock
 };
 

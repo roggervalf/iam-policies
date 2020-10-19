@@ -1,12 +1,13 @@
 import {
   PrincipalMap,
   Context,
-  ResourceBasedType,
-  MatchResourceBasedInterface
+  MatchResourceBasedInterface,
+  ResourceBasedType
 } from './types';
 import {
   instanceOfActionBlock,
   instanceOfNotActionBlock,
+  instanceOfNotPrincipalBlock,
   instanceOfNotResourceBlock,
   instanceOfPrincipalBlock,
   instanceOfResourceBlock
@@ -22,32 +23,16 @@ class ResourceBased extends Statement {
   private notResource?: string[];
   private notAction?: string[];
   private statement: ResourceBasedType;
+  private hasPrincipals: boolean;
+  private hasResources: boolean;
 
   constructor(identity: ResourceBasedType) {
     super(identity);
+    this.hasPrincipals = false;
+    this.hasResources = false;
     this.checkAndAssignActions(identity);
-    if (instanceOfResourceBlock(identity)) {
-      this.resource =
-        typeof identity.resource === 'string'
-          ? [identity.resource]
-          : identity.resource;
-    } else if (instanceOfNotResourceBlock(identity)) {
-      this.notResource =
-        typeof identity.notResource === 'string'
-          ? [identity.notResource]
-          : identity.notResource;
-    }
-    if (instanceOfPrincipalBlock(identity)) {
-      this.principal =
-        typeof identity.principal === 'string'
-          ? [identity.principal]
-          : identity.principal;
-    } else {
-      this.notPrincipal =
-        typeof identity.notPrincipal === 'string'
-          ? [identity.notPrincipal]
-          : identity.notPrincipal;
-    }
+    this.checkAndAssignPrincipals(identity);
+    this.checkAndAssignResources(identity);
     this.statement = { ...identity, sid: this.sid };
   }
 
@@ -64,14 +49,59 @@ class ResourceBased extends Statement {
     conditionResolver
   }: MatchResourceBasedInterface): boolean {
     return (
-      this.matchPrincipals(principal, principalType, context) &&
-      this.matchNotPrincipals(principal, principalType, context) &&
+      this.matchPrincipalAndNotPrincipal(principal, principalType, context) &&
       this.matchActions(action, context) &&
       this.matchNotActions(action, context) &&
-      this.matchResources(resource, context) &&
-      this.matchNotResources(resource, context) &&
+      this.matchResourceAndNotResource(resource, context) &&
       this.matchConditions({ context, conditionResolver })
     );
+  }
+
+  /*valueComing principal noPrincipal
+  true        false     false       false
+  true        true      false       true or false
+  true        false     true        true or false
+  false       false     false       true
+  false       true      false       false
+  false       false     true        false*/
+  private matchPrincipalAndNotPrincipal(
+    principal?: string,
+    principalType?: string,
+    context?: Context
+  ): boolean {
+    if (principal) {
+      if (this.hasPrincipals)
+        return (
+          this.matchPrincipals(principal, principalType, context) &&
+          this.matchNotPrincipals(principal, principalType, context)
+        );
+      return false;
+    }
+    if (this.hasPrincipals) return false;
+    return true;
+  }
+
+  /*valueComing resource noResource
+  true        false     false       false
+  true        true      false       true or false
+  true        false     true        true or false
+  false       false     false       true
+  false       true      false       false
+  false       false     true        false*/
+  private matchResourceAndNotResource(
+    resource?: string,
+    context?: Context
+  ): boolean {
+    if (resource) {
+      if (this.hasResources)
+        return (
+          this.matchResources(resource, context) &&
+          this.matchNotResources(resource, context)
+        );
+      return false;
+    }
+    if (this.hasResources) return false;
+    return true;
   }
 
   private checkAndAssignActions(identity: ResourceBasedType): void {
@@ -97,6 +127,52 @@ class ResourceBased extends Statement {
         typeof identity.notAction === 'string'
           ? [identity.notAction]
           : identity.notAction;
+    }
+  }
+
+  private checkAndAssignPrincipals(identity: ResourceBasedType): void {
+    const hasPrincipal = instanceOfPrincipalBlock(identity);
+    const hasNotPrincipal = instanceOfNotPrincipalBlock(identity);
+    if (hasPrincipal && hasNotPrincipal) {
+      throw new TypeError(
+        'ResourceBased statement could have a principal or a notPrincipal attribute, no both'
+      );
+    }
+    if (instanceOfPrincipalBlock(identity)) {
+      this.principal =
+        typeof identity.principal === 'string'
+          ? [identity.principal]
+          : identity.principal;
+      this.hasPrincipals = true;
+    } else if (instanceOfNotPrincipalBlock(identity)) {
+      this.notPrincipal =
+        typeof identity.notPrincipal === 'string'
+          ? [identity.notPrincipal]
+          : identity.notPrincipal;
+      this.hasPrincipals = true;
+    }
+  }
+
+  private checkAndAssignResources(identity: ResourceBasedType): void {
+    const hasResource = instanceOfResourceBlock(identity);
+    const hasNotResource = instanceOfNotResourceBlock(identity);
+    if (hasResource && hasNotResource) {
+      throw new TypeError(
+        'ResourceBased statement could have a resource or a notResource attribute, no both'
+      );
+    }
+    if (instanceOfResourceBlock(identity)) {
+      this.resource =
+        typeof identity.resource === 'string'
+          ? [identity.resource]
+          : identity.resource;
+      this.hasResources = true;
+    } else if (instanceOfNotResourceBlock(identity)) {
+      this.notResource =
+        typeof identity.notResource === 'string'
+          ? [identity.notResource]
+          : identity.notResource;
+      this.hasResources = true;
     }
   }
 

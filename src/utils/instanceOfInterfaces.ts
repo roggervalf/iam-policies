@@ -1,8 +1,9 @@
 import {
   ActionBlock,
   NotActionBlock,
-  PrincipalBlock,
+  NotPrincipalBlock,
   NotResourceBlock,
+  PrincipalBlock,
   ResourceBlock
 } from '../types';
 
@@ -50,12 +51,34 @@ export function instanceOfNotActionBlock(
  * ```javascript
  * instanceOfPrincipalBlock({ principal: 'something' })
  * // => true
+ *
+ * instanceOfPrincipalBlock({ notPrincipal: 'something' })
+ * // => false
  * ```
  */
 export function instanceOfPrincipalBlock(
   object: object
 ): object is PrincipalBlock {
   return 'principal' in object;
+}
+
+/**
+ * Validate if an `object` is an instance of `NotPrincipalBlock`.
+ * @param {Object} object Object to validate
+ * @returns {boolean} Returns true if `object` has `notPrincipal` attribute.
+ * @example
+ * ```javascript
+ * instanceOfNotPrincipalBlock({ notPrincipal: 'something' })
+ * // => true
+ *
+ * instanceOfNotPrincipalBlock({ principal: 'something' })
+ * // => false
+ * ```
+ */
+export function instanceOfNotPrincipalBlock(
+  object: object
+): object is NotPrincipalBlock {
+  return 'notPrincipal' in object;
 }
 
 /**

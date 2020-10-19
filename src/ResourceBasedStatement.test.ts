@@ -45,5 +45,35 @@ describe('ResourceBased Class', () => {
         }).toThrow(expectedError);
       });
     });
+
+    describe('when creating resource based statement with resource and notResource attributes', () => {
+      it('throws a TypeError', () => {
+        const expectedError = new TypeError(
+          'ResourceBased statement could have a resource or a notResource attribute, no both'
+        );
+        expect(() => {
+          new ResourceBased({
+            action: ['read', 'write'],
+            resource: ['account'],
+            notResource: 'profile'
+          });
+        }).toThrow(expectedError);
+      });
+    });
+
+    describe('when creating resource based statement with principal and notPrincipal attributes', () => {
+      it('throws a TypeError', () => {
+        const expectedError = new TypeError(
+          'ResourceBased statement could have a principal or a notPrincipal attribute, no both'
+        );
+        expect(() => {
+          new ResourceBased({
+            action: ['read', 'write'],
+            principal: ['id1'],
+            notPrincipal: 'id2'
+          });
+        }).toThrow(expectedError);
+      });
+    });
   });
 });

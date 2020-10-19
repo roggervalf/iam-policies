@@ -56,6 +56,10 @@ describe('ResourceBasedPolicy Class', () => {
           principal: { id: '1' },
           resource: ['books:horror:*'],
           action: 'write'
+        },
+        {
+          resource: ['books:science:*'],
+          action: 'read'
         }
       ]);
 
@@ -93,6 +97,19 @@ describe('ResourceBasedPolicy Class', () => {
           principal: '1',
           action: 'write',
           resource: 'books:horror:The Call of Cthulhu'
+        })
+      ).toBe(false);
+      expect(
+        policy.evaluate({
+          action: 'read',
+          resource: 'books:science:Chemistry'
+        })
+      ).toBe(true);
+      expect(
+        policy.evaluate({
+          principal: 'id1',
+          action: 'read',
+          resource: 'books:science:Chemistry'
         })
       ).toBe(false);
     });
@@ -223,6 +240,10 @@ describe('ResourceBasedPolicy Class', () => {
           principal: ['rogger', 'andre'],
           resource: 'books:horror:*',
           action: ['read']
+        },
+        {
+          principal: 'andre',
+          action: ['write']
         }
       ]);
 
@@ -236,8 +257,20 @@ describe('ResourceBasedPolicy Class', () => {
       expect(
         policy.evaluate({
           principal: 'andre',
-          action: 'read',
-          resource: 'books:fantasy:Brisingr'
+          action: 'read'
+        })
+      ).toBe(false);
+      expect(
+        policy.evaluate({
+          principal: 'andre',
+          action: 'write'
+        })
+      ).toBe(true);
+      expect(
+        policy.evaluate({
+          principal: 'andre',
+          resource: 'books',
+          action: 'write'
         })
       ).toBe(false);
     });

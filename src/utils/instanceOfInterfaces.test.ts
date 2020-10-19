@@ -1,9 +1,10 @@
 import {
   instanceOfActionBlock,
-  instanceOfPrincipalBlock,
-  instanceOfResourceBlock,
   instanceOfNotActionBlock,
-  instanceOfNotResourceBlock
+  instanceOfNotPrincipalBlock,
+  instanceOfNotResourceBlock,
+  instanceOfPrincipalBlock,
+  instanceOfResourceBlock
 } from './instanceOfInterfaces';
 
 describe('Util functions', () => {
@@ -16,6 +17,22 @@ describe('Util functions', () => {
       ).not.toThrow();
       expect(instanceOfPrincipalBlock({ principal: 'something' })).toBe(true);
       expect(instanceOfPrincipalBlock({ notPrincipal: 'something' })).toBe(
+        false
+      );
+    });
+  });
+
+  describe('instanceOfNotPrincipalBlock', () => {
+    it("doesn't throw an error", () => {
+      expect(() =>
+        instanceOfNotPrincipalBlock({
+          notPrincipal: 'something'
+        })
+      ).not.toThrow();
+      expect(instanceOfNotPrincipalBlock({ notPrincipal: 'something' })).toBe(
+        true
+      );
+      expect(instanceOfNotPrincipalBlock({ principal: 'something' })).toBe(
         false
       );
     });

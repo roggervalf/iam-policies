@@ -613,10 +613,29 @@ function instanceOfNotActionBlock(object) {
  * ```javascript
  * instanceOfPrincipalBlock({ principal: 'something' })
  * // => true
+ *
+ * instanceOfPrincipalBlock({ notPrincipal: 'something' })
+ * // => false
  * ```
  */
 function instanceOfPrincipalBlock(object) {
     return 'principal' in object;
+}
+/**
+ * Validate if an `object` is an instance of `NotPrincipalBlock`.
+ * @param {Object} object Object to validate
+ * @returns {boolean} Returns true if `object` has `notPrincipal` attribute.
+ * @example
+ * ```javascript
+ * instanceOfNotPrincipalBlock({ notPrincipal: 'something' })
+ * // => true
+ *
+ * instanceOfNotPrincipalBlock({ principal: 'something' })
+ * // => false
+ * ```
+ */
+function instanceOfNotPrincipalBlock(object) {
+    return 'notPrincipal' in object;
 }
 /**
  * Validate if an `object` is an instance of `NotResourceBlock`.
@@ -738,35 +757,27 @@ function decomposeString(initialSeparator, finalSeparator, str) {
 }
 
 class Matcher {
-    constructor(pattern) {
+    constructor(pattern, maxLength = 1024 * 64) {
         this.set = [];
         this.pattern = pattern.trim();
+        this.maxLength = maxLength;
         this.empty = !this.pattern ? true : false;
         const set = this.braceExpand();
-        this.set = set.map(val => this.parse(val));
-        this.set = this.set.filter(s => {
+        this.set = set.map((val) => this.parse(val));
+        this.set = this.set.filter((s) => {
             return Boolean(s);
         });
     }
     braceExpand() {
-        let pattern = this.pattern;
+        const pattern = this.pattern;
         if (!pattern.match(/{.*}/)) {
             return [pattern];
-        }
-        // I don't know why Bash 4.3 does this, but it does.
-        // Anything starting with {} will have the first two bytes preserved
-        // but only at the top level, so {},a}b will not expand to anything,
-        // but a{},b}c will be expanded to [a}c,abc].
-        // One could argue that this is a bug in Bash, but since the goal of
-        // this module is to match Bash's rules, we escape a leading {}
-        if (pattern.substr(0, 2) === '{}') {
-            pattern = '\\{\\}' + pattern.substr(2);
         }
         return this.expand(pattern, true);
     }
     parse(pattern) {
-        if (pattern.length > 1024 * 64) {
-            throw new TypeError('pattern is too long');
+        if (pattern.length > this.maxLength) {
+            throw new TypeError('Pattern is too long');
         }
         let regExp;
         let hasSpecialCharacter = false;
@@ -797,18 +808,14 @@ class Matcher {
         const balance = decomposeString('{', '}', str);
         if (balance.start < 0 || /\$$/.test(balance.pre))
             return [str];
-        let parts;
-        if (!balance.body)
-            parts = [''];
-        else
-            parts = balance.body.split(',');
+        const parts = balance.body.split(',');
         // no need to expand pre, since it is guaranteed to be free of brace-sets
         const pre = balance.pre;
         const postParts = balance.post.length
             ? this.expand(balance.post, false)
             : [''];
         parts.forEach((part) => {
-            postParts.forEach(postPart => {
+            postParts.forEach((postPart) => {
                 const expansion = pre + part + postPart;
                 if (!isTop || expansion)
                     expansions.push(expansion);
@@ -819,12 +826,9 @@ class Matcher {
     match(str) {
         if (this.empty)
             return str === '';
-        const set = this.set;
-        return set.some(pattern => this.matchOne(str, pattern));
+        return this.set.some((pattern) => this.matchOne(str, pattern));
     }
     matchOne(str, pattern) {
-        if (!pattern)
-            return false;
         if (typeof pattern === 'string') {
             return str === pattern;
         }
@@ -964,44 +968,58 @@ class IdentityBased extends Statement {
 class ResourceBased extends Statement {
     constructor(identity) {
         super(identity);
+        this.hasPrincipals = false;
+        this.hasResources = false;
         this.checkAndAssignActions(identity);
-        if (instanceOfResourceBlock(identity)) {
-            this.resource =
-                typeof identity.resource === 'string'
-                    ? [identity.resource]
-                    : identity.resource;
-        }
-        else if (instanceOfNotResourceBlock(identity)) {
-            this.notResource =
-                typeof identity.notResource === 'string'
-                    ? [identity.notResource]
-                    : identity.notResource;
-        }
-        if (instanceOfPrincipalBlock(identity)) {
-            this.principal =
-                typeof identity.principal === 'string'
-                    ? [identity.principal]
-                    : identity.principal;
-        }
-        else {
-            this.notPrincipal =
-                typeof identity.notPrincipal === 'string'
-                    ? [identity.notPrincipal]
-                    : identity.notPrincipal;
-        }
+        this.checkAndAssignPrincipals(identity);
+        this.checkAndAssignResources(identity);
         this.statement = Object.assign(Object.assign({}, identity), { sid: this.sid });
     }
     getStatement() {
         return this.statement;
     }
     matches({ principal, action, resource, principalType, context, conditionResolver }) {
-        return (this.matchPrincipals(principal, principalType, context) &&
-            this.matchNotPrincipals(principal, principalType, context) &&
+        return (this.matchPrincipalAndNotPrincipal(principal, principalType, context) &&
             this.matchActions(action, context) &&
             this.matchNotActions(action, context) &&
-            this.matchResources(resource, context) &&
-            this.matchNotResources(resource, context) &&
+            this.matchResourceAndNotResource(resource, context) &&
             this.matchConditions({ context, conditionResolver }));
+    }
+    /*valueComing principal noPrincipal
+    true        false     false       false
+    true        true      false       true or false
+    true        false     true        true or false
+    false       false     false       true
+    false       true      false       false
+    false       false     true        false*/
+    matchPrincipalAndNotPrincipal(principal, principalType, context) {
+        if (principal) {
+            if (this.hasPrincipals)
+                return (this.matchPrincipals(principal, principalType, context) &&
+                    this.matchNotPrincipals(principal, principalType, context));
+            return false;
+        }
+        if (this.hasPrincipals)
+            return false;
+        return true;
+    }
+    /*valueComing resource noResource
+    true        false     false       false
+    true        true      false       true or false
+    true        false     true        true or false
+    false       false     false       true
+    false       true      false       false
+    false       false     true        false*/
+    matchResourceAndNotResource(resource, context) {
+        if (resource) {
+            if (this.hasResources)
+                return (this.matchResources(resource, context) &&
+                    this.matchNotResources(resource, context));
+            return false;
+        }
+        if (this.hasResources)
+            return false;
+        return true;
     }
     checkAndAssignActions(identity) {
         const hasAction = instanceOfActionBlock(identity);
@@ -1023,6 +1041,48 @@ class ResourceBased extends Statement {
                 typeof identity.notAction === 'string'
                     ? [identity.notAction]
                     : identity.notAction;
+        }
+    }
+    checkAndAssignPrincipals(identity) {
+        const hasPrincipal = instanceOfPrincipalBlock(identity);
+        const hasNotPrincipal = instanceOfNotPrincipalBlock(identity);
+        if (hasPrincipal && hasNotPrincipal) {
+            throw new TypeError('ResourceBased statement could have a principal or a notPrincipal attribute, no both');
+        }
+        if (instanceOfPrincipalBlock(identity)) {
+            this.principal =
+                typeof identity.principal === 'string'
+                    ? [identity.principal]
+                    : identity.principal;
+            this.hasPrincipals = true;
+        }
+        else if (instanceOfNotPrincipalBlock(identity)) {
+            this.notPrincipal =
+                typeof identity.notPrincipal === 'string'
+                    ? [identity.notPrincipal]
+                    : identity.notPrincipal;
+            this.hasPrincipals = true;
+        }
+    }
+    checkAndAssignResources(identity) {
+        const hasResource = instanceOfResourceBlock(identity);
+        const hasNotResource = instanceOfNotResourceBlock(identity);
+        if (hasResource && hasNotResource) {
+            throw new TypeError('ResourceBased statement could have a resource or a notResource attribute, no both');
+        }
+        if (instanceOfResourceBlock(identity)) {
+            this.resource =
+                typeof identity.resource === 'string'
+                    ? [identity.resource]
+                    : identity.resource;
+            this.hasResources = true;
+        }
+        else if (instanceOfNotResourceBlock(identity)) {
+            this.notResource =
+                typeof identity.notResource === 'string'
+                    ? [identity.notResource]
+                    : identity.notResource;
+            this.hasResources = true;
         }
     }
     matchPrincipals(principal, principalType, context) {

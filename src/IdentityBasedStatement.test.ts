@@ -24,6 +24,7 @@ describe('IdentityBased Class', () => {
         const expectedError = new TypeError(
           'IdentityBased statement should have an action or a notAction attribute'
         );
+
         expect(() => {
           new IdentityBased({
             resource: 'secret'
@@ -37,6 +38,7 @@ describe('IdentityBased Class', () => {
         const expectedError = new TypeError(
           'IdentityBased statement should have a resource or a notResource attribute'
         );
+
         expect(() => {
           new IdentityBased({
             action: 'write'
@@ -50,6 +52,7 @@ describe('IdentityBased Class', () => {
         const expectedError = new TypeError(
           'IdentityBased statement should have an action or a notAction attribute, no both'
         );
+
         expect(() => {
           new IdentityBased({
             action: ['read', 'write'],
@@ -64,6 +67,7 @@ describe('IdentityBased Class', () => {
         const expectedError = new TypeError(
           'IdentityBased statement should have a resource or a notResource attribute, no both'
         );
+
         expect(() => {
           new IdentityBased({
             action: ['read', 'write'],

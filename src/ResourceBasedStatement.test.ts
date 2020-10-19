@@ -24,6 +24,7 @@ describe('ResourceBased Class', () => {
         const expectedError = new TypeError(
           'ResourceBased statement should have an action or a notAction attribute'
         );
+
         expect(() => {
           new ResourceBased({
             resource: 'secret'
@@ -37,6 +38,7 @@ describe('ResourceBased Class', () => {
         const expectedError = new TypeError(
           'ResourceBased statement should have an action or a notAction attribute, no both'
         );
+
         expect(() => {
           new ResourceBased({
             action: ['read', 'write'],
@@ -51,6 +53,7 @@ describe('ResourceBased Class', () => {
         const expectedError = new TypeError(
           'ResourceBased statement could have a resource or a notResource attribute, no both'
         );
+
         expect(() => {
           new ResourceBased({
             action: ['read', 'write'],
@@ -66,6 +69,7 @@ describe('ResourceBased Class', () => {
         const expectedError = new TypeError(
           'ResourceBased statement could have a principal or a notPrincipal attribute, no both'
         );
+
         expect(() => {
           new ResourceBased({
             action: ['read', 'write'],

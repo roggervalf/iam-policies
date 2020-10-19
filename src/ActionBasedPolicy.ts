@@ -31,7 +31,7 @@ export class ActionBasedPolicy extends Policy {
       (s) => s.effect === 'allow'
     );
     this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
-    this.statements = this.statements = statementInstances.map((statement) =>
+    this.statements = statementInstances.map((statement) =>
       statement.getStatement()
     );
   }

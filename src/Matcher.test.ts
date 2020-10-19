@@ -8,6 +8,7 @@ describe('Matcher Class', () => {
 
     it('throws a TypeError', () => {
       const expectedError = new TypeError('Pattern is too long');
+
       expect(() => new Matcher('secrets:123:*', 5)).toThrow(expectedError);
     });
 

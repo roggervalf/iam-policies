@@ -11,6 +11,7 @@ describe('Policy Class', () => {
   describe('when getContext', () => {
     it('returns context attribute', () => {
       const context = { user: { age: 31 } };
+
       expect(new Policy({ context }).getContext()).toBe(context);
     });
   });
@@ -20,6 +21,7 @@ describe('Policy Class', () => {
       const context = { user: { age: 31 } };
       const policy = new Policy({});
       policy.setContext(context);
+
       expect(policy.getContext()).toBe(context);
     });
   });
@@ -31,6 +33,7 @@ describe('Policy Class', () => {
           return data > expected;
         }
       };
+
       expect(new Policy({ conditionResolver }).getConditionResolver()).toBe(
         conditionResolver
       );
@@ -46,6 +49,7 @@ describe('Policy Class', () => {
       };
       const policy = new Policy({});
       policy.setConditionResolver(conditionResolver);
+
       expect(policy.getConditionResolver()).toBe(conditionResolver);
     });
   });

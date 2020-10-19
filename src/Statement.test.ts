@@ -6,18 +6,16 @@ describe('Statement Class', () => {
       const context = {
         user: { id: 456, bestFriends: [123, 532, 987] }
       };
+
       expect(applyContext('secrets:${user.id}:*', context)).toBe(
         'secrets:456:*'
       );
-
       expect(applyContext('secrets:${user.bestFriends}:*', context)).toBe(
         'secrets:{123,532,987}:*'
       );
-
       expect(applyContext('secrets:${user.bestFriends}:account', context)).toBe(
         'secrets:{123,532,987}:account'
       );
-
       expect(
         applyContext(
           'secrets:${user.id}:bestFriends:${user.bestFriends}',
@@ -79,6 +77,7 @@ describe('Statement Class', () => {
           return data < expected;
         }
       };
+
       expect(
         new Statement(firstStatementConfig).matchConditions({
           context: { user: { age: 31 } },
@@ -112,6 +111,7 @@ describe('Statement Class', () => {
           return data < expected;
         }
       };
+
       expect(
         new Statement(firstStatementConfig).matchConditions({
           context: { user: { age: 31 } },

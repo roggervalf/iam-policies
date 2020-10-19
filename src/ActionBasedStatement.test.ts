@@ -22,6 +22,7 @@ describe('ActionBased Class', () => {
         const expectedError = new TypeError(
           'ActionBased statement should have an action or a notAction attribute'
         );
+
         expect(() => {
           new ActionBased({});
         }).toThrow(expectedError);
@@ -33,6 +34,7 @@ describe('ActionBased Class', () => {
         const expectedError = new TypeError(
           'ActionBased statement should have an action or a notAction attribute, no both'
         );
+
         expect(() => {
           new ActionBased({
             action: ['read', 'write'],

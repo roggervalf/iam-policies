@@ -48,6 +48,7 @@ describe('ActionBasedPolicy Class', () => {
       ];
       const policy = new ActionBasedPolicy({ statements });
       const exportedStatements = policy.getStatements();
+
       expect(exportedStatements).toMatchObject(statements);
       expect(exportedStatements[0].sid).not.toBeFalsy();
     });
@@ -202,6 +203,7 @@ describe('ActionBasedPolicy Class', () => {
           }
         ]
       });
+
       expect(
         policy.can({
           action: 'getUser/123',
@@ -234,6 +236,7 @@ describe('ActionBasedPolicy Class', () => {
           }
         ]
       });
+
       expect(
         policy.cannot({
           action: 'getUser/123',

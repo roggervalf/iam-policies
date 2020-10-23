@@ -4,14 +4,6 @@ import {
   MatchResourceBasedInterface,
   ResourceBasedType
 } from './types';
-import {
-  instanceOfActionBlock,
-  instanceOfNotActionBlock,
-  instanceOfNotPrincipalBlock,
-  instanceOfNotResourceBlock,
-  instanceOfPrincipalBlock,
-  instanceOfResourceBlock
-} from './utils/instanceOfInterfaces';
 import { Matcher } from './Matcher';
 import { applyContext, Statement } from './Statement';
 
@@ -105,8 +97,8 @@ class ResourceBased extends Statement {
   }
 
   private checkAndAssignActions(identity: ResourceBasedType): void {
-    const hasAction = instanceOfActionBlock(identity);
-    const hasNotAction = instanceOfNotActionBlock(identity);
+    const hasAction = 'action' in identity;
+    const hasNotAction = 'notAction' in identity;
     if (hasAction && hasNotAction) {
       throw new TypeError(
         'ResourceBased statement should have an action or a notAction attribute, no both'
@@ -117,7 +109,7 @@ class ResourceBased extends Statement {
         'ResourceBased statement should have an action or a notAction attribute'
       );
     }
-    if (instanceOfActionBlock(identity)) {
+    if ('action' in identity) {
       this.action =
         typeof identity.action === 'string'
           ? [identity.action]
@@ -131,20 +123,20 @@ class ResourceBased extends Statement {
   }
 
   private checkAndAssignPrincipals(identity: ResourceBasedType): void {
-    const hasPrincipal = instanceOfPrincipalBlock(identity);
-    const hasNotPrincipal = instanceOfNotPrincipalBlock(identity);
+    const hasPrincipal = 'principal' in identity;
+    const hasNotPrincipal = 'notPrincipal' in identity;
     if (hasPrincipal && hasNotPrincipal) {
       throw new TypeError(
         'ResourceBased statement could have a principal or a notPrincipal attribute, no both'
       );
     }
-    if (instanceOfPrincipalBlock(identity)) {
+    if ('principal' in identity) {
       this.principal =
         typeof identity.principal === 'string'
           ? [identity.principal]
           : identity.principal;
       this.hasPrincipals = true;
-    } else if (instanceOfNotPrincipalBlock(identity)) {
+    } else if ('notPrincipal' in identity) {
       this.notPrincipal =
         typeof identity.notPrincipal === 'string'
           ? [identity.notPrincipal]
@@ -154,20 +146,20 @@ class ResourceBased extends Statement {
   }
 
   private checkAndAssignResources(identity: ResourceBasedType): void {
-    const hasResource = instanceOfResourceBlock(identity);
-    const hasNotResource = instanceOfNotResourceBlock(identity);
+    const hasResource = 'resource' in identity;
+    const hasNotResource = 'notResource' in identity;
     if (hasResource && hasNotResource) {
       throw new TypeError(
         'ResourceBased statement could have a resource or a notResource attribute, no both'
       );
     }
-    if (instanceOfResourceBlock(identity)) {
+    if ('resource' in identity) {
       this.resource =
         typeof identity.resource === 'string'
           ? [identity.resource]
           : identity.resource;
       this.hasResources = true;
-    } else if (instanceOfNotResourceBlock(identity)) {
+    } else if ('notResource' in identity) {
       this.notResource =
         typeof identity.notResource === 'string'
           ? [identity.notResource]

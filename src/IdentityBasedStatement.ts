@@ -3,12 +3,6 @@ import {
   IdentityBasedType,
   MatchIdentityBasedInterface
 } from './types';
-import {
-  instanceOfActionBlock,
-  instanceOfNotActionBlock,
-  instanceOfNotResourceBlock,
-  instanceOfResourceBlock
-} from './utils/instanceOfInterfaces';
 import { Matcher } from './Matcher';
 import { applyContext, Statement } from './Statement';
 
@@ -46,8 +40,8 @@ class IdentityBased extends Statement {
   }
 
   private checkAndAssignActions(identity: IdentityBasedType): void {
-    const hasAction = instanceOfActionBlock(identity);
-    const hasNotAction = instanceOfNotActionBlock(identity);
+    const hasAction = 'action' in identity;
+    const hasNotAction = 'notAction' in identity;
     if (hasAction && hasNotAction) {
       throw new TypeError(
         'IdentityBased statement should have an action or a notAction attribute, no both'
@@ -58,7 +52,7 @@ class IdentityBased extends Statement {
         'IdentityBased statement should have an action or a notAction attribute'
       );
     }
-    if (instanceOfActionBlock(identity)) {
+    if ('action' in identity) {
       this.action =
         typeof identity.action === 'string'
           ? [identity.action]
@@ -72,8 +66,8 @@ class IdentityBased extends Statement {
   }
 
   private checkAndAssignResources(identity: IdentityBasedType): void {
-    const hasResource = instanceOfResourceBlock(identity);
-    const hasNotResource = instanceOfNotResourceBlock(identity);
+    const hasResource = 'resource' in identity;
+    const hasNotResource = 'notResource' in identity;
     if (hasResource && hasNotResource) {
       throw new TypeError(
         'IdentityBased statement should have a resource or a notResource attribute, no both'
@@ -84,7 +78,7 @@ class IdentityBased extends Statement {
         'IdentityBased statement should have a resource or a notResource attribute'
       );
     }
-    if (instanceOfResourceBlock(identity)) {
+    if ('resource' in identity) {
       this.resource =
         typeof identity.resource === 'string'
           ? [identity.resource]

@@ -7,7 +7,7 @@ import {
 import { ActionBased } from './ActionBasedStatement';
 import { Policy } from './Policy';
 
-interface ActionBasedPolicyInterface {
+export interface ActionBasedPolicyInterface {
   statements: ActionBasedType[];
   conditionResolver?: ConditionResolver;
   context?: Context;

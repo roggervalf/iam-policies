@@ -13,8 +13,10 @@ export const MAX_MEMOIZE_SIZE = 500;
  * @param {Function} func The function to have its output memoized.
  * @returns {Function} Returns the new memoized function.
  */
-export function memoizeCapped(func: Function): MemoizeInterface {
-  const result = memoize(func, (key: any) => {
+export function memoizeCapped(
+  func: (...args: any) => unknown
+): MemoizeInterface {
+  const result = memoize(func, (key: unknown) => {
     const { cache } = result;
     if (cache.size === MAX_MEMOIZE_SIZE) {
       cache.clear();

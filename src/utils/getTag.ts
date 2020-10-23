@@ -14,6 +14,6 @@
  * // => '[object Null]'
  * ```
  */
-export function getTag(value: any): string {
+export function getTag(value: unknown): string {
   return Object.prototype.toString.call(value);
 }

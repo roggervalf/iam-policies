@@ -6,7 +6,7 @@
  * @param {Object} [object] The object to query keys on.
  * @returns {Array} Returns the cast property path array.
  */
-declare function castPath<T>(value: any, object: object): Array<T>;
+declare function castPath<T>(value: unknown, object: Record<string | symbol, unknown>): Array<T>;
 /**
  * The base implementation of `get` without support for default values.
  *
@@ -15,7 +15,7 @@ declare function castPath<T>(value: any, object: object): Array<T>;
  * @param {Array|string} path The path of the property to get.
  * @returns {*} Returns the resolved value.
  */
-declare function baseGet<T>(object: object, path: Array<T> | string): any;
+declare function baseGet<T>(object: Record<string, unknown>, path: Array<T> | string): any;
 /**
  * Gets the value at `path` of `object`. If the resolved value is
  * `undefined`, the `defaultValue` is returned in its place.
@@ -39,7 +39,7 @@ declare function baseGet<T>(object: object, path: Array<T> | string): any;
  * getValueFromPath(object, 'a.b.c', 'default')
  * // => 'default'
  */
-declare function getValueFromPath<T>(object: object, path: Array<T> | string, defaultValue?: any): any;
+declare function getValueFromPath<T>(object: Record<string, unknown>, path: Array<T> | string, defaultValue?: unknown): any;
 
 declare type EffectBlock = 'allow' | 'deny';
 declare type Patterns = string[] | string;
@@ -110,7 +110,7 @@ interface EvaluateResourceBasedInterface extends EvaluateIdentityBasedInterface 
 }
 declare type ActionBasedType = StatementInterface & (ActionBlock | NotActionBlock);
 declare type IdentityBasedType = StatementInterface & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock);
-declare type ResourceBasedType = StatementInterface & (PrincipalBlock | NotPrincipalBlock) & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock | {});
+declare type ResourceBasedType = StatementInterface & (PrincipalBlock | NotPrincipalBlock) & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock);
 
 declare function applyContext(str: string, context?: Context): string;
 declare class Statement {
@@ -234,4 +234,4 @@ declare class ResourceBasedPolicy extends Policy {
     cannot({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
 }
 
-export { ActionBased, ActionBasedPolicy, IdentityBased, IdentityBasedPolicy, ResourceBased, ResourceBasedPolicy, Statement, applyContext, baseGet, castPath, getValueFromPath };
+export { ActionBased, ActionBasedPolicy, ActionBasedPolicyInterface, IdentityBased, IdentityBasedPolicy, ResourceBased, ResourceBasedPolicy, Statement, applyContext, baseGet, castPath, getValueFromPath };

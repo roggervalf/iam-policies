@@ -34,8 +34,14 @@ import { MemoizeInterface } from '../types';
  * // => ['a', 'b']
  * ```
  */
-export function memoize(func: Function, resolver?: Function): MemoizeInterface {
-  const memoized = function (this: Function, ...args: any): MemoizeInterface {
+export function memoize(
+  func: (...args: unknown[]) => any,
+  resolver?: (...args: unknown[]) => any
+): MemoizeInterface {
+  const memoized = function (
+    this: (...args: unknown[]) => any,
+    ...args: unknown[]
+  ): MemoizeInterface {
     const key = resolver ? resolver.apply(this, args) : args[0];
     const cache = memoized.cache;
 

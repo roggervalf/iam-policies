@@ -111,7 +111,7 @@ type IdentityBasedType = StatementInterface &
 type ResourceBasedType = StatementInterface &
   (PrincipalBlock | NotPrincipalBlock) &
   (ActionBlock | NotActionBlock) &
-  (ResourceBlock | NotResourceBlock | {});
+  (ResourceBlock | NotResourceBlock);
 
 export {
   ActionBasedType,

@@ -1,8 +1,4 @@
 import { ActionBasedType, Context, MatchActionBasedInterface } from './types';
-import {
-  instanceOfActionBlock,
-  instanceOfNotActionBlock
-} from './utils/instanceOfInterfaces';
 import { Matcher } from './Matcher';
 import { applyContext, Statement } from './Statement';
 
@@ -34,8 +30,8 @@ class ActionBased extends Statement {
   }
 
   private checkAndAssignActions(action: ActionBasedType): void {
-    const hasAction = instanceOfActionBlock(action);
-    const hasNotAction = instanceOfNotActionBlock(action);
+    const hasAction = 'action' in action;
+    const hasNotAction = 'notAction' in action;
     if (hasAction && hasNotAction) {
       throw new TypeError(
         'ActionBased statement should have an action or a notAction attribute, no both'
@@ -46,7 +42,7 @@ class ActionBased extends Statement {
         'ActionBased statement should have an action or a notAction attribute'
       );
     }
-    if (instanceOfActionBlock(action)) {
+    if ('action' in action) {
       this.action =
         typeof action.action === 'string' ? [action.action] : action.action;
     } else {

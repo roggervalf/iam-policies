@@ -114,9 +114,12 @@ function isKey(value, object) {
         isSymbol(value)) {
         return true;
     }
-    return (reIsPlainProp.test(value) ||
-        !reIsDeepProp.test(value) ||
-        (object !== null && value in Object(object)));
+    if (typeof value === 'string') {
+        return (reIsPlainProp.test(value) ||
+            !reIsDeepProp.test(value) ||
+            (object !== null && value in Object(object)));
+    }
+    return false;
 }
 
 /**
@@ -574,122 +577,6 @@ class Statement {
 }
 
 /**
- * Validate if an `object` is an instance of `ActionBlock`.
- * @param {Object} object Object to validate
- * @returns {boolean} Returns true if `object` has `action` attribute.
- * @example
- * ```javascript
- * instanceOfActionBlock({ action: 'something' })
- * // => true
- *
- * instanceOfActionBlock({ notAction: 'something' })
- * // => false
- * ```
- */
-function instanceOfActionBlock(object) {
-    return 'action' in object;
-}
-/**
- * Validate if an `object` is an instance of `NotActionBlock`.
- * @param {Object} object Object to validate
- * @returns {boolean} Returns true if `object` has `notAction` attribute.
- * @example
- * ```javascript
- * instanceOfNotActionBlock({ notAction: 'something' })
- * // => true
- *
- * instanceOfNotActionBlock({ action: 'something' })
- * // => false
- * ```
- */
-function instanceOfNotActionBlock(object) {
-    return 'notAction' in object;
-}
-/**
- * Validate if an `object` is an instance of `PrincipalBlock`.
- * @param {Object} object Object to validate
- * @returns {boolean} Returns true if `object` has `principal` attribute.
- * @example
- * ```javascript
- * instanceOfPrincipalBlock({ principal: 'something' })
- * // => true
- *
- * instanceOfPrincipalBlock({ notPrincipal: 'something' })
- * // => false
- * ```
- */
-function instanceOfPrincipalBlock(object) {
-    return 'principal' in object;
-}
-/**
- * Validate if an `object` is an instance of `NotPrincipalBlock`.
- * @param {Object} object Object to validate
- * @returns {boolean} Returns true if `object` has `notPrincipal` attribute.
- * @example
- * ```javascript
- * instanceOfNotPrincipalBlock({ notPrincipal: 'something' })
- * // => true
- *
- * instanceOfNotPrincipalBlock({ principal: 'something' })
- * // => false
- * ```
- */
-function instanceOfNotPrincipalBlock(object) {
-    return 'notPrincipal' in object;
-}
-/**
- * Validate if an `object` is an instance of `NotResourceBlock`.
- * @param {Object} object Object to validate
- * @returns {boolean} Returns true if `object` has `notResource` attribute.
- * @example
- * ```javascript
- * instanceOfNotResourceBlock({ notResource: 'something' })
- * // => true
- *
- * instanceOfNotResourceBlock({ resource: 'something' })
- * // => false
- * ```
- */
-function instanceOfNotResourceBlock(object) {
-    return 'notResource' in object;
-}
-/**
- * Validate if an `object` is an instance of `ResourceBlock`.
- * @param {Object} object Object to validate
- * @returns {boolean} Returns true if `object` has `resource` attribute.
- * @example
- * ```javascript
- * instanceOfResourceBlock({ resource: 'something' })
- * // => true
- *
- * instanceOfResourceBlock({ notResource: 'something' })
- * // => false
- * ```
- */
-function instanceOfResourceBlock(object) {
-    return 'resource' in object;
-}
-//export { IdentityBasedType, ResourceBasedType, PrincipalMap, Patterns, ResourceBlock, ActionBlock};
-/*
-type Message = MessageWithText | MessageWithAttachment | (MessageWithText & MessageWithAttachment);*/
-/*<condition_block> = "Condition" : { <condition_map> }
-<condition_map> = {
-  <condition_type_string> : { <condition_key_string> : <condition_value_list> },
-  <condition_type_string> : { <condition_key_string> : <condition_value_list> }, ...
-}
-<condition_value_list> = [<condition_value>, <condition_value>, ...]
-<condition_value> = ("string" | "number" | "Boolean")
-
-//ConditionBlock
-condition: {//ConditionMap
-        ConditionTypeString        greaterThan: {
-        ConditionKeyString          'user.age': 18 //ConditionValueList,
-                },
-              }
-
-*/
-
-/**
  * Get index range where separators are found.
  *
  * @private
@@ -851,15 +738,15 @@ class ActionBased extends Statement {
             this.matchConditions({ context, conditionResolver }));
     }
     checkAndAssignActions(action) {
-        const hasAction = instanceOfActionBlock(action);
-        const hasNotAction = instanceOfNotActionBlock(action);
+        const hasAction = 'action' in action;
+        const hasNotAction = 'notAction' in action;
         if (hasAction && hasNotAction) {
             throw new TypeError('ActionBased statement should have an action or a notAction attribute, no both');
         }
         if (!hasAction && !hasNotAction) {
             throw new TypeError('ActionBased statement should have an action or a notAction attribute');
         }
-        if (instanceOfActionBlock(action)) {
+        if ('action' in action) {
             this.action =
                 typeof action.action === 'string' ? [action.action] : action.action;
         }
@@ -900,15 +787,15 @@ class IdentityBased extends Statement {
             this.matchConditions({ context, conditionResolver }));
     }
     checkAndAssignActions(identity) {
-        const hasAction = instanceOfActionBlock(identity);
-        const hasNotAction = instanceOfNotActionBlock(identity);
+        const hasAction = 'action' in identity;
+        const hasNotAction = 'notAction' in identity;
         if (hasAction && hasNotAction) {
             throw new TypeError('IdentityBased statement should have an action or a notAction attribute, no both');
         }
         if (!hasAction && !hasNotAction) {
             throw new TypeError('IdentityBased statement should have an action or a notAction attribute');
         }
-        if (instanceOfActionBlock(identity)) {
+        if ("action" in identity) {
             this.action =
                 typeof identity.action === 'string'
                     ? [identity.action]
@@ -922,15 +809,15 @@ class IdentityBased extends Statement {
         }
     }
     checkAndAssignResources(identity) {
-        const hasResource = instanceOfResourceBlock(identity);
-        const hasNotResource = instanceOfNotResourceBlock(identity);
+        const hasResource = "resource" in identity;
+        const hasNotResource = "notResource" in identity;
         if (hasResource && hasNotResource) {
             throw new TypeError('IdentityBased statement should have a resource or a notResource attribute, no both');
         }
         if (!hasResource && !hasNotResource) {
             throw new TypeError('IdentityBased statement should have a resource or a notResource attribute');
         }
-        if (instanceOfResourceBlock(identity)) {
+        if ("resource" in identity) {
             this.resource =
                 typeof identity.resource === 'string'
                     ? [identity.resource]
@@ -1022,15 +909,15 @@ class ResourceBased extends Statement {
         return true;
     }
     checkAndAssignActions(identity) {
-        const hasAction = instanceOfActionBlock(identity);
-        const hasNotAction = instanceOfNotActionBlock(identity);
+        const hasAction = 'action' in identity;
+        const hasNotAction = 'notAction' in identity;
         if (hasAction && hasNotAction) {
             throw new TypeError('ResourceBased statement should have an action or a notAction attribute, no both');
         }
         if (!hasAction && !hasNotAction) {
             throw new TypeError('ResourceBased statement should have an action or a notAction attribute');
         }
-        if (instanceOfActionBlock(identity)) {
+        if ('action' in identity) {
             this.action =
                 typeof identity.action === 'string'
                     ? [identity.action]
@@ -1044,19 +931,19 @@ class ResourceBased extends Statement {
         }
     }
     checkAndAssignPrincipals(identity) {
-        const hasPrincipal = instanceOfPrincipalBlock(identity);
-        const hasNotPrincipal = instanceOfNotPrincipalBlock(identity);
+        const hasPrincipal = 'principal' in identity;
+        const hasNotPrincipal = 'notPrincipal' in identity;
         if (hasPrincipal && hasNotPrincipal) {
             throw new TypeError('ResourceBased statement could have a principal or a notPrincipal attribute, no both');
         }
-        if (instanceOfPrincipalBlock(identity)) {
+        if ('principal' in identity) {
             this.principal =
                 typeof identity.principal === 'string'
                     ? [identity.principal]
                     : identity.principal;
             this.hasPrincipals = true;
         }
-        else if (instanceOfNotPrincipalBlock(identity)) {
+        else if ('notPrincipal' in identity) {
             this.notPrincipal =
                 typeof identity.notPrincipal === 'string'
                     ? [identity.notPrincipal]
@@ -1065,19 +952,19 @@ class ResourceBased extends Statement {
         }
     }
     checkAndAssignResources(identity) {
-        const hasResource = instanceOfResourceBlock(identity);
-        const hasNotResource = instanceOfNotResourceBlock(identity);
+        const hasResource = 'resource' in identity;
+        const hasNotResource = 'notResource' in identity;
         if (hasResource && hasNotResource) {
             throw new TypeError('ResourceBased statement could have a resource or a notResource attribute, no both');
         }
-        if (instanceOfResourceBlock(identity)) {
+        if ('resource' in identity) {
             this.resource =
                 typeof identity.resource === 'string'
                     ? [identity.resource]
                     : identity.resource;
             this.hasResources = true;
         }
-        else if (instanceOfNotResourceBlock(identity)) {
+        else if ('notResource' in identity) {
             this.notResource =
                 typeof identity.notResource === 'string'
                     ? [identity.notResource]

@@ -35,22 +35,26 @@ const reIsPlainProp = /^\w*$/; //matches any word caracter (alphanumeric and und
  * // => true
  * ```
  */
-export function isKey(value: any, object?: object): boolean {
-  if (Array.isArray(value)) {
-    return false;
-  }
+export function isKey(
+  value: unknown,
+  object?: Record<string | symbol, unknown>
+): boolean {
   const type = typeof value;
   if (
     type === 'number' ||
     type === 'boolean' ||
     value === null ||
+    value === undefined ||
     isSymbol(value)
   ) {
     return true;
   }
-  return (
-    reIsPlainProp.test(value) ||
-    !reIsDeepProp.test(value) ||
-    (object !== null && value in Object(object))
-  );
+  if (typeof value === 'string') {
+    return (
+      reIsPlainProp.test(value) ||
+      !reIsDeepProp.test(value) ||
+      (object !== null && value in Object(object))
+    );
+  }
+  return false;
 }

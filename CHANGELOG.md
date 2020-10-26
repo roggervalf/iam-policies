@@ -1,3 +1,26 @@
+# [4.0.0](https://github.com/roggervalf/iam-policies/compare/v3.5.0...v4.0.0) (2020-10-26)
+
+
+### Bug Fixes
+
+* **resourcebasedstatement:** validate principal, notPrincipal, resource and notResource attributes ([2aee00c](https://github.com/roggervalf/iam-policies/commit/2aee00caf6ac720213cbb7bcc1da2c5292f41acb))
+* throw Type Error in Identity and Resource statements for actions and resources ([78c52ca](https://github.com/roggervalf/iam-policies/commit/78c52ca50a4edf84758d4d96e8d422ade6d3f1d7))
+* **actionbasedstatement:** throw TypeError when action and notAction are present ([2e4409d](https://github.com/roggervalf/iam-policies/commit/2e4409dd87cad000c85a0d8d2c6941b936293487))
+* **resourcebasedstatement:** return true in matchNotPrincipals ([f78553e](https://github.com/roggervalf/iam-policies/commit/f78553e307ed58b6823b05da3408d5fc5a3c1097))
+
+
+### Features
+
+* **actionbasedpolicy:** allow to generate proxy from Action Based Policy ([72f4092](https://github.com/roggervalf/iam-policies/commit/72f40920e7869fd22b3ea3dbaa9dcaccc75dfd92))
+* extending Policy in Identity and Resource Based Policies ([bd06fc6](https://github.com/roggervalf/iam-policies/commit/bd06fc6ec22177e0fca38308bda7601e4c47fd1e))
+* **actionbasedpolicy:** allowing set and get conditionResolver ([10bee79](https://github.com/roggervalf/iam-policies/commit/10bee7935e7aa72d59995d170fe0f801acc5dc20))
+* **actionbasedpolicy:** allowing set and get context ([3420d87](https://github.com/roggervalf/iam-policies/commit/3420d871d98c7bc62ecef9f147479228640edba3))
+
+
+### BREAKING CHANGES
+
+* new way to contruct Policies instances with a json
+
 # [3.5.0](https://github.com/roggervalf/iam-policies/compare/v3.4.1...v3.5.0) (2020-10-11)
 
 

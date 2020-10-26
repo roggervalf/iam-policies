@@ -1072,28 +1072,36 @@ class ActionBasedPolicy extends Policy {
         const { get = {}, set = {} } = options;
         const { allow: allowGet = true, propertyMap: propertyMapGet = {} } = get;
         const { allow: allowSet = true, propertyMap: propertyMapSet = {} } = set;
-        const handler = Object.assign(Object.assign({}, (allowGet ? { get: (target, prop) => {
-                if (prop in target) {
+        const handler = Object.assign(Object.assign({}, (allowGet
+            ? {
+                get: (target, prop) => {
+                    if (prop in target) {
+                        if (typeof prop === 'string') {
+                            const property = propertyMapGet[prop] || prop;
+                            if (this.evaluate({ action: property }))
+                                return target[prop];
+                            throw new Error(`Unauthorize to get ${prop} property`);
+                        }
+                    }
+                    return target[prop];
+                }
+            }
+            : {})), (allowSet
+            ? {
+                set: (target, prop, value) => {
                     if (typeof prop === 'string') {
-                        const property = propertyMapGet[prop] || prop;
-                        if (this.evaluate({ action: property }))
-                            return target[prop];
-                        throw new Error(`Unauthorize to get ${prop} property`);
+                        const property = propertyMapSet[prop] || prop;
+                        if (this.evaluate({ action: property })) {
+                            target[prop] = value;
+                            return true;
+                        }
+                        else
+                            throw new Error(`Unauthorize to set ${prop} property`);
                     }
+                    return true;
                 }
-                return target[prop];
-            } } : {})), (allowSet ? { set: (target, prop, value) => {
-                if (typeof prop === 'string') {
-                    const property = propertyMapSet[prop] || prop;
-                    if (this.evaluate({ action: property })) {
-                        target[prop] = value;
-                        return true;
-                    }
-                    else
-                        throw new Error(`Unauthorize to set ${prop} property`);
-                }
-                return true;
-            } } : {}));
+            }
+            : {}));
         if (obj instanceof Object) {
             return new Proxy(obj, handler);
         }

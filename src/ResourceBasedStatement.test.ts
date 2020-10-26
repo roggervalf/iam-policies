@@ -19,20 +19,6 @@ describe('ResourceBased Class', () => {
       ).not.toThrow();
     });
 
-    describe('when creating resource based statement with no actions', () => {
-      it('throws a TypeError', () => {
-        const expectedError = new TypeError(
-          'ResourceBased statement should have an action or a notAction attribute'
-        );
-
-        expect(() => {
-          new ResourceBased({
-            resource: 'secret'
-          });
-        }).toThrow(expectedError);
-      });
-    });
-
     describe('when creating resource based statement with action and notAction attributes', () => {
       it('throws a TypeError', () => {
         const expectedError = new TypeError(

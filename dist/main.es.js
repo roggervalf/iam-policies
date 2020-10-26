@@ -100,13 +100,11 @@ const reIsPlainProp = /^\w*$/; //matches any word caracter (alphanumeric and und
  * ```
  */
 function isKey(value, object) {
-    if (Array.isArray(value)) {
-        return false;
-    }
     const type = typeof value;
     if (type === 'number' ||
         type === 'boolean' ||
         value === null ||
+        value === undefined ||
         isSymbol(value)) {
         return true;
     }
@@ -739,9 +737,6 @@ class ActionBased extends Statement {
         if (hasAction && hasNotAction) {
             throw new TypeError('ActionBased statement should have an action or a notAction attribute, no both');
         }
-        if (!hasAction && !hasNotAction) {
-            throw new TypeError('ActionBased statement should have an action or a notAction attribute');
-        }
         if ('action' in action) {
             this.action =
                 typeof action.action === 'string' ? [action.action] : action.action;
@@ -788,10 +783,7 @@ class IdentityBased extends Statement {
         if (hasAction && hasNotAction) {
             throw new TypeError('IdentityBased statement should have an action or a notAction attribute, no both');
         }
-        if (!hasAction && !hasNotAction) {
-            throw new TypeError('IdentityBased statement should have an action or a notAction attribute');
-        }
-        if ("action" in identity) {
+        if ('action' in identity) {
             this.action =
                 typeof identity.action === 'string'
                     ? [identity.action]
@@ -805,15 +797,12 @@ class IdentityBased extends Statement {
         }
     }
     checkAndAssignResources(identity) {
-        const hasResource = "resource" in identity;
-        const hasNotResource = "notResource" in identity;
+        const hasResource = 'resource' in identity;
+        const hasNotResource = 'notResource' in identity;
         if (hasResource && hasNotResource) {
             throw new TypeError('IdentityBased statement should have a resource or a notResource attribute, no both');
         }
-        if (!hasResource && !hasNotResource) {
-            throw new TypeError('IdentityBased statement should have a resource or a notResource attribute');
-        }
-        if ("resource" in identity) {
+        if ('resource' in identity) {
             this.resource =
                 typeof identity.resource === 'string'
                     ? [identity.resource]
@@ -909,9 +898,6 @@ class ResourceBased extends Statement {
         const hasNotAction = 'notAction' in identity;
         if (hasAction && hasNotAction) {
             throw new TypeError('ResourceBased statement should have an action or a notAction attribute, no both');
-        }
-        if (!hasAction && !hasNotAction) {
-            throw new TypeError('ResourceBased statement should have an action or a notAction attribute');
         }
         if ('action' in identity) {
             this.action =
@@ -1077,6 +1063,37 @@ class ActionBasedPolicy extends Policy {
             context: context || this.context,
             conditionResolver: this.conditionResolver
         }));
+    }
+    generateProxy(obj, options = {}) {
+        const { get = {}, set = {} } = options;
+        const { allow: allowGet = true, propertyMap: propertyMapGet = {} } = get;
+        const { allow: allowSet = true, propertyMap: propertyMapSet = {} } = set;
+        const handler = Object.assign(Object.assign({}, (allowGet ? { get: (target, prop) => {
+                if (prop in target) {
+                    if (typeof prop === 'string') {
+                        const property = propertyMapGet[prop] || prop;
+                        if (this.evaluate({ action: property }))
+                            return target[prop];
+                        throw new Error(`Unauthorize to get ${prop} property`);
+                    }
+                }
+                return target[prop];
+            } } : {})), (allowSet ? { set: (target, prop, value) => {
+                if (typeof prop === 'string') {
+                    const property = propertyMapSet[prop] || prop;
+                    if (this.evaluate({ action: property })) {
+                        target[prop] = value;
+                        return true;
+                    }
+                    else
+                        throw new Error(`Unauthorize to set ${prop} property`);
+                }
+                return true;
+            } } : {}));
+        if (obj instanceof Object) {
+            return new Proxy(obj, handler);
+        }
+        return undefined;
     }
 }
 

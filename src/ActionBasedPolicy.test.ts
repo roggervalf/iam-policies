@@ -256,4 +256,152 @@ describe('ActionBasedPolicy Class', () => {
       ).toBe(false);
     });
   });
+
+  describe('generate Proxy', () => {
+    describe('when use default options', () => {
+      it('returns an instance of a class', () => {
+        const policy = new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['upper', 'lastName', 'age']
+            }
+          ]
+        });
+        class User {
+          firstName: string;
+          age: number;
+          private lastName: string;
+          constructor(firstName, lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+          }
+          upper(): string {
+            return this.lastName.toUpperCase();
+          }
+        }
+        const user = new User('John', 'Wick');
+        const proxy = policy.generateProxy(user) as User;
+        const getExpectedError = new Error(
+          'Unauthorize to get firstName property'
+        );
+        const setExpectedError = new Error(
+          'Unauthorize to set firstName property'
+        );
+
+        expect(proxy.upper()).toBe('WICK');
+        expect(proxy.upper()).toBe('WICK');
+        expect(() => {
+          proxy.age = 20;
+        }).not.toThrow();
+        expect(proxy.age).toBe(20);
+        expect(() => (proxy.firstName = 'Nancy')).toThrow(setExpectedError);
+        expect(() => proxy.firstName).toThrow(getExpectedError);
+      });
+
+      it('returns a json', () => {
+        const policy = new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['lastName']
+            }
+          ]
+        });
+        const sym: string = (Symbol('id') as unknown) as string;
+        const user = {
+          firstName: 'John',
+          lastName: 'Wick',
+          [sym]: 1
+        };
+        const proxy = policy.generateProxy(user) as Record<
+          string | symbol,
+          unknown
+        >;
+        const expectedError = new Error(
+          'Unauthorize to get firstName property'
+        );
+
+        expect(proxy.lastName).toBe('Wick');
+        expect(() => (proxy[sym] = 2)).not.toThrow();
+        expect(proxy[sym]).toBe(1);
+        expect(proxy.otherValue).toBe(undefined);
+        expect(() => proxy.firstName).toThrow(expectedError);
+      });
+
+      it('returns undefined', () => {
+        const policy = new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['lastName']
+            }
+          ]
+        });
+        const proxy = policy.generateProxy(8);
+
+        expect(proxy).toBe(undefined);
+      });
+    });
+
+    describe('when pass options', () => {
+      it('sets propertyMap', () => {
+        const policy = new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['getLastName']
+            }
+          ]
+        });
+        const user = {
+          firstName: 'John',
+          lastName: 'Wick'
+        };
+        const proxy = policy.generateProxy(user, {
+          get: {
+            propertyMap: {
+              lastName: 'getLastName'
+            }
+          },
+          set: {
+            allow: false
+          }
+        }) as Record<string, unknown>;
+        const expectedError = new Error(
+          'Unauthorize to get firstName property'
+        );
+
+        expect(proxy.lastName).toBe('Wick');
+        expect(() => proxy.firstName).toThrow(expectedError);
+      });
+
+      it('sets propertyMap', () => {
+        const policy = new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['setLastName']
+            }
+          ]
+        });
+        const user = {
+          firstName: 'John',
+          lastName: 'Wick'
+        };
+        const proxy = policy.generateProxy(user, {
+          set: {
+            propertyMap: {
+              lastName: 'setLastName'
+            }
+          },
+          get: {
+            allow: false
+          }
+        }) as Record<string, unknown>;
+        const expectedError = new Error(
+          'Unauthorize to set firstName property'
+        );
+
+        expect(() => (proxy.lastName = 'Smith')).not.toThrow();
+        expect(proxy.lastName).toBe('Smith');
+        expect(() => (proxy.firstName = 'Mario')).toThrow(expectedError);
+      });
+    });
+  });
 });

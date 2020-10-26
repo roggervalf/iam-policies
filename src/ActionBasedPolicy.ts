@@ -2,7 +2,8 @@ import {
   ActionBasedType,
   ConditionResolver,
   Context,
-  EvaluateActionBasedInterface
+  EvaluateActionBasedInterface,
+  ProxyOptions
 } from './types';
 import { ActionBased } from './ActionBasedStatement';
 import { Policy } from './Policy';
@@ -63,5 +64,49 @@ export class ActionBasedPolicy extends Policy {
         conditionResolver: this.conditionResolver
       })
     );
+  }
+
+  generateProxy<T, U extends keyof T>(
+    obj: unknown,
+    options: ProxyOptions = {}
+  ): T | undefined {
+    const { get = {}, set = {} } = options;
+    const { allow: allowGet = true, propertyMap: propertyMapGet = {} } = get;
+    const { allow: allowSet = true, propertyMap: propertyMapSet = {} } = set;
+    const handler = {
+      ...(allowGet
+        ? {
+            get: (target: T, prop: U): any => {
+              if (prop in target) {
+                if (typeof prop === 'string') {
+                  const property = propertyMapGet[prop] || prop;
+                  if (this.evaluate({ action: property })) return target[prop];
+                  throw new Error(`Unauthorize to get ${prop} property`);
+                }
+              }
+              return target[prop];
+            }
+          }
+        : {}),
+      ...(allowSet
+        ? {
+            set: (target: T, prop: U, value: any): boolean => {
+              if (typeof prop === 'string') {
+                const property = propertyMapSet[prop] || prop;
+                if (this.evaluate({ action: property })) {
+                  target[prop] = value;
+                  return true;
+                } else throw new Error(`Unauthorize to set ${prop} property`);
+              }
+              return true;
+            }
+          }
+        : {})
+    };
+
+    if (obj instanceof Object) {
+      return new Proxy(obj, handler) as T;
+    }
+    return undefined;
   }
 }

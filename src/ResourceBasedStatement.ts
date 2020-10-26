@@ -104,11 +104,6 @@ class ResourceBased extends Statement {
         'ResourceBased statement should have an action or a notAction attribute, no both'
       );
     }
-    if (!hasAction && !hasNotAction) {
-      throw new TypeError(
-        'ResourceBased statement should have an action or a notAction attribute'
-      );
-    }
     if ('action' in identity) {
       this.action =
         typeof identity.action === 'string'

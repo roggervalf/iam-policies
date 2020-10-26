@@ -47,11 +47,6 @@ class IdentityBased extends Statement {
         'IdentityBased statement should have an action or a notAction attribute, no both'
       );
     }
-    if (!hasAction && !hasNotAction) {
-      throw new TypeError(
-        'IdentityBased statement should have an action or a notAction attribute'
-      );
-    }
     if ('action' in identity) {
       this.action =
         typeof identity.action === 'string'
@@ -71,11 +66,6 @@ class IdentityBased extends Statement {
     if (hasResource && hasNotResource) {
       throw new TypeError(
         'IdentityBased statement should have a resource or a notResource attribute, no both'
-      );
-    }
-    if (!hasResource && !hasNotResource) {
-      throw new TypeError(
-        'IdentityBased statement should have a resource or a notResource attribute'
       );
     }
     if ('resource' in identity) {

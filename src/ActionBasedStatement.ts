@@ -37,11 +37,6 @@ class ActionBased extends Statement {
         'ActionBased statement should have an action or a notAction attribute, no both'
       );
     }
-    if (!hasAction && !hasNotAction) {
-      throw new TypeError(
-        'ActionBased statement should have an action or a notAction attribute'
-      );
-    }
     if ('action' in action) {
       this.action =
         typeof action.action === 'string' ? [action.action] : action.action;

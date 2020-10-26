@@ -46,11 +46,11 @@ declare type Patterns = string[] | string;
 interface PrincipalMap {
     [key: string]: Patterns;
 }
-interface PrincipalBlock {
-    principal: PrincipalMap | Patterns;
+interface OptionalPrincipalBlock {
+    principal?: PrincipalMap | Patterns;
 }
-interface NotPrincipalBlock {
-    notPrincipal: PrincipalMap | Patterns;
+interface OptionalNotPrincipalBlock {
+    notPrincipal?: PrincipalMap | Patterns;
 }
 interface ActionBlock {
     action: Patterns;
@@ -63,6 +63,12 @@ interface ResourceBlock {
 }
 interface NotResourceBlock {
     notResource: Patterns;
+}
+interface OptionalResourceBlock {
+    resource?: Patterns;
+}
+interface OptionalNotResourceBlock {
+    notResource?: Patterns;
 }
 declare type ConditionKey = string | number | boolean;
 interface Context {
@@ -93,9 +99,10 @@ interface MatchActionBasedInterface extends MatchConditionInterface {
 interface MatchIdentityBasedInterface extends MatchActionBasedInterface {
     resource: string;
 }
-interface MatchResourceBasedInterface extends MatchIdentityBasedInterface {
-    principal: string;
+interface MatchResourceBasedInterface extends MatchActionBasedInterface {
+    principal?: string;
     principalType?: string;
+    resource?: string;
 }
 interface EvaluateActionBasedInterface {
     action: string;
@@ -104,13 +111,24 @@ interface EvaluateActionBasedInterface {
 interface EvaluateIdentityBasedInterface extends EvaluateActionBasedInterface {
     resource: string;
 }
-interface EvaluateResourceBasedInterface extends EvaluateIdentityBasedInterface {
-    principal: string;
+interface EvaluateResourceBasedInterface extends EvaluateActionBasedInterface {
+    principal?: string;
     principalType?: string;
+    resource?: string;
 }
 declare type ActionBasedType = StatementInterface & (ActionBlock | NotActionBlock);
 declare type IdentityBasedType = StatementInterface & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock);
-declare type ResourceBasedType = StatementInterface & (PrincipalBlock | NotPrincipalBlock) & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock);
+declare type ResourceBasedType = StatementInterface & (OptionalPrincipalBlock | OptionalNotPrincipalBlock) & (ActionBlock | NotActionBlock) & (OptionalResourceBlock | OptionalNotResourceBlock);
+interface ProxyOptions {
+    get?: {
+        allow?: boolean;
+        propertyMap?: Record<string, string>;
+    };
+    set?: {
+        allow?: boolean;
+        propertyMap?: Record<string, string>;
+    };
+}
 
 declare function applyContext(str: string, context?: Context): string;
 declare class Statement {
@@ -200,6 +218,7 @@ declare class ActionBasedPolicy extends Policy {
     evaluate({ action, context }: EvaluateActionBasedInterface): boolean;
     can({ action, context }: EvaluateActionBasedInterface): boolean;
     cannot({ action, context }: EvaluateActionBasedInterface): boolean;
+    generateProxy<T, U extends keyof T>(obj: unknown, options?: ProxyOptions): T | undefined;
 }
 
 interface IdentityBasedPolicyInterface {

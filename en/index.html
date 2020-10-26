@@ -116,7 +116,7 @@ data-styled.g7[id="sc-global-BndOP1"]{content:"sc-global-BndOP1,"}/*!sc*/
 </li>
 </ul></div></aside><div class="content__ContentStyled-sc-5d8xcj-0 dttZPt"><main><section class="documentation__DocumentationStyled-sc-1iu6os0-0 kJUvbk"><div id="main-content"><h1 id="iam-policies" style="position:relative;"><a href="#iam-policies" aria-label="iam policies permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>iam-policies</h1>
 <blockquote>
-<p><a href="https://www.npmjs.com/package/iam-policies" target="_blank" rel="nofollow"><img src="https://img.shields.io/npm/v/iam-policies.svg" alt="NPM"></a> <a href="https://standardjs.com" target="_blank" rel="nofollow"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="JavaScript Style Guide"></a> <a href="https://travis-ci.com/github/roggervalf/iam-policies" target="_blank" rel="nofollow"><img src="https://travis-ci.com/roggervalf/iam-policies.svg?branch=master" alt="Build Status"></a> <a href="https://github.com/semantic-release/semantic-release" target="_blank" rel="nofollow"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release"></a></p>
+<p><a href="https://www.npmjs.com/package/iam-policies" target="_blank" rel="nofollow"><img src="https://img.shields.io/npm/v/iam-policies.svg" alt="NPM"></a> <a href="https://standardjs.com" target="_blank" rel="nofollow"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="JavaScript Style Guide"></a> <a href="https://travis-ci.com/github/roggervalf/iam-policies" target="_blank" rel="nofollow"><img src="https://travis-ci.com/roggervalf/iam-policies.svg?branch=master" alt="Build Status"></a> <a href="https://www.npmjs.com/package/iam-policies" target="_blank" rel="nofollow"><img src="https://img.shields.io/npm/dm/iam-policies" alt="NPM downloads"></a> <a href="https://coveralls.io/github/roggervalf/iam-policies?branch=master" target="_blank" rel="nofollow"><img src="https://coveralls.io/repos/github/roggervalf/iam-policies/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://github.com/semantic-release/semantic-release" target="_blank" rel="nofollow"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release"></a></p>
 </blockquote>
 <h2 id="about" style="position:relative;"><a href="#about" aria-label="about permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>About</h2>
 <p>Define custom IAM Policies by allowed or denied set of actions against a set of resources with optional context and conditions.</p>
@@ -145,6 +145,7 @@ data-styled.g7[id="sc-global-BndOP1"]{content:"sc-global-BndOP1,"}/*!sc*/
 <ul>
 <li>Policies creation (<a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policy-types" target="_blank" rel="nofollow">IdentityBasedPolicy and ResourceBasedPolicy</a>)</li>
 <li>Permission verifications</li>
+<li>Generate Proxies</li>
 </ul>
 <h2 id="usage" style="position:relative;"><a href="#usage" aria-label="usage permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Usage</h2>
 <h3 id="examples" style="position:relative;"><a href="#examples" aria-label="examples permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Examples</h3>
@@ -155,17 +156,19 @@ data-styled.g7[id="sc-global-BndOP1"]{content:"sc-global-BndOP1,"}/*!sc*/
   ResourceBasedPolicy
 <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"iam-policies"</span><span class="token punctuation">)</span></code></pre></div>
 <h4 id="effect-property-allow" style="position:relative;"><a href="#effect-property-allow" aria-label="effect property allow permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Effect property allow</h4>
-<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> allowExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
-  <span class="token punctuation">{</span>
-    effect<span class="token operator">:</span> <span class="token string">"allow"</span><span class="token punctuation">,</span> <span class="token comment">// optional, defaults to allow</span>
-    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:${user.id}:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// embedded value by context</span>
-    action<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"read"</span><span class="token punctuation">,</span> <span class="token string">"write"</span><span class="token punctuation">]</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token punctuation">{</span>
-    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"bd:company:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    action<span class="token operator">:</span> <span class="token string">"create"</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> allowExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      effect<span class="token operator">:</span> <span class="token string">"allow"</span><span class="token punctuation">,</span> <span class="token comment">// optional, defaults to allow</span>
+      resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:${user.id}:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// embedded value by context</span>
+      action<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"read"</span><span class="token punctuation">,</span> <span class="token string">"write"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"bd:company:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      action<span class="token operator">:</span> <span class="token string">"create"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 <span class="token keyword">const</span> contextForAllowExample <span class="token operator">=</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token number">456</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
 
@@ -190,17 +193,19 @@ allowExample<span class="token punctuation">.</span><span class="token function"
   context<span class="token operator">:</span> contextForAllowExample
 <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
 <h4 id="effect-property-deny" style="position:relative;"><a href="#effect-property-deny" aria-label="effect property deny permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Effect property deny</h4>
-<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> denyExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
-  <span class="token punctuation">{</span>
-    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:${user.bestFriends}:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    action<span class="token operator">:</span> <span class="token string">"read"</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token punctuation">{</span>
-    effect<span class="token operator">:</span> <span class="token string">"deny"</span><span class="token punctuation">,</span>
-    resource<span class="token operator">:</span> <span class="token string">"secrets:123:*"</span><span class="token punctuation">,</span>
-    action<span class="token operator">:</span> <span class="token string">"read"</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> denyExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:${user.bestFriends}:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      action<span class="token operator">:</span> <span class="token string">"read"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      effect<span class="token operator">:</span> <span class="token string">"deny"</span><span class="token punctuation">,</span>
+      resource<span class="token operator">:</span> <span class="token string">"secrets:123:*"</span><span class="token punctuation">,</span>
+      action<span class="token operator">:</span> <span class="token string">"read"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 <span class="token keyword">const</span> contextForDenyExample <span class="token operator">=</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> <span class="token punctuation">{</span> bestFriends<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">123</span><span class="token punctuation">,</span> <span class="token number">563</span><span class="token punctuation">,</span> <span class="token number">1211</span><span class="token punctuation">]</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
 
@@ -215,12 +220,14 @@ denyExample<span class="token punctuation">.</span><span class="token function">
   context<span class="token operator">:</span> contextForDenyExample
 <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
 <h4 id="not-action-property" style="position:relative;"><a href="#not-action-property" aria-label="not action property permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Not Action property</h4>
-<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> notActionExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
-  <span class="token punctuation">{</span>
-    resource<span class="token operator">:</span> <span class="token string">"bd:company:*"</span><span class="token punctuation">,</span>
-    notAction<span class="token operator">:</span> <span class="token string">"update"</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> notActionExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      resource<span class="token operator">:</span> <span class="token string">"bd:company:*"</span><span class="token punctuation">,</span>
+      notAction<span class="token operator">:</span> <span class="token string">"update"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 notActionExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   action<span class="token operator">:</span> <span class="token string">"delete"</span><span class="token punctuation">,</span>
@@ -231,12 +238,14 @@ notActionExample<span class="token punctuation">.</span><span class="token funct
   resource<span class="token operator">:</span> <span class="token string">"bd:company:account"</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
 <h4 id="not-resource-property" style="position:relative;"><a href="#not-resource-property" aria-label="not resource property permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Not Resource property</h4>
-<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> notResourceExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
-  <span class="token punctuation">{</span>
-    notResource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"bd:roles:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    action<span class="token operator">:</span> <span class="token string">"update"</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> notResourceExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      notResource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"bd:roles:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      action<span class="token operator">:</span> <span class="token string">"update"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 notResourceExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   action<span class="token operator">:</span> <span class="token string">"update"</span><span class="token punctuation">,</span>
@@ -247,12 +256,14 @@ notResourceExample<span class="token punctuation">.</span><span class="token fun
   resource<span class="token operator">:</span> <span class="token string">"bd:roles:admin"</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
 <h4 id="allow-everything" style="position:relative;"><a href="#allow-everything" aria-label="allow everything permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Allow everything</h4>
-<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> adminExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
-  <span class="token punctuation">{</span>
-    resource<span class="token operator">:</span> <span class="token string">"*"</span><span class="token punctuation">,</span>
-    action<span class="token operator">:</span> <span class="token string">"*"</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> adminExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      resource<span class="token operator">:</span> <span class="token string">"*"</span><span class="token punctuation">,</span>
+      action<span class="token operator">:</span> <span class="token string">"*"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 adminExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
@@ -263,14 +274,14 @@ adminExample<span class="token punctuation">.</span><span class="token function"
   resource<span class="token operator">:</span> <span class="token string">"otherResource"</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// true</span></code></pre></div>
 <h4 id="conditions-property" style="position:relative;"><a href="#conditions-property" aria-label="conditions property permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Conditions property</h4>
-<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> conditions <span class="token operator">=</span> <span class="token punctuation">{</span>
-  <span class="token function-variable function">greaterThan</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data<span class="token punctuation">,</span> expected</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> conditionResolver <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">greaterThan</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">data<span class="token punctuation">,</span> expected</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> data <span class="token operator">></span> expected
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">const</span> conditionExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span>
-  <span class="token punctuation">[</span>
+<span class="token keyword">const</span> conditionExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
       resource<span class="token operator">:</span> <span class="token string">"secrets:*"</span><span class="token punctuation">,</span>
       action<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"read"</span><span class="token punctuation">,</span> <span class="token string">"write"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -281,8 +292,8 @@ adminExample<span class="token punctuation">.</span><span class="token function"
       <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
-  conditions
-<span class="token punctuation">)</span>
+  conditionResolver
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 conditionExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   action<span class="token operator">:</span> <span class="token string">"read"</span><span class="token punctuation">,</span>
@@ -297,19 +308,21 @@ conditionExample<span class="token punctuation">.</span><span class="token funct
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
 <h4 id="principal-property" style="position:relative;"><a href="#principal-property" aria-label="principal property permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Principal property</h4>
-<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> principalExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResourceBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
-  <span class="token punctuation">{</span>
-    principal<span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
-    effect<span class="token operator">:</span> <span class="token string">"allow"</span><span class="token punctuation">,</span>
-    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:user:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    action<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"read"</span><span class="token punctuation">,</span> <span class="token string">"write"</span><span class="token punctuation">]</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token punctuation">{</span>
-    principal<span class="token operator">:</span> <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token string">"2"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    resource<span class="token operator">:</span> <span class="token string">"bd:company:*"</span><span class="token punctuation">,</span>
-    notAction<span class="token operator">:</span> <span class="token string">"update"</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> principalExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResourceBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      principal<span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+      effect<span class="token operator">:</span> <span class="token string">"allow"</span><span class="token punctuation">,</span>
+      resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:user:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      action<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"read"</span><span class="token punctuation">,</span> <span class="token string">"write"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      principal<span class="token operator">:</span> <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token string">"2"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      resource<span class="token operator">:</span> <span class="token string">"bd:company:*"</span><span class="token punctuation">,</span>
+      notAction<span class="token operator">:</span> <span class="token string">"update"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 principalExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   principal<span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
@@ -334,18 +347,20 @@ principalExample<span class="token punctuation">.</span><span class="token funct
   principalType<span class="token operator">:</span> <span class="token string">"id"</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// false</span></code></pre></div>
 <h4 id="not-principal-property" style="position:relative;"><a href="#not-principal-property" aria-label="not principal property permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Not Principal property</h4>
-<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> notPrincipalExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResourceBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
-  <span class="token punctuation">{</span>
-    notPrincipal<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"1"</span><span class="token punctuation">,</span> <span class="token string">"2"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:bd:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    action<span class="token operator">:</span> <span class="token string">"read"</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token punctuation">{</span>
-    notPrincipal<span class="token operator">:</span> <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token string">"3"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    resource<span class="token operator">:</span> <span class="token string">"secrets:admin:*"</span><span class="token punctuation">,</span>
-    action<span class="token operator">:</span> <span class="token string">"read"</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> notPrincipalExample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResourceBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      notPrincipal<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"1"</span><span class="token punctuation">,</span> <span class="token string">"2"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      resource<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"secrets:bd:*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      action<span class="token operator">:</span> <span class="token string">"read"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      notPrincipal<span class="token operator">:</span> <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token string">"3"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      resource<span class="token operator">:</span> <span class="token string">"secrets:admin:*"</span><span class="token punctuation">,</span>
+      action<span class="token operator">:</span> <span class="token string">"read"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 notPrincipalExample<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   principal<span class="token operator">:</span> <span class="token string">"3"</span><span class="token punctuation">,</span>
@@ -383,7 +398,9 @@ notPrincipalExample<span class="token punctuation">.</span><span class="token fu
   <span class="token punctuation">}</span>
 <span class="token punctuation">]</span>
 
-<span class="token keyword">const</span> inclusivePolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span>canAndCannotStatements<span class="token punctuation">)</span>
+<span class="token keyword">const</span> inclusivePolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token operator">:</span> canAndCannotStatements
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 <span class="token keyword">const</span> contextCanAndCannot <span class="token operator">=</span> <span class="token punctuation">{</span>
   division<span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -425,7 +442,11 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <p>Attach managed and simple inline policies to grant actions only.</p>
 <div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> ActionBasedPolicy <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"iam-policies"</span><span class="token punctuation">)</span>
 
-<span class="token keyword">const</span> actionBasedPolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ActionBasedPolicy</span><span class="token punctuation">(</span>Statement<span class="token punctuation">,</span> conditionResolver<span class="token punctuation">)</span></code></pre></div>
+<span class="token keyword">const</span> actionBasedPolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ActionBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token punctuation">,</span>
+  conditionResolver<span class="token punctuation">,</span>
+  context
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre></div>
 <h3 id="properties" style="position:relative;"><a href="#properties" aria-label="properties permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties</h3>
 <table>
 <thead>
@@ -439,59 +460,95 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 </thead>
 <tbody>
 <tr>
-<td><code class="language-text">Statement</code></td>
+<td><code class="language-text">statements</code></td>
 <td>object[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>Statement</em></strong> element is the main element for a policy. The Statement element can contain a single statement or an array of individual statements.</td>
+<td>The <strong><em>statements</em></strong> is the main element for a policy. The statements element can contain an array of individual statements.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].sid</code></td>
+<td><code class="language-text">statements[].sid</code></td>
 <td>string</td>
 <td><em>uuid</em></td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>sid</em></strong> element should be a unique identifier. It is automatically generated with a uuid in case it is undefined.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].effect</code></td>
+<td><code class="language-text">statements[].effect</code></td>
 <td>string</td>
 <td>allow</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>effect</em></strong> element specifies whether the statement results in an allow or an explicit deny. Valid values for Effect are <code class="language-text">allow</code> and <code class="language-text">deny</code>.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].action</code></td>
+<td><code class="language-text">statements[].action</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>action</em></strong> element describes the specific action or actions that will be allowed or denied. Statements must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.</td>
+<td>The <strong><em>action</em></strong> element describes the specific action or actions that will be allowed or denied. Each statement must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].notAction</code></td>
+<td><code class="language-text">statements[].notAction</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>notAction</em></strong> element is an advanced policy element that explicitly matches everything except the specified list of actions. Statements must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element. Using <code class="language-text">notAction</code> can result in a shorter policy by listing only a few actions that should not match, rather than including a long list of actions that will match. When using <code class="language-text">notAction</code>, you should keep in mind that actions specified in this element are the only actions in that are limited. This, in turn, means that all of the applicable actions or services that are not listed are allowed if you use the Allow effect. In addition, such unlisted actions or services are denied if you use the <code class="language-text">deny</code> effect. When you use <code class="language-text">notAction</code> with the <code class="language-text">resource</code> element, you provide scope for the policy.</td>
+<td>The <strong><em>notAction</em></strong> element is an advanced policy element that explicitly matches everything except the specified list of actions. Each statement must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element. Using <code class="language-text">notAction</code> can result in a shorter policy by listing only a few actions that should not match, rather than including a long list of actions that will match. When using <code class="language-text">notAction</code>, you should keep in mind that actions specified in this element are the only actions in that are limited. This, in turn, means that all of the applicable actions or services that are not listed are allowed if you use the Allow effect. In addition, such unlisted actions or services are denied if you use the <code class="language-text">deny</code> effect. When you use <code class="language-text">notAction</code> with the <code class="language-text">resource</code> element, you provide scope for the policy.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].condition[&quot;conditionType&quot;]</code></td>
+<td><code class="language-text">statements[].condition</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>The <strong><em>condition</em></strong> element (or Condition block) lets you specify conditions for when a policy is in effect. In the <code class="language-text">condition</code> element, you build expressions in which you use condition operators (equal, less than, etc.) to match the condition keys and values in the policy against keys and values in the request context.</td>
+</tr>
+<tr>
+<td><code class="language-text">statements[].condition[&quot;conditionType&quot;]</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>conditionType</em></strong> name should be replaced with a custom string attribute for a specific condition that should be match with one conditionResolver element.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
+<td><code class="language-text">statements[].condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
 <td>(string or number or boolean) or (string or number or boolean)[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>conditionKey</em></strong> should be a custom string path attribute for a specific context attribute. Note: attributes must be separated but dots (<code class="language-text">.</code>).</td>
 </tr>
+<tr>
+<td><code class="language-text">conditionResolver</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>The <strong><em>conditionResolver</em></strong> should contain a function in each attribute to resolve an specific embedded condition in our statements.</td>
+</tr>
+<tr>
+<td><code class="language-text">conditionResolver[&quot;conditionKey&quot;]</code></td>
+<td>function</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>The <strong><em>conditionKey</em></strong> should match with a function name that will be used as a resolver in condition evaluation. There are 2 parameters for this function: <strong>data</strong> (first parameter) that will be evaluated with <strong>expected</strong> (second parameter), returning a <strong>true</strong> or <strong>false</strong>.</td>
+</tr>
+<tr>
+<td><code class="language-text">context</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>The <strong><em>context</em></strong> has those properties that will be embedded in our statements.</td>
+</tr>
 </tbody>
 </table>
 <h3 id="methods" style="position:relative;"><a href="#methods" aria-label="methods permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h3>
 <h4 id="actionbasedpolicygetstatements" style="position:relative;"><a href="#actionbasedpolicygetstatements" aria-label="actionbasedpolicygetstatements permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>actionBasedPolicy.getStatements()</h4>
-<p><em>public</em>: Returns <code class="language-text">Statement[]</code> (statements array).</p>
+<p><em>public</em>: Returns <code class="language-text">statements[]</code> (statements array).</p>
+<h4 id="actionbasedpolicygetcontext" style="position:relative;"><a href="#actionbasedpolicygetcontext" aria-label="actionbasedpolicygetcontext permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>actionBasedPolicy.getContext()</h4>
+<p><em>public</em>: Returns <code class="language-text">context</code> object.</p>
+<h4 id="actionbasedpolicysetcontextcontext" style="position:relative;"><a href="#actionbasedpolicysetcontextcontext" aria-label="actionbasedpolicysetcontextcontext permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>actionBasedPolicy.setContext(context)</h4>
+<p><em>public</em>: Sets <code class="language-text">context</code> object.</p>
+<h4 id="actionbasedpolicygetconditionresolver" style="position:relative;"><a href="#actionbasedpolicygetconditionresolver" aria-label="actionbasedpolicygetconditionresolver permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>actionBasedPolicy.getConditionResolver()</h4>
+<p><em>public</em>: Returns <code class="language-text">conditionResolver</code> object.</p>
+<h4 id="actionbasedpolicysetconditionresolverconditionresolver" style="position:relative;"><a href="#actionbasedpolicysetconditionresolverconditionresolver" aria-label="actionbasedpolicysetconditionresolverconditionresolver permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>actionBasedPolicy.setConditionResolver(conditionResolver)</h4>
+<p><em>public</em>: Sets <code class="language-text">conditionResolver</code> object.</p>
 <h4 id="actionbasedpolicyevaluateaction-context" style="position:relative;"><a href="#actionbasedpolicyevaluateaction-context" aria-label="actionbasedpolicyevaluateaction context permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>actionBasedPolicy.evaluate({action, context})</h4>
 <p><em>public</em>: Verify if action is allowed (<code class="language-text">true</code>) or denied (<code class="language-text">false</code>).</p>
 <h5 id="params" style="position:relative;"><a href="#params" aria-label="params permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
@@ -582,14 +639,86 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 </tr>
 </tbody>
 </table>
+<h4 id="actionbasedpolicygenerateproxyobject-options" style="position:relative;"><a href="#actionbasedpolicygenerateproxyobject-options" aria-label="actionbasedpolicygenerateproxyobject options permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>actionBasedPolicy.generateProxy(object, options)</h4>
+<p><em>public</em>: Generate a Proxy for the object param.</p>
+<h5 id="params-3" style="position:relative;"><a href="#params-3" aria-label="params 3 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">object</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">true</code></td>
+<td>It's the object that is going to be wrapped with a Proxy.</td>
+</tr>
+<tr>
+<td><code class="language-text">options</code></td>
+<td>object</td>
+<td>{ get:{ allow:true }, set:{ allow:true } }</td>
+<td><code class="language-text">false</code></td>
+<td>It should contains attributes to modify the default behavior.</td>
+</tr>
+<tr>
+<td><code class="language-text">options.get</code></td>
+<td>object</td>
+<td>{ allow:true }</td>
+<td><code class="language-text">false</code></td>
+<td>It should contain get function handler options for the Proxy instance.</td>
+</tr>
+<tr>
+<td><code class="language-text">options.get.allow</code></td>
+<td>boolean</td>
+<td>true</td>
+<td><code class="language-text">false</code></td>
+<td>It should allow to use the get function handler.</td>
+</tr>
+<tr>
+<td><code class="language-text">options.get.propertyMap</code></td>
+<td>object</td>
+<td>{}</td>
+<td><code class="language-text">false</code></td>
+<td>It should serve as a mapping for different property names in get function handler.</td>
+</tr>
+<tr>
+<td><code class="language-text">options.set</code></td>
+<td>object</td>
+<td>{ allow:true }</td>
+<td><code class="language-text">false</code></td>
+<td>It should contain set function handler options for the Proxy instance.</td>
+</tr>
+<tr>
+<td><code class="language-text">options.set.allow</code></td>
+<td>boolean</td>
+<td>true</td>
+<td><code class="language-text">false</code></td>
+<td>It should allow to use the set function handler.</td>
+</tr>
+<tr>
+<td><code class="language-text">options.set.propertyMap</code></td>
+<td>object</td>
+<td>{}</td>
+<td><code class="language-text">false</code></td>
+<td>It should serve as a mapping for different property names in set function handler.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="identitybasedpolicy-class" style="position:relative;"><a href="#identitybasedpolicy-class" aria-label="identitybasedpolicy class permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IdentityBasedPolicy Class</h2>
 <p>Attach managed and inline policies to identities (users, groups to which users belong, or roles). Identity-based policies grant permissions to an identity.</p>
 <div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> IdentityBasedPolicy <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"iam-policies"</span><span class="token punctuation">)</span>
 
-<span class="token keyword">const</span> identityBasedPolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span>
-  Statement<span class="token punctuation">,</span>
+<span class="token keyword">const</span> identityBasedPolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IdentityBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token punctuation">,</span>
   conditionResolver
-<span class="token punctuation">)</span></code></pre></div>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre></div>
 <h3 id="properties-1" style="position:relative;"><a href="#properties-1" aria-label="properties 1 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties</h3>
 <table>
 <thead>
@@ -603,83 +732,112 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 </thead>
 <tbody>
 <tr>
-<td><code class="language-text">Statement</code></td>
+<td><code class="language-text">statements</code></td>
 <td>object[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>Statement</em></strong> element is the main element for a policy. The Statement element can contain a single statement or an array of individual statements.</td>
+<td>The <strong><em>statements</em></strong> element is the main element for a policy. The statements element can contain an array of individual statements.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].sid</code></td>
+<td><code class="language-text">statements[].sid</code></td>
 <td>string</td>
 <td><em>uuid</em></td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>sid</em></strong> element should be a unique identifier. It is automatically generated with a uuid in case it is undefined.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].effect</code></td>
+<td><code class="language-text">statements[].effect</code></td>
 <td>string</td>
 <td>allow</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>effect</em></strong> element specifies whether the statement results in an allow or an explicit deny. Valid values for Effect are <code class="language-text">allow</code> and <code class="language-text">deny</code>.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].action</code></td>
+<td><code class="language-text">statements[].action</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>action</em></strong> element describes the specific action or actions that will be allowed or denied. Statements must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].notAction</code></td>
+<td><code class="language-text">statements[].notAction</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>notAction</em></strong> element is an advanced policy element that explicitly matches everything except the specified list of actions. Statements must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element. Using <code class="language-text">notAction</code> can result in a shorter policy by listing only a few actions that should not match, rather than including a long list of actions that will match. When using <code class="language-text">notAction</code>, you should keep in mind that actions specified in this element are the only actions in that are limited. This, in turn, means that all of the applicable actions or services that are not listed are allowed if you use the Allow effect. In addition, such unlisted actions or services are denied if you use the <code class="language-text">deny</code> effect. When you use <code class="language-text">notAction</code> with the <code class="language-text">resource</code> element, you provide scope for the policy.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].resource</code></td>
+<td><code class="language-text">statements[].resource</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>resource</em></strong> element specifies the object or objects that the statement covers. Statements must include either a <code class="language-text">resource</code> or a <code class="language-text">notResource</code> element.</td>
+<td>The <strong><em>resource</em></strong> element specifies the object or objects that the statement covers. Each statement must include either a <code class="language-text">resource</code> or a <code class="language-text">notResource</code> element.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].notResource</code></td>
+<td><code class="language-text">statements[].notResource</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>notResource</em></strong> element is an advanced policy element that explicitly matches every resource except those specified. Statements must include either an <code class="language-text">resource</code> or <code class="language-text">notResource</code> element. Using <code class="language-text">notResource</code> can result in a shorter policy by listing only a few resources that should not match, rather than including a long list of resources that will match.</td>
+<td>The <strong><em>notResource</em></strong> element is an advanced policy element that explicitly matches every resource except those specified. Each statement must include either an <code class="language-text">resource</code> or <code class="language-text">notResource</code> element. Using <code class="language-text">notResource</code> can result in a shorter policy by listing only a few resources that should not match, rather than including a long list of resources that will match.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].condition</code></td>
+<td><code class="language-text">statements[].condition</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>condition</em></strong> element (or Condition block) lets you specify conditions for when a policy is in effect. In the <code class="language-text">condition</code> element, you build expressions in which you use condition operators (equal, less than, etc.) to match the condition keys and values in the policy against keys and values in the request context.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].condition[&quot;conditionType&quot;]</code></td>
+<td><code class="language-text">statements[].condition[&quot;conditionType&quot;]</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>conditionType</em></strong> name should be replaced with a custom string attribute for a specific condition that should be match with one conditionResolver element.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
+<td><code class="language-text">statements[].condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
 <td>(string or number or boolean) or (string or number or boolean)[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>conditionKey</em></strong> should be a custom string path attribute for a specific context attribute. Note: attributes must be separated but dots (<code class="language-text">.</code>).</td>
 </tr>
+<tr>
+<td><code class="language-text">conditionResolver</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>The <strong><em>conditionResolver</em></strong> should contain a function in each attribute to resolve an specific embedded condition in our statements.</td>
+</tr>
+<tr>
+<td><code class="language-text">conditionResolver[&quot;conditionKey&quot;]</code></td>
+<td>function</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>The <strong><em>conditionKey</em></strong> should match with a function name that will be used as a resolver in condition evaluation. There are 2 parameters for this function: <strong>data</strong> (first parameter) that will be evaluated with <strong>expected</strong> (second parameter), returning a <strong>true</strong> or <strong>false</strong>.</td>
+</tr>
+<tr>
+<td><code class="language-text">context</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>The <strong><em>context</em></strong> has those properties that will be embedded in our statements.</td>
+</tr>
 </tbody>
 </table>
 <h3 id="methods-1" style="position:relative;"><a href="#methods-1" aria-label="methods 1 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h3>
 <h4 id="identitybasedpolicygetstatements" style="position:relative;"><a href="#identitybasedpolicygetstatements" aria-label="identitybasedpolicygetstatements permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>identityBasedPolicy.getStatements()</h4>
-<p><em>public</em>: Returns <code class="language-text">Statement[]</code> (statements array).</p>
+<p><em>public</em>: Returns <code class="language-text">statements[]</code> (statements array).</p>
+<h4 id="identitybasedpolicygetcontext" style="position:relative;"><a href="#identitybasedpolicygetcontext" aria-label="identitybasedpolicygetcontext permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>identityBasedPolicy.getContext()</h4>
+<p><em>public</em>: Returns <code class="language-text">context</code> object.</p>
+<h4 id="identitybasedpolicysetcontextcontext" style="position:relative;"><a href="#identitybasedpolicysetcontextcontext" aria-label="identitybasedpolicysetcontextcontext permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>identityBasedPolicy.setContext(context)</h4>
+<p><em>public</em>: Sets <code class="language-text">context</code> object.</p>
+<h4 id="identitybasedpolicygetconditionresolver" style="position:relative;"><a href="#identitybasedpolicygetconditionresolver" aria-label="identitybasedpolicygetconditionresolver permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>identityBasedPolicy.getConditionResolver()</h4>
+<p><em>public</em>: Returns <code class="language-text">conditionResolver</code> object.</p>
+<h4 id="identitybasedpolicysetconditionresolverconditionresolver" style="position:relative;"><a href="#identitybasedpolicysetconditionresolverconditionresolver" aria-label="identitybasedpolicysetconditionresolverconditionresolver permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>identityBasedPolicy.setConditionResolver(conditionResolver)</h4>
+<p><em>public</em>: Sets <code class="language-text">conditionResolver</code> object.</p>
 <h4 id="identitybasedpolicyevaluateaction-resource-context" style="position:relative;"><a href="#identitybasedpolicyevaluateaction-resource-context" aria-label="identitybasedpolicyevaluateaction resource context permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>identityBasedPolicy.evaluate({action, resource, context})</h4>
 <p><em>public</em>: Verify if action for specific resource is allowed (<code class="language-text">true</code>) or denied (<code class="language-text">false</code>).</p>
-<h5 id="params-3" style="position:relative;"><a href="#params-3" aria-label="params 3 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
+<h5 id="params-4" style="position:relative;"><a href="#params-4" aria-label="params 4 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
 <table>
 <thead>
 <tr>
@@ -716,7 +874,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 </table>
 <h4 id="identitybasedpolicycanaction-resource-context" style="position:relative;"><a href="#identitybasedpolicycanaction-resource-context" aria-label="identitybasedpolicycanaction resource context permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>identityBasedPolicy.can({action, resource, context})</h4>
 <p><em>public</em>: Verify if action for specific resource is allowed (<code class="language-text">true</code>) or not present (<code class="language-text">false</code>).</p>
-<h5 id="params-4" style="position:relative;"><a href="#params-4" aria-label="params 4 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
+<h5 id="params-5" style="position:relative;"><a href="#params-5" aria-label="params 5 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
 <table>
 <thead>
 <tr>
@@ -753,7 +911,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 </table>
 <h4 id="identitybasedpolicycannotaction-resource-context" style="position:relative;"><a href="#identitybasedpolicycannotaction-resource-context" aria-label="identitybasedpolicycannotaction resource context permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>identityBasedPolicy.cannot({action, resource, context})</h4>
 <p><em>public</em>: Verify if action for specific resource is denied (<code class="language-text">true</code>) or not present (<code class="language-text">false</code>).</p>
-<h5 id="params-5" style="position:relative;"><a href="#params-5" aria-label="params 5 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
+<h5 id="params-6" style="position:relative;"><a href="#params-6" aria-label="params 6 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
 <table>
 <thead>
 <tr>
@@ -792,10 +950,11 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <p>Attach inline policies to resources. Resource-based policies grant permissions to the principal that is specified in the policy.</p>
 <div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> ResourceBasedPolicy <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"iam-policies"</span><span class="token punctuation">)</span>
 
-<span class="token keyword">const</span> resourceBasedPolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResourceBasedPolicy</span><span class="token punctuation">(</span>
-  Statement<span class="token punctuation">,</span>
-  conditionResolver
-<span class="token punctuation">)</span></code></pre></div>
+<span class="token keyword">const</span> resourceBasedPolicy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResourceBasedPolicy</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  statements<span class="token punctuation">,</span>
+  conditionResolver<span class="token punctuation">,</span>
+  context
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre></div>
 <h3 id="properties-2" style="position:relative;"><a href="#properties-2" aria-label="properties 2 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties</h3>
 <table>
 <thead>
@@ -809,147 +968,125 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 </thead>
 <tbody>
 <tr>
-<td><code class="language-text">Statement</code></td>
+<td><code class="language-text">statements</code></td>
 <td>object[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>Statement</em></strong> element is the main element for a policy. The Statement element can contain a single statement or an array of individual statements.</td>
+<td>The <strong><em>statements</em></strong> element is the main element for a policy. The statements element can contain an array of individual statements.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].sid</code></td>
+<td><code class="language-text">statements[].sid</code></td>
 <td>string</td>
 <td><em>uuid</em></td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>sid</em></strong> element should be a unique identifier. It is automatically generated with a uuid in case it is undefined.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].effect</code></td>
+<td><code class="language-text">statements[].effect</code></td>
 <td>string</td>
 <td>allow</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>effect</em></strong> element specifies whether the statement results in an allow or an explicit deny. Valid values for Effect are <code class="language-text">allow</code> and <code class="language-text">deny</code>.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].principal</code></td>
+<td><code class="language-text">statements[].principal</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>principal</em></strong> element in a policy to specify the principal that is allowed or denied access to a resource. Statements must include either an <code class="language-text">principal</code> or <code class="language-text">notPrincipal</code> element.</td>
+<td>The <strong><em>principal</em></strong> element in a policy to specify the principal that is allowed or denied access to a resource. Each statement could include either an <code class="language-text">principal</code> or <code class="language-text">notPrincipal</code>.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].notPrincipal</code></td>
+<td><code class="language-text">statements[].notPrincipal</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>notPrincipal</em></strong> element specifies the principal that is not allowed or denied access to a resource. The <code class="language-text">notPrincipal</code> element enables you to specify an exception to a list of principals. Use this element to deny access to all principals except the one named in the <code class="language-text">notPrincipal</code> element. Statements must include either an <code class="language-text">principal</code> or <code class="language-text">notPrincipal</code> element.</td>
+<td>The <strong><em>notPrincipal</em></strong> element specifies the principal that is not allowed or denied access to a resource. The <code class="language-text">notPrincipal</code> element enables you to specify an exception to a list of principals. Use this element to deny access to all principals except the one named in the <code class="language-text">notPrincipal</code> element. Each statement could include either an <code class="language-text">principal</code> or <code class="language-text">notPrincipal</code> element.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].action</code></td>
+<td><code class="language-text">statements[].action</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>action</em></strong> element describes the specific action or actions that will be allowed or denied. Statements must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.</td>
+<td>The <strong><em>action</em></strong> element describes the specific action or actions that will be allowed or denied. Each statement must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].notAction</code></td>
+<td><code class="language-text">statements[].notAction</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>notAction</em></strong> element is an advanced policy element that explicitly matches everything except the specified list of actions. Statements must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element. Using <code class="language-text">notAction</code> can result in a shorter policy by listing only a few actions that should not match, rather than including a long list of actions that will match. When using <code class="language-text">notAction</code>, you should keep in mind that actions specified in this element are the only actions in that are limited. This, in turn, means that all of the applicable actions or services that are not listed are allowed if you use the Allow effect. In addition, such unlisted actions or services are denied if you use the <code class="language-text">deny</code> effect. When you use <code class="language-text">notAction</code> with the <code class="language-text">resource</code> element, you provide scope for the policy.</td>
+<td>The <strong><em>notAction</em></strong> element is an advanced policy element that explicitly matches everything except the specified list of actions. Each statement must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element. Using <code class="language-text">notAction</code> can result in a shorter policy by listing only a few actions that should not match, rather than including a long list of actions that will match. When using <code class="language-text">notAction</code>, you should keep in mind that actions specified in this element are the only actions in that are limited. This, in turn, means that all of the applicable actions or services that are not listed are allowed if you use the Allow effect. In addition, such unlisted actions or services are denied if you use the <code class="language-text">deny</code> effect. When you use <code class="language-text">notAction</code> with the <code class="language-text">resource</code> element, you provide scope for the policy.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].resource</code></td>
+<td><code class="language-text">statements[].resource</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>resource</em></strong> element specifies the object or objects that the statement covers. Statements could include either a <code class="language-text">resource</code> or a <code class="language-text">notResource</code> element.</td>
+<td>The <strong><em>resource</em></strong> element specifies the object or objects that the statement covers. Each statement could include either a <code class="language-text">resource</code> or a <code class="language-text">notResource</code> element.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].notResource</code></td>
+<td><code class="language-text">statements[].notResource</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>notResource</em></strong> element is an advanced policy element that explicitly matches every resource except those specified. Statements could include either an <code class="language-text">resource</code> or <code class="language-text">notResource</code> element. Using <code class="language-text">notResource</code> can result in a shorter policy by listing only a few resources that should not match, rather than including a long list of resources that will match.</td>
+<td>The <strong><em>notResource</em></strong> element is an advanced policy element that explicitly matches every resource except those specified. Each statement could include either an <code class="language-text">resource</code> or <code class="language-text">notResource</code> element. Using <code class="language-text">notResource</code> can result in a shorter policy by listing only a few resources that should not match, rather than including a long list of resources that will match.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].condition</code></td>
+<td><code class="language-text">statements[].condition</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>condition</em></strong> element (or Condition block) lets you specify conditions for when a policy is in effect. In the <code class="language-text">condition</code> element, you build expressions in which you use condition operators (equal, less than, etc.) to match the condition keys and values in the policy against keys and values in the request context.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].condition[&quot;conditionType&quot;]</code></td>
+<td><code class="language-text">statements[].condition[&quot;conditionType&quot;]</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>conditionType</em></strong> name should be replaced with a custom string attribute for a specific condition that should be match with one conditionResolver element.</td>
 </tr>
 <tr>
-<td><code class="language-text">Statement[].condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
+<td><code class="language-text">statements[].condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
 <td>(string or number or boolean) or (string or number or boolean)[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>conditionKey</em></strong> should be a custom string path attribute for a specific context attribute. Note: attributes must be separated but dots (<code class="language-text">.</code>).</td>
 </tr>
-</tbody>
-</table>
-<h3 id="methods-2" style="position:relative;"><a href="#methods-2" aria-label="methods 2 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h3>
-<h4 id="resourcebasedpolicygetstatements" style="position:relative;"><a href="#resourcebasedpolicygetstatements" aria-label="resourcebasedpolicygetstatements permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.getStatements()</h4>
-<p><em>public</em>: Returns <code class="language-text">Statement[]</code> (statements array).</p>
-<h4 id="resourcebasedpolicyevaluateprincipal-action-resource-context-principaltype" style="position:relative;"><a href="#resourcebasedpolicyevaluateprincipal-action-resource-context-principaltype" aria-label="resourcebasedpolicyevaluateprincipal action resource context principaltype permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.evaluate({principal, action, resource, context, principalType})</h4>
-<p><em>public</em>: Verify if action for specific resource is allowed (<code class="language-text">true</code>) or denied (<code class="language-text">false</code>).</p>
-<h5 id="params-6" style="position:relative;"><a href="#params-6" aria-label="params 6 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
-<table>
-<thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th>Default</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code class="language-text">principal</code></td>
-<td>string</td>
+<td><code class="language-text">conditionResolver</code></td>
+<td>object</td>
 <td>undefined</td>
-<td><code class="language-text">true</code></td>
-<td>It represents the principal you are asking.</td>
+<td><code class="language-text">false</code></td>
+<td>The <strong><em>conditionResolver</em></strong> should contain a function in each attribute to resolve an specific embedded condition in our statements.</td>
 </tr>
 <tr>
-<td><code class="language-text">action</code></td>
-<td>string</td>
+<td><code class="language-text">conditionResolver[&quot;conditionKey&quot;]</code></td>
+<td>function</td>
 <td>undefined</td>
-<td><code class="language-text">true</code></td>
-<td>It represents the action you are asking.</td>
-</tr>
-<tr>
-<td><code class="language-text">resource</code></td>
-<td>string</td>
-<td>undefined</td>
-<td><code class="language-text">true</code></td>
-<td>It represents the resource for the action you are asking.</td>
+<td><code class="language-text">false</code></td>
+<td>The <strong><em>conditionKey</em></strong> should match with a function name that will be used as a resolver in condition evaluation. There are 2 parameters for this function: <strong>data</strong> (first parameter) that will be evaluated with <strong>expected</strong> (second parameter), returning a <strong>true</strong> or <strong>false</strong>.</td>
 </tr>
 <tr>
 <td><code class="language-text">context</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>It represents the properties that will be embedded into your resources.</td>
-</tr>
-<tr>
-<td><code class="language-text">principalType</code></td>
-<td>string</td>
-<td>undefined</td>
-<td><code class="language-text">true</code></td>
-<td>It represents the principalType (principal attribute if the statement have principal object) you are asking.</td>
+<td>The <strong><em>context</em></strong> has those properties that will be embedded in our statements.</td>
 </tr>
 </tbody>
 </table>
-<h4 id="resourcebasedpolicycanprincipal-action-resource-context-principaltype" style="position:relative;"><a href="#resourcebasedpolicycanprincipal-action-resource-context-principaltype" aria-label="resourcebasedpolicycanprincipal action resource context principaltype permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.can({principal, action, resource, context, principalType})</h4>
-<p><em>public</em>: Verify if action for specific resource is allowed (<code class="language-text">true</code>) or not present (<code class="language-text">false</code>).</p>
+<h3 id="methods-2" style="position:relative;"><a href="#methods-2" aria-label="methods 2 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h3>
+<h4 id="resourcebasedpolicygetstatements" style="position:relative;"><a href="#resourcebasedpolicygetstatements" aria-label="resourcebasedpolicygetstatements permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.getStatements()</h4>
+<p><em>public</em>: Returns <code class="language-text">statements[]</code> (statements array).</p>
+<h4 id="resourcebasedpolicygetcontext" style="position:relative;"><a href="#resourcebasedpolicygetcontext" aria-label="resourcebasedpolicygetcontext permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.getContext()</h4>
+<p><em>public</em>: Returns <code class="language-text">context</code> object.</p>
+<h4 id="resourcebasedpolicysetcontextcontext" style="position:relative;"><a href="#resourcebasedpolicysetcontextcontext" aria-label="resourcebasedpolicysetcontextcontext permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.setContext(context)</h4>
+<p><em>public</em>: Sets <code class="language-text">context</code> object.</p>
+<h4 id="resourcebasedpolicygetconditionresolver" style="position:relative;"><a href="#resourcebasedpolicygetconditionresolver" aria-label="resourcebasedpolicygetconditionresolver permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.getConditionResolver()</h4>
+<p><em>public</em>: Returns <code class="language-text">conditionResolver</code> object.</p>
+<h4 id="resourcebasedpolicysetconditionresolverconditionresolver" style="position:relative;"><a href="#resourcebasedpolicysetconditionresolverconditionresolver" aria-label="resourcebasedpolicysetconditionresolverconditionresolver permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.setConditionResolver(conditionResolver)</h4>
+<p><em>public</em>: Sets <code class="language-text">conditionResolver</code> object.</p>
+<h4 id="resourcebasedpolicyevaluateprincipal-action-resource-context-principaltype" style="position:relative;"><a href="#resourcebasedpolicyevaluateprincipal-action-resource-context-principaltype" aria-label="resourcebasedpolicyevaluateprincipal action resource context principaltype permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.evaluate({principal, action, resource, context, principalType})</h4>
+<p><em>public</em>: Verify if action for specific resource is allowed (<code class="language-text">true</code>) or denied (<code class="language-text">false</code>).</p>
 <h5 id="params-7" style="position:relative;"><a href="#params-7" aria-label="params 7 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
 <table>
 <thead>
@@ -966,7 +1103,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td><code class="language-text">principal</code></td>
 <td>string</td>
 <td>undefined</td>
-<td><code class="language-text">true</code></td>
+<td><code class="language-text">false</code></td>
 <td>It represents the principal you are asking.</td>
 </tr>
 <tr>
@@ -980,7 +1117,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td><code class="language-text">resource</code></td>
 <td>string</td>
 <td>undefined</td>
-<td><code class="language-text">true</code></td>
+<td><code class="language-text">false</code></td>
 <td>It represents the resource for the action you are asking.</td>
 </tr>
 <tr>
@@ -994,13 +1131,13 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td><code class="language-text">principalType</code></td>
 <td>string</td>
 <td>undefined</td>
-<td><code class="language-text">true</code></td>
+<td><code class="language-text">false</code></td>
 <td>It represents the principalType (principal attribute if the statement have principal object) you are asking.</td>
 </tr>
 </tbody>
 </table>
-<h4 id="resourcebasedpolicycannotprincipal-action-resource-context-principaltype" style="position:relative;"><a href="#resourcebasedpolicycannotprincipal-action-resource-context-principaltype" aria-label="resourcebasedpolicycannotprincipal action resource context principaltype permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.cannot({principal, action, resource, context, principalType})</h4>
-<p><em>public</em>: Verify if action for specific resource is denied (<code class="language-text">true</code>) or not present (<code class="language-text">false</code>).</p>
+<h4 id="resourcebasedpolicycanprincipal-action-resource-context-principaltype" style="position:relative;"><a href="#resourcebasedpolicycanprincipal-action-resource-context-principaltype" aria-label="resourcebasedpolicycanprincipal action resource context principaltype permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.can({principal, action, resource, context, principalType})</h4>
+<p><em>public</em>: Verify if action for specific resource is allowed (<code class="language-text">true</code>) or not present (<code class="language-text">false</code>).</p>
 <h5 id="params-8" style="position:relative;"><a href="#params-8" aria-label="params 8 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
 <table>
 <thead>
@@ -1017,7 +1154,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td><code class="language-text">principal</code></td>
 <td>string</td>
 <td>undefined</td>
-<td><code class="language-text">true</code></td>
+<td><code class="language-text">false</code></td>
 <td>It represents the principal you are asking.</td>
 </tr>
 <tr>
@@ -1031,7 +1168,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td><code class="language-text">resource</code></td>
 <td>string</td>
 <td>undefined</td>
-<td><code class="language-text">true</code></td>
+<td><code class="language-text">false</code></td>
 <td>It represents the resource for the action you are asking.</td>
 </tr>
 <tr>
@@ -1045,7 +1182,58 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td><code class="language-text">principalType</code></td>
 <td>string</td>
 <td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>It represents the principalType (principal attribute if the statement have principal object) you are asking.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="resourcebasedpolicycannotprincipal-action-resource-context-principaltype" style="position:relative;"><a href="#resourcebasedpolicycannotprincipal-action-resource-context-principaltype" aria-label="resourcebasedpolicycannotprincipal action resource context principaltype permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>resourceBasedPolicy.cannot({principal, action, resource, context, principalType})</h4>
+<p><em>public</em>: Verify if action for specific resource is denied (<code class="language-text">true</code>) or not present (<code class="language-text">false</code>).</p>
+<h5 id="params-9" style="position:relative;"><a href="#params-9" aria-label="params 9 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h5>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="language-text">principal</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>It represents the principal you are asking.</td>
+</tr>
+<tr>
+<td><code class="language-text">action</code></td>
+<td>string</td>
+<td>undefined</td>
 <td><code class="language-text">true</code></td>
+<td>It represents the action you are asking.</td>
+</tr>
+<tr>
+<td><code class="language-text">resource</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>It represents the resource for the action you are asking.</td>
+</tr>
+<tr>
+<td><code class="language-text">context</code></td>
+<td>object</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
+<td>It represents the properties that will be embedded into your resources.</td>
+</tr>
+<tr>
+<td><code class="language-text">principalType</code></td>
+<td>string</td>
+<td>undefined</td>
+<td><code class="language-text">false</code></td>
 <td>It represents the principalType (principal attribute if the statement have principal object) you are asking.</td>
 </tr>
 </tbody>
@@ -1055,7 +1243,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> getValueFromPath <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"iam-policies"</span><span class="token punctuation">)</span>
 
 <span class="token keyword">const</span> value <span class="token operator">=</span> <span class="token function">getValueFromPath</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> path<span class="token punctuation">,</span> defaultValue<span class="token punctuation">)</span></code></pre></div>
-<h3 id="params-9" style="position:relative;"><a href="#params-9" aria-label="params 9 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h3>
+<h3 id="params-10" style="position:relative;"><a href="#params-10" aria-label="params 10 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h3>
 <table>
 <thead>
 <tr>
@@ -1095,7 +1283,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> applyContext <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"iam-policies"</span><span class="token punctuation">)</span>
 
 <span class="token keyword">const</span> embeddedStr <span class="token operator">=</span> <span class="token function">applyContext</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> context<span class="token punctuation">)</span></code></pre></div>
-<h3 id="params-10" style="position:relative;"><a href="#params-10" aria-label="params 10 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h3>
+<h3 id="params-11" style="position:relative;"><a href="#params-11" aria-label="params 11 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Params</h3>
 <table>
 <thead>
 <tr>

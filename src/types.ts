@@ -5,12 +5,12 @@ interface PrincipalMap {
   [key: string]: Patterns;
 }
 
-interface PrincipalBlock {
-  principal: PrincipalMap | Patterns;
+interface OptionalPrincipalBlock {
+  principal?: PrincipalMap | Patterns;
 }
 
-interface NotPrincipalBlock {
-  notPrincipal: PrincipalMap | Patterns;
+interface OptionalNotPrincipalBlock {
+  notPrincipal?: PrincipalMap | Patterns;
 }
 
 interface ActionBlock {
@@ -29,7 +29,19 @@ interface NotResourceBlock {
   notResource: Patterns;
 }
 
+interface OptionalResourceBlock {
+  resource?: Patterns;
+}
+
+interface OptionalNotResourceBlock {
+  notResource?: Patterns;
+}
+
 export type ConditionKey = string | number | boolean;
+
+export interface Context {
+  [key: string]: ConditionKey | Context | string[] | number[];
+}
 
 export interface ConditionMap {
   [key: string]: ConditionKey[] | ConditionKey;
@@ -59,10 +71,6 @@ export interface ConditionResolver {
   [key: string]: Resolver;
 }
 
-export interface Context {
-  [key: string]: ConditionKey | Context | string[] | number[];
-}
-
 export interface MatchConditionInterface {
   context?: Context;
   conditionResolver?: ConditionResolver;
@@ -76,10 +84,10 @@ export interface MatchIdentityBasedInterface extends MatchActionBasedInterface {
   resource: string;
 }
 
-export interface MatchResourceBasedInterface
-  extends MatchIdentityBasedInterface {
-  principal: string;
+export interface MatchResourceBasedInterface extends MatchActionBasedInterface {
+  principal?: string;
   principalType?: string;
+  resource?: string;
 }
 
 export interface EvaluateActionBasedInterface {
@@ -93,9 +101,10 @@ export interface EvaluateIdentityBasedInterface
 }
 
 export interface EvaluateResourceBasedInterface
-  extends EvaluateIdentityBasedInterface {
-  principal: string;
+  extends EvaluateActionBasedInterface {
+  principal?: string;
   principalType?: string;
+  resource?: string;
 }
 
 export interface MemoizeInterface extends Function {
@@ -109,20 +118,28 @@ type IdentityBasedType = StatementInterface &
   (ResourceBlock | NotResourceBlock);
 
 type ResourceBasedType = StatementInterface &
-  (PrincipalBlock | NotPrincipalBlock) &
+  (OptionalPrincipalBlock | OptionalNotPrincipalBlock) &
   (ActionBlock | NotActionBlock) &
-  (ResourceBlock | NotResourceBlock | {});
+  (OptionalResourceBlock | OptionalNotResourceBlock);
+
+interface ProxyOptions {
+  get?: {
+    allow?: boolean;
+    propertyMap?: Record<string, string>;
+  };
+  set?: {
+    allow?: boolean;
+    propertyMap?: Record<string, string>;
+  };
+}
 
 export {
   ActionBasedType,
   IdentityBasedType,
-  ResourceBasedType,
-  PrincipalMap,
   Patterns,
-  ResourceBlock,
-  NotResourceBlock,
-  ActionBlock,
-  PrincipalBlock
+  PrincipalMap,
+  ResourceBasedType,
+  ProxyOptions
 };
 
 /*

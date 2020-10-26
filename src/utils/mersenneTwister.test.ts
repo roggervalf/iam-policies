@@ -1,24 +1,42 @@
 import { MersenneTwister } from './mersenneTwister';
 
 describe('MersenneTwister', () => {
-  it('should repeat random sequence on same seed', () => {
-    const mersenne = new MersenneTwister();
+  describe('when using an empty array as seed', () => {
+    it('sets 5489 as seed', () => {
+      const mersenne = new MersenneTwister([]);
 
-    const seed = 123;
-
-    mersenne.initSeed(seed);
-    const first1 = mersenne.randomReal2();
-    const first2 = mersenne.randomReal2();
-
-    mersenne.initSeed(seed);
-    const second1 = mersenne.randomReal2();
-    const second2 = mersenne.randomReal2();
-
-    expect(first1).toEqual(second1);
-    expect(first2).toEqual(second2);
+      expect(mersenne.randomInt32()).toEqual(3499211612);
+    });
   });
 
-  it('should allow seeding via constructor', () => {
+  describe('when using empty with length greater or equal than 624', () => {
+    it('returns a MersenneTwister instance', () => {
+      expect(new MersenneTwister(new Array(624))).toBeInstanceOf(
+        MersenneTwister
+      );
+    });
+  });
+
+  describe('when using initSeed', () => {
+    it('repeats random sequence on same seed', () => {
+      const mersenne = new MersenneTwister();
+
+      const seed = 123;
+
+      mersenne.initSeed(seed);
+      const first1 = mersenne.randomReal2();
+      const first2 = mersenne.randomReal2();
+
+      mersenne.initSeed(seed);
+      const second1 = mersenne.randomReal2();
+      const second2 = mersenne.randomReal2();
+
+      expect(first1).toEqual(second1);
+      expect(first2).toEqual(second2);
+    });
+  });
+
+  it('allows seeding via constructor', () => {
     const seed = 325;
     const mersenne1 = new MersenneTwister(seed);
     const mersenne2 = new MersenneTwister(seed);
@@ -36,7 +54,7 @@ describe('MersenneTwister', () => {
   Modify the mtTest.c file to try each function with the proper seed
   */
   describe('when comparing with results from C language', () => {
-    it('should generate 100 Int32 values as C', () => {
+    it('generates 100 Int32 values as C', () => {
       const seeds = [0x123, 0x234, 0x345, 0x456];
       const mersenne = new MersenneTwister(seeds);
 
@@ -148,7 +166,7 @@ describe('MersenneTwister', () => {
       }
     });
 
-    it('should generate 100 Int31 values as C', () => {
+    it('generates 100 Int31 values as C', () => {
       const seeds = [0x123, 0x234, 0x345, 0x456];
       const mersenne = new MersenneTwister(seeds);
 
@@ -260,7 +278,7 @@ describe('MersenneTwister', () => {
       }
     });
 
-    it('should generate 100 Real1 values as C', () => {
+    it('generates 100 Real1 values as C', () => {
       const seeds = [0x123, 0x234, 0x345, 0x456];
       const mersenne = new MersenneTwister(seeds);
 
@@ -372,7 +390,7 @@ describe('MersenneTwister', () => {
       }
     });
 
-    it('should generate 100 Real2 values as C', () => {
+    it('generates 100 Real2 values as C', () => {
       const seeds = [0x123, 0x234, 0x345, 0x456];
       const mersenne = new MersenneTwister(seeds);
 
@@ -484,7 +502,7 @@ describe('MersenneTwister', () => {
       }
     });
 
-    it('should generate 100 Real3 values as C', () => {
+    it('generates 100 Real3 values as C', () => {
       const seeds = [0x123, 0x234, 0x345, 0x456];
       const mersenne = new MersenneTwister(seeds);
 
@@ -596,7 +614,7 @@ describe('MersenneTwister', () => {
       }
     });
 
-    it('should generate 100 Real3 values as C', () => {
+    it('generates 100 Real3 values as C', () => {
       const seeds = [0x123, 0x234, 0x345, 0x456];
       const mersenne = new MersenneTwister(seeds);
 

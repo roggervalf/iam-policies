@@ -16,7 +16,7 @@ import { getTag } from './getTag';
  * // => false
  * ```
  */
-export function isSymbol(value?: any): boolean {
+export function isSymbol(value?: unknown): value is symbol {
   const type = typeof value;
   return (
     type === 'symbol' ||

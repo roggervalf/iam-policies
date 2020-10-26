@@ -5,21 +5,36 @@ describe('ActionBasedPolicy Class', () => {
     it("doesn't throw an error", () => {
       expect(
         () =>
-          new ActionBasedPolicy([
-            {
-              action: ['read', 'write']
-            }
-          ])
+          new ActionBasedPolicy({
+            statements: [
+              {
+                action: ['read', 'write']
+              }
+            ]
+          })
+      ).not.toThrow();
+      expect(
+        () =>
+          new ActionBasedPolicy({
+            statements: [
+              {
+                notAction: ['write']
+              }
+            ],
+            context: {}
+          })
       ).not.toThrow();
     });
 
     it('returns an ActionBasedPolicy instance', () => {
       expect(
-        new ActionBasedPolicy([
-          {
-            action: ['read', 'write']
-          }
-        ])
+        new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['read', 'write']
+            }
+          ]
+        })
       ).toBeInstanceOf(ActionBasedPolicy);
     });
   });
@@ -28,11 +43,12 @@ describe('ActionBasedPolicy Class', () => {
     it('returns those statements', () => {
       const statements = [
         {
-          action: ['read']
+          action: 'read'
         }
       ];
-      const policy = new ActionBasedPolicy(statements);
+      const policy = new ActionBasedPolicy({ statements });
       const exportedStatements = policy.getStatements();
+
       expect(exportedStatements).toMatchObject(statements);
       expect(exportedStatements[0].sid).not.toBeFalsy();
     });
@@ -40,11 +56,13 @@ describe('ActionBasedPolicy Class', () => {
 
   describe('when match actions', () => {
     it('returns true or false', () => {
-      const policy = new ActionBasedPolicy([
-        {
-          action: ['read']
-        }
-      ]);
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            action: ['read']
+          }
+        ]
+      });
 
       expect(
         policy.evaluate({
@@ -61,11 +79,13 @@ describe('ActionBasedPolicy Class', () => {
 
   describe('when match not actions', () => {
     it('returns true or false', () => {
-      const policy = new ActionBasedPolicy([
-        {
-          notAction: 'read'
-        }
-      ]);
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            notAction: 'read'
+          }
+        ]
+      });
 
       expect(
         policy.evaluate({
@@ -82,19 +102,21 @@ describe('ActionBasedPolicy Class', () => {
 
   describe('when match based on context', () => {
     it('returns true or false', () => {
-      const policy = new ActionBasedPolicy([
-        {
-          action: ['getUser/${user.id}', 'updateUser/${user.id}']
-        },
-        {
-          action: 'getAllProjects'
-        }
-      ]);
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            action: ['getUser/${user.id}', 'updateUser/${user.id}']
+          },
+          {
+            action: 'getAllProjects'
+          }
+        ],
+        context: { user: { id: 123 } }
+      });
 
       expect(
         policy.evaluate({
-          action: 'getUser/123',
-          context: { user: { id: 123 } }
+          action: 'getUser/123'
         })
       ).toBe(true);
       expect(
@@ -123,14 +145,14 @@ describe('ActionBasedPolicy Class', () => {
 
   describe('when match based on conditions', () => {
     it('returns true or false', () => {
-      const conditions = {
+      const conditionResolver = {
         greaterThan: (data: number, expected: number): boolean => {
           return data > expected;
         }
       };
 
-      const policy = new ActionBasedPolicy(
-        [
+      const policy = new ActionBasedPolicy({
+        statements: [
           {
             action: ['read']
           },
@@ -143,8 +165,8 @@ describe('ActionBasedPolicy Class', () => {
             }
           }
         ],
-        conditions
-      );
+        conditionResolver
+      });
 
       expect(
         policy.evaluate({
@@ -169,16 +191,19 @@ describe('ActionBasedPolicy Class', () => {
 
   describe('can and cannot', () => {
     it('can should return false when not found and true for when matched with allow', () => {
-      const policy = new ActionBasedPolicy([
-        {
-          effect: 'allow',
-          action: [
-            'createProject',
-            'getUser/${user.id}',
-            'updateUser/${user.id}'
-          ]
-        }
-      ]);
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            effect: 'allow',
+            action: [
+              'createProject',
+              'getUser/${user.id}',
+              'updateUser/${user.id}'
+            ]
+          }
+        ]
+      });
+
       expect(
         policy.can({
           action: 'getUser/123',
@@ -199,16 +224,19 @@ describe('ActionBasedPolicy Class', () => {
     });
 
     it('cannot should return false when not found and true for when matched with deny', () => {
-      const policy = new ActionBasedPolicy([
-        {
-          effect: 'deny',
-          action: [
-            'createProject',
-            'getUser/${user.id}',
-            'updateUser/${user.id}'
-          ]
-        }
-      ]);
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            effect: 'deny',
+            action: [
+              'createProject',
+              'getUser/${user.id}',
+              'updateUser/${user.id}'
+            ]
+          }
+        ]
+      });
+
       expect(
         policy.cannot({
           action: 'getUser/123',
@@ -226,6 +254,154 @@ describe('ActionBasedPolicy Class', () => {
           context: { user: { id: 123 } }
         })
       ).toBe(false);
+    });
+  });
+
+  describe('generate Proxy', () => {
+    describe('when use default options', () => {
+      it('returns an instance of a class', () => {
+        const policy = new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['upper', 'lastName', 'age']
+            }
+          ]
+        });
+        class User {
+          firstName: string;
+          age: number;
+          private lastName: string;
+          constructor(firstName, lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+          }
+          upper(): string {
+            return this.lastName.toUpperCase();
+          }
+        }
+        const user = new User('John', 'Wick');
+        const proxy = policy.generateProxy(user) as User;
+        const getExpectedError = new Error(
+          'Unauthorize to get firstName property'
+        );
+        const setExpectedError = new Error(
+          'Unauthorize to set firstName property'
+        );
+
+        expect(proxy.upper()).toBe('WICK');
+        expect(proxy.upper()).toBe('WICK');
+        expect(() => {
+          proxy.age = 20;
+        }).not.toThrow();
+        expect(proxy.age).toBe(20);
+        expect(() => (proxy.firstName = 'Nancy')).toThrow(setExpectedError);
+        expect(() => proxy.firstName).toThrow(getExpectedError);
+      });
+
+      it('returns a json', () => {
+        const policy = new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['lastName']
+            }
+          ]
+        });
+        const sym: string = (Symbol('id') as unknown) as string;
+        const user = {
+          firstName: 'John',
+          lastName: 'Wick',
+          [sym]: 1
+        };
+        const proxy = policy.generateProxy(user) as Record<
+          string | symbol,
+          unknown
+        >;
+        const expectedError = new Error(
+          'Unauthorize to get firstName property'
+        );
+
+        expect(proxy.lastName).toBe('Wick');
+        expect(() => (proxy[sym] = 2)).not.toThrow();
+        expect(proxy[sym]).toBe(1);
+        expect(proxy.otherValue).toBe(undefined);
+        expect(() => proxy.firstName).toThrow(expectedError);
+      });
+
+      it('returns undefined', () => {
+        const policy = new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['lastName']
+            }
+          ]
+        });
+        const proxy = policy.generateProxy(8);
+
+        expect(proxy).toBe(undefined);
+      });
+    });
+
+    describe('when pass options', () => {
+      it('sets propertyMap', () => {
+        const policy = new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['getLastName']
+            }
+          ]
+        });
+        const user = {
+          firstName: 'John',
+          lastName: 'Wick'
+        };
+        const proxy = policy.generateProxy(user, {
+          get: {
+            propertyMap: {
+              lastName: 'getLastName'
+            }
+          },
+          set: {
+            allow: false
+          }
+        }) as Record<string, unknown>;
+        const expectedError = new Error(
+          'Unauthorize to get firstName property'
+        );
+
+        expect(proxy.lastName).toBe('Wick');
+        expect(() => proxy.firstName).toThrow(expectedError);
+      });
+
+      it('sets propertyMap', () => {
+        const policy = new ActionBasedPolicy({
+          statements: [
+            {
+              action: ['setLastName']
+            }
+          ]
+        });
+        const user = {
+          firstName: 'John',
+          lastName: 'Wick'
+        };
+        const proxy = policy.generateProxy(user, {
+          set: {
+            propertyMap: {
+              lastName: 'setLastName'
+            }
+          },
+          get: {
+            allow: false
+          }
+        }) as Record<string, unknown>;
+        const expectedError = new Error(
+          'Unauthorize to set firstName property'
+        );
+
+        expect(() => (proxy.lastName = 'Smith')).not.toThrow();
+        expect(proxy.lastName).toBe('Smith');
+        expect(() => (proxy.firstName = 'Mario')).toThrow(expectedError);
+      });
     });
   });
 });

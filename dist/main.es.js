@@ -100,19 +100,20 @@ const reIsPlainProp = /^\w*$/; //matches any word caracter (alphanumeric and und
  * ```
  */
 function isKey(value, object) {
-    if (Array.isArray(value)) {
-        return false;
-    }
     const type = typeof value;
     if (type === 'number' ||
         type === 'boolean' ||
         value === null ||
+        value === undefined ||
         isSymbol(value)) {
         return true;
     }
-    return (reIsPlainProp.test(value) ||
-        !reIsDeepProp.test(value) ||
-        (object !== null && value in Object(object)));
+    if (typeof value === 'string') {
+        return (reIsPlainProp.test(value) ||
+            !reIsDeepProp.test(value) ||
+            (object !== null && value in Object(object)));
+    }
+    return false;
 }
 
 /**
@@ -157,7 +158,7 @@ function memoize(func, resolver) {
             return cache.get(key);
         }
         const result = func.apply(this, args);
-        memoized.cache = cache.set(key, result) || cache;
+        cache.set(key, result);
         return result;
     };
     memoized.cache = new Map();
@@ -360,7 +361,8 @@ class MersenneTwister {
         this.mt = new Array(this.N); /* the array for the state vector */
         this.mti = this.N + 1; /* mti==N+1 means mt[N] is not initialized */
         if (Array.isArray(seed)) {
-            this.initByArray(seed, seed.length);
+            if (seed.length > 0)
+                this.initByArray(seed, seed.length);
         }
         else {
             if (seed === undefined) {
@@ -539,7 +541,7 @@ function applyContext(str, context) {
         if (Array.isArray(value))
             return `{${value}}`;
         if (value instanceof Object)
-            return String(undefined);
+            return 'undefined';
         return String(value);
     }));
 }
@@ -555,92 +557,18 @@ class Statement {
         this.condition = condition;
     }
     matchConditions({ context, conditionResolver }) {
-        return conditionResolver && this.condition && context
-            ? Object.keys(this.condition).every(condition => Object.keys(this.condition ? this.condition[condition] : {}).every(path => {
-                if (this.condition) {
-                    const conditionValues = this.condition[condition][path];
-                    if (conditionValues instanceof Array) {
-                        return conditionValues.some(value => conditionResolver[condition](getValueFromPath(context, path), value));
-                    }
-                    return conditionResolver[condition](getValueFromPath(context, path), conditionValues);
+        const { condition: conditions } = this;
+        return conditionResolver && conditions && context
+            ? Object.keys(conditions).every((condition) => Object.keys(conditions[condition]).every((path) => {
+                const conditionValues = conditions[condition][path];
+                if (conditionValues instanceof Array) {
+                    return conditionValues.some((value) => conditionResolver[condition](getValueFromPath(context, path), value));
                 }
-                return conditionResolver[condition](getValueFromPath(context, path), '');
+                return conditionResolver[condition](getValueFromPath(context, path), conditionValues);
             }))
             : true;
     }
 }
-
-/**
- * Validate if an `object` is an instance of `ActionBlock`.
- * @param {Object} object Object to validate
- * @returns {boolean} Returns true if `object` has `action` attribute.
- * @example
- * ```javascript
- * instanceOfActionBlock({ action: 'something' })
- * // => true
- * ```
- */
-function instanceOfActionBlock(object) {
-    return 'action' in object;
-}
-/**
- * Validate if an `object` is an instance of `PrincipalBlock`.
- * @param {Object} object Object to validate
- * @returns {boolean} Returns true if `object` has `principal` attribute.
- * @example
- * ```javascript
- * instanceOfPrincipalBlock({ principal: 'something' })
- * // => true
- * ```
- */
-function instanceOfPrincipalBlock(object) {
-    return 'principal' in object;
-}
-/**
- * Validate if an `object` is an instance of `NotResourceBlock`.
- * @param {Object} object Object to validate
- * @returns {boolean} Returns true if `object` has `notResource` attribute.
- * @example
- * ```javascript
- * instanceOfNotResourceBlock({ notResource: 'something' })
- * // => true
- * ```
- */
-function instanceOfNotResourceBlock(object) {
-    return 'notResource' in object;
-}
-/**
- * Validate if an `object` is an instance of `ResourceBlock`.
- * @param {Object} object Object to validate
- * @returns {boolean} Returns true if `object` has `resource` attribute.
- * @example
- * ```javascript
- * instanceOfResourceBlock({ resource: 'something' })
- * // => true
- * ```
- */
-function instanceOfResourceBlock(object) {
-    return 'resource' in object;
-}
-//export { IdentityBasedType, ResourceBasedType, PrincipalMap, Patterns, ResourceBlock, ActionBlock};
-/*
-type Message = MessageWithText | MessageWithAttachment | (MessageWithText & MessageWithAttachment);*/
-/*<condition_block> = "Condition" : { <condition_map> }
-<condition_map> = {
-  <condition_type_string> : { <condition_key_string> : <condition_value_list> },
-  <condition_type_string> : { <condition_key_string> : <condition_value_list> }, ...
-}
-<condition_value_list> = [<condition_value>, <condition_value>, ...]
-<condition_value> = ("string" | "number" | "Boolean")
-
-//ConditionBlock
-condition: {//ConditionMap
-        ConditionTypeString        greaterThan: {
-        ConditionKeyString          'user.age': 18 //ConditionValueList,
-                },
-              }
-
-*/
 
 /**
  * Get index range where separators are found.
@@ -710,35 +638,27 @@ function decomposeString(initialSeparator, finalSeparator, str) {
 }
 
 class Matcher {
-    constructor(pattern) {
+    constructor(pattern, maxLength = 1024 * 64) {
         this.set = [];
         this.pattern = pattern.trim();
+        this.maxLength = maxLength;
         this.empty = !this.pattern ? true : false;
         const set = this.braceExpand();
-        this.set = set.map(val => this.parse(val));
-        this.set = this.set.filter(s => {
+        this.set = set.map((val) => this.parse(val));
+        this.set = this.set.filter((s) => {
             return Boolean(s);
         });
     }
     braceExpand() {
-        let pattern = this.pattern;
+        const pattern = this.pattern;
         if (!pattern.match(/{.*}/)) {
             return [pattern];
-        }
-        // I don't know why Bash 4.3 does this, but it does.
-        // Anything starting with {} will have the first two bytes preserved
-        // but only at the top level, so {},a}b will not expand to anything,
-        // but a{},b}c will be expanded to [a}c,abc].
-        // One could argue that this is a bug in Bash, but since the goal of
-        // this module is to match Bash's rules, we escape a leading {}
-        if (pattern.substr(0, 2) === '{}') {
-            pattern = '\\{\\}' + pattern.substr(2);
         }
         return this.expand(pattern, true);
     }
     parse(pattern) {
-        if (pattern.length > 1024 * 64) {
-            throw new TypeError('pattern is too long');
+        if (pattern.length > this.maxLength) {
+            throw new TypeError('Pattern is too long');
         }
         let regExp;
         let hasSpecialCharacter = false;
@@ -769,18 +689,14 @@ class Matcher {
         const balance = decomposeString('{', '}', str);
         if (balance.start < 0 || /\$$/.test(balance.pre))
             return [str];
-        let parts;
-        if (!balance.body)
-            parts = [''];
-        else
-            parts = balance.body.split(',');
+        const parts = balance.body.split(',');
         // no need to expand pre, since it is guaranteed to be free of brace-sets
         const pre = balance.pre;
         const postParts = balance.post.length
             ? this.expand(balance.post, false)
             : [''];
         parts.forEach((part) => {
-            postParts.forEach(postPart => {
+            postParts.forEach((postPart) => {
                 const expansion = pre + part + postPart;
                 if (!isTop || expansion)
                     expansions.push(expansion);
@@ -791,12 +707,9 @@ class Matcher {
     match(str) {
         if (this.empty)
             return str === '';
-        const set = this.set;
-        return set.some(pattern => this.matchOne(str, pattern));
+        return this.set.some((pattern) => this.matchOne(str, pattern));
     }
     matchOne(str, pattern) {
-        if (!pattern)
-            return false;
         if (typeof pattern === 'string') {
             return str === pattern;
         }
@@ -807,16 +720,7 @@ class Matcher {
 class ActionBased extends Statement {
     constructor(action) {
         super(action);
-        if (instanceOfActionBlock(action)) {
-            this.action =
-                typeof action.action === 'string' ? [action.action] : action.action;
-        }
-        else {
-            this.notAction =
-                typeof action.notAction === 'string'
-                    ? [action.notAction]
-                    : action.notAction;
-        }
+        this.checkAndAssignActions(action);
         this.statement = Object.assign(Object.assign({}, action), { sid: this.sid });
     }
     getStatement() {
@@ -827,14 +731,31 @@ class ActionBased extends Statement {
             this.matchNotActions(action, context) &&
             this.matchConditions({ context, conditionResolver }));
     }
+    checkAndAssignActions(action) {
+        const hasAction = 'action' in action;
+        const hasNotAction = 'notAction' in action;
+        if (hasAction && hasNotAction) {
+            throw new TypeError('ActionBased statement should have an action or a notAction attribute, no both');
+        }
+        if ('action' in action) {
+            this.action =
+                typeof action.action === 'string' ? [action.action] : action.action;
+        }
+        else {
+            this.notAction =
+                typeof action.notAction === 'string'
+                    ? [action.notAction]
+                    : action.notAction;
+        }
+    }
     matchActions(action, context) {
         return this.action
-            ? this.action.some(a => new Matcher(applyContext(a, context)).match(action))
+            ? this.action.some((a) => new Matcher(applyContext(a, context)).match(action))
             : true;
     }
     matchNotActions(action, context) {
         return this.notAction
-            ? !this.notAction.some(a => new Matcher(applyContext(a, context)).match(action))
+            ? !this.notAction.some((a) => new Matcher(applyContext(a, context)).match(action))
             : true;
     }
 }
@@ -842,30 +763,8 @@ class ActionBased extends Statement {
 class IdentityBased extends Statement {
     constructor(identity) {
         super(identity);
-        if (instanceOfResourceBlock(identity)) {
-            this.resource =
-                typeof identity.resource === 'string'
-                    ? [identity.resource]
-                    : identity.resource;
-        }
-        else {
-            this.notResource =
-                typeof identity.notResource === 'string'
-                    ? [identity.notResource]
-                    : identity.notResource;
-        }
-        if (instanceOfActionBlock(identity)) {
-            this.action =
-                typeof identity.action === 'string'
-                    ? [identity.action]
-                    : identity.action;
-        }
-        else {
-            this.notAction =
-                typeof identity.notAction === 'string'
-                    ? [identity.notAction]
-                    : identity.notAction;
-        }
+        this.checkAndAssignActions(identity);
+        this.checkAndAssignResources(identity);
         this.statement = Object.assign(Object.assign({}, identity), { sid: this.sid });
     }
     getStatement() {
@@ -878,44 +777,13 @@ class IdentityBased extends Statement {
             this.matchNotResources(resource, context) &&
             this.matchConditions({ context, conditionResolver }));
     }
-    matchActions(action, context) {
-        return this.action
-            ? this.action.some(a => new Matcher(applyContext(a, context)).match(action))
-            : true;
-    }
-    matchNotActions(action, context) {
-        return this.notAction
-            ? !this.notAction.some(a => new Matcher(applyContext(a, context)).match(action))
-            : true;
-    }
-    matchResources(resource, context) {
-        return this.resource
-            ? this.resource.some(a => new Matcher(applyContext(a, context)).match(resource))
-            : true;
-    }
-    matchNotResources(resource, context) {
-        return this.notResource
-            ? !this.notResource.some(a => new Matcher(applyContext(a, context)).match(resource))
-            : true;
-    }
-}
-
-class ResourceBased extends Statement {
-    constructor(identity) {
-        super(identity);
-        if (instanceOfResourceBlock(identity)) {
-            this.resource =
-                typeof identity.resource === 'string'
-                    ? [identity.resource]
-                    : identity.resource;
+    checkAndAssignActions(identity) {
+        const hasAction = 'action' in identity;
+        const hasNotAction = 'notAction' in identity;
+        if (hasAction && hasNotAction) {
+            throw new TypeError('IdentityBased statement should have an action or a notAction attribute, no both');
         }
-        else if (instanceOfNotResourceBlock(identity)) {
-            this.notResource =
-                typeof identity.notResource === 'string'
-                    ? [identity.notResource]
-                    : identity.notResource;
-        }
-        if (instanceOfActionBlock(identity)) {
+        if ('action' in identity) {
             this.action =
                 typeof identity.action === 'string'
                     ? [identity.action]
@@ -927,46 +795,177 @@ class ResourceBased extends Statement {
                     ? [identity.notAction]
                     : identity.notAction;
         }
-        if (instanceOfPrincipalBlock(identity)) {
-            this.principal =
-                typeof identity.principal === 'string'
-                    ? [identity.principal]
-                    : identity.principal;
+    }
+    checkAndAssignResources(identity) {
+        const hasResource = 'resource' in identity;
+        const hasNotResource = 'notResource' in identity;
+        if (hasResource && hasNotResource) {
+            throw new TypeError('IdentityBased statement should have a resource or a notResource attribute, no both');
+        }
+        if ('resource' in identity) {
+            this.resource =
+                typeof identity.resource === 'string'
+                    ? [identity.resource]
+                    : identity.resource;
         }
         else {
-            this.notPrincipal =
-                typeof identity.notPrincipal === 'string'
-                    ? [identity.notPrincipal]
-                    : identity.notPrincipal;
+            this.notResource =
+                typeof identity.notResource === 'string'
+                    ? [identity.notResource]
+                    : identity.notResource;
         }
+    }
+    matchActions(action, context) {
+        return this.action
+            ? this.action.some((a) => new Matcher(applyContext(a, context)).match(action))
+            : true;
+    }
+    matchNotActions(action, context) {
+        return this.notAction
+            ? !this.notAction.some((a) => new Matcher(applyContext(a, context)).match(action))
+            : true;
+    }
+    matchResources(resource, context) {
+        return this.resource
+            ? this.resource.some((a) => new Matcher(applyContext(a, context)).match(resource))
+            : true;
+    }
+    matchNotResources(resource, context) {
+        return this.notResource
+            ? !this.notResource.some((a) => new Matcher(applyContext(a, context)).match(resource))
+            : true;
+    }
+}
+
+class ResourceBased extends Statement {
+    constructor(identity) {
+        super(identity);
+        this.hasPrincipals = false;
+        this.hasResources = false;
+        this.checkAndAssignActions(identity);
+        this.checkAndAssignPrincipals(identity);
+        this.checkAndAssignResources(identity);
         this.statement = Object.assign(Object.assign({}, identity), { sid: this.sid });
     }
     getStatement() {
         return this.statement;
     }
     matches({ principal, action, resource, principalType, context, conditionResolver }) {
-        return (this.matchPrincipals(principal, principalType, context) &&
-            this.matchNotPrincipals(principal, principalType, context) &&
+        return (this.matchPrincipalAndNotPrincipal(principal, principalType, context) &&
             this.matchActions(action, context) &&
             this.matchNotActions(action, context) &&
-            this.matchResources(resource, context) &&
-            this.matchNotResources(resource, context) &&
+            this.matchResourceAndNotResource(resource, context) &&
             this.matchConditions({ context, conditionResolver }));
+    }
+    /*valueComing principal noPrincipal
+    true        false     false       false
+    true        true      false       true or false
+    true        false     true        true or false
+    false       false     false       true
+    false       true      false       false
+    false       false     true        false*/
+    matchPrincipalAndNotPrincipal(principal, principalType, context) {
+        if (principal) {
+            if (this.hasPrincipals)
+                return (this.matchPrincipals(principal, principalType, context) &&
+                    this.matchNotPrincipals(principal, principalType, context));
+            return false;
+        }
+        if (this.hasPrincipals)
+            return false;
+        return true;
+    }
+    /*valueComing resource noResource
+    true        false     false       false
+    true        true      false       true or false
+    true        false     true        true or false
+    false       false     false       true
+    false       true      false       false
+    false       false     true        false*/
+    matchResourceAndNotResource(resource, context) {
+        if (resource) {
+            if (this.hasResources)
+                return (this.matchResources(resource, context) &&
+                    this.matchNotResources(resource, context));
+            return false;
+        }
+        if (this.hasResources)
+            return false;
+        return true;
+    }
+    checkAndAssignActions(identity) {
+        const hasAction = 'action' in identity;
+        const hasNotAction = 'notAction' in identity;
+        if (hasAction && hasNotAction) {
+            throw new TypeError('ResourceBased statement should have an action or a notAction attribute, no both');
+        }
+        if ('action' in identity) {
+            this.action =
+                typeof identity.action === 'string'
+                    ? [identity.action]
+                    : identity.action;
+        }
+        else {
+            this.notAction =
+                typeof identity.notAction === 'string'
+                    ? [identity.notAction]
+                    : identity.notAction;
+        }
+    }
+    checkAndAssignPrincipals(identity) {
+        const hasPrincipal = 'principal' in identity;
+        const hasNotPrincipal = 'notPrincipal' in identity;
+        if (hasPrincipal && hasNotPrincipal) {
+            throw new TypeError('ResourceBased statement could have a principal or a notPrincipal attribute, no both');
+        }
+        if ('principal' in identity) {
+            this.principal =
+                typeof identity.principal === 'string'
+                    ? [identity.principal]
+                    : identity.principal;
+            this.hasPrincipals = true;
+        }
+        else if ('notPrincipal' in identity) {
+            this.notPrincipal =
+                typeof identity.notPrincipal === 'string'
+                    ? [identity.notPrincipal]
+                    : identity.notPrincipal;
+            this.hasPrincipals = true;
+        }
+    }
+    checkAndAssignResources(identity) {
+        const hasResource = 'resource' in identity;
+        const hasNotResource = 'notResource' in identity;
+        if (hasResource && hasNotResource) {
+            throw new TypeError('ResourceBased statement could have a resource or a notResource attribute, no both');
+        }
+        if ('resource' in identity) {
+            this.resource =
+                typeof identity.resource === 'string'
+                    ? [identity.resource]
+                    : identity.resource;
+            this.hasResources = true;
+        }
+        else if ('notResource' in identity) {
+            this.notResource =
+                typeof identity.notResource === 'string'
+                    ? [identity.notResource]
+                    : identity.notResource;
+            this.hasResources = true;
+        }
     }
     matchPrincipals(principal, principalType, context) {
         if (this.principal) {
             if (this.principal instanceof Array) {
                 return principalType
                     ? false
-                    : this.principal.some(a => new Matcher(applyContext(a, context)).match(principal));
+                    : this.principal.some((a) => new Matcher(applyContext(a, context)).match(principal));
             }
             else {
                 if (principalType) {
                     const principalValues = this.principal[principalType];
                     if (principalValues instanceof Array) {
-                        return typeof principalValues === 'string'
-                            ? [principalValues].some(a => new Matcher(applyContext(a, context)).match(principal))
-                            : principalValues.some(a => new Matcher(applyContext(a, context)).match(principal));
+                        return principalValues.some((a) => new Matcher(applyContext(a, context)).match(principal));
                     }
                     return new Matcher(applyContext(principalValues, context)).match(principal);
                 }
@@ -980,52 +979,69 @@ class ResourceBased extends Statement {
             if (this.notPrincipal instanceof Array) {
                 return principalType
                     ? true
-                    : !this.notPrincipal.some(a => new Matcher(applyContext(a, context)).match(principal));
+                    : !this.notPrincipal.some((a) => new Matcher(applyContext(a, context)).match(principal));
             }
             else {
                 if (principalType) {
                     const principalValues = this.notPrincipal[principalType];
                     if (principalValues instanceof Array) {
-                        return typeof principalValues === 'string'
-                            ? ![principalValues].some(a => new Matcher(applyContext(a, context)).match(principal))
-                            : !principalValues.some(a => new Matcher(applyContext(a, context)).match(principal));
+                        return !principalValues.some((a) => new Matcher(applyContext(a, context)).match(principal));
                     }
                     return !new Matcher(applyContext(principalValues, context)).match(principal);
                 }
-                return false;
+                return true;
             }
         }
         return true;
     }
     matchActions(action, context) {
         return this.action
-            ? this.action.some(a => new Matcher(applyContext(a, context)).match(action))
+            ? this.action.some((a) => new Matcher(applyContext(a, context)).match(action))
             : true;
     }
     matchNotActions(action, context) {
         return this.notAction
-            ? !this.notAction.some(a => new Matcher(applyContext(a, context)).match(action))
+            ? !this.notAction.some((a) => new Matcher(applyContext(a, context)).match(action))
             : true;
     }
     matchResources(resource, context) {
         return this.resource
-            ? this.resource.some(a => new Matcher(applyContext(a, context)).match(resource))
+            ? this.resource.some((a) => new Matcher(applyContext(a, context)).match(resource))
             : true;
     }
     matchNotResources(resource, context) {
         return this.notResource
-            ? !this.notResource.some(a => new Matcher(applyContext(a, context)).match(resource))
+            ? !this.notResource.some((a) => new Matcher(applyContext(a, context)).match(resource))
             : true;
     }
 }
 
-class ActionBasedPolicy {
-    constructor(config, conditionResolver) {
-        const statementInstances = config.map(statement => new ActionBased(statement));
-        this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
-        this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
+class Policy {
+    constructor({ context, conditionResolver }) {
+        this.context = context;
         this.conditionResolver = conditionResolver;
-        this.statements = this.statements = statementInstances.map(statement => statement.getStatement());
+    }
+    setContext(context) {
+        this.context = context;
+    }
+    getContext() {
+        return this.context;
+    }
+    setConditionResolver(conditionResolver) {
+        this.conditionResolver = conditionResolver;
+    }
+    getConditionResolver() {
+        return this.conditionResolver;
+    }
+}
+
+class ActionBasedPolicy extends Policy {
+    constructor({ statements, conditionResolver, context }) {
+        super({ context, conditionResolver });
+        const statementInstances = statements.map((statement) => new ActionBased(statement));
+        this.allowStatements = statementInstances.filter((s) => s.effect === 'allow');
+        this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
+        this.statements = statementInstances.map((statement) => statement.getStatement());
     }
     getStatements() {
         return this.statements;
@@ -1035,28 +1051,67 @@ class ActionBasedPolicy {
         return !this.cannot(args) && this.can(args);
     }
     can({ action, context }) {
-        return this.allowStatements.some(s => s.matches({
+        return this.allowStatements.some((s) => s.matches({
             action,
-            context,
+            context: context || this.context,
             conditionResolver: this.conditionResolver
         }));
     }
     cannot({ action, context }) {
-        return this.denyStatements.some(s => s.matches({
+        return this.denyStatements.some((s) => s.matches({
             action,
-            context,
+            context: context || this.context,
             conditionResolver: this.conditionResolver
         }));
     }
+    generateProxy(obj, options = {}) {
+        const { get = {}, set = {} } = options;
+        const { allow: allowGet = true, propertyMap: propertyMapGet = {} } = get;
+        const { allow: allowSet = true, propertyMap: propertyMapSet = {} } = set;
+        const handler = Object.assign(Object.assign({}, (allowGet
+            ? {
+                get: (target, prop) => {
+                    if (prop in target) {
+                        if (typeof prop === 'string') {
+                            const property = propertyMapGet[prop] || prop;
+                            if (this.evaluate({ action: property }))
+                                return target[prop];
+                            throw new Error(`Unauthorize to get ${prop} property`);
+                        }
+                    }
+                    return target[prop];
+                }
+            }
+            : {})), (allowSet
+            ? {
+                set: (target, prop, value) => {
+                    if (typeof prop === 'string') {
+                        const property = propertyMapSet[prop] || prop;
+                        if (this.evaluate({ action: property })) {
+                            target[prop] = value;
+                            return true;
+                        }
+                        else
+                            throw new Error(`Unauthorize to set ${prop} property`);
+                    }
+                    return true;
+                }
+            }
+            : {}));
+        if (obj instanceof Object) {
+            return new Proxy(obj, handler);
+        }
+        return undefined;
+    }
 }
 
-class IdentityBasedPolicy {
-    constructor(config, conditionResolver) {
-        const statementInstances = config.map(statement => new IdentityBased(statement));
-        this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
-        this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
-        this.conditionResolver = conditionResolver;
-        this.statements = statementInstances.map(statement => statement.getStatement());
+class IdentityBasedPolicy extends Policy {
+    constructor({ statements, conditionResolver, context }) {
+        super({ context, conditionResolver });
+        const statementInstances = statements.map((statement) => new IdentityBased(statement));
+        this.allowStatements = statementInstances.filter((s) => s.effect === 'allow');
+        this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
+        this.statements = statementInstances.map((statement) => statement.getStatement());
     }
     getStatements() {
         return this.statements;
@@ -1066,7 +1121,7 @@ class IdentityBasedPolicy {
         return !this.cannot(args) && this.can(args);
     }
     can({ action, resource, context }) {
-        return this.allowStatements.some(s => s.matches({
+        return this.allowStatements.some((s) => s.matches({
             action,
             resource,
             context,
@@ -1074,7 +1129,7 @@ class IdentityBasedPolicy {
         }));
     }
     cannot({ action, resource, context }) {
-        return this.denyStatements.some(s => s.matches({
+        return this.denyStatements.some((s) => s.matches({
             action,
             resource,
             context,
@@ -1083,13 +1138,13 @@ class IdentityBasedPolicy {
     }
 }
 
-class ResourceBasedPolicy {
-    constructor(config, conditionResolver) {
-        const statementInstances = config.map(statement => new ResourceBased(statement));
-        this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
-        this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
-        this.conditionResolver = conditionResolver;
-        this.statements = statementInstances.map(statement => statement.getStatement());
+class ResourceBasedPolicy extends Policy {
+    constructor({ statements, conditionResolver, context }) {
+        super({ context, conditionResolver });
+        const statementInstances = statements.map((statement) => new ResourceBased(statement));
+        this.allowStatements = statementInstances.filter((s) => s.effect === 'allow');
+        this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
+        this.statements = statementInstances.map((statement) => statement.getStatement());
     }
     getStatements() {
         return this.statements;
@@ -1099,7 +1154,7 @@ class ResourceBasedPolicy {
         return !this.cannot(args) && this.can(args);
     }
     can({ principal, action, resource, principalType, context }) {
-        return this.allowStatements.some(s => s.matches({
+        return this.allowStatements.some((s) => s.matches({
             principal,
             action,
             resource,
@@ -1109,7 +1164,7 @@ class ResourceBasedPolicy {
         }));
     }
     cannot({ principal, action, resource, principalType, context }) {
-        return this.denyStatements.some(s => s.matches({
+        return this.denyStatements.some((s) => s.matches({
             principal,
             action,
             resource,

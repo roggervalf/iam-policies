@@ -6,7 +6,7 @@
  * @param {Object} [object] The object to query keys on.
  * @returns {Array} Returns the cast property path array.
  */
-declare function castPath<T>(value: any, object: object): Array<T>;
+declare function castPath<T>(value: unknown, object: Record<string | symbol, unknown>): Array<T>;
 /**
  * The base implementation of `get` without support for default values.
  *
@@ -15,7 +15,7 @@ declare function castPath<T>(value: any, object: object): Array<T>;
  * @param {Array|string} path The path of the property to get.
  * @returns {*} Returns the resolved value.
  */
-declare function baseGet<T>(object: object, path: Array<T> | string): any;
+declare function baseGet<T>(object: Record<string, unknown>, path: Array<T> | string): any;
 /**
  * Gets the value at `path` of `object`. If the resolved value is
  * `undefined`, the `defaultValue` is returned in its place.
@@ -39,18 +39,18 @@ declare function baseGet<T>(object: object, path: Array<T> | string): any;
  * getValueFromPath(object, 'a.b.c', 'default')
  * // => 'default'
  */
-declare function getValueFromPath<T>(object: object, path: Array<T> | string, defaultValue?: any): any;
+declare function getValueFromPath<T>(object: Record<string, unknown>, path: Array<T> | string, defaultValue?: unknown): any;
 
 declare type EffectBlock = 'allow' | 'deny';
 declare type Patterns = string[] | string;
 interface PrincipalMap {
     [key: string]: Patterns;
 }
-interface PrincipalBlock {
-    principal: PrincipalMap | Patterns;
+interface OptionalPrincipalBlock {
+    principal?: PrincipalMap | Patterns;
 }
-interface NotPrincipalBlock {
-    notPrincipal: PrincipalMap | Patterns;
+interface OptionalNotPrincipalBlock {
+    notPrincipal?: PrincipalMap | Patterns;
 }
 interface ActionBlock {
     action: Patterns;
@@ -64,7 +64,16 @@ interface ResourceBlock {
 interface NotResourceBlock {
     notResource: Patterns;
 }
+interface OptionalResourceBlock {
+    resource?: Patterns;
+}
+interface OptionalNotResourceBlock {
+    notResource?: Patterns;
+}
 declare type ConditionKey = string | number | boolean;
+interface Context {
+    [key: string]: ConditionKey | Context | string[] | number[];
+}
 interface ConditionMap {
     [key: string]: ConditionKey[] | ConditionKey;
 }
@@ -80,9 +89,6 @@ declare type Resolver = (data: any, expected: any) => boolean;
 interface ConditionResolver {
     [key: string]: Resolver;
 }
-interface Context {
-    [key: string]: ConditionKey | Context | string[] | number[];
-}
 interface MatchConditionInterface {
     context?: Context;
     conditionResolver?: ConditionResolver;
@@ -93,9 +99,10 @@ interface MatchActionBasedInterface extends MatchConditionInterface {
 interface MatchIdentityBasedInterface extends MatchActionBasedInterface {
     resource: string;
 }
-interface MatchResourceBasedInterface extends MatchIdentityBasedInterface {
-    principal: string;
+interface MatchResourceBasedInterface extends MatchActionBasedInterface {
+    principal?: string;
     principalType?: string;
+    resource?: string;
 }
 interface EvaluateActionBasedInterface {
     action: string;
@@ -104,13 +111,24 @@ interface EvaluateActionBasedInterface {
 interface EvaluateIdentityBasedInterface extends EvaluateActionBasedInterface {
     resource: string;
 }
-interface EvaluateResourceBasedInterface extends EvaluateIdentityBasedInterface {
-    principal: string;
+interface EvaluateResourceBasedInterface extends EvaluateActionBasedInterface {
+    principal?: string;
     principalType?: string;
+    resource?: string;
 }
 declare type ActionBasedType = StatementInterface & (ActionBlock | NotActionBlock);
 declare type IdentityBasedType = StatementInterface & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock);
-declare type ResourceBasedType = StatementInterface & (PrincipalBlock | NotPrincipalBlock) & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock | {});
+declare type ResourceBasedType = StatementInterface & (OptionalPrincipalBlock | OptionalNotPrincipalBlock) & (ActionBlock | NotActionBlock) & (OptionalResourceBlock | OptionalNotResourceBlock);
+interface ProxyOptions {
+    get?: {
+        allow?: boolean;
+        propertyMap?: Record<string, string>;
+    };
+    set?: {
+        allow?: boolean;
+        propertyMap?: Record<string, string>;
+    };
+}
 
 declare function applyContext(str: string, context?: Context): string;
 declare class Statement {
@@ -128,6 +146,7 @@ declare class ActionBased extends Statement {
     constructor(action: ActionBasedType);
     getStatement(): ActionBasedType;
     matches({ action, context, conditionResolver }: MatchActionBasedInterface): boolean;
+    private checkAndAssignActions;
     private matchActions;
     private matchNotActions;
 }
@@ -141,6 +160,8 @@ declare class IdentityBased extends Statement {
     constructor(identity: IdentityBasedType);
     getStatement(): IdentityBasedType;
     matches({ action, resource, context, conditionResolver }: MatchIdentityBasedInterface): boolean;
+    private checkAndAssignActions;
+    private checkAndAssignResources;
     private matchActions;
     private matchNotActions;
     private matchResources;
@@ -155,51 +176,81 @@ declare class ResourceBased extends Statement {
     private notResource?;
     private notAction?;
     private statement;
+    private hasPrincipals;
+    private hasResources;
     constructor(identity: ResourceBasedType);
     getStatement(): ResourceBasedType;
     matches({ principal, action, resource, principalType, context, conditionResolver }: MatchResourceBasedInterface): boolean;
-    matchPrincipals(principal: string, principalType?: string, context?: Context): boolean;
-    matchNotPrincipals(principal: string, principalType?: string, context?: Context): boolean;
-    matchActions(action: string, context?: Context): boolean;
-    matchNotActions(action: string, context?: Context): boolean;
-    matchResources(resource: string, context?: Context): boolean;
-    matchNotResources(resource: string, context?: Context): boolean;
+    private matchPrincipalAndNotPrincipal;
+    private matchResourceAndNotResource;
+    private checkAndAssignActions;
+    private checkAndAssignPrincipals;
+    private checkAndAssignResources;
+    private matchPrincipals;
+    private matchNotPrincipals;
+    private matchActions;
+    private matchNotActions;
+    private matchResources;
+    private matchNotResources;
 }
 
-declare class ActionBasedPolicy {
+declare class Policy {
+    protected context?: Context;
+    protected conditionResolver?: ConditionResolver;
+    constructor({ context, conditionResolver }: MatchConditionInterface);
+    setContext(context: Context): void;
+    getContext(): Context | undefined;
+    setConditionResolver(conditionResolver: ConditionResolver): void;
+    getConditionResolver(): ConditionResolver | undefined;
+}
+
+interface ActionBasedPolicyInterface {
+    statements: ActionBasedType[];
+    conditionResolver?: ConditionResolver;
+    context?: Context;
+}
+declare class ActionBasedPolicy extends Policy {
     private denyStatements;
     private allowStatements;
-    private conditionResolver?;
     private statements;
-    constructor(config: ActionBasedType[], conditionResolver?: ConditionResolver);
+    constructor({ statements, conditionResolver, context }: ActionBasedPolicyInterface);
     getStatements(): ActionBasedType[];
     evaluate({ action, context }: EvaluateActionBasedInterface): boolean;
     can({ action, context }: EvaluateActionBasedInterface): boolean;
     cannot({ action, context }: EvaluateActionBasedInterface): boolean;
+    generateProxy<T, U extends keyof T>(obj: unknown, options?: ProxyOptions): T | undefined;
 }
 
-declare class IdentityBasedPolicy {
+interface IdentityBasedPolicyInterface {
+    statements: IdentityBasedType[];
+    conditionResolver?: ConditionResolver;
+    context?: Context;
+}
+declare class IdentityBasedPolicy extends Policy {
     private denyStatements;
     private allowStatements;
-    private conditionResolver?;
     private statements;
-    constructor(config: IdentityBasedType[], conditionResolver?: ConditionResolver);
+    constructor({ statements, conditionResolver, context }: IdentityBasedPolicyInterface);
     getStatements(): IdentityBasedType[];
     evaluate({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
     can({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
     cannot({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
 }
 
-declare class ResourceBasedPolicy {
+interface ResourceBasedPolicyInterface {
+    statements: ResourceBasedType[];
+    conditionResolver?: ConditionResolver;
+    context?: Context;
+}
+declare class ResourceBasedPolicy extends Policy {
     private denyStatements;
     private allowStatements;
-    private conditionResolver?;
     private statements;
-    constructor(config: ResourceBasedType[], conditionResolver?: ConditionResolver);
+    constructor({ statements, conditionResolver, context }: ResourceBasedPolicyInterface);
     getStatements(): ResourceBasedType[];
     evaluate({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
     can({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
     cannot({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
 }
 
-export { ActionBased, ActionBasedPolicy, IdentityBased, IdentityBasedPolicy, ResourceBased, ResourceBasedPolicy, Statement, applyContext, baseGet, castPath, getValueFromPath };
+export { ActionBased, ActionBasedPolicy, ActionBasedPolicyInterface, IdentityBased, IdentityBasedPolicy, ResourceBased, ResourceBasedPolicy, Statement, applyContext, baseGet, castPath, getValueFromPath };

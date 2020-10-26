@@ -5,23 +5,27 @@ describe('IdentityBasedPolicy Class', () => {
     it("doesn't throw an error", () => {
       expect(
         () =>
-          new IdentityBasedPolicy([
-            {
-              resource: 'some:glob:*:string/word',
-              action: ['read', 'write']
-            }
-          ])
+          new IdentityBasedPolicy({
+            statements: [
+              {
+                resource: 'some:glob:*:string/word',
+                action: ['read', 'write']
+              }
+            ]
+          })
       ).not.toThrow();
     });
 
     it('returns an IdentityBasedPolicy instance', () => {
       expect(
-        new IdentityBasedPolicy([
-          {
-            resource: 'some:glob:*:string/word',
-            action: ['read', 'write']
-          }
-        ])
+        new IdentityBasedPolicy({
+          statements: [
+            {
+              notResource: ['some:glob:*:string/word'],
+              notAction: ['read', 'write']
+            }
+          ]
+        })
       ).toBeInstanceOf(IdentityBasedPolicy);
     });
   });
@@ -34,8 +38,9 @@ describe('IdentityBasedPolicy Class', () => {
           action: ['read']
         }
       ];
-      const policy = new IdentityBasedPolicy(statements);
+      const policy = new IdentityBasedPolicy({ statements });
       const exportedStatements = policy.getStatements();
+
       expect(exportedStatements).toMatchObject(statements);
       expect(exportedStatements[0].sid).not.toBeFalsy();
     });
@@ -43,12 +48,14 @@ describe('IdentityBasedPolicy Class', () => {
 
   describe('when match actions', () => {
     it('returns true or false', () => {
-      const policy = new IdentityBasedPolicy([
-        {
-          resource: ['books:horror:*'],
-          action: ['read']
-        }
-      ]);
+      const policy = new IdentityBasedPolicy({
+        statements: [
+          {
+            resource: ['books:horror:*'],
+            action: ['read']
+          }
+        ]
+      });
 
       expect(
         policy.evaluate({
@@ -67,12 +74,14 @@ describe('IdentityBasedPolicy Class', () => {
 
   describe('when match not actions', () => {
     it('returns true or false', () => {
-      const policy = new IdentityBasedPolicy([
-        {
-          resource: 'books:horror:*',
-          notAction: 'read'
-        }
-      ]);
+      const policy = new IdentityBasedPolicy({
+        statements: [
+          {
+            resource: 'books:horror:*',
+            notAction: 'read'
+          }
+        ]
+      });
 
       expect(
         policy.evaluate({
@@ -91,12 +100,14 @@ describe('IdentityBasedPolicy Class', () => {
 
   describe('when match resources', () => {
     it('returns true or false', () => {
-      const policy = new IdentityBasedPolicy([
-        {
-          resource: 'books:horror:*',
-          action: 'read'
-        }
-      ]);
+      const policy = new IdentityBasedPolicy({
+        statements: [
+          {
+            resource: 'books:horror:*',
+            action: 'read'
+          }
+        ]
+      });
 
       expect(
         policy.evaluate({
@@ -115,12 +126,14 @@ describe('IdentityBasedPolicy Class', () => {
 
   describe('when match not resources', () => {
     it('returns true or false', () => {
-      const policy = new IdentityBasedPolicy([
-        {
-          notResource: 'books:horror:*',
-          action: 'read'
-        }
-      ]);
+      const policy = new IdentityBasedPolicy({
+        statements: [
+          {
+            notResource: 'books:horror:*',
+            action: 'read'
+          }
+        ]
+      });
 
       expect(
         policy.evaluate({
@@ -139,16 +152,18 @@ describe('IdentityBasedPolicy Class', () => {
 
   describe('when match based on context', () => {
     it('returns true or false', () => {
-      const policy = new IdentityBasedPolicy([
-        {
-          resource: ['secrets:${user.id}:*'],
-          action: ['read', 'write']
-        },
-        {
-          resource: ['secrets:${user.bestFriends}:*'],
-          action: 'read'
-        }
-      ]);
+      const policy = new IdentityBasedPolicy({
+        statements: [
+          {
+            resource: ['secrets:${user.id}:*'],
+            action: ['read', 'write']
+          },
+          {
+            resource: ['secrets:${user.bestFriends}:*'],
+            action: 'read'
+          }
+        ]
+      });
 
       expect(
         policy.evaluate({
@@ -188,14 +203,13 @@ describe('IdentityBasedPolicy Class', () => {
 
   describe('when match based on conditions', () => {
     it('returns true or false', () => {
-      const conditions = {
+      const conditionResolver = {
         greaterThan: (data: number, expected: number): boolean => {
           return data > expected;
         }
       };
-
-      const policy = new IdentityBasedPolicy(
-        [
+      const policy = new IdentityBasedPolicy({
+        statements: [
           {
             resource: 'secrets:*',
             action: ['read', 'write']
@@ -210,8 +224,8 @@ describe('IdentityBasedPolicy Class', () => {
             }
           }
         ],
-        conditions
-      );
+        conditionResolver
+      });
 
       expect(
         policy.evaluate({
@@ -236,15 +250,19 @@ describe('IdentityBasedPolicy Class', () => {
       ).toBe(true);
     });
   });
+
   describe('can and cannot', () => {
     it('can should return false when not found and true for when matched with allow', () => {
-      const policy = new IdentityBasedPolicy([
-        {
-          effect: 'allow',
-          resource: ['posts:${user.id}:*'],
-          action: ['write', 'read', 'update']
-        }
-      ]);
+      const policy = new IdentityBasedPolicy({
+        statements: [
+          {
+            effect: 'allow',
+            resource: ['posts:${user.id}:*'],
+            action: ['write', 'read', 'update']
+          }
+        ]
+      });
+
       expect(
         policy.can({
           action: 'read',
@@ -262,13 +280,16 @@ describe('IdentityBasedPolicy Class', () => {
     });
 
     it('cannot should return false when not found and true for when matched with deny', () => {
-      const policy = new IdentityBasedPolicy([
-        {
-          effect: 'deny',
-          resource: ['posts:${user.id}:*'],
-          action: ['write', 'read', 'update']
-        }
-      ]);
+      const policy = new IdentityBasedPolicy({
+        statements: [
+          {
+            effect: 'deny',
+            resource: ['posts:${user.id}:*'],
+            action: ['write', 'read', 'update']
+          }
+        ]
+      });
+
       expect(
         policy.cannot({
           action: 'read',

@@ -13,6 +13,7 @@ describe('isKey', () => {
     });
     it('should get false', () => {
       expect(isKey([1, ''])).toEqual(false);
+      expect(isKey({})).toEqual(false);
       expect(isKey('something[test]')).toEqual(false);
       expect(isKey('a.b')).toEqual(false);
     });

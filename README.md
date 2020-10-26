@@ -70,7 +70,7 @@ Supports these glob features:
 Please click on the language that you prefer
 
 - Translations:
-  - [Chinese docs](https://roggervalf.github.io/iam-policies/zh-CN/) by [@mickymao1110](https://github.com/mickymao1110)
+  - [Chinese docs](https://roggervalf.github.io/iam-policies/zh-CN/) by [@mickymao1110](https://github.com/mickymao1110) (< v3.5.0 )
   - [English docs](https://roggervalf.github.io/iam-policies/en/) by [@roggervalf](https://github.com/roggervalf)
 
 ## Article

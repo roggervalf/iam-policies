@@ -20,7 +20,7 @@ export function applyContext(str: string, context?: Context): string {
     str.replace(reDelimiters, (_, path: string) => {
       const value = getValueFromPath(context, path);
       if (Array.isArray(value)) return `{${value}}`;
-      if (value instanceof Object) return String(undefined);
+      if (value instanceof Object) return 'undefined';
 
       return String(value);
     })
@@ -46,31 +46,24 @@ class Statement {
     context,
     conditionResolver
   }: MatchConditionInterface): boolean {
-    return conditionResolver && this.condition && context
-      ? Object.keys(this.condition).every(condition =>
-          Object.keys(this.condition ? this.condition[condition] : {}).every(
-            path => {
-              if (this.condition) {
-                const conditionValues = this.condition[condition][path];
-                if (conditionValues instanceof Array) {
-                  return conditionValues.some(value =>
-                    conditionResolver[condition](
-                      getValueFromPath(context, path),
-                      value
-                    )
-                  );
-                }
-                return conditionResolver[condition](
+    const { condition: conditions } = this;
+    return conditionResolver && conditions && context
+      ? Object.keys(conditions).every((condition) =>
+          Object.keys(conditions[condition]).every((path) => {
+            const conditionValues = conditions[condition][path];
+            if (conditionValues instanceof Array) {
+              return conditionValues.some((value) =>
+                conditionResolver[condition](
                   getValueFromPath(context, path),
-                  conditionValues
-                );
-              }
-              return conditionResolver[condition](
-                getValueFromPath(context, path),
-                ''
+                  value
+                )
               );
             }
-          )
+            return conditionResolver[condition](
+              getValueFromPath(context, path),
+              conditionValues
+            );
+          })
         )
       : true;
   }

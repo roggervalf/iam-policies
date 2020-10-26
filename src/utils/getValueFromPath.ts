@@ -10,7 +10,10 @@ import { stringToPath } from './stringToPath';
  * @param {Object} [object] The object to query keys on.
  * @returns {Array} Returns the cast property path array.
  */
-export function castPath<T>(value: any, object: object): Array<T> {
+export function castPath<T>(
+  value: unknown,
+  object: Record<string | symbol, unknown>
+): Array<T> {
   if (Array.isArray(value)) {
     return value;
   }
@@ -26,7 +29,10 @@ export function castPath<T>(value: any, object: object): Array<T> {
  * @param {Array|string} path The path of the property to get.
  * @returns {*} Returns the resolved value.
  */
-export function baseGet<T>(object: object, path: Array<T> | string): any {
+export function baseGet<T>(
+  object: Record<string, unknown>,
+  path: Array<T> | string
+): any {
   const newPath = castPath(path, object);
 
   let index = 0;
@@ -64,9 +70,9 @@ export function baseGet<T>(object: object, path: Array<T> | string): any {
  * // => 'default'
  */
 export function getValueFromPath<T>(
-  object: object,
+  object: Record<string, unknown>,
   path: Array<T> | string,
-  defaultValue?: any
+  defaultValue?: unknown
 ): any {
   const result = object === null ? undefined : baseGet(object, path);
 

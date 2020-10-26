@@ -1,32 +1,45 @@
 import {
-  IdentityBasedType,
+  ConditionResolver,
+  Context,
   EvaluateIdentityBasedInterface,
-  ConditionResolver
+  IdentityBasedType
 } from './types';
 import { IdentityBased } from './IdentityBasedStatement';
+import { Policy } from './Policy';
 
-export class IdentityBasedPolicy {
+interface IdentityBasedPolicyInterface {
+  statements: IdentityBasedType[];
+  conditionResolver?: ConditionResolver;
+  context?: Context;
+}
+
+export class IdentityBasedPolicy extends Policy {
   private denyStatements: IdentityBased[];
   private allowStatements: IdentityBased[];
-  private conditionResolver?: ConditionResolver;
   private statements: IdentityBasedType[];
-  constructor(
-    config: IdentityBasedType[],
-    conditionResolver?: ConditionResolver
-  ) {
-    const statementInstances = config.map(
-      statement => new IdentityBased(statement)
+
+  constructor({
+    statements,
+    conditionResolver,
+    context
+  }: IdentityBasedPolicyInterface) {
+    super({ context, conditionResolver });
+    const statementInstances = statements.map(
+      (statement) => new IdentityBased(statement)
     );
-    this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
-    this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
-    this.conditionResolver = conditionResolver;
-    this.statements = statementInstances.map(statement =>
+    this.allowStatements = statementInstances.filter(
+      (s) => s.effect === 'allow'
+    );
+    this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
+    this.statements = statementInstances.map((statement) =>
       statement.getStatement()
     );
   }
+
   getStatements(): IdentityBasedType[] {
     return this.statements;
   }
+
   evaluate({
     action,
     resource,
@@ -35,8 +48,9 @@ export class IdentityBasedPolicy {
     const args = { action, resource, context };
     return !this.cannot(args) && this.can(args);
   }
+
   can({ action, resource, context }: EvaluateIdentityBasedInterface): boolean {
-    return this.allowStatements.some(s =>
+    return this.allowStatements.some((s) =>
       s.matches({
         action,
         resource,
@@ -45,12 +59,13 @@ export class IdentityBasedPolicy {
       })
     );
   }
+
   cannot({
     action,
     resource,
     context
   }: EvaluateIdentityBasedInterface): boolean {
-    return this.denyStatements.some(s =>
+    return this.denyStatements.some((s) =>
       s.matches({
         action,
         resource,

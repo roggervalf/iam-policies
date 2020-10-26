@@ -3,12 +3,8 @@ import {
   IdentityBasedType,
   MatchIdentityBasedInterface
 } from './types';
-import {
-  instanceOfResourceBlock,
-  instanceOfActionBlock
-} from './utils/instanceOfInterfaces';
 import { Matcher } from './Matcher';
-import { Statement, applyContext } from './Statement';
+import { applyContext, Statement } from './Statement';
 
 class IdentityBased extends Statement {
   private resource?: string[];
@@ -19,28 +15,8 @@ class IdentityBased extends Statement {
 
   constructor(identity: IdentityBasedType) {
     super(identity);
-    if (instanceOfResourceBlock(identity)) {
-      this.resource =
-        typeof identity.resource === 'string'
-          ? [identity.resource]
-          : identity.resource;
-    } else {
-      this.notResource =
-        typeof identity.notResource === 'string'
-          ? [identity.notResource]
-          : identity.notResource;
-    }
-    if (instanceOfActionBlock(identity)) {
-      this.action =
-        typeof identity.action === 'string'
-          ? [identity.action]
-          : identity.action;
-    } else {
-      this.notAction =
-        typeof identity.notAction === 'string'
-          ? [identity.notAction]
-          : identity.notAction;
-    }
+    this.checkAndAssignActions(identity);
+    this.checkAndAssignResources(identity);
     this.statement = { ...identity, sid: this.sid };
   }
 
@@ -63,9 +39,51 @@ class IdentityBased extends Statement {
     );
   }
 
+  private checkAndAssignActions(identity: IdentityBasedType): void {
+    const hasAction = 'action' in identity;
+    const hasNotAction = 'notAction' in identity;
+    if (hasAction && hasNotAction) {
+      throw new TypeError(
+        'IdentityBased statement should have an action or a notAction attribute, no both'
+      );
+    }
+    if ('action' in identity) {
+      this.action =
+        typeof identity.action === 'string'
+          ? [identity.action]
+          : identity.action;
+    } else {
+      this.notAction =
+        typeof identity.notAction === 'string'
+          ? [identity.notAction]
+          : identity.notAction;
+    }
+  }
+
+  private checkAndAssignResources(identity: IdentityBasedType): void {
+    const hasResource = 'resource' in identity;
+    const hasNotResource = 'notResource' in identity;
+    if (hasResource && hasNotResource) {
+      throw new TypeError(
+        'IdentityBased statement should have a resource or a notResource attribute, no both'
+      );
+    }
+    if ('resource' in identity) {
+      this.resource =
+        typeof identity.resource === 'string'
+          ? [identity.resource]
+          : identity.resource;
+    } else {
+      this.notResource =
+        typeof identity.notResource === 'string'
+          ? [identity.notResource]
+          : identity.notResource;
+    }
+  }
+
   private matchActions(action: string, context?: Context): boolean {
     return this.action
-      ? this.action.some(a =>
+      ? this.action.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
         )
       : true;
@@ -73,7 +91,7 @@ class IdentityBased extends Statement {
 
   private matchNotActions(action: string, context?: Context): boolean {
     return this.notAction
-      ? !this.notAction.some(a =>
+      ? !this.notAction.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
         )
       : true;
@@ -81,7 +99,7 @@ class IdentityBased extends Statement {
 
   private matchResources(resource: string, context?: Context): boolean {
     return this.resource
-      ? this.resource.some(a =>
+      ? this.resource.some((a) =>
           new Matcher(applyContext(a, context)).match(resource)
         )
       : true;
@@ -89,7 +107,7 @@ class IdentityBased extends Statement {
 
   private matchNotResources(resource: string, context?: Context): boolean {
     return this.notResource
-      ? !this.notResource.some(a =>
+      ? !this.notResource.some((a) =>
           new Matcher(applyContext(a, context)).match(resource)
         )
       : true;

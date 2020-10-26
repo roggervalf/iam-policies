@@ -1,32 +1,45 @@
 import {
-  ResourceBasedType,
+  ConditionResolver,
+  Context,
   EvaluateResourceBasedInterface,
-  ConditionResolver
+  ResourceBasedType
 } from './types';
 import { ResourceBased } from './ResourceBasedStatement';
+import { Policy } from './Policy';
 
-export class ResourceBasedPolicy {
+interface ResourceBasedPolicyInterface {
+  statements: ResourceBasedType[];
+  conditionResolver?: ConditionResolver;
+  context?: Context;
+}
+
+export class ResourceBasedPolicy extends Policy {
   private denyStatements: ResourceBased[];
   private allowStatements: ResourceBased[];
-  private conditionResolver?: ConditionResolver;
   private statements: ResourceBasedType[];
-  constructor(
-    config: ResourceBasedType[],
-    conditionResolver?: ConditionResolver
-  ) {
-    const statementInstances = config.map(
-      statement => new ResourceBased(statement)
+
+  constructor({
+    statements,
+    conditionResolver,
+    context
+  }: ResourceBasedPolicyInterface) {
+    super({ context, conditionResolver });
+    const statementInstances = statements.map(
+      (statement) => new ResourceBased(statement)
     );
-    this.allowStatements = statementInstances.filter(s => s.effect === 'allow');
-    this.denyStatements = statementInstances.filter(s => s.effect === 'deny');
-    this.conditionResolver = conditionResolver;
-    this.statements = statementInstances.map(statement =>
+    this.allowStatements = statementInstances.filter(
+      (s) => s.effect === 'allow'
+    );
+    this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
+    this.statements = statementInstances.map((statement) =>
       statement.getStatement()
     );
   }
+
   getStatements(): ResourceBasedType[] {
     return this.statements;
   }
+
   evaluate({
     principal,
     action,
@@ -37,6 +50,7 @@ export class ResourceBasedPolicy {
     const args = { principal, action, resource, principalType, context };
     return !this.cannot(args) && this.can(args);
   }
+
   can({
     principal,
     action,
@@ -44,7 +58,7 @@ export class ResourceBasedPolicy {
     principalType,
     context
   }: EvaluateResourceBasedInterface): boolean {
-    return this.allowStatements.some(s =>
+    return this.allowStatements.some((s) =>
       s.matches({
         principal,
         action,
@@ -55,6 +69,7 @@ export class ResourceBasedPolicy {
       })
     );
   }
+
   cannot({
     principal,
     action,
@@ -62,7 +77,7 @@ export class ResourceBasedPolicy {
     principalType,
     context
   }: EvaluateResourceBasedInterface): boolean {
-    return this.denyStatements.some(s =>
+    return this.denyStatements.some((s) =>
       s.matches({
         principal,
         action,

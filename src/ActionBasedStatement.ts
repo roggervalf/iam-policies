@@ -1,7 +1,6 @@
-import { Context, ActionBasedType, MatchActionBasedInterface } from './types';
-import { instanceOfActionBlock } from './utils/instanceOfInterfaces';
+import { ActionBasedType, Context, MatchActionBasedInterface } from './types';
 import { Matcher } from './Matcher';
-import { Statement, applyContext } from './Statement';
+import { applyContext, Statement } from './Statement';
 
 class ActionBased extends Statement {
   private action?: string[];
@@ -10,15 +9,7 @@ class ActionBased extends Statement {
 
   constructor(action: ActionBasedType) {
     super(action);
-    if (instanceOfActionBlock(action)) {
-      this.action =
-        typeof action.action === 'string' ? [action.action] : action.action;
-    } else {
-      this.notAction =
-        typeof action.notAction === 'string'
-          ? [action.notAction]
-          : action.notAction;
-    }
+    this.checkAndAssignActions(action);
     this.statement = { ...action, sid: this.sid };
   }
 
@@ -38,9 +29,28 @@ class ActionBased extends Statement {
     );
   }
 
+  private checkAndAssignActions(action: ActionBasedType): void {
+    const hasAction = 'action' in action;
+    const hasNotAction = 'notAction' in action;
+    if (hasAction && hasNotAction) {
+      throw new TypeError(
+        'ActionBased statement should have an action or a notAction attribute, no both'
+      );
+    }
+    if ('action' in action) {
+      this.action =
+        typeof action.action === 'string' ? [action.action] : action.action;
+    } else {
+      this.notAction =
+        typeof action.notAction === 'string'
+          ? [action.notAction]
+          : action.notAction;
+    }
+  }
+
   private matchActions(action: string, context?: Context): boolean {
     return this.action
-      ? this.action.some(a =>
+      ? this.action.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
         )
       : true;
@@ -48,7 +58,7 @@ class ActionBased extends Statement {
 
   private matchNotActions(action: string, context?: Context): boolean {
     return this.notAction
-      ? !this.notAction.some(a =>
+      ? !this.notAction.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
         )
       : true;

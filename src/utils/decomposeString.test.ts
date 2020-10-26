@@ -17,6 +17,7 @@ describe('decomposeString', () => {
       post: '**'
     });
   });
+
   it('should find only one separator', () => {
     expect(decomposeString('first', 'second', 'firstAndSecond')).toEqual({
       start: -1,

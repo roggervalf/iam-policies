@@ -23,6 +23,7 @@ describe('getValueFromPath', () => {
         const context = {
           user: { id: 456, bestFriends: [123, 532], '56': 50 }
         };
+
         expect(getValueFromPath(context, 'user.bestFriends')).toEqual([
           123,
           532
@@ -40,6 +41,7 @@ describe('getValueFromPath', () => {
         const context = {
           user: { id: 456, bestFriends: [123, 532], '56': 50 }
         };
+
         expect(getValueFromPath(context, ['user', 'bestFriends'])).toEqual([
           123,
           532
@@ -60,6 +62,7 @@ describe('getValueFromPath', () => {
           const context = {
             user: { id: 456, bestFriends: [123] }
           };
+
           expect(getValueFromPath(context, 'user.id.pets')).toBe(undefined);
           expect(getValueFromPath(context, 'company')).toBe(undefined);
           expect(getValueFromPath(context, 'company.address')).toBe(undefined);
@@ -71,6 +74,7 @@ describe('getValueFromPath', () => {
           const context = {
             user: { id: 456, bestFriends: [123] }
           };
+
           expect(getValueFromPath(context, 'user.id.pets', 'default')).toBe(
             'default'
           );

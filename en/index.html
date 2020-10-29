@@ -481,7 +481,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td>The <strong><em>effect</em></strong> element specifies whether the statement results in an allow or an explicit deny.<br/> Valid values for Effect are <code class="language-text">allow</code> and <code class="language-text">deny</code>.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].</code><br/><code class="language-text">action</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.action</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
@@ -495,7 +495,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td>The <strong><em>notAction</em></strong> element is an advanced policy element that explicitly matches everything except the specified list of actions.<br/> Each statement must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.<br/> Using <code class="language-text">notAction</code> can result in a shorter policy by listing only a few actions that should not match, rather than including a long list of actions that will match.<br/> When using <code class="language-text">notAction</code>, you should keep in mind that actions specified in this element are the only actions in that are limited.<br/> This, in turn, means that all of the applicable actions or services that are not listed are allowed if you use the Allow effect.<br/> In addition, such unlisted actions or services are denied if you use the <code class="language-text">deny</code> effect.<br/> When you use <code class="language-text">notAction</code> with the <code class="language-text">resource</code> element, you provide scope for the policy.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].</code><br/><code class="language-text">condition</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.condition</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
@@ -663,47 +663,47 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <tr>
 <td><code class="language-text">options</code></td>
 <td>object</td>
-<td>{ get:{ allow:true }, set:{ allow:true } }</td>
+<td>{ get:{ allow:true },<br/> set:{ allow:true } }</td>
 <td><code class="language-text">false</code></td>
 <td>It should contains attributes to modify the default behavior.</td>
 </tr>
 <tr>
-<td><code class="language-text">options.get</code></td>
+<td><code class="language-text">options</code><br/><code class="language-text">.get</code></td>
 <td>object</td>
 <td>{ allow:true }</td>
 <td><code class="language-text">false</code></td>
 <td>It should contain get function handler options for the Proxy instance.</td>
 </tr>
 <tr>
-<td><code class="language-text">options.get.allow</code></td>
+<td><code class="language-text">options</code><br/><code class="language-text">.get.allow</code></td>
 <td>boolean</td>
 <td>true</td>
 <td><code class="language-text">false</code></td>
 <td>It should allow to use the get function handler.</td>
 </tr>
 <tr>
-<td><code class="language-text">options.get.propertyMap</code></td>
+<td><code class="language-text">options</code><br/><code class="language-text">.get.propertyMap</code></td>
 <td>object</td>
 <td>{}</td>
 <td><code class="language-text">false</code></td>
 <td>It should serve as a mapping for different property names in get function handler.</td>
 </tr>
 <tr>
-<td><code class="language-text">options.set</code></td>
+<td><code class="language-text">options</code><br/><code class="language-text">.set</code></td>
 <td>object</td>
 <td>{ allow:true }</td>
 <td><code class="language-text">false</code></td>
 <td>It should contain set function handler options for the Proxy instance.</td>
 </tr>
 <tr>
-<td><code class="language-text">options.set.allow</code></td>
+<td><code class="language-text">options</code><br/><code class="language-text">.set.allow</code></td>
 <td>boolean</td>
 <td>true</td>
 <td><code class="language-text">false</code></td>
 <td>It should allow to use the set function handler.</td>
 </tr>
 <tr>
-<td><code class="language-text">options.set.propertyMap</code></td>
+<td><code class="language-text">options</code><br/><code class="language-text">.set.propertyMap</code></td>
 <td>object</td>
 <td>{}</td>
 <td><code class="language-text">false</code></td>
@@ -739,67 +739,67 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td>The <strong><em>statements</em></strong> element is the main element for a policy. The statements element can contain an array of individual statements.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].sid</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.sid</code></td>
 <td>string</td>
 <td><em>uuid</em></td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>sid</em></strong> element should be a unique identifier. It is automatically generated with a uuid in case it is undefined.</td>
+<td>The <strong><em>sid</em></strong> element should be a unique identifier.<br/> It is automatically generated with a uuid in case it is undefined.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].effect</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.effect</code></td>
 <td>string</td>
 <td>allow</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>effect</em></strong> element specifies whether the statement results in an allow or an explicit deny. Valid values for Effect are <code class="language-text">allow</code> and <code class="language-text">deny</code>.</td>
+<td>The <strong><em>effect</em></strong> element specifies whether the statement results in an allow or an explicit deny.<br/> Valid values for Effect are <code class="language-text">allow</code> and <code class="language-text">deny</code>.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].action</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.action</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>action</em></strong> element describes the specific action or actions that will be allowed or denied. Statements must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.</td>
+<td>The <strong><em>action</em></strong> element describes the specific action or actions that will be allowed or denied.<br/> Statements must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].notAction</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.notAction</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>notAction</em></strong> element is an advanced policy element that explicitly matches everything except the specified list of actions. Statements must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element. Using <code class="language-text">notAction</code> can result in a shorter policy by listing only a few actions that should not match, rather than including a long list of actions that will match. When using <code class="language-text">notAction</code>, you should keep in mind that actions specified in this element are the only actions in that are limited. This, in turn, means that all of the applicable actions or services that are not listed are allowed if you use the Allow effect. In addition, such unlisted actions or services are denied if you use the <code class="language-text">deny</code> effect. When you use <code class="language-text">notAction</code> with the <code class="language-text">resource</code> element, you provide scope for the policy.</td>
+<td>The <strong><em>notAction</em></strong> element is an advanced policy element that explicitly matches everything except the specified list of actions.<br/> Statements must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.<br/> Using <code class="language-text">notAction</code> can result in a shorter policy by listing only a few actions that should not match, rather than including a long list of actions that will match.<br/> When using <code class="language-text">notAction</code>, you should keep in mind that actions specified in this element are the only actions in that are limited.<br/> This, in turn, means that all of the applicable actions or services that are not listed are allowed if you use the Allow effect.<br/> In addition, such unlisted actions or services are denied if you use the <code class="language-text">deny</code> effect.<br/> When you use <code class="language-text">notAction</code> with the <code class="language-text">resource</code> element, you provide scope for the policy.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].resource</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.resource</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>resource</em></strong> element specifies the object or objects that the statement covers. Each statement must include either a <code class="language-text">resource</code> or a <code class="language-text">notResource</code> element.</td>
+<td>The <strong><em>resource</em></strong> element specifies the object or objects that the statement covers.<br/> Each statement must include either a <code class="language-text">resource</code> or a <code class="language-text">notResource</code> element.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].notResource</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.notResource</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>notResource</em></strong> element is an advanced policy element that explicitly matches every resource except those specified. Each statement must include either an <code class="language-text">resource</code> or <code class="language-text">notResource</code> element. Using <code class="language-text">notResource</code> can result in a shorter policy by listing only a few resources that should not match, rather than including a long list of resources that will match.</td>
+<td>The <strong><em>notResource</em></strong> element is an advanced policy element that explicitly matches every resource except those specified.<br/> Each statement must include either an <code class="language-text">resource</code> or <code class="language-text">notResource</code> element.<br/> Using <code class="language-text">notResource</code> can result in a shorter policy by listing only a few resources that should not match, rather than including a long list of resources that will match.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].condition</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.condition</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>condition</em></strong> element (or Condition block) lets you specify conditions for when a policy is in effect. In the <code class="language-text">condition</code> element, you build expressions in which you use condition operators (equal, less than, etc.) to match the condition keys and values in the policy against keys and values in the request context.</td>
+<td>The <strong><em>condition</em></strong> element (or Condition block) lets you specify conditions for when a policy is in effect.<br/> In the <code class="language-text">condition</code> element, you build expressions in which you use condition operators (equal, less than, etc.) to match the condition keys and values in the policy against keys and values in the request context.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].condition[&quot;conditionType&quot;]</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.condition[&quot;conditionType&quot;]</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>conditionType</em></strong> name should be replaced with a custom string attribute for a specific condition that should be match with one conditionResolver element.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
-<td>(string or number or boolean) or (string or number or boolean)[]</td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
+<td>(string or number or boolean) or<br/> (string or number or boolean)[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>conditionKey</em></strong> should be a custom string path attribute for a specific context attribute. Note: attributes must be separated but dots (<code class="language-text">.</code>).</td>
+<td>The <strong><em>conditionKey</em></strong> should be a custom string path attribute for a specific context attribute.<br/> Note: attributes must be separated but dots (<code class="language-text">.</code>).</td>
 </tr>
 <tr>
 <td><code class="language-text">conditionResolver</code></td>
@@ -813,7 +813,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td>function</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>conditionKey</em></strong> should match with a function name that will be used as a resolver in condition evaluation. There are 2 parameters for this function: <strong>data</strong> (first parameter) that will be evaluated with <strong>expected</strong> (second parameter), returning a <strong>true</strong> or <strong>false</strong>.</td>
+<td>The <strong><em>conditionKey</em></strong> should match with a function name that will be used as a resolver in condition evaluation.<br/> There are 2 parameters for this function: <strong>data</strong> (first parameter) that will be evaluated with <strong>expected</strong> (second parameter), returning a <strong>true</strong> or <strong>false</strong>.</td>
 </tr>
 <tr>
 <td><code class="language-text">context</code></td>
@@ -972,56 +972,56 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td>object[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>statements</em></strong> element is the main element for a policy. The statements element can contain an array of individual statements.</td>
+<td>The <strong><em>statements</em></strong> element is the main element for a policy.<br/> The statements element can contain an array of individual statements.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].sid</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.sid</code></td>
 <td>string</td>
 <td><em>uuid</em></td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>sid</em></strong> element should be a unique identifier. It is automatically generated with a uuid in case it is undefined.</td>
+<td>The <strong><em>sid</em></strong> element should be a unique identifier.<br/> It is automatically generated with a uuid in case it is undefined.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].effect</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.effect</code></td>
 <td>string</td>
 <td>allow</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>effect</em></strong> element specifies whether the statement results in an allow or an explicit deny. Valid values for Effect are <code class="language-text">allow</code> and <code class="language-text">deny</code>.</td>
+<td>The <strong><em>effect</em></strong> element specifies whether the statement results in an allow or an explicit deny.<br/> Valid values for Effect are <code class="language-text">allow</code> and <code class="language-text">deny</code>.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].principal</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.principal</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>principal</em></strong> element in a policy to specify the principal that is allowed or denied access to a resource. Each statement could include either an <code class="language-text">principal</code> or <code class="language-text">notPrincipal</code>.</td>
+<td>The <strong><em>principal</em></strong> element in a policy to specify the principal that is allowed or denied access to a resource.<br/> Each statement could include either an <code class="language-text">principal</code> or <code class="language-text">notPrincipal</code>.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].notPrincipal</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.notPrincipal</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>notPrincipal</em></strong> element specifies the principal that is not allowed or denied access to a resource. The <code class="language-text">notPrincipal</code> element enables you to specify an exception to a list of principals. Use this element to deny access to all principals except the one named in the <code class="language-text">notPrincipal</code> element. Each statement could include either an <code class="language-text">principal</code> or <code class="language-text">notPrincipal</code> element.</td>
+<td>The <strong><em>notPrincipal</em></strong> element specifies the principal that is not allowed or denied access to a resource.<br/> The <code class="language-text">notPrincipal</code> element enables you to specify an exception to a list of principals.<br/> Use this element to deny access to all principals except the one named in the <code class="language-text">notPrincipal</code> element.<br/> Each statement could include either an <code class="language-text">principal</code> or <code class="language-text">notPrincipal</code> element.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].action</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.action</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>action</em></strong> element describes the specific action or actions that will be allowed or denied. Each statement must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.</td>
+<td>The <strong><em>action</em></strong> element describes the specific action or actions that will be allowed or denied.<br/> Each statement must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].notAction</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.notAction</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>notAction</em></strong> element is an advanced policy element that explicitly matches everything except the specified list of actions. Each statement must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element. Using <code class="language-text">notAction</code> can result in a shorter policy by listing only a few actions that should not match, rather than including a long list of actions that will match. When using <code class="language-text">notAction</code>, you should keep in mind that actions specified in this element are the only actions in that are limited. This, in turn, means that all of the applicable actions or services that are not listed are allowed if you use the Allow effect. In addition, such unlisted actions or services are denied if you use the <code class="language-text">deny</code> effect. When you use <code class="language-text">notAction</code> with the <code class="language-text">resource</code> element, you provide scope for the policy.</td>
+<td>The <strong><em>notAction</em></strong> element is an advanced policy element that explicitly matches everything except the specified list of actions.<br/> Each statement must include either an <code class="language-text">action</code> or <code class="language-text">notAction</code> element.<br/> Using <code class="language-text">notAction</code> can result in a shorter policy by listing only a few actions that should not match, rather than including a long list of actions that will match.<br/> When using <code class="language-text">notAction</code>, you should keep in mind that actions specified in this element are the only actions in that are limited.<br/> This, in turn, means that all of the applicable actions or services that are not listed are allowed if you use the Allow effect.<br/> In addition, such unlisted actions or services are denied if you use the <code class="language-text">deny</code> effect.<br/> When you use <code class="language-text">notAction</code> with the <code class="language-text">resource</code> element, you provide scope for the policy.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].resource</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.resource</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>resource</em></strong> element specifies the object or objects that the statement covers. Each statement could include either a <code class="language-text">resource</code> or a <code class="language-text">notResource</code> element.</td>
+<td>The <strong><em>resource</em></strong> element specifies the object or objects that the statement covers.<br/> Each statement could include either a <code class="language-text">resource</code> or a <code class="language-text">notResource</code> element.</td>
 </tr>
 <tr>
 <td><code class="language-text">statements[].notResource</code></td>

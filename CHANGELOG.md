@@ -159,3 +159,11 @@
 ### Features
 
 - **identitybased and resourcebased:** adding new policies ([#8](https://github.com/roggervalf/iam-policies/pull/8)) ([58210b7](https://github.com/roggervalf/iam-policies/commit/58210b738f95b9eb6f81d297a08a36af4ee2b19e))
+
+### [1.3.2](https://github.com/roggervalf/iam-policies/compare/1.3.1...1.3.2) (2020-02-11)
+
+### [1.3.1](https://github.com/roggervalf/iam-policies/compare/1.3.0...1.3.1) (2020-01-19)
+
+## [1.3.0](https://github.com/roggervalf/iam-policies/compare/1.2.0...1.3.0) (2020-01-01)
+
+## [1.2.0](https://github.com/roggervalf/iam-policies/compare/1.1.0...1.2.0) (2019-12-20)

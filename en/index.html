@@ -1024,32 +1024,32 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td>The <strong><em>resource</em></strong> element specifies the object or objects that the statement covers.<br/> Each statement could include either a <code class="language-text">resource</code> or a <code class="language-text">notResource</code> element.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].notResource</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.notResource</code></td>
 <td>string or string[]</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>The <strong><em>notResource</em></strong> element is an advanced policy element that explicitly matches every resource except those specified. Each statement could include either an <code class="language-text">resource</code> or <code class="language-text">notResource</code> element. Using <code class="language-text">notResource</code> can result in a shorter policy by listing only a few resources that should not match, rather than including a long list of resources that will match.</td>
+<td>The <strong><em>notResource</em></strong> element is an advanced policy element that explicitly matches every resource except those specified.<br/> Each statement could include either an <code class="language-text">resource</code> or <code class="language-text">notResource</code> element.<br/> Using <code class="language-text">notResource</code> can result in a shorter policy by listing only a few resources that should not match, rather than including a long list of resources that will match.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].condition</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.condition</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>condition</em></strong> element (or Condition block) lets you specify conditions for when a policy is in effect. In the <code class="language-text">condition</code> element, you build expressions in which you use condition operators (equal, less than, etc.) to match the condition keys and values in the policy against keys and values in the request context.</td>
+<td>The <strong><em>condition</em></strong> element (or Condition block) lets you specify conditions for when a policy is in effect.<br/> In the <code class="language-text">condition</code> element, you build expressions in which you use condition operators (equal, less than, etc.) to match the condition keys and values in the policy against keys and values in the request context.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].condition[&quot;conditionType&quot;]</code></td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.condition[&quot;conditionType&quot;]</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
 <td>The <strong><em>conditionType</em></strong> name should be replaced with a custom string attribute for a specific condition that should be match with one conditionResolver element.</td>
 </tr>
 <tr>
-<td><code class="language-text">statements[].condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
-<td>(string or number or boolean) or (string or number or boolean)[]</td>
+<td><code class="language-text">statements[]</code><br/><code class="language-text">.condition[&quot;conditionType&quot;][&quot;conditionKey&quot;]</code></td>
+<td>(string or number or boolean) or<br/> (string or number or boolean)[]</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>conditionKey</em></strong> should be a custom string path attribute for a specific context attribute. Note: attributes must be separated but dots (<code class="language-text">.</code>).</td>
+<td>The <strong><em>conditionKey</em></strong> should be a custom string path attribute for a specific context attribute.<br/> Note: attributes must be separated but dots (<code class="language-text">.</code>).</td>
 </tr>
 <tr>
 <td><code class="language-text">conditionResolver</code></td>
@@ -1063,7 +1063,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td>function</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>The <strong><em>conditionKey</em></strong> should match with a function name that will be used as a resolver in condition evaluation. There are 2 parameters for this function: <strong>data</strong> (first parameter) that will be evaluated with <strong>expected</strong> (second parameter), returning a <strong>true</strong> or <strong>false</strong>.</td>
+<td>The <strong><em>conditionKey</em></strong> should match with a function name that will be used as a resolver in condition evaluation.<br/> There are 2 parameters for this function: <strong>data</strong> (first parameter) that will be evaluated with <strong>expected</strong> (second parameter), returning a <strong>true</strong> or <strong>false</strong>.</td>
 </tr>
 <tr>
 <td><code class="language-text">context</code></td>
@@ -1267,7 +1267,7 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td>Array or string</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>It is the value path from data. Separate attribute names by dots (<code class="language-text">.</code>).</td>
+<td>It is the value path from data.<br/> Separate attribute names by dots (<code class="language-text">.</code>).</td>
 </tr>
 <tr>
 <td><code class="language-text">defaultValue</code></td>
@@ -1300,14 +1300,14 @@ inclusivePolicy<span class="token punctuation">.</span><span class="token functi
 <td>string</td>
 <td>undefined</td>
 <td><code class="language-text">true</code></td>
-<td>It could contain embedded path <br/> values into it by using (<code class="language-text">${}</code>).</td>
+<td>It could contain embedded path values into it by using (<code class="language-text">${}</code>).</td>
 </tr>
 <tr>
 <td><code class="language-text">context</code></td>
 <td>object</td>
 <td>undefined</td>
 <td><code class="language-text">false</code></td>
-<td>It represents the context that <br/> should be embedded into <code class="language-text">str</code>.</td>
+<td>It represents the context that should be embedded into <code class="language-text">str</code>.</td>
 </tr>
 </tbody>
 </table>

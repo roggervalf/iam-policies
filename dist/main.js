@@ -653,6 +653,11 @@ class Matcher {
             return Boolean(s);
         });
     }
+    match(str) {
+        if (this.empty)
+            return str === '';
+        return this.set.some((pattern) => this.matchOne(str, pattern));
+    }
     braceExpand() {
         const pattern = this.pattern;
         if (!pattern.match(/{.*}/)) {
@@ -707,11 +712,6 @@ class Matcher {
             });
         });
         return expansions;
-    }
-    match(str) {
-        if (this.empty)
-            return str === '';
-        return this.set.some((pattern) => this.matchOne(str, pattern));
     }
     matchOne(str, pattern) {
         if (typeof pattern === 'string') {

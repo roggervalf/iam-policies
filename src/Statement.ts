@@ -42,10 +42,10 @@ class Statement {
     this.condition = condition;
   }
 
-  matchConditions({
-    context,
-    conditionResolver
-  }: MatchConditionInterface): boolean {
+  matchConditions(
+    this: Statement,
+    { context, conditionResolver }: MatchConditionInterface
+  ): boolean {
     const { condition: conditions } = this;
     return conditionResolver && conditions && context
       ? Object.keys(conditions).every((condition) =>

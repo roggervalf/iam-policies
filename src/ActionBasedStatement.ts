@@ -13,15 +13,14 @@ class ActionBased extends Statement {
     this.statement = { ...action, sid: this.sid };
   }
 
-  getStatement(): ActionBasedType {
+  getStatement(this: ActionBased): ActionBasedType {
     return this.statement;
   }
 
-  matches({
-    action,
-    context,
-    conditionResolver
-  }: MatchActionBasedInterface): boolean {
+  matches(
+    this: ActionBased,
+    { action, context, conditionResolver }: MatchActionBasedInterface
+  ): boolean {
     return (
       this.matchActions(action, context) &&
       this.matchNotActions(action, context) &&

@@ -28,18 +28,21 @@ class ResourceBased extends Statement {
     this.statement = { ...identity, sid: this.sid };
   }
 
-  getStatement(): ResourceBasedType {
+  getStatement(this: ResourceBased): ResourceBasedType {
     return this.statement;
   }
 
-  matches({
-    principal,
-    action,
-    resource,
-    principalType,
-    context,
-    conditionResolver
-  }: MatchResourceBasedInterface): boolean {
+  matches(
+    this: ResourceBased,
+    {
+      principal,
+      action,
+      resource,
+      principalType,
+      context,
+      conditionResolver
+    }: MatchResourceBasedInterface
+  ): boolean {
     return (
       this.matchPrincipalAndNotPrincipal(principal, principalType, context) &&
       this.matchActions(action, context) &&

@@ -20,16 +20,19 @@ class IdentityBased extends Statement {
     this.statement = { ...identity, sid: this.sid };
   }
 
-  getStatement(): IdentityBasedType {
+  getStatement(this: IdentityBased): IdentityBasedType {
     return this.statement;
   }
 
-  matches({
-    action,
-    resource,
-    context,
-    conditionResolver
-  }: MatchIdentityBasedInterface): boolean {
+  matches(
+    this: IdentityBased,
+    {
+      action,
+      resource,
+      context,
+      conditionResolver
+    }: MatchIdentityBasedInterface
+  ): boolean {
     return (
       this.matchActions(action, context) &&
       this.matchNotActions(action, context) &&

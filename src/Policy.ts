@@ -9,19 +9,22 @@ class Policy {
     this.conditionResolver = conditionResolver;
   }
 
-  setContext(context: Context): void {
+  setContext(this: Policy, context: Context): void {
     this.context = context;
   }
 
-  getContext(): Context | undefined {
+  getContext(this: Policy): Context | undefined {
     return this.context;
   }
 
-  setConditionResolver(conditionResolver: ConditionResolver): void {
+  setConditionResolver(
+    this: Policy,
+    conditionResolver: ConditionResolver
+  ): void {
     this.conditionResolver = conditionResolver;
   }
 
-  getConditionResolver(): ConditionResolver | undefined {
+  getConditionResolver(this: Policy): ConditionResolver | undefined {
     return this.conditionResolver;
   }
 }

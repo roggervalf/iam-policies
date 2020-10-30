@@ -37,16 +37,22 @@ export class ActionBasedPolicy extends Policy {
     );
   }
 
-  getStatements(): ActionBasedType[] {
+  getStatements(this: ActionBasedPolicy): ActionBasedType[] {
     return this.statements;
   }
 
-  evaluate({ action, context }: EvaluateActionBasedInterface): boolean {
+  evaluate(
+    this: ActionBasedPolicy,
+    { action, context }: EvaluateActionBasedInterface
+  ): boolean {
     const args = { action, context };
     return !this.cannot(args) && this.can(args);
   }
 
-  can({ action, context }: EvaluateActionBasedInterface): boolean {
+  can(
+    this: ActionBasedPolicy,
+    { action, context }: EvaluateActionBasedInterface
+  ): boolean {
     return this.allowStatements.some((s) =>
       s.matches({
         action,
@@ -56,7 +62,10 @@ export class ActionBasedPolicy extends Policy {
     );
   }
 
-  cannot({ action, context }: EvaluateActionBasedInterface): boolean {
+  cannot(
+    this: ActionBasedPolicy,
+    { action, context }: EvaluateActionBasedInterface
+  ): boolean {
     return this.denyStatements.some((s) =>
       s.matches({
         action,
@@ -67,6 +76,7 @@ export class ActionBasedPolicy extends Policy {
   }
 
   generateProxy<T, U extends keyof T>(
+    this: ActionBasedPolicy,
     obj: unknown,
     options: ProxyOptions = {}
   ): T | undefined {

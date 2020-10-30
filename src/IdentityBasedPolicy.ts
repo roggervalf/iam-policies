@@ -36,20 +36,22 @@ export class IdentityBasedPolicy extends Policy {
     );
   }
 
-  getStatements(): IdentityBasedType[] {
+  getStatements(this: IdentityBasedPolicy): IdentityBasedType[] {
     return this.statements;
   }
 
-  evaluate({
-    action,
-    resource,
-    context
-  }: EvaluateIdentityBasedInterface): boolean {
+  evaluate(
+    this: IdentityBasedPolicy,
+    { action, resource, context }: EvaluateIdentityBasedInterface
+  ): boolean {
     const args = { action, resource, context };
     return !this.cannot(args) && this.can(args);
   }
 
-  can({ action, resource, context }: EvaluateIdentityBasedInterface): boolean {
+  can(
+    this: IdentityBasedPolicy,
+    { action, resource, context }: EvaluateIdentityBasedInterface
+  ): boolean {
     return this.allowStatements.some((s) =>
       s.matches({
         action,
@@ -60,11 +62,10 @@ export class IdentityBasedPolicy extends Policy {
     );
   }
 
-  cannot({
-    action,
-    resource,
-    context
-  }: EvaluateIdentityBasedInterface): boolean {
+  cannot(
+    this: IdentityBasedPolicy,
+    { action, resource, context }: EvaluateIdentityBasedInterface
+  ): boolean {
     return this.denyStatements.some((s) =>
       s.matches({
         action,

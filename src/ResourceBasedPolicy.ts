@@ -36,28 +36,34 @@ export class ResourceBasedPolicy extends Policy {
     );
   }
 
-  getStatements(): ResourceBasedType[] {
+  getStatements(this: ResourceBasedPolicy): ResourceBasedType[] {
     return this.statements;
   }
 
-  evaluate({
-    principal,
-    action,
-    resource,
-    principalType,
-    context
-  }: EvaluateResourceBasedInterface): boolean {
+  evaluate(
+    this: ResourceBasedPolicy,
+    {
+      principal,
+      action,
+      resource,
+      principalType,
+      context
+    }: EvaluateResourceBasedInterface
+  ): boolean {
     const args = { principal, action, resource, principalType, context };
     return !this.cannot(args) && this.can(args);
   }
 
-  can({
-    principal,
-    action,
-    resource,
-    principalType,
-    context
-  }: EvaluateResourceBasedInterface): boolean {
+  can(
+    this: ResourceBasedPolicy,
+    {
+      principal,
+      action,
+      resource,
+      principalType,
+      context
+    }: EvaluateResourceBasedInterface
+  ): boolean {
     return this.allowStatements.some((s) =>
       s.matches({
         principal,
@@ -70,13 +76,16 @@ export class ResourceBasedPolicy extends Policy {
     );
   }
 
-  cannot({
-    principal,
-    action,
-    resource,
-    principalType,
-    context
-  }: EvaluateResourceBasedInterface): boolean {
+  cannot(
+    this: ResourceBasedPolicy,
+    {
+      principal,
+      action,
+      resource,
+      principalType,
+      context
+    }: EvaluateResourceBasedInterface
+  ): boolean {
     return this.denyStatements.some((s) =>
       s.matches({
         principal,

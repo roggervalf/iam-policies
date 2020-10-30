@@ -19,6 +19,12 @@ export class Matcher {
     });
   }
 
+  match(this: Matcher, str: string): boolean {
+    if (this.empty) return str === '';
+
+    return this.set.some((pattern) => this.matchOne(str, pattern));
+  }
+
   private braceExpand(): string[] {
     const pattern = this.pattern;
     if (!pattern.match(/{.*}/)) {
@@ -79,12 +85,6 @@ export class Matcher {
     });
 
     return expansions;
-  }
-
-  match(str: string): boolean {
-    if (this.empty) return str === '';
-
-    return this.set.some((pattern) => this.matchOne(str, pattern));
   }
 
   private matchOne(str: string, pattern: string | RegExp): boolean {

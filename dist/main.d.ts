@@ -136,7 +136,7 @@ declare class Statement {
     protected readonly condition?: ConditionBlock;
     effect: EffectBlock;
     constructor({ sid, effect, condition }: StatementInterface);
-    matchConditions({ context, conditionResolver }: MatchConditionInterface): boolean;
+    matchConditions(this: Statement, { context, conditionResolver }: MatchConditionInterface): boolean;
 }
 
 declare class ActionBased extends Statement {
@@ -144,8 +144,8 @@ declare class ActionBased extends Statement {
     private notAction?;
     private statement;
     constructor(action: ActionBasedType);
-    getStatement(): ActionBasedType;
-    matches({ action, context, conditionResolver }: MatchActionBasedInterface): boolean;
+    getStatement(this: ActionBased): ActionBasedType;
+    matches(this: ActionBased, { action, context, conditionResolver }: MatchActionBasedInterface): boolean;
     private checkAndAssignActions;
     private matchActions;
     private matchNotActions;
@@ -158,8 +158,8 @@ declare class IdentityBased extends Statement {
     private notAction?;
     private statement;
     constructor(identity: IdentityBasedType);
-    getStatement(): IdentityBasedType;
-    matches({ action, resource, context, conditionResolver }: MatchIdentityBasedInterface): boolean;
+    getStatement(this: IdentityBased): IdentityBasedType;
+    matches(this: IdentityBased, { action, resource, context, conditionResolver }: MatchIdentityBasedInterface): boolean;
     private checkAndAssignActions;
     private checkAndAssignResources;
     private matchActions;
@@ -179,8 +179,8 @@ declare class ResourceBased extends Statement {
     private hasPrincipals;
     private hasResources;
     constructor(identity: ResourceBasedType);
-    getStatement(): ResourceBasedType;
-    matches({ principal, action, resource, principalType, context, conditionResolver }: MatchResourceBasedInterface): boolean;
+    getStatement(this: ResourceBased): ResourceBasedType;
+    matches(this: ResourceBased, { principal, action, resource, principalType, context, conditionResolver }: MatchResourceBasedInterface): boolean;
     private matchPrincipalAndNotPrincipal;
     private matchResourceAndNotResource;
     private checkAndAssignActions;
@@ -198,10 +198,10 @@ declare class Policy {
     protected context?: Context;
     protected conditionResolver?: ConditionResolver;
     constructor({ context, conditionResolver }: MatchConditionInterface);
-    setContext(context: Context): void;
-    getContext(): Context | undefined;
-    setConditionResolver(conditionResolver: ConditionResolver): void;
-    getConditionResolver(): ConditionResolver | undefined;
+    setContext(this: Policy, context: Context): void;
+    getContext(this: Policy): Context | undefined;
+    setConditionResolver(this: Policy, conditionResolver: ConditionResolver): void;
+    getConditionResolver(this: Policy): ConditionResolver | undefined;
 }
 
 interface ActionBasedPolicyInterface {
@@ -214,11 +214,11 @@ declare class ActionBasedPolicy extends Policy {
     private allowStatements;
     private statements;
     constructor({ statements, conditionResolver, context }: ActionBasedPolicyInterface);
-    getStatements(): ActionBasedType[];
-    evaluate({ action, context }: EvaluateActionBasedInterface): boolean;
-    can({ action, context }: EvaluateActionBasedInterface): boolean;
-    cannot({ action, context }: EvaluateActionBasedInterface): boolean;
-    generateProxy<T, U extends keyof T>(obj: unknown, options?: ProxyOptions): T | undefined;
+    getStatements(this: ActionBasedPolicy): ActionBasedType[];
+    evaluate(this: ActionBasedPolicy, { action, context }: EvaluateActionBasedInterface): boolean;
+    can(this: ActionBasedPolicy, { action, context }: EvaluateActionBasedInterface): boolean;
+    cannot(this: ActionBasedPolicy, { action, context }: EvaluateActionBasedInterface): boolean;
+    generateProxy<T, U extends keyof T>(this: ActionBasedPolicy, obj: unknown, options?: ProxyOptions): T | undefined;
 }
 
 interface IdentityBasedPolicyInterface {
@@ -231,10 +231,10 @@ declare class IdentityBasedPolicy extends Policy {
     private allowStatements;
     private statements;
     constructor({ statements, conditionResolver, context }: IdentityBasedPolicyInterface);
-    getStatements(): IdentityBasedType[];
-    evaluate({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
-    can({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
-    cannot({ action, resource, context }: EvaluateIdentityBasedInterface): boolean;
+    getStatements(this: IdentityBasedPolicy): IdentityBasedType[];
+    evaluate(this: IdentityBasedPolicy, { action, resource, context }: EvaluateIdentityBasedInterface): boolean;
+    can(this: IdentityBasedPolicy, { action, resource, context }: EvaluateIdentityBasedInterface): boolean;
+    cannot(this: IdentityBasedPolicy, { action, resource, context }: EvaluateIdentityBasedInterface): boolean;
 }
 
 interface ResourceBasedPolicyInterface {
@@ -247,10 +247,10 @@ declare class ResourceBasedPolicy extends Policy {
     private allowStatements;
     private statements;
     constructor({ statements, conditionResolver, context }: ResourceBasedPolicyInterface);
-    getStatements(): ResourceBasedType[];
-    evaluate({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
-    can({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
-    cannot({ principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
+    getStatements(this: ResourceBasedPolicy): ResourceBasedType[];
+    evaluate(this: ResourceBasedPolicy, { principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
+    can(this: ResourceBasedPolicy, { principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
+    cannot(this: ResourceBasedPolicy, { principal, action, resource, principalType, context }: EvaluateResourceBasedInterface): boolean;
 }
 
 export { ActionBased, ActionBasedPolicy, ActionBasedPolicyInterface, IdentityBased, IdentityBasedPolicy, ResourceBased, ResourceBasedPolicy, Statement, applyContext, baseGet, castPath, getValueFromPath };

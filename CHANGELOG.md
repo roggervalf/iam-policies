@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/roggervalf/iam-policies/compare/v4.0.0...v4.0.1) (2020-10-30)
+
+
+### Bug Fixes
+
+* **types:** adding this types in public functions in classes ([f182fd9](https://github.com/roggervalf/iam-policies/commit/f182fd9cad7603ed3c347f8475ea510b48d6a4f9))
+
 # [4.0.0](https://github.com/roggervalf/iam-policies/compare/v3.5.0...v4.0.0) (2020-10-26)
 
 

@@ -1,3 +1,10 @@
+## [4.0.2](https://github.com/roggervalf/iam-policies/compare/v4.0.1...v4.0.2) (2020-10-31)
+
+
+### Bug Fixes
+
+* **sourcemaps:** allowing sourceMap from ts config ([f071ca0](https://github.com/roggervalf/iam-policies/commit/f071ca0927d61152fb9ddf428b2685f95bbf2663))
+
 ## [4.0.1](https://github.com/roggervalf/iam-policies/compare/v4.0.0...v4.0.1) (2020-10-30)
 
 

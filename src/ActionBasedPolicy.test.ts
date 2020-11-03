@@ -280,7 +280,7 @@ describe('ActionBasedPolicy Class', () => {
           }
         }
         const user = new User('John', 'Wick');
-        const proxy = policy.generateProxy(user) as User;
+        const proxy = policy.generateProxy(user);
         const getExpectedError = new Error(
           'Unauthorize to get firstName property'
         );
@@ -312,10 +312,7 @@ describe('ActionBasedPolicy Class', () => {
           lastName: 'Wick',
           [sym]: 1
         };
-        const proxy = policy.generateProxy(user) as Record<
-          string | symbol,
-          unknown
-        >;
+        const proxy = policy.generateProxy(user);
         const expectedError = new Error(
           'Unauthorize to get firstName property'
         );
@@ -325,19 +322,6 @@ describe('ActionBasedPolicy Class', () => {
         expect(proxy[sym]).toBe(1);
         expect(proxy.otherValue).toBe(undefined);
         expect(() => proxy.firstName).toThrow(expectedError);
-      });
-
-      it('returns undefined', () => {
-        const policy = new ActionBasedPolicy({
-          statements: [
-            {
-              action: ['lastName']
-            }
-          ]
-        });
-        const proxy = policy.generateProxy(8);
-
-        expect(proxy).toBe(undefined);
       });
     });
 
@@ -363,7 +347,7 @@ describe('ActionBasedPolicy Class', () => {
           set: {
             allow: false
           }
-        }) as Record<string, unknown>;
+        });
         const expectedError = new Error(
           'Unauthorize to get firstName property'
         );
@@ -393,7 +377,7 @@ describe('ActionBasedPolicy Class', () => {
           get: {
             allow: false
           }
-        }) as Record<string, unknown>;
+        });
         const expectedError = new Error(
           'Unauthorize to set firstName property'
         );

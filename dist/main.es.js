@@ -61,13 +61,12 @@ function toKey(value) {
     if (typeof value === 'string' || isSymbol(value)) {
         return value;
     }
-    const result = `${value}`;
-    return result === '0' && 1 / value === -INFINITY ? '-0' : result;
+    return value === 0 && 1 / value === -INFINITY ? '-0' : `${value}`;
 }
 
 /** Used to match property names within property paths. */
 const reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
-const reIsPlainProp = /^\w*$/; //matches any word caracter (alphanumeric and underscore)
+const reIsPlainProp = /^\w*$/; //matches any word character (alphanumeric and underscore)
 /**
  * Checks if `value` is a property name and not a property path.
  *
@@ -1098,10 +1097,7 @@ class ActionBasedPolicy extends Policy {
                 }
             }
             : {}));
-        if (obj instanceof Object) {
-            return new Proxy(obj, handler);
-        }
-        return undefined;
+        return new Proxy(obj, handler);
     }
 }
 

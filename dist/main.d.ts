@@ -6,7 +6,7 @@
  * @param {Object} [object] The object to query keys on.
  * @returns {Array} Returns the cast property path array.
  */
-declare function castPath<T>(value: unknown, object: Record<string | symbol, unknown>): Array<T>;
+declare function castPath<T>(value: unknown, object: Record<PropertyKey, unknown>): Array<T>;
 /**
  * The base implementation of `get` without support for default values.
  *
@@ -15,7 +15,7 @@ declare function castPath<T>(value: unknown, object: Record<string | symbol, unk
  * @param {Array|string} path The path of the property to get.
  * @returns {*} Returns the resolved value.
  */
-declare function baseGet<T>(object: Record<string, unknown>, path: Array<T> | string): any;
+declare function baseGet<T>(object: Record<PropertyKey, unknown>, path: Array<T> | string): any;
 /**
  * Gets the value at `path` of `object`. If the resolved value is
  * `undefined`, the `defaultValue` is returned in its place.
@@ -39,7 +39,7 @@ declare function baseGet<T>(object: Record<string, unknown>, path: Array<T> | st
  * getValueFromPath(object, 'a.b.c', 'default')
  * // => 'default'
  */
-declare function getValueFromPath<T>(object: Record<string, unknown>, path: Array<T> | string, defaultValue?: unknown): any;
+declare function getValueFromPath<T>(object: Record<PropertyKey, unknown>, path: Array<T> | string, defaultValue?: unknown): any;
 
 declare type EffectBlock = 'allow' | 'deny';
 declare type Patterns = string[] | string;
@@ -218,7 +218,7 @@ declare class ActionBasedPolicy extends Policy {
     evaluate(this: ActionBasedPolicy, { action, context }: EvaluateActionBasedInterface): boolean;
     can(this: ActionBasedPolicy, { action, context }: EvaluateActionBasedInterface): boolean;
     cannot(this: ActionBasedPolicy, { action, context }: EvaluateActionBasedInterface): boolean;
-    generateProxy<T, U extends keyof T>(this: ActionBasedPolicy, obj: unknown, options?: ProxyOptions): T | undefined;
+    generateProxy<T extends object, U extends keyof T>(this: ActionBasedPolicy, obj: T, options?: ProxyOptions): T;
 }
 
 interface IdentityBasedPolicyInterface {

@@ -2,7 +2,7 @@ import { isSymbol } from './isSymbol';
 
 /** Used to match property names within property paths. */
 const reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
-const reIsPlainProp = /^\w*$/; //matches any word caracter (alphanumeric and underscore)
+const reIsPlainProp = /^\w*$/; //matches any word character (alphanumeric and underscore)
 
 /**
  * Checks if `value` is a property name and not a property path.
@@ -37,7 +37,7 @@ const reIsPlainProp = /^\w*$/; //matches any word caracter (alphanumeric and und
  */
 export function isKey(
   value: unknown,
-  object?: Record<string | symbol, unknown>
+  object?: Record<PropertyKey, unknown>
 ): boolean {
   const type = typeof value;
   if (

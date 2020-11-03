@@ -75,11 +75,11 @@ export class ActionBasedPolicy extends Policy {
     );
   }
 
-  generateProxy<T, U extends keyof T>(
+  generateProxy<T extends object, U extends keyof T>(
     this: ActionBasedPolicy,
-    obj: unknown,
+    obj: T,
     options: ProxyOptions = {}
-  ): T | undefined {
+  ): T {
     const { get = {}, set = {} } = options;
     const { allow: allowGet = true, propertyMap: propertyMapGet = {} } = get;
     const { allow: allowSet = true, propertyMap: propertyMapSet = {} } = set;
@@ -114,9 +114,6 @@ export class ActionBasedPolicy extends Policy {
         : {})
     };
 
-    if (obj instanceof Object) {
-      return new Proxy(obj, handler) as T;
-    }
-    return undefined;
+    return new Proxy(obj, handler);
   }
 }

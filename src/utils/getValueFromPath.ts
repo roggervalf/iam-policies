@@ -12,7 +12,7 @@ import { stringToPath } from './stringToPath';
  */
 export function castPath<T>(
   value: unknown,
-  object: Record<string | symbol, unknown>
+  object: Record<PropertyKey, unknown>
 ): Array<T> {
   if (Array.isArray(value)) {
     return value;
@@ -30,7 +30,7 @@ export function castPath<T>(
  * @returns {*} Returns the resolved value.
  */
 export function baseGet<T>(
-  object: Record<string, unknown>,
+  object: Record<PropertyKey, unknown>,
   path: Array<T> | string
 ): any {
   const newPath = castPath(path, object);
@@ -70,7 +70,7 @@ export function baseGet<T>(
  * // => 'default'
  */
 export function getValueFromPath<T>(
-  object: Record<string, unknown>,
+  object: Record<PropertyKey, unknown>,
   path: Array<T> | string,
   defaultValue?: unknown
 ): any {

@@ -1,3 +1,10 @@
+## [4.0.3](https://github.com/roggervalf/iam-policies/compare/v4.0.2...v4.0.3) (2020-11-03)
+
+
+### Bug Fixes
+
+* **types:** using object type in generateProxy ([8f90ff1](https://github.com/roggervalf/iam-policies/commit/8f90ff1370250133a55387d7c1259f84a7fc5230))
+
 ## [4.0.2](https://github.com/roggervalf/iam-policies/compare/v4.0.1...v4.0.2) (2020-10-31)
 
 

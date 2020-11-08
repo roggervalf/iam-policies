@@ -4,7 +4,8 @@ import {
   MatchIdentityBasedInterface
 } from './types';
 import { Matcher } from './Matcher';
-import { applyContext, Statement } from './Statement';
+import { Statement } from './Statement';
+import { applyContext } from './utils/applyContext';
 
 class IdentityBased extends Statement {
   private resource?: string[];

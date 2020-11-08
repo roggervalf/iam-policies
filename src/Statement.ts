@@ -2,30 +2,10 @@ import {
   EffectBlock,
   ConditionBlock,
   StatementInterface,
-  Context,
   MatchConditionInterface
 } from './types';
 import { getValueFromPath } from './utils/getValueFromPath';
 import { generateUUID } from './utils/generateUUID';
-
-const reDelimiters = /\${([^}]*)}/g;
-const trim = / +(?= )|^\s+|\s+$/g;
-
-const specialTrim = (str: string): string => str.replace(trim, '');
-
-export function applyContext(str: string, context?: Context): string {
-  if (!context) return str;
-
-  return specialTrim(
-    str.replace(reDelimiters, (_, path: string) => {
-      const value = getValueFromPath(context, path);
-      if (Array.isArray(value)) return `{${value}}`;
-      if (value instanceof Object) return 'undefined';
-
-      return String(value);
-    })
-  );
-}
 
 class Statement {
   protected sid: string;

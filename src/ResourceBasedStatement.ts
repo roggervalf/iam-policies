@@ -5,7 +5,8 @@ import {
   ResourceBasedType
 } from './types';
 import { Matcher } from './Matcher';
-import { applyContext, Statement } from './Statement';
+import { Statement } from './Statement';
+import { applyContext } from './utils/applyContext';
 
 class ResourceBased extends Statement {
   private principal?: PrincipalMap | string[];

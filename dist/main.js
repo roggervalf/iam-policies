@@ -305,6 +305,190 @@ function getValueFromPath(object, path, defaultValue) {
     return result === undefined ? defaultValue : result;
 }
 
+const reDelimiters = /\${([^}]*)}/g;
+const trim = / +(?= )|^\s+|\s+$/g;
+const specialTrim = (str) => str.replace(trim, '');
+/**
+ * Apply the context value in a string.
+ *
+ * @param {string} str Pattern string, containing context path.
+ * @param {object} context Object to get values from path.
+ * @returns {string} Returns a string with embedded context values.
+ * @example
+ * ```javascript
+ * const context = {
+ *   user: { id: 456, bestFriends: [123, 532, 987] }
+ * };
+ * applyContext('secrets:${user.id}:*', context)
+ * // => 'secrets:456:*'
+ *
+ * applyContext('secrets:${user.bestFriends}:*', context)
+ * // => 'secrets:{123,532,987}:*'
+ *
+ * applyContext('secrets:${company.address}:account', context)
+ * // => 'secrets:undefined:account'
+ * ```
+ */
+function applyContext(str, context) {
+    if (!context)
+        return str;
+    return specialTrim(str.replace(reDelimiters, (_, path) => {
+        const value = getValueFromPath(context, path);
+        if (Array.isArray(value))
+            return `{${value}}`;
+        if (value instanceof Object)
+            return 'undefined';
+        return String(value);
+    }));
+}
+
+/**
+ * Get index range where separators are found.
+ *
+ * @private
+ * @since 3.1.1
+ * @param {string} initialSeparator First string to be found.
+ * @param {string} finalSeparator Second string to be found.
+ * @param {string} str String to be decomposed.
+ * @returns {number[]} Returns the beginning and final index for those matches.
+ * @example
+ * ```javascript
+ * getIndexRange('first', 'Second', 'firstAndSecond')
+ * // => [0, 8]
+ *
+ * getIndexRange('First', 'Second', '++FirstAndSecond**')
+ * // => [2, 10]
+ * ```
+ */
+function getIndexRange(initialSeparator, finalSeparator, str) {
+    const beginningIndex = str.indexOf(initialSeparator);
+    const finalIndex = str.indexOf(finalSeparator, beginningIndex + 1);
+    if (beginningIndex >= 0 && finalIndex > 0) {
+        return [beginningIndex, finalIndex];
+    }
+    return [-1, -1];
+}
+/**
+ * Object returned by decomposeString function
+ *
+ * @typedef {Object} DecomposedString
+ * @property {number} start Beginning index for first separator match
+ * @property {number} end Final index for second separator match
+ * @property {string} pre Substring before first separator
+ * @property {string} body Substring between separators
+ * @property {string} post Substring after second separator
+ */
+/**
+ * Decompose string in pre, body and post strings by using separators.
+ *
+ * @private
+ * @since 3.1.1
+ * @param {string} initialSeparator First string to be found.
+ * @param {string} finalSeparator Second string to be found.
+ * @param {string} str String to be decomposed.
+ * @returns {DecomposedString} Returns a decompose string.
+ * @example
+ * ```javascript
+ * decomposeString('first', 'Second', 'firstAndSecond')
+ * // => { start: 0, end: 8, pre: '', body: 'And', post: '' }
+ *
+ * decomposeString('First', 'Second', '++FirstAndSecond**')
+ * // => { start: 2, end: 10, pre: '++', body: 'And', post: '**' }
+ * ```
+ */
+function decomposeString(initialSeparator, finalSeparator, str) {
+    const [beginningIndex, finalIndex] = getIndexRange(initialSeparator, finalSeparator, str);
+    return {
+        start: beginningIndex,
+        end: finalIndex,
+        pre: beginningIndex >= 0 ? str.slice(0, beginningIndex) : '',
+        body: beginningIndex >= 0
+            ? str.slice(beginningIndex + initialSeparator.length, finalIndex)
+            : '',
+        post: beginningIndex >= 0 ? str.slice(finalIndex + finalSeparator.length) : ''
+    };
+}
+
+class Matcher {
+    constructor(pattern, maxLength = 1024 * 64) {
+        this.set = [];
+        this.pattern = pattern.trim();
+        this.maxLength = maxLength;
+        this.empty = !this.pattern ? true : false;
+        const set = this.braceExpand();
+        this.set = set.map((val) => this.parse(val));
+        this.set = this.set.filter((s) => {
+            return Boolean(s);
+        });
+    }
+    match(str) {
+        if (this.empty)
+            return str === '';
+        return this.set.some((pattern) => this.matchOne(str, pattern));
+    }
+    braceExpand() {
+        const pattern = this.pattern;
+        if (!pattern.match(/{.*}/)) {
+            return [pattern];
+        }
+        return this.expand(pattern, true);
+    }
+    parse(pattern) {
+        if (pattern.length > this.maxLength) {
+            throw new TypeError('Pattern is too long');
+        }
+        let regExp;
+        let hasSpecialCharacter = false;
+        if (pattern === '')
+            return '';
+        const re = pattern.replace(/\*/g, () => {
+            hasSpecialCharacter = true;
+            return '.+?';
+        });
+        // skip the regexp for non-* patterns
+        // unescape anything in it, though, so that it'll be
+        // an exact match.
+        if (!hasSpecialCharacter) {
+            return pattern.replace(/\\(.)/g, '$1');
+        }
+        try {
+            regExp = new RegExp('^' + re + '$');
+        }
+        catch (error) {
+            // If it was an invalid regular expression, then it can't match
+            // anything.
+            return new RegExp('$.');
+        }
+        return regExp;
+    }
+    expand(str, isTop) {
+        const expansions = [];
+        const balance = decomposeString('{', '}', str);
+        if (balance.start < 0 || /\$$/.test(balance.pre))
+            return [str];
+        const parts = balance.body.split(',');
+        // no need to expand pre, since it is guaranteed to be free of brace-sets
+        const pre = balance.pre;
+        const postParts = balance.post.length
+            ? this.expand(balance.post, false)
+            : [''];
+        parts.forEach((part) => {
+            postParts.forEach((postPart) => {
+                const expansion = pre + part + postPart;
+                if (!isTop || expansion)
+                    expansions.push(expansion);
+            });
+        });
+        return expansions;
+    }
+    matchOne(str, pattern) {
+        if (typeof pattern === 'string') {
+            return str === pattern;
+        }
+        return Boolean(str.match(pattern));
+    }
+}
+
 /*
   https://github.com/banksean wrapped Makoto Matsumoto and Takuji Nishimura's code in a namespace
   so it's better encapsulated. Now you can have multiple random number generators
@@ -533,21 +717,6 @@ function generateUUID() {
     return RFC4122_TEMPLATE.replace(/[xy]/g, replacePlaceholders(mersenne));
 }
 
-const reDelimiters = /\${([^}]*)}/g;
-const trim = / +(?= )|^\s+|\s+$/g;
-const specialTrim = (str) => str.replace(trim, '');
-function applyContext(str, context) {
-    if (!context)
-        return str;
-    return specialTrim(str.replace(reDelimiters, (_, path) => {
-        const value = getValueFromPath(context, path);
-        if (Array.isArray(value))
-            return `{${value}}`;
-        if (value instanceof Object)
-            return 'undefined';
-        return String(value);
-    }));
-}
 class Statement {
     constructor({ sid, effect = 'allow', condition }) {
         if (!sid) {
@@ -570,153 +739,6 @@ class Statement {
                 return conditionResolver[condition](getValueFromPath(context, path), conditionValues);
             }))
             : true;
-    }
-}
-
-/**
- * Get index range where separators are found.
- *
- * @private
- * @since 3.1.1
- * @param {string} initialSeparator First string to be found.
- * @param {string} finalSeparator Second string to be found.
- * @param {string} str String to be decomposed.
- * @returns {number[]} Returns the beginning and final index for those matches.
- * @example
- * ```javascript
- * getIndexRange('first', 'Second', 'firstAndSecond')
- * // => [0, 8]
- *
- * getIndexRange('First', 'Second', '++FirstAndSecond**')
- * // => [2, 10]
- * ```
- */
-function getIndexRange(initialSeparator, finalSeparator, str) {
-    const beginningIndex = str.indexOf(initialSeparator);
-    const finalIndex = str.indexOf(finalSeparator, beginningIndex + 1);
-    if (beginningIndex >= 0 && finalIndex > 0) {
-        return [beginningIndex, finalIndex];
-    }
-    return [-1, -1];
-}
-/**
- * Object returned by decomposeString function
- *
- * @typedef {Object} DecomposedString
- * @property {number} start Beginning index for first separator match
- * @property {number} end Final index for second separator match
- * @property {string} pre Substring before first separator
- * @property {string} body Substring between separators
- * @property {string} post Substring after second separator
- */
-/**
- * Decompose string in pre, body and post strings by using separators.
- *
- * @private
- * @since 3.1.1
- * @param {string} initialSeparator First string to be found.
- * @param {string} finalSeparator Second string to be found.
- * @param {string} str String to be decomposed.
- * @returns {DecomposedString} Returns a decompose string.
- * @example
- * ```javascript
- * decomposeString('first', 'Second', 'firstAndSecond')
- * // => { start: 0, end: 8, pre: '', body: 'And', post: '' }
- *
- * decomposeString('First', 'Second', '++FirstAndSecond**')
- * // => { start: 2, end: 10, pre: '++', body: 'And', post: '**' }
- * ```
- */
-function decomposeString(initialSeparator, finalSeparator, str) {
-    const [beginningIndex, finalIndex] = getIndexRange(initialSeparator, finalSeparator, str);
-    return {
-        start: beginningIndex,
-        end: finalIndex,
-        pre: beginningIndex >= 0 ? str.slice(0, beginningIndex) : '',
-        body: beginningIndex >= 0
-            ? str.slice(beginningIndex + initialSeparator.length, finalIndex)
-            : '',
-        post: beginningIndex >= 0 ? str.slice(finalIndex + finalSeparator.length) : ''
-    };
-}
-
-class Matcher {
-    constructor(pattern, maxLength = 1024 * 64) {
-        this.set = [];
-        this.pattern = pattern.trim();
-        this.maxLength = maxLength;
-        this.empty = !this.pattern ? true : false;
-        const set = this.braceExpand();
-        this.set = set.map((val) => this.parse(val));
-        this.set = this.set.filter((s) => {
-            return Boolean(s);
-        });
-    }
-    match(str) {
-        if (this.empty)
-            return str === '';
-        return this.set.some((pattern) => this.matchOne(str, pattern));
-    }
-    braceExpand() {
-        const pattern = this.pattern;
-        if (!pattern.match(/{.*}/)) {
-            return [pattern];
-        }
-        return this.expand(pattern, true);
-    }
-    parse(pattern) {
-        if (pattern.length > this.maxLength) {
-            throw new TypeError('Pattern is too long');
-        }
-        let regExp;
-        let hasSpecialCharacter = false;
-        if (pattern === '')
-            return '';
-        const re = pattern.replace(/\*/g, () => {
-            hasSpecialCharacter = true;
-            return '.+?';
-        });
-        // skip the regexp for non-* patterns
-        // unescape anything in it, though, so that it'll be
-        // an exact match.
-        if (!hasSpecialCharacter) {
-            return pattern.replace(/\\(.)/g, '$1');
-        }
-        try {
-            regExp = new RegExp('^' + re + '$');
-        }
-        catch (error) {
-            // If it was an invalid regular expression, then it can't match
-            // anything.
-            return new RegExp('$.');
-        }
-        return regExp;
-    }
-    expand(str, isTop) {
-        const expansions = [];
-        const balance = decomposeString('{', '}', str);
-        if (balance.start < 0 || /\$$/.test(balance.pre))
-            return [str];
-        const parts = balance.body.split(',');
-        // no need to expand pre, since it is guaranteed to be free of brace-sets
-        const pre = balance.pre;
-        const postParts = balance.post.length
-            ? this.expand(balance.post, false)
-            : [''];
-        parts.forEach((part) => {
-            postParts.forEach((postPart) => {
-                const expansion = pre + part + postPart;
-                if (!isTop || expansion)
-                    expansions.push(expansion);
-            });
-        });
-        return expansions;
-    }
-    matchOne(str, pattern) {
-        if (typeof pattern === 'string') {
-            return str === pattern;
-        }
-        return Boolean(str.match(pattern));
     }
 }
 
@@ -1181,9 +1203,6 @@ exports.IdentityBased = IdentityBased;
 exports.IdentityBasedPolicy = IdentityBasedPolicy;
 exports.ResourceBased = ResourceBased;
 exports.ResourceBasedPolicy = ResourceBasedPolicy;
-exports.Statement = Statement;
 exports.applyContext = applyContext;
-exports.baseGet = baseGet;
-exports.castPath = castPath;
 exports.getValueFromPath = getValueFromPath;
 //# sourceMappingURL=main.js.map

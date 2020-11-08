@@ -1,5 +1,5 @@
-export * from './src/utils/getValueFromPath';
-export * from './src/Statement';
+export { applyContext } from './src/utils/applyContext';
+export { getValueFromPath } from './src/utils/getValueFromPath';
 export * from './src/ActionBasedStatement';
 export * from './src/IdentityBasedStatement';
 export * from './src/ResourceBasedStatement';

@@ -1,6 +1,7 @@
 import { ActionBasedType, Context, MatchActionBasedInterface } from './types';
 import { Matcher } from './Matcher';
-import { applyContext, Statement } from './Statement';
+import { Statement } from './Statement';
+import { applyContext } from './utils/applyContext';
 
 class ActionBased extends Statement {
   private action?: string[];

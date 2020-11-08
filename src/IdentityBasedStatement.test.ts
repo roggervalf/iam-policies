@@ -50,5 +50,95 @@ describe('IdentityBased Class', () => {
         }).toThrow(expectedError);
       });
     });
+
+    describe('when match conditions', () => {
+      it('returns true', () => {
+        const firstIdentityBasedStatement = new IdentityBased({
+          sid: 'first',
+          action: ['write'],
+          resource: 'topSecret',
+          condition: {
+            greaterThan: { 'user.age': 30 }
+          }
+        });
+        const secondIdentityBasedStatement = new IdentityBased({
+          sid: 'second',
+          action: ['write'],
+          resource: 'topSecret',
+          condition: {
+            lessThan: { 'user.age': [30, 40] }
+          }
+        });
+        const conditionResolver = {
+          greaterThan: (data: number, expected: number): boolean => {
+            return data > expected;
+          },
+          lessThan: (data: number, expected: number): boolean => {
+            return data < expected;
+          }
+        };
+
+        expect(
+          firstIdentityBasedStatement.matches({
+            action: 'write',
+            resource: 'topSecret',
+            context: { user: { age: 31 } },
+            conditionResolver
+          })
+        ).toBe(true);
+        expect(
+          secondIdentityBasedStatement.matches({
+            action: 'write',
+            resource: 'topSecret',
+            context: { user: { age: 35 } },
+            conditionResolver
+          })
+        ).toBe(true);
+      });
+
+      it('returns false', () => {
+        const firstIdentityBasedStatement = new IdentityBased({
+          sid: 'first',
+          action: ['write'],
+          resource: 'topSecret',
+          condition: {
+            greaterThan: { 'user.age': 35 }
+          }
+        });
+        const secondIdentityBasedStatement = new IdentityBased({
+          sid: 'second',
+          action: ['write'],
+          resource: 'topSecret',
+          condition: {
+            lessThan: { 'user.age': [50, 45] }
+          }
+        });
+        const conditionResolver = {
+          greaterThan: (data: number, expected: number): boolean => {
+            return data > expected;
+          },
+          lessThan: (data: number, expected: number): boolean => {
+            return data < expected;
+          }
+        };
+
+        expect(
+          firstIdentityBasedStatement.matches({
+            action: 'write',
+            resource: 'topSecret',
+            context: { user: { age: 31 } },
+            conditionResolver
+          })
+        ).toBe(false);
+        expect(
+          secondIdentityBasedStatement.matches({
+            action: 'write',
+            resource: 'topSecret',
+            context: { user: { age: 60 } },
+            conditionResolver
+          })
+        ).toBe(false);
+      });
+    });
   });
 });

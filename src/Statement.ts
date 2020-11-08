@@ -7,7 +7,7 @@ import {
 import { getValueFromPath } from './utils/getValueFromPath';
 import { generateUUID } from './utils/generateUUID';
 
-class Statement {
+abstract class Statement {
   protected sid: string;
   protected readonly condition?: ConditionBlock;
   effect: EffectBlock;

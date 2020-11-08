@@ -1,6 +1,6 @@
 import { applyContext } from './applyContext';
 
-describe('applyContext function', () => {
+describe('applyContext', () => {
   it('can match based on context', () => {
     const context = {
       user: { id: 456, bestFriends: [123, 532, 987] }

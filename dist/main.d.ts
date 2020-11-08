@@ -135,7 +135,7 @@ declare function applyContext(str: string, context?: Context): string;
  */
 declare function getValueFromPath<T>(object: Record<PropertyKey, unknown>, path: Array<T> | string, defaultValue?: unknown): any;
 
-declare class Statement {
+declare abstract class Statement {
     protected sid: string;
     protected readonly condition?: ConditionBlock;
     effect: EffectBlock;

@@ -1,6 +1,5 @@
 import {
   PrincipalMap,
-  Context,
   MatchResourceBasedInterface,
   ResourceBasedType
 } from './types';
@@ -8,7 +7,7 @@ import { Matcher } from './Matcher';
 import { Statement } from './Statement';
 import { applyContext } from './utils/applyContext';
 
-class ResourceBased extends Statement {
+class ResourceBased<T extends object> extends Statement<T> {
   private principal?: PrincipalMap | string[];
   private resource?: string[];
   private action?: string[];
@@ -29,12 +28,12 @@ class ResourceBased extends Statement {
     this.statement = { ...identity, sid: this.sid };
   }
 
-  getStatement(this: ResourceBased): ResourceBasedType {
+  getStatement(this: ResourceBased<T>): ResourceBasedType {
     return this.statement;
   }
 
   matches(
-    this: ResourceBased,
+    this: ResourceBased<T>,
     {
       principal,
       action,
@@ -42,7 +41,7 @@ class ResourceBased extends Statement {
       principalType,
       context,
       conditionResolver
-    }: MatchResourceBasedInterface
+    }: MatchResourceBasedInterface<T>
   ): boolean {
     return (
       this.matchPrincipalAndNotPrincipal(principal, principalType, context) &&
@@ -63,7 +62,7 @@ class ResourceBased extends Statement {
   private matchPrincipalAndNotPrincipal(
     principal?: string,
     principalType?: string,
-    context?: Context
+    context?: T
   ): boolean {
     if (principal) {
       if (this.hasPrincipals)
@@ -84,10 +83,7 @@ class ResourceBased extends Statement {
   false       false     false       true
   false       true      false       false
   false       false     true        false*/
-  private matchResourceAndNotResource(
-    resource?: string,
-    context?: Context
-  ): boolean {
+  private matchResourceAndNotResource(resource?: string, context?: T): boolean {
     if (resource) {
       if (this.hasResources)
         return (
@@ -170,7 +166,7 @@ class ResourceBased extends Statement {
   private matchPrincipals(
     principal: string,
     principalType?: string,
-    context?: Context
+    context?: T
   ): boolean {
     if (this.principal) {
       if (this.principal instanceof Array) {
@@ -200,7 +196,7 @@ class ResourceBased extends Statement {
   private matchNotPrincipals(
     principal: string,
     principalType?: string,
-    context?: Context
+    context?: T
   ): boolean {
     if (this.notPrincipal) {
       if (this.notPrincipal instanceof Array) {
@@ -227,7 +223,7 @@ class ResourceBased extends Statement {
     return true;
   }
 
-  private matchActions(action: string, context?: Context): boolean {
+  private matchActions(action: string, context?: T): boolean {
     return this.action
       ? this.action.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
@@ -235,7 +231,7 @@ class ResourceBased extends Statement {
       : true;
   }
 
-  private matchNotActions(action: string, context?: Context): boolean {
+  private matchNotActions(action: string, context?: T): boolean {
     return this.notAction
       ? !this.notAction.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
@@ -243,7 +239,7 @@ class ResourceBased extends Statement {
       : true;
   }
 
-  private matchResources(resource: string, context?: Context): boolean {
+  private matchResources(resource: string, context?: T): boolean {
     return this.resource
       ? this.resource.some((a) =>
           new Matcher(applyContext(a, context)).match(resource)
@@ -251,7 +247,7 @@ class ResourceBased extends Statement {
       : true;
   }
 
-  private matchNotResources(resource: string, context?: Context): boolean {
+  private matchNotResources(resource: string, context?: T): boolean {
     return this.notResource
       ? !this.notResource.some((a) =>
           new Matcher(applyContext(a, context)).match(resource)

@@ -1,29 +1,28 @@
 import {
   ActionBasedType,
   ConditionResolver,
-  Context,
   EvaluateActionBasedInterface,
   ProxyOptions
 } from './types';
 import { ActionBased } from './ActionBasedStatement';
 import { Policy } from './Policy';
 
-export interface ActionBasedPolicyInterface {
+export interface ActionBasedPolicyInterface<T extends object> {
   statements: ActionBasedType[];
   conditionResolver?: ConditionResolver;
-  context?: Context;
+  context?: T;
 }
 
-export class ActionBasedPolicy extends Policy {
-  private denyStatements: ActionBased[];
-  private allowStatements: ActionBased[];
+export class ActionBasedPolicy<W extends object> extends Policy<W> {
+  private denyStatements: ActionBased<W>[];
+  private allowStatements: ActionBased<W>[];
   private statements: ActionBasedType[];
 
   constructor({
     statements,
     conditionResolver,
     context
-  }: ActionBasedPolicyInterface) {
+  }: ActionBasedPolicyInterface<W>) {
     super({ context, conditionResolver });
     const statementInstances = statements.map(
       (statement) => new ActionBased(statement)
@@ -37,21 +36,21 @@ export class ActionBasedPolicy extends Policy {
     );
   }
 
-  getStatements(this: ActionBasedPolicy): ActionBasedType[] {
+  getStatements(this: ActionBasedPolicy<W>): ActionBasedType[] {
     return this.statements;
   }
 
   evaluate(
-    this: ActionBasedPolicy,
-    { action, context }: EvaluateActionBasedInterface
+    this: ActionBasedPolicy<W>,
+    { action, context }: EvaluateActionBasedInterface<W>
   ): boolean {
     const args = { action, context };
     return !this.cannot(args) && this.can(args);
   }
 
   can(
-    this: ActionBasedPolicy,
-    { action, context }: EvaluateActionBasedInterface
+    this: ActionBasedPolicy<W>,
+    { action, context }: EvaluateActionBasedInterface<W>
   ): boolean {
     return this.allowStatements.some((s) =>
       s.matches({
@@ -63,8 +62,8 @@ export class ActionBasedPolicy extends Policy {
   }
 
   cannot(
-    this: ActionBasedPolicy,
-    { action, context }: EvaluateActionBasedInterface
+    this: ActionBasedPolicy<W>,
+    { action, context }: EvaluateActionBasedInterface<W>
   ): boolean {
     return this.denyStatements.some((s) =>
       s.matches({
@@ -76,7 +75,7 @@ export class ActionBasedPolicy extends Policy {
   }
 
   generateProxy<T extends object, U extends keyof T>(
-    this: ActionBasedPolicy,
+    this: ActionBasedPolicy<W>,
     obj: T,
     options: ProxyOptions = {}
   ): T {

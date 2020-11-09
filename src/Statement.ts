@@ -7,7 +7,7 @@ import {
 import { getValueFromPath } from './utils/getValueFromPath';
 import { generateUUID } from './utils/generateUUID';
 
-abstract class Statement {
+abstract class Statement<T extends object> {
   protected sid: string;
   protected readonly condition?: ConditionBlock;
   effect: EffectBlock;
@@ -23,8 +23,8 @@ abstract class Statement {
   }
 
   matchConditions(
-    this: Statement,
-    { context, conditionResolver }: MatchConditionInterface
+    this: Statement<T>,
+    { context, conditionResolver }: MatchConditionInterface<T>
   ): boolean {
     const { condition: conditions } = this;
     return conditionResolver && conditions && context

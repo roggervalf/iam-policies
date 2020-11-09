@@ -1,30 +1,30 @@
-import { MatchConditionInterface, ConditionResolver, Context } from './types';
+import { MatchConditionInterface, ConditionResolver } from './types';
 
-class Policy {
-  protected context?: Context;
+class Policy<T extends object> {
+  protected context?: T;
   protected conditionResolver?: ConditionResolver;
 
-  constructor({ context, conditionResolver }: MatchConditionInterface) {
+  constructor({ context, conditionResolver }: MatchConditionInterface<T>) {
     this.context = context;
     this.conditionResolver = conditionResolver;
   }
 
-  setContext(this: Policy, context: Context): void {
+  setContext(this: Policy<T>, context: T): void {
     this.context = context;
   }
 
-  getContext(this: Policy): Context | undefined {
+  getContext(this: Policy<T>): T | undefined {
     return this.context;
   }
 
   setConditionResolver(
-    this: Policy,
+    this: Policy<T>,
     conditionResolver: ConditionResolver
   ): void {
     this.conditionResolver = conditionResolver;
   }
 
-  getConditionResolver(this: Policy): ConditionResolver | undefined {
+  getConditionResolver(this: Policy<T>): ConditionResolver | undefined {
     return this.conditionResolver;
   }
 }

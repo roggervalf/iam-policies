@@ -39,17 +39,11 @@ interface OptionalNotResourceBlock {
 
 export type ConditionKey = string | number | boolean;
 
-export interface Context {
-  [key: string]: ConditionKey | Context | string[] | number[];
-}
-
 export interface ConditionMap {
   [key: string]: ConditionKey[] | ConditionKey;
 }
 
-export interface ConditionBlock {
-  [key: string]: ConditionMap;
-}
+export type ConditionBlock = Record<string, Record<string, unknown>>;
 
 export interface StatementInterface {
   sid?: string;
@@ -71,37 +65,40 @@ export interface ConditionResolver {
   [key: string]: Resolver;
 }
 
-export interface MatchConditionInterface {
-  context?: Context;
+export interface MatchConditionInterface<T extends object> {
+  context?: T;
   conditionResolver?: ConditionResolver;
 }
 
-export interface MatchActionBasedInterface extends MatchConditionInterface {
+export interface MatchActionBasedInterface<T extends object>
+  extends MatchConditionInterface<T> {
   action: string;
 }
 
-export interface MatchIdentityBasedInterface extends MatchActionBasedInterface {
+export interface MatchIdentityBasedInterface<T extends object>
+  extends MatchActionBasedInterface<T> {
   resource: string;
 }
 
-export interface MatchResourceBasedInterface extends MatchActionBasedInterface {
+export interface MatchResourceBasedInterface<T extends object>
+  extends MatchActionBasedInterface<T> {
   principal?: string;
   principalType?: string;
   resource?: string;
 }
 
-export interface EvaluateActionBasedInterface {
+export interface EvaluateActionBasedInterface<T extends object> {
   action: string;
-  context?: Context;
+  context?: T;
 }
 
-export interface EvaluateIdentityBasedInterface
-  extends EvaluateActionBasedInterface {
+export interface EvaluateIdentityBasedInterface<T extends object>
+  extends EvaluateActionBasedInterface<T> {
   resource: string;
 }
 
-export interface EvaluateResourceBasedInterface
-  extends EvaluateActionBasedInterface {
+export interface EvaluateResourceBasedInterface<T extends object>
+  extends EvaluateActionBasedInterface<T> {
   principal?: string;
   principalType?: string;
   resource?: string;

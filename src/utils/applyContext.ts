@@ -1,4 +1,3 @@
-import { Context } from '../types';
 import { getValueFromPath } from './getValueFromPath';
 
 const reDelimiters = /\${([^}]*)}/g;
@@ -27,7 +26,10 @@ const specialTrim = (str: string): string => str.replace(trim, '');
  * // => 'secrets:undefined:account'
  * ```
  */
-export function applyContext(str: string, context?: Context): string {
+export function applyContext<T extends object>(
+  str: string,
+  context?: T
+): string {
   if (!context) return str;
 
   return specialTrim(

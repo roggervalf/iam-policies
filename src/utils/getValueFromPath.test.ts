@@ -17,7 +17,52 @@ describe('getValueFromPath', () => {
     });
   });
 
-  describe('when object is not null', () => {
+  describe('when object is class instance', () => {
+    describe('when path exist', () => {
+      it('should get value from existed string path', () => {
+        class User {
+          bestFriends?: number[];
+          age?: number;
+          firstName: string;
+          private lastName: string;
+          constructor(firstName, lastName, bestFriends?, age?) {
+            this.age = age;
+            this.bestFriends = bestFriends;
+            this.firstName = firstName;
+            this.lastName = lastName;
+          }
+          get upperLastName(): string {
+            return this.lastName.toUpperCase();
+          }
+        }
+        const context = new User('John', 'Wick', [123, 532]);
+
+        expect(getValueFromPath(context, 'bestFriends')).toEqual([123, 532]);
+        expect(getValueFromPath(context, 'firstName')).toBe('John');
+        expect(getValueFromPath(context, 'upperLastName')).toEqual('WICK');
+      });
+    });
+
+    describe('when path does not exist', () => {
+      describe('when non default param is passed', () => {
+        it('should get undefined', () => {
+          class User {
+            firstName: string;
+            constructor(firstName) {
+              this.firstName = firstName;
+            }
+          }
+          const context = new User('John');
+
+          expect(getValueFromPath(context, 'user.id.pets')).toBe(undefined);
+          expect(getValueFromPath(context, 'company')).toBe(undefined);
+          expect(getValueFromPath(context, 'company.address')).toBe(undefined);
+        });
+      });
+    });
+  });
+
+  describe('when object is a json object', () => {
     describe('when path exist', () => {
       it('should get value from existed string path', () => {
         const context = {

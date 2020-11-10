@@ -1,28 +1,27 @@
 import {
   ConditionResolver,
-  Context,
   EvaluateIdentityBasedInterface,
   IdentityBasedType
 } from './types';
 import { IdentityBased } from './IdentityBasedStatement';
 import { Policy } from './Policy';
 
-interface IdentityBasedPolicyInterface {
+interface IdentityBasedPolicyInterface<T extends object> {
   statements: IdentityBasedType[];
   conditionResolver?: ConditionResolver;
-  context?: Context;
+  context?: T;
 }
 
-export class IdentityBasedPolicy extends Policy {
-  private denyStatements: IdentityBased[];
-  private allowStatements: IdentityBased[];
+export class IdentityBasedPolicy<T extends object> extends Policy<T> {
+  private denyStatements: IdentityBased<T>[];
+  private allowStatements: IdentityBased<T>[];
   private statements: IdentityBasedType[];
 
   constructor({
     statements,
     conditionResolver,
     context
-  }: IdentityBasedPolicyInterface) {
+  }: IdentityBasedPolicyInterface<T>) {
     super({ context, conditionResolver });
     const statementInstances = statements.map(
       (statement) => new IdentityBased(statement)
@@ -36,21 +35,21 @@ export class IdentityBasedPolicy extends Policy {
     );
   }
 
-  getStatements(this: IdentityBasedPolicy): IdentityBasedType[] {
+  getStatements(this: IdentityBasedPolicy<T>): IdentityBasedType[] {
     return this.statements;
   }
 
   evaluate(
-    this: IdentityBasedPolicy,
-    { action, resource, context }: EvaluateIdentityBasedInterface
+    this: IdentityBasedPolicy<T>,
+    { action, resource, context }: EvaluateIdentityBasedInterface<T>
   ): boolean {
     const args = { action, resource, context };
     return !this.cannot(args) && this.can(args);
   }
 
   can(
-    this: IdentityBasedPolicy,
-    { action, resource, context }: EvaluateIdentityBasedInterface
+    this: IdentityBasedPolicy<T>,
+    { action, resource, context }: EvaluateIdentityBasedInterface<T>
   ): boolean {
     return this.allowStatements.some((s) =>
       s.matches({
@@ -63,8 +62,8 @@ export class IdentityBasedPolicy extends Policy {
   }
 
   cannot(
-    this: IdentityBasedPolicy,
-    { action, resource, context }: EvaluateIdentityBasedInterface
+    this: IdentityBasedPolicy<T>,
+    { action, resource, context }: EvaluateIdentityBasedInterface<T>
   ): boolean {
     return this.denyStatements.some((s) =>
       s.matches({

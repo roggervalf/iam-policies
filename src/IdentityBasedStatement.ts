@@ -1,13 +1,9 @@
-import {
-  Context,
-  IdentityBasedType,
-  MatchIdentityBasedInterface
-} from './types';
+import { IdentityBasedType, MatchIdentityBasedInterface } from './types';
 import { Matcher } from './Matcher';
 import { Statement } from './Statement';
 import { applyContext } from './utils/applyContext';
 
-class IdentityBased extends Statement {
+class IdentityBased<T extends object> extends Statement<T> {
   private resource?: string[];
   private action?: string[];
   private notResource?: string[];
@@ -21,18 +17,18 @@ class IdentityBased extends Statement {
     this.statement = { ...identity, sid: this.sid };
   }
 
-  getStatement(this: IdentityBased): IdentityBasedType {
+  getStatement(this: IdentityBased<T>): IdentityBasedType {
     return this.statement;
   }
 
   matches(
-    this: IdentityBased,
+    this: IdentityBased<T>,
     {
       action,
       resource,
       context,
       conditionResolver
-    }: MatchIdentityBasedInterface
+    }: MatchIdentityBasedInterface<T>
   ): boolean {
     return (
       this.matchActions(action, context) &&
@@ -85,7 +81,7 @@ class IdentityBased extends Statement {
     }
   }
 
-  private matchActions(action: string, context?: Context): boolean {
+  private matchActions(action: string, context?: T): boolean {
     return this.action
       ? this.action.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
@@ -93,7 +89,7 @@ class IdentityBased extends Statement {
       : true;
   }
 
-  private matchNotActions(action: string, context?: Context): boolean {
+  private matchNotActions(action: string, context?: T): boolean {
     return this.notAction
       ? !this.notAction.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
@@ -101,7 +97,7 @@ class IdentityBased extends Statement {
       : true;
   }
 
-  private matchResources(resource: string, context?: Context): boolean {
+  private matchResources(resource: string, context?: T): boolean {
     return this.resource
       ? this.resource.some((a) =>
           new Matcher(applyContext(a, context)).match(resource)
@@ -109,7 +105,7 @@ class IdentityBased extends Statement {
       : true;
   }
 
-  private matchNotResources(resource: string, context?: Context): boolean {
+  private matchNotResources(resource: string, context?: T): boolean {
     return this.notResource
       ? !this.notResource.some((a) =>
           new Matcher(applyContext(a, context)).match(resource)

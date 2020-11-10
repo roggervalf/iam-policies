@@ -35,10 +35,7 @@ const reIsPlainProp = /^\w*$/; //matches any word character (alphanumeric and un
  * // => true
  * ```
  */
-export function isKey(
-  value: unknown,
-  object?: Record<PropertyKey, unknown>
-): boolean {
+export function isKey<T extends object>(value: unknown, object?: T): boolean {
   const type = typeof value;
   if (
     type === 'number' ||

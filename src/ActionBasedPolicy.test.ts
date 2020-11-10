@@ -145,6 +145,13 @@ describe('ActionBasedPolicy Class', () => {
 
   describe('when match based on conditions', () => {
     it('returns true or false', () => {
+      class User {
+        constructor(public info = { id: 456, age: 19 }) {}
+        get user() {
+          return this.info;
+        }
+      }
+
       const conditionResolver = {
         greaterThan: (data: number, expected: number): boolean => {
           return data > expected;
@@ -183,7 +190,7 @@ describe('ActionBasedPolicy Class', () => {
       expect(
         policy.evaluate({
           action: 'write',
-          context: { user: { id: 456, age: 19 } }
+          context: new User()
         })
       ).toBe(true);
     });

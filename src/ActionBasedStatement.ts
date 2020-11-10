@@ -1,9 +1,9 @@
-import { ActionBasedType, Context, MatchActionBasedInterface } from './types';
+import { ActionBasedType, MatchActionBasedInterface } from './types';
 import { Matcher } from './Matcher';
 import { Statement } from './Statement';
 import { applyContext } from './utils/applyContext';
 
-class ActionBased extends Statement {
+class ActionBased<T extends object> extends Statement<T> {
   private action?: string[];
   private notAction?: string[];
   private statement: ActionBasedType;
@@ -14,13 +14,13 @@ class ActionBased extends Statement {
     this.statement = { ...action, sid: this.sid };
   }
 
-  getStatement(this: ActionBased): ActionBasedType {
+  getStatement(this: ActionBased<T>): ActionBasedType {
     return this.statement;
   }
 
   matches(
-    this: ActionBased,
-    { action, context, conditionResolver }: MatchActionBasedInterface
+    this: ActionBased<T>,
+    { action, context, conditionResolver }: MatchActionBasedInterface<T>
   ): boolean {
     return (
       this.matchActions(action, context) &&
@@ -48,7 +48,7 @@ class ActionBased extends Statement {
     }
   }
 
-  private matchActions(action: string, context?: Context): boolean {
+  private matchActions(action: string, context?: T): boolean {
     return this.action
       ? this.action.some((a) =>
           new Matcher(applyContext(a, context)).match(action)
@@ -56,7 +56,7 @@ class ActionBased extends Statement {
       : true;
   }
 
-  private matchNotActions(action: string, context?: Context): boolean {
+  private matchNotActions(action: string, context?: T): boolean {
     return this.notAction
       ? !this.notAction.some((a) =>
           new Matcher(applyContext(a, context)).match(action)

@@ -1,3 +1,11 @@
+# [4.1.0](https://github.com/roggervalf/iam-policies/compare/v4.0.3...v4.1.0) (2020-11-10)
+
+
+### Features
+
+* **condition:** extends condition block type to accept unknown values ([38a6daa](https://github.com/roggervalf/iam-policies/commit/38a6daafd5e7d231c51bd50a0f914e4201ec5109))
+* **context:** allow passing objects as context ([b78d5fb](https://github.com/roggervalf/iam-policies/commit/b78d5fb98e3e2c4aa23889ecf8a8d865d339418e)), closes [#15](https://github.com/roggervalf/iam-policies/issues/15)
+
 ## [4.0.3](https://github.com/roggervalf/iam-policies/compare/v4.0.2...v4.0.3) (2020-11-03)
 
 

@@ -13,16 +13,16 @@ export interface ActionBasedPolicyInterface<T extends object> {
   context?: T;
 }
 
-export class ActionBasedPolicy<W extends object> extends Policy<W> {
-  private denyStatements: ActionBased<W>[];
-  private allowStatements: ActionBased<W>[];
+export class ActionBasedPolicy<T extends object> extends Policy<T> {
+  private denyStatements: ActionBased<T>[];
+  private allowStatements: ActionBased<T>[];
   private statements: ActionBasedType[];
 
   constructor({
     statements,
     conditionResolver,
     context
-  }: ActionBasedPolicyInterface<W>) {
+  }: ActionBasedPolicyInterface<T>) {
     super({ context, conditionResolver });
     const statementInstances = statements.map(
       (statement) => new ActionBased(statement)
@@ -36,21 +36,21 @@ export class ActionBasedPolicy<W extends object> extends Policy<W> {
     );
   }
 
-  getStatements(this: ActionBasedPolicy<W>): ActionBasedType[] {
+  getStatements(this: ActionBasedPolicy<T>): ActionBasedType[] {
     return this.statements;
   }
 
   evaluate(
-    this: ActionBasedPolicy<W>,
-    { action, context }: EvaluateActionBasedInterface<W>
+    this: ActionBasedPolicy<T>,
+    { action, context }: EvaluateActionBasedInterface<T>
   ): boolean {
     const args = { action, context };
     return !this.cannot(args) && this.can(args);
   }
 
   can(
-    this: ActionBasedPolicy<W>,
-    { action, context }: EvaluateActionBasedInterface<W>
+    this: ActionBasedPolicy<T>,
+    { action, context }: EvaluateActionBasedInterface<T>
   ): boolean {
     return this.allowStatements.some((s) =>
       s.matches({
@@ -62,8 +62,8 @@ export class ActionBasedPolicy<W extends object> extends Policy<W> {
   }
 
   cannot(
-    this: ActionBasedPolicy<W>,
-    { action, context }: EvaluateActionBasedInterface<W>
+    this: ActionBasedPolicy<T>,
+    { action, context }: EvaluateActionBasedInterface<T>
   ): boolean {
     return this.denyStatements.some((s) =>
       s.matches({
@@ -74,18 +74,18 @@ export class ActionBasedPolicy<W extends object> extends Policy<W> {
     );
   }
 
-  generateProxy<T extends object, U extends keyof T>(
-    this: ActionBasedPolicy<W>,
-    obj: T,
+  generateProxy<U extends object, W extends keyof U>(
+    this: ActionBasedPolicy<T>,
+    obj: U,
     options: ProxyOptions = {}
-  ): T {
+  ): U {
     const { get = {}, set = {} } = options;
     const { allow: allowGet = true, propertyMap: propertyMapGet = {} } = get;
     const { allow: allowSet = true, propertyMap: propertyMapSet = {} } = set;
     const handler = {
       ...(allowGet
         ? {
-            get: (target: T, prop: U): any => {
+            get: (target: U, prop: W): any => {
               if (prop in target) {
                 if (typeof prop === 'string') {
                   const property = propertyMapGet[prop] || prop;
@@ -99,7 +99,7 @@ export class ActionBasedPolicy<W extends object> extends Policy<W> {
         : {}),
       ...(allowSet
         ? {
-            set: (target: T, prop: U, value: any): boolean => {
+            set: (target: U, prop: W, value: any): boolean => {
               if (typeof prop === 'string') {
                 const property = propertyMapSet[prop] || prop;
                 if (this.evaluate({ action: property })) {

@@ -204,16 +204,16 @@ interface ActionBasedPolicyInterface<T extends object> {
     conditionResolver?: ConditionResolver;
     context?: T;
 }
-declare class ActionBasedPolicy<W extends object> extends Policy<W> {
+declare class ActionBasedPolicy<T extends object> extends Policy<T> {
     private denyStatements;
     private allowStatements;
     private statements;
-    constructor({ statements, conditionResolver, context }: ActionBasedPolicyInterface<W>);
-    getStatements(this: ActionBasedPolicy<W>): ActionBasedType[];
-    evaluate(this: ActionBasedPolicy<W>, { action, context }: EvaluateActionBasedInterface<W>): boolean;
-    can(this: ActionBasedPolicy<W>, { action, context }: EvaluateActionBasedInterface<W>): boolean;
-    cannot(this: ActionBasedPolicy<W>, { action, context }: EvaluateActionBasedInterface<W>): boolean;
-    generateProxy<T extends object, U extends keyof T>(this: ActionBasedPolicy<W>, obj: T, options?: ProxyOptions): T;
+    constructor({ statements, conditionResolver, context }: ActionBasedPolicyInterface<T>);
+    getStatements(this: ActionBasedPolicy<T>): ActionBasedType[];
+    evaluate(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): boolean;
+    can(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): boolean;
+    cannot(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): boolean;
+    generateProxy<U extends object, W extends keyof U>(this: ActionBasedPolicy<T>, obj: U, options?: ProxyOptions): U;
 }
 
 interface IdentityBasedPolicyInterface<T extends object> {

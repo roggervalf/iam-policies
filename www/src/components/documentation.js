@@ -11,6 +11,17 @@ const DocumentationStyled = styled.section`
     }
   }
 
+  p {
+    display: flex;
+    flex-wrap: wrap;
+    a {
+      margin: 0.5rem 1rem 0rem 0rem;
+      img{
+        width: auto;
+      }
+    }
+  }
+
   a {
     color: ${({ theme }) => theme.colors.primary};
     text-decoration: none;

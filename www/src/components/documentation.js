@@ -11,7 +11,7 @@ const DocumentationStyled = styled.section`
     }
   }
 
-  p {
+  p:first-of-type {
     display: flex;
     flex-wrap: wrap;
     a {

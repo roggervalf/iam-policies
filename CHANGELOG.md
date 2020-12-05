@@ -1,3 +1,10 @@
+# [4.2.0](https://github.com/roggervalf/iam-policies/compare/v4.1.0...v4.2.0) (2020-12-05)
+
+
+### Features
+
+* **policies:** adding addStatement function ([fc2697f](https://github.com/roggervalf/iam-policies/commit/fc2697f20fe4e14a77c78c0034654fdb498503dd)), closes [#35](https://github.com/roggervalf/iam-policies/issues/35)
+
 # [4.1.0](https://github.com/roggervalf/iam-policies/compare/v4.0.3...v4.1.0) (2020-11-10)
 
 

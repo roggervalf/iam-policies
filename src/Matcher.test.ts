@@ -33,6 +33,8 @@ describe('Matcher Class', () => {
 
     it('returns true', () => {
       expect(new Matcher('*').match('secrets::999/image')).toBe(true);
+      expect(new Matcher('number{125}').match('number125')).toBe(true);
+      expect(new Matcher('number${125}').match('number{125}')).toBe(true);
       expect(new Matcher('{125,126}').match('125')).toBe(true);
       expect(new Matcher('secrets:123').match('secrets:123')).toBe(true);
       expect(

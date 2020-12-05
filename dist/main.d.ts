@@ -210,6 +210,7 @@ declare class ActionBasedPolicy<T extends object> extends Policy<T, ActionBasedT
     private allowStatements;
     private statements;
     constructor({ statements, conditionResolver, context }: ActionBasedPolicyInterface<T>);
+    addStatement(this: ActionBasedPolicy<T>, statement: ActionBasedType): void;
     getStatements(this: ActionBasedPolicy<T>): ActionBasedType[];
     evaluate(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): boolean;
     can(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): boolean;
@@ -227,6 +228,7 @@ declare class IdentityBasedPolicy<T extends object> extends Policy<T, IdentityBa
     private allowStatements;
     private statements;
     constructor({ statements, conditionResolver, context }: IdentityBasedPolicyInterface<T>);
+    addStatement(this: IdentityBasedPolicy<T>, statement: IdentityBasedType): void;
     getStatements(this: IdentityBasedPolicy<T>): IdentityBasedType[];
     evaluate(this: IdentityBasedPolicy<T>, { action, resource, context }: EvaluateIdentityBasedInterface<T>): boolean;
     can(this: IdentityBasedPolicy<T>, { action, resource, context }: EvaluateIdentityBasedInterface<T>): boolean;
@@ -243,6 +245,7 @@ declare class ResourceBasedPolicy<T extends object> extends Policy<T, ResourceBa
     private allowStatements;
     private statements;
     constructor({ statements, conditionResolver, context }: ResourceBasedPolicyInterface<T>);
+    addStatement(this: ResourceBasedPolicy<T>, statement: ResourceBasedType): void;
     getStatements(this: ResourceBasedPolicy<T>): ResourceBasedType[];
     evaluate(this: ResourceBasedPolicy<T>, { principal, action, resource, principalType, context }: EvaluateResourceBasedInterface<T>): boolean;
     can(this: ResourceBasedPolicy<T>, { principal, action, resource, principalType, context }: EvaluateResourceBasedInterface<T>): boolean;

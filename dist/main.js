@@ -1068,6 +1068,16 @@ class ActionBasedPolicy extends Policy {
         this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
         this.statements = statementInstances.map((statement) => statement.getStatement());
     }
+    addStatement(statement) {
+        const statementInstance = new ActionBased(statement);
+        if (statementInstance.effect === 'allow') {
+            this.allowStatements.push(statementInstance);
+        }
+        else {
+            this.denyStatements.push(statementInstance);
+        }
+        this.statements.push(statementInstance.getStatement());
+    }
     getStatements() {
         return this.statements;
     }
@@ -1135,6 +1145,16 @@ class IdentityBasedPolicy extends Policy {
         this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
         this.statements = statementInstances.map((statement) => statement.getStatement());
     }
+    addStatement(statement) {
+        const statementInstance = new IdentityBased(statement);
+        if (statementInstance.effect === 'allow') {
+            this.allowStatements.push(statementInstance);
+        }
+        else {
+            this.denyStatements.push(statementInstance);
+        }
+        this.statements.push(statementInstance.getStatement());
+    }
     getStatements() {
         return this.statements;
     }
@@ -1167,6 +1187,16 @@ class ResourceBasedPolicy extends Policy {
         this.allowStatements = statementInstances.filter((s) => s.effect === 'allow');
         this.denyStatements = statementInstances.filter((s) => s.effect === 'deny');
         this.statements = statementInstances.map((statement) => statement.getStatement());
+    }
+    addStatement(statement) {
+        const statementInstance = new ResourceBased(statement);
+        if (statementInstance.effect === 'allow') {
+            this.allowStatements.push(statementInstance);
+        }
+        else {
+            this.denyStatements.push(statementInstance);
+        }
+        this.statements.push(statementInstance.getStatement());
     }
     getStatements() {
         return this.statements;

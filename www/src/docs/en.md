@@ -422,6 +422,10 @@ const actionBasedPolicy = new ActionBasedPolicy({
 
 ### Methods
 
+#### actionBasedPolicy.addStatement(statement)
+
+_public_: Add a new `statement` to this Policy.
+
 #### actionBasedPolicy.getStatements()
 
 _public_: Returns `statements[]` (statements array).
@@ -525,6 +529,10 @@ const identityBasedPolicy = new IdentityBasedPolicy({
 
 ### Methods
 
+#### identityBasedPolicy.addStatement(statement)
+
+_public_: Add a new `statement` to this Policy.
+
 #### identityBasedPolicy.getStatements()
 
 _public_: Returns `statements[]` (statements array).
@@ -616,6 +624,10 @@ const resourceBasedPolicy = new ResourceBasedPolicy({
 | `context`                                                        | object             | undefined | `false`  | The **_context_** has those properties that will be embedded in our statements.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 
 ### Methods
+
+#### resourceBasedPolicy.addStatement(statement)
+
+_public_: Add a new `statement` to this Policy.
 
 #### resourceBasedPolicy.getStatements()
 

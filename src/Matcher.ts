@@ -1,4 +1,4 @@
-import { decomposeString } from './utils/decomposeString';
+import { braceExpand } from './utils/braceExpand';
 
 export class Matcher {
   private readonly pattern: string;
@@ -12,7 +12,7 @@ export class Matcher {
     this.maxLength = maxLength;
     this.empty = !this.pattern ? true : false;
 
-    const set = this.braceExpand();
+    const set = braceExpand(pattern);
     this.set = set.map((val) => this.parse(val));
     this.set = this.set.filter((s) => {
       return Boolean(s);
@@ -23,15 +23,6 @@ export class Matcher {
     if (this.empty) return str === '';
 
     return this.set.some((pattern) => this.matchOne(str, pattern));
-  }
-
-  private braceExpand(): string[] {
-    const pattern = this.pattern;
-    if (!pattern.match(/{.*}/)) {
-      return [pattern];
-    }
-
-    return this.expand(pattern, true);
   }
 
   private parse(pattern: string): string | RegExp {
@@ -63,28 +54,6 @@ export class Matcher {
     }
 
     return regExp;
-  }
-
-  private expand(str: string, isTop?: boolean): string[] {
-    const expansions = [] as string[];
-    const balance = decomposeString('{', '}', str);
-    if (balance.start < 0 || /\$$/.test(balance.pre)) return [str];
-
-    const parts = balance.body.split(',');
-    // no need to expand pre, since it is guaranteed to be free of brace-sets
-    const pre = balance.pre;
-    const postParts = balance.post.length
-      ? this.expand(balance.post, false)
-      : [''];
-
-    parts.forEach((part: string) => {
-      postParts.forEach((postPart) => {
-        const expansion = pre + part + postPart;
-        if (!isTop || expansion) expansions.push(expansion);
-      });
-    });
-
-    return expansions;
   }
 
   private matchOne(str: string, pattern: string | RegExp): boolean {

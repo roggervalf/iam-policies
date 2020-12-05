@@ -405,13 +405,65 @@ function decomposeString(initialSeparator, finalSeparator, str) {
     };
 }
 
+/**
+ * Generate an array of string depending on {} blocks.
+ *
+ * @param {string} pattern Pattern string that can contains {} blocks.
+ * @returns {string[]} Returns an array of string with all the combinations.
+ * @example
+ * ```javascript
+ * braceExpand('${13}')
+ * // => ['{13}']
+ *
+ * braceExpand('a{b,f,m}p')
+ * // => ['abp','afp','amp']
+ *
+ * braceExpand('-v{,,}')
+ * // => ['-v','-v','-v']
+ * ```
+ */
+const braceExpand = (pattern) => {
+    if (!pattern.match(/{.*}/)) {
+        return [pattern];
+    }
+    return expand(pattern, true);
+};
+const expand = (str, isTop) => {
+    const expansions = [];
+    const balance = decomposeString('{', '}', str);
+    if (balance.start < 0)
+        return [str];
+    const parts = balance.body.split(',');
+    // no need to expand pre, since it is guaranteed to be free of brace-sets
+    const pre = balance.pre;
+    const postParts = balance.post.length
+        ? expand(balance.post, false)
+        : [''];
+    if (/\$$/.test(balance.pre)) {
+        postParts.forEach((postPart) => {
+            const expansion = `${balance.pre.slice(0, -1)}{${balance.body}}${postPart}`;
+            expansions.push(expansion);
+        });
+    }
+    else {
+        parts.forEach((part) => {
+            postParts.forEach((postPart) => {
+                const expansion = pre + part + postPart;
+                if (!isTop || expansion)
+                    expansions.push(expansion);
+            });
+        });
+    }
+    return expansions;
+};
+
 class Matcher {
     constructor(pattern, maxLength = 1024 * 64) {
         this.set = [];
         this.pattern = pattern.trim();
         this.maxLength = maxLength;
         this.empty = !this.pattern ? true : false;
-        const set = this.braceExpand();
+        const set = braceExpand(pattern);
         this.set = set.map((val) => this.parse(val));
         this.set = this.set.filter((s) => {
             return Boolean(s);
@@ -421,13 +473,6 @@ class Matcher {
         if (this.empty)
             return str === '';
         return this.set.some((pattern) => this.matchOne(str, pattern));
-    }
-    braceExpand() {
-        const pattern = this.pattern;
-        if (!pattern.match(/{.*}/)) {
-            return [pattern];
-        }
-        return this.expand(pattern, true);
     }
     parse(pattern) {
         if (pattern.length > this.maxLength) {
@@ -456,26 +501,6 @@ class Matcher {
             return new RegExp('$.');
         }
         return regExp;
-    }
-    expand(str, isTop) {
-        const expansions = [];
-        const balance = decomposeString('{', '}', str);
-        if (balance.start < 0 || /\$$/.test(balance.pre))
-            return [str];
-        const parts = balance.body.split(',');
-        // no need to expand pre, since it is guaranteed to be free of brace-sets
-        const pre = balance.pre;
-        const postParts = balance.post.length
-            ? this.expand(balance.post, false)
-            : [''];
-        parts.forEach((part) => {
-            postParts.forEach((postPart) => {
-                const expansion = pre + part + postPart;
-                if (!isTop || expansion)
-                    expansions.push(expansion);
-            });
-        });
-        return expansions;
     }
     matchOne(str, pattern) {
         if (typeof pattern === 'string') {

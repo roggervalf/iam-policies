@@ -46,6 +46,37 @@ describe('IdentityBasedPolicy Class', () => {
     });
   });
 
+  describe('when getContext', () => {
+    it('returns context attribute', () => {
+      const context = { user: { age: 31 } };
+      const statements = [
+        {
+          resource: ['books:horror:*'],
+          action: ['read']
+        }
+      ];
+      const policy = new IdentityBasedPolicy({ statements, context });
+
+      expect(policy.getContext()).toBe(context);
+    });
+  });
+
+  describe('when setContext', () => {
+    it('sets context attribute', () => {
+      const context = { user: { age: 31 } };
+      const statements = [
+        {
+          resource: ['books:horror:*'],
+          action: ['read']
+        }
+      ];
+      const policy = new IdentityBasedPolicy({ statements });
+      policy.setContext(context);
+
+      expect(policy.getContext()).toBe(context);
+    });
+  });
+
   describe('when match actions', () => {
     it('returns true or false', () => {
       const policy = new IdentityBasedPolicy({

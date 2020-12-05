@@ -48,6 +48,47 @@ describe('ResourceBasedPolicy Class', () => {
     });
   });
 
+  describe('when getConditionResolver', () => {
+    it('returns conditionResolver attribute', () => {
+      const conditionResolver = {
+        greaterThan: (data: number, expected: number): boolean => {
+          return data > expected;
+        }
+      };
+      const statements = [
+        {
+          principal: 'andre',
+          resource: ['books:horror:*'],
+          action: ['read']
+        }
+      ];
+      const policy = new ResourceBasedPolicy({ statements, conditionResolver });
+
+      expect(policy.getConditionResolver()).toBe(conditionResolver);
+    });
+  });
+
+  describe('when setConditionResolver', () => {
+    it('sets conditionResolver attribute', () => {
+      const conditionResolver = {
+        greaterThan: (data: number, expected: number): boolean => {
+          return data > expected;
+        }
+      };
+      const statements = [
+        {
+          principal: 'andre',
+          resource: ['books:horror:*'],
+          action: ['read']
+        }
+      ];
+      const policy = new ResourceBasedPolicy({ statements });
+      policy.setConditionResolver(conditionResolver);
+
+      expect(policy.getConditionResolver()).toBe(conditionResolver);
+    });
+  });
+
   describe('when match principal', () => {
     it('returns true or false', () => {
       const policy = new ResourceBasedPolicy({

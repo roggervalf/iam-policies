@@ -1,6 +1,6 @@
 import { MatchConditionInterface, ConditionResolver } from './types';
 
-class Policy<T extends object> {
+abstract class Policy<T extends object> {
   protected context?: T;
   protected conditionResolver?: ConditionResolver;
 

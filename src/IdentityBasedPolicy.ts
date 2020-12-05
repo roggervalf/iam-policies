@@ -12,7 +12,10 @@ interface IdentityBasedPolicyInterface<T extends object> {
   context?: T;
 }
 
-export class IdentityBasedPolicy<T extends object> extends Policy<T> {
+export class IdentityBasedPolicy<T extends object> extends Policy<
+  T,
+  IdentityBasedType
+> {
   private denyStatements: IdentityBased<T>[];
   private allowStatements: IdentityBased<T>[];
   private statements: IdentityBasedType[];
@@ -33,6 +36,19 @@ export class IdentityBasedPolicy<T extends object> extends Policy<T> {
     this.statements = statementInstances.map((statement) =>
       statement.getStatement()
     );
+  }
+
+  addStatement(
+    this: IdentityBasedPolicy<T>,
+    statement: IdentityBasedType
+  ): void {
+    const statementInstance = new IdentityBased(statement);
+    if (statementInstance.effect === 'allow') {
+      this.allowStatements.push(statementInstance);
+    } else {
+      this.denyStatements.push(statementInstance);
+    }
+    this.statements.push(statementInstance.getStatement());
   }
 
   getStatements(this: IdentityBasedPolicy<T>): IdentityBasedType[] {

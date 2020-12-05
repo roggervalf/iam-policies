@@ -39,7 +39,48 @@ describe('ActionBasedPolicy Class', () => {
     });
   });
 
-  describe('when get statements', () => {
+  describe('when addStatement is called', () => {
+    describe('when adding an statement with effect as allow', () => {
+      it('adds a new ActionBased statement', () => {
+        const statements = [
+          {
+            action: 'read'
+          }
+        ];
+        const newStatement = {
+          action: 'write'
+        };
+
+        const policy = new ActionBasedPolicy({ statements });
+        policy.addStatement(newStatement);
+        const exportedStatements = policy.getStatements();
+
+        expect(exportedStatements).toMatchObject([...statements, newStatement]);
+      });
+    });
+
+    describe('when adding an statement with effect as deny', () => {
+      it('adds a new ActionBased statement', () => {
+        const statements = [
+          {
+            action: 'read'
+          }
+        ];
+        const newStatement = {
+          effect: 'deny' as const,
+          action: 'write'
+        };
+
+        const policy = new ActionBasedPolicy({ statements });
+        policy.addStatement(newStatement);
+        const exportedStatements = policy.getStatements();
+
+        expect(exportedStatements).toMatchObject([...statements, newStatement]);
+      });
+    });
+  });
+
+  describe('when getStatements is called', () => {
     it('returns those statements', () => {
       const statements = [
         {

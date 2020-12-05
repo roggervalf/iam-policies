@@ -13,7 +13,10 @@ export interface ActionBasedPolicyInterface<T extends object> {
   context?: T;
 }
 
-export class ActionBasedPolicy<T extends object> extends Policy<T> {
+export class ActionBasedPolicy<T extends object> extends Policy<
+  T,
+  ActionBasedType
+> {
   private denyStatements: ActionBased<T>[];
   private allowStatements: ActionBased<T>[];
   private statements: ActionBasedType[];
@@ -34,6 +37,16 @@ export class ActionBasedPolicy<T extends object> extends Policy<T> {
     this.statements = statementInstances.map((statement) =>
       statement.getStatement()
     );
+  }
+
+  addStatement(this: ActionBasedPolicy<T>, statement: ActionBasedType): void {
+    const statementInstance = new ActionBased(statement);
+    if (statementInstance.effect === 'allow') {
+      this.allowStatements.push(statementInstance);
+    } else {
+      this.denyStatements.push(statementInstance);
+    }
+    this.statements.push(statementInstance.getStatement());
   }
 
   getStatements(this: ActionBasedPolicy<T>): ActionBasedType[] {

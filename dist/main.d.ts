@@ -189,14 +189,15 @@ declare class ResourceBased<T extends object> extends Statement<T> {
     private matchNotResources;
 }
 
-declare class Policy<T extends object> {
+declare abstract class Policy<T extends object, U> {
     protected context?: T;
     protected conditionResolver?: ConditionResolver;
     constructor({ context, conditionResolver }: MatchConditionInterface<T>);
-    setContext(this: Policy<T>, context: T): void;
-    getContext(this: Policy<T>): T | undefined;
-    setConditionResolver(this: Policy<T>, conditionResolver: ConditionResolver): void;
-    getConditionResolver(this: Policy<T>): ConditionResolver | undefined;
+    setContext(this: Policy<T, U>, context: T): void;
+    getContext(this: Policy<T, U>): T | undefined;
+    setConditionResolver(this: Policy<T, U>, conditionResolver: ConditionResolver): void;
+    getConditionResolver(this: Policy<T, U>): ConditionResolver | undefined;
+    abstract getStatements(this: Policy<T, U>): U[];
 }
 
 interface ActionBasedPolicyInterface<T extends object> {
@@ -204,7 +205,7 @@ interface ActionBasedPolicyInterface<T extends object> {
     conditionResolver?: ConditionResolver;
     context?: T;
 }
-declare class ActionBasedPolicy<T extends object> extends Policy<T> {
+declare class ActionBasedPolicy<T extends object> extends Policy<T, ActionBasedType> {
     private denyStatements;
     private allowStatements;
     private statements;
@@ -221,7 +222,7 @@ interface IdentityBasedPolicyInterface<T extends object> {
     conditionResolver?: ConditionResolver;
     context?: T;
 }
-declare class IdentityBasedPolicy<T extends object> extends Policy<T> {
+declare class IdentityBasedPolicy<T extends object> extends Policy<T, IdentityBasedType> {
     private denyStatements;
     private allowStatements;
     private statements;
@@ -237,7 +238,7 @@ interface ResourceBasedPolicyInterface<T extends object> {
     conditionResolver?: ConditionResolver;
     context?: T;
 }
-declare class ResourceBasedPolicy<T extends object> extends Policy<T> {
+declare class ResourceBasedPolicy<T extends object> extends Policy<T, ResourceBasedType> {
     private denyStatements;
     private allowStatements;
     private statements;

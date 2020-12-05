@@ -30,7 +30,53 @@ describe('IdentityBasedPolicy Class', () => {
     });
   });
 
-  describe('when get statements', () => {
+  describe('when addStatement is called', () => {
+    describe('when adding an statement with effect as allow', () => {
+      it('adds a new IdentityBased statement', () => {
+        const statements = [
+          {
+            resource: ['books:horror:*'],
+            action: ['read']
+          }
+        ];
+        const newStatement = {
+          effect: 'allow' as const,
+          resource: ['books:horror:*'],
+          action: 'write'
+        };
+
+        const policy = new IdentityBasedPolicy({ statements });
+        policy.addStatement(newStatement);
+        const exportedStatements = policy.getStatements();
+
+        expect(exportedStatements).toMatchObject([...statements, newStatement]);
+      });
+    });
+
+    describe('when adding an statement with effect as deny', () => {
+      it('adds a new IdentityBased statement', () => {
+        const statements = [
+          {
+            resource: ['books:horror:*'],
+            action: ['read']
+          }
+        ];
+        const newStatement = {
+          effect: 'deny' as const,
+          resource: ['books:horror:*'],
+          action: 'write'
+        };
+
+        const policy = new IdentityBasedPolicy({ statements });
+        policy.addStatement(newStatement);
+        const exportedStatements = policy.getStatements();
+
+        expect(exportedStatements).toMatchObject([...statements, newStatement]);
+      });
+    });
+  });
+
+  describe('when getStatements is called', () => {
     it('returns those statements', () => {
       const statements = [
         {
@@ -46,7 +92,7 @@ describe('IdentityBasedPolicy Class', () => {
     });
   });
 
-  describe('when getContext', () => {
+  describe('when getContext is called', () => {
     it('returns context attribute', () => {
       const context = { user: { age: 31 } };
       const statements = [
@@ -61,7 +107,7 @@ describe('IdentityBasedPolicy Class', () => {
     });
   });
 
-  describe('when setContext', () => {
+  describe('when setContext is called', () => {
     it('sets context attribute', () => {
       const context = { user: { age: 31 } };
       const statements = [

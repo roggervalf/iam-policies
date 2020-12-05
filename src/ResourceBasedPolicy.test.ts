@@ -32,7 +32,55 @@ describe('ResourceBasedPolicy Class', () => {
     });
   });
 
-  describe('when get statements', () => {
+  describe('when addStatement is called', () => {
+    describe('when adding an statement with effect as allow', () => {
+      it('adds a new ResourceBased statement', () => {
+        const statements = [
+          {
+            principal: 'andre',
+            resource: ['books:horror:*'],
+            action: ['read']
+          }
+        ];
+        const newStatement = {
+          effect: 'allow' as const,
+          resource: ['books:horror:*'],
+          action: 'write'
+        };
+
+        const policy = new ResourceBasedPolicy({ statements });
+        policy.addStatement(newStatement);
+        const exportedStatements = policy.getStatements();
+
+        expect(exportedStatements).toMatchObject([...statements, newStatement]);
+      });
+    });
+
+    describe('when adding an statement with effect as deny', () => {
+      it('adds a new ResourceBased statement', () => {
+        const statements = [
+          {
+            principal: 'andre',
+            resource: ['books:horror:*'],
+            action: ['read']
+          }
+        ];
+        const newStatement = {
+          effect: 'deny' as const,
+          resource: ['books:horror:*'],
+          action: 'write'
+        };
+
+        const policy = new ResourceBasedPolicy({ statements });
+        policy.addStatement(newStatement);
+        const exportedStatements = policy.getStatements();
+
+        expect(exportedStatements).toMatchObject([...statements, newStatement]);
+      });
+    });
+  });
+
+  describe('when getStatements is called', () => {
     it('returns those statements', () => {
       const statements = [
         {
@@ -48,7 +96,7 @@ describe('ResourceBasedPolicy Class', () => {
     });
   });
 
-  describe('when getConditionResolver', () => {
+  describe('when getConditionResolver is called', () => {
     it('returns conditionResolver attribute', () => {
       const conditionResolver = {
         greaterThan: (data: number, expected: number): boolean => {
@@ -68,7 +116,7 @@ describe('ResourceBasedPolicy Class', () => {
     });
   });
 
-  describe('when setConditionResolver', () => {
+  describe('when setConditionResolver is called', () => {
     it('sets conditionResolver attribute', () => {
       const conditionResolver = {
         greaterThan: (data: number, expected: number): boolean => {

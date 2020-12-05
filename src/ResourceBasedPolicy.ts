@@ -12,7 +12,10 @@ interface ResourceBasedPolicyInterface<T extends object> {
   context?: T;
 }
 
-export class ResourceBasedPolicy<T extends object> extends Policy<T> {
+export class ResourceBasedPolicy<T extends object> extends Policy<
+  T,
+  ResourceBasedType
+> {
   private denyStatements: ResourceBased<T>[];
   private allowStatements: ResourceBased<T>[];
   private statements: ResourceBasedType[];
@@ -33,6 +36,19 @@ export class ResourceBasedPolicy<T extends object> extends Policy<T> {
     this.statements = statementInstances.map((statement) =>
       statement.getStatement()
     );
+  }
+
+  addStatement(
+    this: ResourceBasedPolicy<T>,
+    statement: ResourceBasedType
+  ): void {
+    const statementInstance = new ResourceBased(statement);
+    if (statementInstance.effect === 'allow') {
+      this.allowStatements.push(statementInstance);
+    } else {
+      this.denyStatements.push(statementInstance);
+    }
+    this.statements.push(statementInstance.getStatement());
   }
 
   getStatements(this: ResourceBasedPolicy<T>): ResourceBasedType[] {

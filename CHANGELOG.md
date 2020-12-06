@@ -1,3 +1,10 @@
+## [4.2.1](https://github.com/roggervalf/iam-policies/compare/v4.2.0...v4.2.1) (2020-12-06)
+
+
+### Bug Fixes
+
+* **matcher:** allow ignoring {} by using $, ie ${a} should match with {a} ([470f07d](https://github.com/roggervalf/iam-policies/commit/470f07db33303934a40bfbd7d252125f777cb72f)), closes [#37](https://github.com/roggervalf/iam-policies/issues/37)
+
 # [4.2.0](https://github.com/roggervalf/iam-policies/compare/v4.1.0...v4.2.0) (2020-12-05)
 
 

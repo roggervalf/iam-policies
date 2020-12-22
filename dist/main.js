@@ -440,9 +440,7 @@ const expand = (str, isTop) => {
     const parts = balance.body.split(',');
     // no need to expand pre, since it is guaranteed to be free of brace-sets
     const pre = balance.pre;
-    const postParts = balance.post.length
-        ? expand(balance.post, false)
-        : [''];
+    const postParts = balance.post.length ? expand(balance.post, false) : [''];
     if (/\$$/.test(balance.pre)) {
         postParts.forEach((postPart) => {
             const expansion = `${balance.pre.slice(0, -1)}{${balance.body}}${postPart}`;

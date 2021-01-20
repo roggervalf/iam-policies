@@ -16,7 +16,7 @@ const DocumentationStyled = styled.section`
     flex-wrap: wrap;
     a {
       margin: 0.5rem 1rem 0rem 0rem;
-      img{
+      img {
         width: auto;
       }
     }
@@ -48,6 +48,19 @@ const DocumentationStyled = styled.section`
 
   td,
   th {
+    max-width: 30rem;
+    white-space: break-spaces;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+    font-size: 16px;
+  }
+
+  td:last-child,
+  th:last-child {
+    min-width: 25rem;
+    max-width: 30rem;
+    white-space: break-spaces;
     padding: 10px;
     border: 1px solid #ccc;
     text-align: left;

@@ -691,6 +691,16 @@ _public_: Verify if action for specific resource is denied (`true`) or not prese
 | `context`       | object | undefined | `false`  | It represents the properties that will be embedded into your resources.                                      |
 | `principalType` | string | undefined | `false`  | It represents the principalType (principal attribute if the statement have principal object) you are asking. |
 
+## Condition Operators
+
+There is a predefined condition operator to be used as part of conditionResolver in case user don't pass any.
+
+### String condition operators
+
+| Name           | First Parameter | Expected Parameter | Description                     |
+| -------------- | --------------- | ------------------ | ------------------------------- |
+| `stringEquals` | string          | string             | Exact matching, case sensitive. |
+
 ## getValueFromPath(data, path) Function
 
 Get object value from path.

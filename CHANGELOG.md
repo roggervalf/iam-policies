@@ -1,3 +1,10 @@
+# [4.3.0](https://github.com/roggervalf/iam-policies/compare/v4.2.1...v4.3.0) (2021-02-16)
+
+
+### Features
+
+* **stringequals:** adding new predefined string operator ([6fd5766](https://github.com/roggervalf/iam-policies/commit/6fd5766b9f0af96b30907af65763f72448fdd3d2))
+
 ## [4.2.1](https://github.com/roggervalf/iam-policies/compare/v4.2.0...v4.2.1) (2020-12-06)
 
 

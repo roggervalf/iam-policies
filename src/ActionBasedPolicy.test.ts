@@ -237,6 +237,86 @@ describe('ActionBasedPolicy Class', () => {
     });
   });
 
+  describe('when condition does not exist', () => {
+    it('returns false', () => {
+      class User {
+        constructor(public info = { id: 456, age: 19 }) {}
+        get user() {
+          return this.info;
+        }
+      }
+
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            action: ['read']
+          },
+          {
+            action: ['write', 'update'],
+            condition: {
+              greaterThan: {
+                'user.age': 18
+              }
+            }
+          }
+        ]
+      });
+
+      expect(
+        policy.evaluate({
+          action: 'write',
+          context: { user: { id: 123, age: 17 } }
+        })
+      ).toBe(false);
+      expect(
+        policy.evaluate({
+          action: 'write',
+          context: new User()
+        })
+      ).toBe(false);
+    });
+  });
+
+  describe('when condition is predefined', () => {
+    it('returns true or false', () => {
+      class User {
+        constructor(public info = { name: 'Juan', age: 19 }) {}
+        get user() {
+          return this.info;
+        }
+      }
+
+      const policy = new ActionBasedPolicy({
+        statements: [
+          {
+            action: ['read']
+          },
+          {
+            action: ['write', 'update'],
+            condition: {
+              stringEquals: {
+                'user.name': 'Joan'
+              }
+            }
+          }
+        ]
+      });
+
+      expect(
+        policy.evaluate({
+          action: 'write',
+          context: { user: { name: 'Joan', age: 17 } }
+        })
+      ).toBe(true);
+      expect(
+        policy.evaluate({
+          action: 'write',
+          context: new User()
+        })
+      ).toBe(false);
+    });
+  });
+
   describe('can and cannot', () => {
     it('can should return false when not found and true for when matched with allow', () => {
       const policy = new ActionBasedPolicy({

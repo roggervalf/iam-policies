@@ -2,10 +2,12 @@ import {
   EffectBlock,
   ConditionBlock,
   StatementInterface,
-  MatchConditionInterface
+  MatchConditionInterface,
+  MatchConditionResolverInterface
 } from './types';
 import { getValueFromPath } from './utils/getValueFromPath';
 import { generateUUID } from './utils/generateUUID';
+import {operators} from './conditionOperators';
 
 abstract class Statement<T extends object> {
   protected sid: string;
@@ -27,25 +29,51 @@ abstract class Statement<T extends object> {
     { context, conditionResolver }: MatchConditionInterface<T>
   ): boolean {
     const { condition: conditions } = this;
-    return conditionResolver && conditions && context
-      ? Object.keys(conditions).every((condition) =>
-          Object.keys(conditions[condition]).every((path) => {
-            const conditionValues = conditions[condition][path];
-            if (conditionValues instanceof Array) {
-              return conditionValues.some((value) =>
-                conditionResolver[condition](
-                  getValueFromPath(context, path),
-                  value
-                )
-              );
-            }
-            return conditionResolver[condition](
-              getValueFromPath(context, path),
-              conditionValues
+
+    if(conditions && context){
+      return Object.keys(conditions).every((condition) =>
+        Object.keys(conditions[condition]).every((path) => {
+          const conditionValues = conditions[condition][path];
+          if (conditionValues instanceof Array) {
+            return conditionValues.some((value) =>
+              this.evaluateCondition({
+                context,
+                conditionResolver,
+                condition,
+                path,
+                value
+              })
             );
-          })
-        )
-      : true;
+          }
+
+          return this.evaluateCondition({
+            context,
+            conditionResolver,
+            condition,
+            path,
+            value: conditionValues
+          });
+        })
+      )
+    }
+
+    return true;
+  }
+
+  private evaluateCondition(
+    this: Statement<T>,
+    { context, conditionResolver={}, path, value, condition }: MatchConditionResolverInterface<T>
+  ): boolean {
+
+    const currentResolver= conditionResolver[condition] || operators[condition]
+
+    if(currentResolver){
+      return currentResolver(
+        getValueFromPath(context, path),
+        value
+      )
+    }
+    return false;
   }
 }
 

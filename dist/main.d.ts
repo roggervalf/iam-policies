@@ -132,6 +132,7 @@ declare abstract class Statement<T extends object> {
     effect: EffectBlock;
     constructor({ sid, effect, condition }: StatementInterface);
     matchConditions(this: Statement<T>, { context, conditionResolver }: MatchConditionInterface<T>): boolean;
+    private evaluateCondition;
 }
 
 declare class ActionBased<T extends object> extends Statement<T> {

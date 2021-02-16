@@ -70,6 +70,14 @@ export interface MatchConditionInterface<T extends object> {
   conditionResolver?: ConditionResolver;
 }
 
+export interface MatchConditionResolverInterface<T extends object> {
+  context: T
+  conditionResolver?: ConditionResolver;
+  path: string;
+  condition: string;
+  value: any;
+}
+
 export interface MatchActionBasedInterface<T extends object>
   extends MatchConditionInterface<T> {
   action: string;

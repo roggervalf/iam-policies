@@ -736,6 +736,31 @@ function generateUUID() {
     return RFC4122_TEMPLATE.replace(/[xy]/g, replacePlaceholders(mersenne));
 }
 
+/**
+ * Exact matching, case sensitive.
+ *
+ * @since 4.3.0
+ * @category String
+ * @param {string} data The value to be compared.
+ * @param {string} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is equal to `expected value`.
+ * @example
+ * ```javascript
+ * stringEquals('hi', 'hi')
+ * // => true
+ *
+ * stringEquals('hi', 'no')
+ * // => false
+ * ```
+ */
+function stringEquals(data, expected) {
+    return (data === expected);
+}
+
+const operators = {
+    stringEquals
+};
+
 class Statement {
     constructor({ sid, effect = 'allow', condition }) {
         if (!sid) {
@@ -749,15 +774,35 @@ class Statement {
     }
     matchConditions({ context, conditionResolver }) {
         const { condition: conditions } = this;
-        return conditionResolver && conditions && context
-            ? Object.keys(conditions).every((condition) => Object.keys(conditions[condition]).every((path) => {
+        if (conditions && context) {
+            return Object.keys(conditions).every((condition) => Object.keys(conditions[condition]).every((path) => {
                 const conditionValues = conditions[condition][path];
                 if (conditionValues instanceof Array) {
-                    return conditionValues.some((value) => conditionResolver[condition](getValueFromPath(context, path), value));
+                    return conditionValues.some((value) => this.evaluateCondition({
+                        context,
+                        conditionResolver,
+                        condition,
+                        path,
+                        value
+                    }));
                 }
-                return conditionResolver[condition](getValueFromPath(context, path), conditionValues);
-            }))
-            : true;
+                return this.evaluateCondition({
+                    context,
+                    conditionResolver,
+                    condition,
+                    path,
+                    value: conditionValues
+                });
+            }));
+        }
+        return true;
+    }
+    evaluateCondition({ context, conditionResolver = {}, path, value, condition }) {
+        const currentResolver = conditionResolver[condition] || operators[condition];
+        if (currentResolver) {
+            return currentResolver(getValueFromPath(context, path), value);
+        }
+        return false;
     }
 }
 

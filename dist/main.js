@@ -761,8 +761,74 @@ function stringEquals(data, expected) {
     return (data === expected);
 }
 
+/**
+ * Exact matching, ignoring case.
+ *
+ * @since 4.4.0
+ * @category String
+ * @param {string} data The value to be compared.
+ * @param {string} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is equal to `expected value`.
+ * @example
+ * ```javascript
+ * stringEqualsIgnoreCase('hi', 'Hi')
+ * // => true
+ *
+ * stringEqualsIgnoreCase('hi', 'no')
+ * // => false
+ * ```
+ */
+function stringEqualsIgnoreCase(data, expected) {
+    return (data.toLowerCase() === expected.toLowerCase());
+}
+
+/**
+ * Negated string matching.
+ *
+ * @since 4.4.0
+ * @category String
+ * @param {string} data The value to be compared.
+ * @param {string} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is not equal to `expected value`.
+ * @example
+ * ```javascript
+ * stringNotEquals('hi', 'no')
+ * // => true
+ *
+ * stringNotEquals('hi', 'hi')
+ * // => false
+ * ```
+ */
+function stringNotEquals(data, expected) {
+    return (data !== expected);
+}
+
+/**
+ * Negated string matching, ignoring case.
+ *
+ * @since 4.4.0
+ * @category String
+ * @param {string} data The value to be compared.
+ * @param {string} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is not equal to `expected value`.
+ * @example
+ * ```javascript
+ * stringNotEqualsIgnoreCase('hi', 'no')
+ * // => true
+ *
+ * stringNotEqualsIgnoreCase('hi', 'Hi')
+ * // => false
+ * ```
+ */
+function stringNotEqualsIgnoreCase(data, expected) {
+    return (data.toLowerCase() !== expected.toLowerCase());
+}
+
 const operators = {
-    stringEquals
+    stringEquals,
+    stringEqualsIgnoreCase,
+    stringNotEquals,
+    stringNotEqualsIgnoreCase
 };
 
 class Statement {

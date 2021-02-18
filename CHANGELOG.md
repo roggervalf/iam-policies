@@ -1,3 +1,10 @@
+# [4.4.0](https://github.com/roggervalf/iam-policies/compare/v4.3.0...v4.4.0) (2021-02-18)
+
+
+### Features
+
+* **stringoperators:** adding new string operators ([83665fa](https://github.com/roggervalf/iam-policies/commit/83665fa769ba76059a66a9f3ab2c72a1bf107692))
+
 # [4.3.0](https://github.com/roggervalf/iam-policies/compare/v4.2.1...v4.3.0) (2021-02-16)
 
 

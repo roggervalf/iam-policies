@@ -741,7 +741,7 @@ function generateUUID() {
 }
 
 /**
- * Exact matching, case sensitive.
+ * Exact string matching, case sensitive.
  *
  * @since 4.3.0
  * @category String
@@ -762,7 +762,7 @@ function stringEquals(data, expected) {
 }
 
 /**
- * Exact matching, ignoring case.
+ * Exact string matching, ignoring case.
  *
  * @since 4.4.0
  * @category String
@@ -780,6 +780,27 @@ function stringEquals(data, expected) {
  */
 function stringEqualsIgnoreCase(data, expected) {
     return (data.toLowerCase() === expected.toLowerCase());
+}
+
+/**
+ * Case-sensitive matching. The values can include a multi-character match wildcard (*) anywhere in the string.
+ *
+ * @since 4.5.0
+ * @category String
+ * @param {string} data The value to be compared.
+ * @param {string} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is equal like `expected value`.
+ * @example
+ * ```javascript
+ * stringLike('newHouse', 'new*')
+ * // => true
+ *
+ * stringLike('House', 'new*')
+ * // => false
+ * ```
+ */
+function stringLike(data, expected) {
+    return (new Matcher(data).match(expected));
 }
 
 /**
@@ -827,6 +848,7 @@ function stringNotEqualsIgnoreCase(data, expected) {
 const operators = {
     stringEquals,
     stringEqualsIgnoreCase,
+    stringLike,
     stringNotEquals,
     stringNotEqualsIgnoreCase
 };

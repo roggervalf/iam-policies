@@ -3,14 +3,16 @@
 
 ### Features
 
-* **stringoperators:** adding new string operators ([83665fa](https://github.com/roggervalf/iam-policies/commit/83665fa769ba76059a66a9f3ab2c72a1bf107692))
+* **stringequalsignorecase:** adding exact matching string operator, ignoring case ([83665fa](https://github.com/roggervalf/iam-policies/commit/83665fa769ba76059a66a9f3ab2c72a1bf107692))
+* **stringnotequals:** adding negated string matching operator ([83665fa](https://github.com/roggervalf/iam-policies/commit/83665fa769ba76059a66a9f3ab2c72a1bf107692))
+* **stringnotequalsignorecase:** adding negated string matching operator, ignoring case ([83665fa](https://github.com/roggervalf/iam-policies/commit/83665fa769ba76059a66a9f3ab2c72a1bf107692))
 
 # [4.3.0](https://github.com/roggervalf/iam-policies/compare/v4.2.1...v4.3.0) (2021-02-16)
 
 
 ### Features
 
-* **stringequals:** adding new predefined string operator ([6fd5766](https://github.com/roggervalf/iam-policies/commit/6fd5766b9f0af96b30907af65763f72448fdd3d2))
+* **stringequals:** adding exact matching string operator ([6fd5766](https://github.com/roggervalf/iam-policies/commit/6fd5766b9f0af96b30907af65763f72448fdd3d2))
 
 ## [4.2.1](https://github.com/roggervalf/iam-policies/compare/v4.2.0...v4.2.1) (2020-12-06)
 

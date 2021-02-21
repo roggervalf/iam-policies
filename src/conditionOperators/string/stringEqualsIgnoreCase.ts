@@ -1,5 +1,5 @@
 /**
- * Exact matching, ignoring case.
+ * Exact string matching, ignoring case.
  *
  * @since 4.4.0
  * @category String

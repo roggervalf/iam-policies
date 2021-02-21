@@ -48,7 +48,8 @@ const DocumentationStyled = styled.section`
 
   td,
   th {
-    max-width: 30rem;
+    min-width: 5rem;
+    max-width: 17rem;
     white-space: break-spaces;
     padding: 10px;
     border: 1px solid #ccc;
@@ -58,8 +59,8 @@ const DocumentationStyled = styled.section`
 
   td:last-child,
   th:last-child {
-    min-width: 25rem;
-    max-width: 30rem;
+    min-width: 20rem;
+    max-width: 25rem;
     white-space: break-spaces;
     padding: 10px;
     border: 1px solid #ccc;

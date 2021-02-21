@@ -13,7 +13,7 @@ const HeaderStyled = styled.header`
   align-items: center;
   padding: 0.5rem 2rem;
   border: 0 solid #dae1e7;
-  // box-shadow: 0 2px 1px rgba(50, 50, 93, 0.03), 0 1px 1px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 2px 1px rgba(50, 50, 93, 0.03), 0 1px 1px rgba(0, 0, 0, 0.03);
   z-index: 10;
   .title {
     color: white;

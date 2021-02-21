@@ -697,12 +697,13 @@ There is a predefined condition operator to be used as part of conditionResolver
 
 ### String condition operators
 
-| Name                        | First Parameter | Expected Parameter | Description                      |
-| --------------------------- | --------------- | ------------------ | -------------------------------- |
-| `stringEquals`              | string          | string             | Exact matching, case sensitive.  |
-| `stringNotEquals`           | string          | string             | Negated matching.                |
-| `stringEqualsIgnoreCase`    | string          | string             | Exact matching, ignoring case.   |
-| `stringNotEqualsIgnoreCase` | string          | string             | Negated matching, ignoring case. |
+| Name                        | First Parameter | Expected Parameter | Description                                                                                                    |
+| --------------------------- | --------------- | ------------------ | -------------------------------------------------------------------------------------------------------------- |
+| `stringEquals`              | string          | string             | Exact matching, case sensitive.                                                                                |
+| `stringNotEquals`           | string          | string             | Negated matching.                                                                                              |
+| `stringEqualsIgnoreCase`    | string          | string             | Exact matching, ignoring case.                                                                                 |
+| `stringNotEqualsIgnoreCase` | string          | string             | Negated matching, ignoring case.                                                                               |
+| `stringLike`                | string          | string             | Case-sensitive matching. The values can include a multi-character match wildcard (`*`) anywhere in the string. |
 
 ## getValueFromPath(data, path) Function
 

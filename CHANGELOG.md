@@ -1,3 +1,10 @@
+# [4.5.0](https://github.com/roggervalf/iam-policies/compare/v4.4.0...v4.5.0) (2021-02-21)
+
+
+### Features
+
+* **stringlike:** adding case sensitive matching with multi character match * ([e5f2fc8](https://github.com/roggervalf/iam-policies/commit/e5f2fc81b81982cab832be2c5e479db4933c14d7))
+
 # [4.4.0](https://github.com/roggervalf/iam-policies/compare/v4.3.0...v4.4.0) (2021-02-18)
 
 

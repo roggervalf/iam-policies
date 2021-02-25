@@ -695,6 +695,17 @@ _public_: Verify if action for specific resource is denied (`true`) or not prese
 
 There is a predefined condition operator to be used as part of conditionResolver in case user don't pass any.
 
+### Numeric condition operators
+
+| Name                       | First Parameter | Expected Parameter | Description                      |
+| -------------------------- | --------------- | ------------------ | -------------------------------- |
+| `numericEquals`            | number          | number             | Exact matching.                  |
+| `numericNotEquals`         | number          | number             | Negated matching.                |
+| `numericLessThan`          | number          | number             | Less than matching.              |
+| `numericLessThanEquals`    | number          | number             | Less than or equals matching.    |
+| `numericGreaterThan`       | number          | number             | Greater than matching.           |
+| `numericGreaterThanEquals` | number          | number             | Greater than or equals matching. |
+
 ### String condition operators
 
 | Name                        | First Parameter | Expected Parameter | Description                                                                                                    |

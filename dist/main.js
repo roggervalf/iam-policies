@@ -741,6 +741,132 @@ function generateUUID() {
 }
 
 /**
+ * Exact numeric matching.
+ *
+ * @since 4.6.0
+ * @category Numeric
+ * @param {number} data The value to be compared.
+ * @param {number} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is equal to `expected value`.
+ * @example
+ * ```javascript
+ * numericEquals(5, 5)
+ * // => true
+ *
+ * numericEquals(2, 4)
+ * // => false
+ * ```
+ */
+function numericEquals(data, expected) {
+    return (data === expected);
+}
+
+/**
+ * Numeric greater than matching.
+ *
+ * @since 4.6.0
+ * @category Numeric
+ * @param {number} data The value to be compared.
+ * @param {number} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is greater than `expected value`.
+ * @example
+ * ```javascript
+ * numericGreaterThan(6, 5)
+ * // => true
+ *
+ * numericGreaterThan(4, 8)
+ * // => false
+ * ```
+ */
+function numericGreaterThan(data, expected) {
+    return (data > expected);
+}
+
+/**
+ * Numeric greater than or equals matching.
+ *
+ * @since 4.6.0
+ * @category Numeric
+ * @param {number} data The value to be compared.
+ * @param {number} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is greater than or equals `expected value`.
+ * @example
+ * ```javascript
+ * numericGreaterThanEquals(5, 5)
+ * // => true
+ *
+ * numericGreaterThanEquals(4, 8)
+ * // => false
+ * ```
+ */
+function numericGreaterThanEquals(data, expected) {
+    return (data >= expected);
+}
+
+/**
+ * Numeric less than matching.
+ *
+ * @since 4.6.0
+ * @category Numeric
+ * @param {number} data The value to be compared.
+ * @param {number} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is less than `expected value`.
+ * @example
+ * ```javascript
+ * numericLessThan(5, 6)
+ * // => true
+ *
+ * numericLessThan(8, 4)
+ * // => false
+ * ```
+ */
+function numericLessThan(data, expected) {
+    return (data < expected);
+}
+
+/**
+ * Numeric less than or equals matching.
+ *
+ * @since 4.6.0
+ * @category Numeric
+ * @param {number} data The value to be compared.
+ * @param {number} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is less than or equals `expected value`.
+ * @example
+ * ```javascript
+ * numericLessThanEquals(5, 5)
+ * // => true
+ *
+ * numericLessThanEquals(8, 4)
+ * // => false
+ * ```
+ */
+function numericLessThanEquals(data, expected) {
+    return (data <= expected);
+}
+
+/**
+ * Negated numeric matching.
+ *
+ * @since 4.6.0
+ * @category Numeric
+ * @param {number} data The value to be compared.
+ * @param {number} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is not equal to `expected value`.
+ * @example
+ * ```javascript
+ * numericNotEquals(2, 4)
+ * // => true
+ *
+ * numericNotEquals(5, 5)
+ * // => false
+ * ```
+ */
+function numericNotEquals(data, expected) {
+    return (data !== expected);
+}
+
+/**
  * Exact string matching, case sensitive.
  *
  * @since 4.3.0
@@ -846,6 +972,12 @@ function stringNotEqualsIgnoreCase(data, expected) {
 }
 
 const operators = {
+    numericEquals,
+    numericGreaterThan,
+    numericGreaterThanEquals,
+    numericLessThan,
+    numericLessThanEquals,
+    numericNotEquals,
     stringEquals,
     stringEqualsIgnoreCase,
     stringLike,

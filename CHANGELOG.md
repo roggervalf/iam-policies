@@ -1,3 +1,15 @@
+# [4.6.0](https://github.com/roggervalf/iam-policies/compare/v4.5.0...v4.6.0) (2021-02-25)
+
+
+### Features
+
+* **numeric:** adding numericEquals condition operator ([46b89c8](https://github.com/roggervalf/iam-policies/commit/46b89c8af4c7c796a826e9dd6f12770b933ded87))
+* **numeric:** adding numericGreaterThan condition operator ([01384d0](https://github.com/roggervalf/iam-policies/commit/01384d02f601912b1e542b472365b538f17ffabd))
+* **numeric:** adding numericGreaterThanEquals condition operator ([35ad211](https://github.com/roggervalf/iam-policies/commit/35ad2114505e1ac0ce4457d3d02af9b9b2945118))
+* **numeric:** adding numericLessThan condition operator ([fb75c5f](https://github.com/roggervalf/iam-policies/commit/fb75c5f20ad22a9fca74c7118aa8f43b0ad8c49f))
+* **numeric:** adding numericLessThanEquals condition operator ([7ceb06d](https://github.com/roggervalf/iam-policies/commit/7ceb06df5ab6b5e6fb1859d886ebb6582b051ce2))
+* **numeric:** adding numericNotEquals condition operator ([1de1638](https://github.com/roggervalf/iam-policies/commit/1de163869fe18baaf47ac8faa1d2c11f102d60ae))
+
 # [4.5.0](https://github.com/roggervalf/iam-policies/compare/v4.4.0...v4.5.0) (2021-02-21)
 
 

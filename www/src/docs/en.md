@@ -695,7 +695,17 @@ _public_: Verify if action for specific resource is denied (`true`) or not prese
 
 There is a predefined condition operator to be used as part of conditionResolver in case user don't pass any.
 
+### Boolean condition operators
+
+Boolean conditions let you construct **condition** elements that restrict access based on comparing a key to **true** or **false**.
+
+| Name   | First Parameter | Expected Parameter | Description       |
+| ------ | --------------- | ------------------ | ----------------- |
+| `bool` | boolean         | boolean            | Boolean matching. |
+
 ### Numeric condition operators
+
+Numeric condition operators let you construct **condition** elements that restrict access based on comparing a key to an integer or decimal value.
 
 | Name                       | First Parameter | Expected Parameter | Description                      |
 | -------------------------- | --------------- | ------------------ | -------------------------------- |
@@ -707,6 +717,8 @@ There is a predefined condition operator to be used as part of conditionResolver
 | `numericGreaterThanEquals` | number          | number             | Greater than or equals matching. |
 
 ### String condition operators
+
+String condition operators let you construct **condition** elements that restrict access based on comparing a key to a string value.
 
 | Name                        | First Parameter | Expected Parameter | Description                                                                                                    |
 | --------------------------- | --------------- | ------------------ | -------------------------------------------------------------------------------------------------------------- |

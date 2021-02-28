@@ -1,3 +1,10 @@
+# [4.7.0](https://github.com/roggervalf/iam-policies/compare/v4.6.0...v4.7.0) (2021-02-28)
+
+
+### Features
+
+* **bool:** adding boolean matching condition operator ([028c968](https://github.com/roggervalf/iam-policies/commit/028c96893ff9fb5919b70f9b9a9d2485e6cb05cb))
+
 # [4.6.0](https://github.com/roggervalf/iam-policies/compare/v4.5.0...v4.6.0) (2021-02-25)
 
 

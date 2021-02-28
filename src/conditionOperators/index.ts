@@ -1,3 +1,4 @@
+import {bool} from './boolean/bool';
 import {numericEquals} from './numeric/numericEquals';
 import {numericGreaterThan} from './numeric/numericGreaterThan';
 import {numericGreaterThanEquals} from './numeric/numericGreaterThanEquals';
@@ -11,6 +12,7 @@ import {stringNotEquals} from './string/stringNotEquals';
 import {stringNotEqualsIgnoreCase} from './string/stringNotEqualsIgnoreCase';
 
 export const operators: Record<string, unknown>={
+  bool,
   numericEquals,
   numericGreaterThan,
   numericGreaterThanEquals,

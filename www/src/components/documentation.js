@@ -48,7 +48,7 @@ const DocumentationStyled = styled.section`
 
   td,
   th {
-    min-width: 5rem;
+    min-width: 6rem;
     max-width: 17rem;
     white-space: break-spaces;
     padding: 10px;

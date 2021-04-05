@@ -1,3 +1,10 @@
+# [4.8.0](https://github.com/roggervalf/iam-policies/compare/v4.7.0...v4.8.0) (2021-04-05)
+
+
+### Features
+
+* **date:** adding date exact matching condition operator ([07315cc](https://github.com/roggervalf/iam-policies/commit/07315cc30e757e97adfcc1d860e9ee5655373435))
+
 # [4.7.0](https://github.com/roggervalf/iam-policies/compare/v4.6.0...v4.7.0) (2021-02-28)
 
 

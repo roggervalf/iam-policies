@@ -703,6 +703,14 @@ Boolean conditions let you construct **condition** elements that restrict access
 | ------ | --------------- | ------------------ | ----------------- |
 | `bool` | boolean         | boolean            | Boolean matching. |
 
+### Date condition operators
+
+Date conditions let you construct **condition** elements that restrict access based on comparing a key to **date/time** value.
+
+| Name         | First Parameter | Expected Parameter | Description               |
+| ------------ | --------------- | ------------------ | ------------------------- |
+| `dateEquals` | Date or string  | Date or string     | Matching a specific date. |
+
 ### Numeric condition operators
 
 Numeric condition operators let you construct **condition** elements that restrict access based on comparing a key to an integer or decimal value.

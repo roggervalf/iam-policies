@@ -129,5 +129,15 @@ describe('getValueFromPath', () => {
         });
       });
     });
+
+    describe('when path reference an array value', () => {
+      it('should resolve array path', () => {
+        const context = { a: [{ b: { c: 3 }, d: [{ e: 4 }, 2] }] };
+
+        expect(getValueFromPath(context, 'a[0].b.c')).toBe(3);
+        expect(getValueFromPath(context, 'a[0].d[1]')).toBe(2);
+        expect(getValueFromPath(context, 'a[0].d[0].e')).toBe(4);
+      });
+    });
   });
 });

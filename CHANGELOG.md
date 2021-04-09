@@ -1,3 +1,10 @@
+## [4.8.1](https://github.com/roggervalf/iam-policies/compare/v4.8.0...v4.8.1) (2021-04-09)
+
+
+### Bug Fixes
+
+* **resourcebasedstatement:** check principalType when is undefined ([34ce2f4](https://github.com/roggervalf/iam-policies/commit/34ce2f49ecb6b41dd6fc2248fc6e98e11f2694e1)), closes [#42](https://github.com/roggervalf/iam-policies/issues/42)
+
 # [4.8.0](https://github.com/roggervalf/iam-policies/compare/v4.7.0...v4.8.0) (2021-04-05)
 
 

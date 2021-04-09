@@ -182,10 +182,12 @@ class ResourceBased<T extends object> extends Statement<T> {
             return principalValues.some((a) =>
               new Matcher(applyContext(a, context)).match(principal)
             );
+          } else if (principalValues) {
+            return new Matcher(applyContext(principalValues, context)).match(
+              principal
+            );
           }
-          return new Matcher(applyContext(principalValues, context)).match(
-            principal
-          );
+          return false;
         }
         return false;
       }
@@ -212,10 +214,12 @@ class ResourceBased<T extends object> extends Statement<T> {
             return !principalValues.some((a) =>
               new Matcher(applyContext(a, context)).match(principal)
             );
+          } else if (principalValues) {
+            return !new Matcher(applyContext(principalValues, context)).match(
+              principal
+            );
           }
-          return !new Matcher(applyContext(principalValues, context)).match(
-            principal
-          );
+          return true;
         }
         return true;
       }

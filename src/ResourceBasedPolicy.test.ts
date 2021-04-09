@@ -208,6 +208,33 @@ describe('ResourceBasedPolicy Class', () => {
         })
       ).toBe(false);
     });
+
+    describe('when there is not a matched principalType', () => {
+      it('returns false', () => {
+        const resourceBasedPolicy = new ResourceBasedPolicy({
+          statements: [
+            {
+              action: '*',
+              resource: '*',
+              principal: {
+                a: '*',
+                b: '*',
+                c: '*'
+              }
+            }
+          ]
+        });
+
+        expect(
+          resourceBasedPolicy.evaluate({
+            action: 'read',
+            resource: 'secrets:ultraSecret',
+            principal: 'secret',
+            principalType: 'd'
+          })
+        ).toBe(false);
+      });
+    });
   });
 
   describe('when match not principal', () => {
@@ -257,6 +284,34 @@ describe('ResourceBasedPolicy Class', () => {
           principalType: 'id'
         })
       ).toBe(true);
+    });
+
+    describe('when there is not a matched principalType', () => {
+      it('returns false', () => {
+        const resourceBasedPolicy = new ResourceBasedPolicy({
+          statements: [
+            {
+              action: '*',
+              resource: '*',
+              notPrincipal: {
+                a: '*',
+                b: '*',
+                c: '*'
+              }
+            }
+          ],
+          context: {}
+        });
+
+        expect(
+          resourceBasedPolicy.evaluate({
+            action: 'read',
+            resource: 'secrets:ultraSecret',
+            principal: 'secret',
+            principalType: 'd'
+          })
+        ).toBe(true);
+      });
     });
   });
 

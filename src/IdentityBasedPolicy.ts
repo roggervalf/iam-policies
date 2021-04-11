@@ -71,7 +71,7 @@ export class IdentityBasedPolicy<T extends object> extends Policy<
       s.matches({
         action,
         resource,
-        context,
+        context: context || this.context,
         conditionResolver: this.conditionResolver
       })
     );
@@ -85,7 +85,7 @@ export class IdentityBasedPolicy<T extends object> extends Policy<
       s.matches({
         action,
         resource,
-        context,
+        context: context || this.context,
         conditionResolver: this.conditionResolver
       })
     );

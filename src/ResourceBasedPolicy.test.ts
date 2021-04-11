@@ -465,7 +465,7 @@ describe('ResourceBasedPolicy Class', () => {
 
   describe('when match based on context', () => {
     it('returns true or false', () => {
-      const policy = new ResourceBasedPolicy({
+      const policy = new ResourceBasedPolicy<Record<string, any>>({
         statements: [
           {
             principal: { id: 'rogger' },
@@ -473,13 +473,31 @@ describe('ResourceBasedPolicy Class', () => {
             action: ['read', 'write']
           },
           {
+            effect: 'deny',
             principal: { id: 'rogger' },
             resource: ['secrets:${user.bestFriends}:*'],
             action: 'read'
           }
-        ]
+        ],
+        context: { user: { id: 124, bestFriends: [563] } }
       });
 
+      expect(
+        policy.evaluate({
+          principal: 'rogger',
+          action: 'read',
+          resource: 'secrets:124:code',
+          principalType: 'id'
+        })
+      ).toBe(true);
+      expect(
+        policy.evaluate({
+          principal: 'rogger',
+          action: 'read',
+          resource: 'secrets:125:code',
+          principalType: 'id'
+        })
+      ).toBe(false);
       expect(
         policy.evaluate({
           principal: 'rogger',
@@ -502,7 +520,7 @@ describe('ResourceBasedPolicy Class', () => {
         policy.evaluate({
           principal: 'rogger',
           action: 'read',
-          resource: 'secrets:123:sshhh',
+          resource: 'secrets:123:topSecret',
           principalType: 'id',
           context: { user: { id: 456 } }
         })
@@ -511,10 +529,10 @@ describe('ResourceBasedPolicy Class', () => {
         policy.evaluate({
           principal: 'rogger',
           action: 'read',
-          resource: 'secrets:563:sshhh',
+          resource: 'secrets:563:topSecret',
           principalType: 'id',
           context: {
-            user: { id: 456, bestFriends: [123, 563, 1211] }
+            user: { id: 563, bestFriends: [123, 1211] }
           }
         })
       ).toBe(true);
@@ -522,7 +540,7 @@ describe('ResourceBasedPolicy Class', () => {
         policy.evaluate({
           principal: 'rogger',
           action: 'write',
-          resource: 'secrets:123:sshhh'
+          resource: 'secrets:123:topSecret'
         })
       ).toBe(false);
     });

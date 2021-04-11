@@ -229,19 +229,33 @@ describe('IdentityBasedPolicy Class', () => {
 
   describe('when match based on context', () => {
     it('returns true or false', () => {
-      const policy = new IdentityBasedPolicy({
+      const policy = new IdentityBasedPolicy<Record<string, any>>({
         statements: [
           {
             resource: ['secrets:${user.id}:*'],
             action: ['read', 'write']
           },
           {
+            effect: 'deny',
             resource: ['secrets:${user.bestFriends}:*'],
             action: 'read'
           }
-        ]
+        ],
+        context: { user: { id: 124 } }
       });
 
+      expect(
+        policy.evaluate({
+          action: 'read',
+          resource: 'secrets:124:code'
+        })
+      ).toBe(true);
+      expect(
+        policy.evaluate({
+          action: 'read',
+          resource: 'secrets:123:code'
+        })
+      ).toBe(false);
       expect(
         policy.evaluate({
           action: 'read',
@@ -268,7 +282,7 @@ describe('IdentityBasedPolicy Class', () => {
           action: 'read',
           resource: 'secrets:563:secret',
           context: {
-            user: { id: 456, bestFriends: [123, 563, 1211] }
+            user: { id: 563, bestFriends: [123, 1211] }
           }
         })
       ).toBe(true);

@@ -85,7 +85,7 @@ export class ResourceBasedPolicy<T extends object> extends Policy<
         action,
         resource,
         principalType,
-        context,
+        context: context || this.context,
         conditionResolver: this.conditionResolver
       })
     );
@@ -107,7 +107,7 @@ export class ResourceBasedPolicy<T extends object> extends Policy<
         action,
         resource,
         principalType,
-        context,
+        context: context || this.context,
         conditionResolver: this.conditionResolver
       })
     );

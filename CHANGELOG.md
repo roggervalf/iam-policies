@@ -1,3 +1,10 @@
+## [4.8.2](https://github.com/roggervalf/iam-policies/compare/v4.8.1...v4.8.2) (2021-04-11)
+
+
+### Bug Fixes
+
+* **evaluate:** using context in instantiation in IdentityBasedPolicy and ResourceBasedPolicy ([c0f3561](https://github.com/roggervalf/iam-policies/commit/c0f3561e4458baf15983425c64cb1d5550fdf6f8)), closes [#43](https://github.com/roggervalf/iam-policies/issues/43)
+
 ## [4.8.1](https://github.com/roggervalf/iam-policies/compare/v4.8.0...v4.8.1) (2021-04-09)
 
 

@@ -1,12 +1,4 @@
-type DateType = Date | string;
-
-const convertDate = (date: DateType): number=>{
-  if(date instanceof Date){
-    return date.getTime();
-  }
-
-  return Date.parse(date);
-}
+import {DateType, convertDate} from './convertDate';
 
 /**
  * Exact date matching.

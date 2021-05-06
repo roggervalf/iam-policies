@@ -1,3 +1,10 @@
+# [4.9.0](https://github.com/roggervalf/iam-policies/compare/v4.8.2...v4.9.0) (2021-05-06)
+
+
+### Features
+
+* **date:** adding negated date maching condition operator ([6081df9](https://github.com/roggervalf/iam-policies/commit/6081df9d83fba84599251914ece843f5a5ddd3a8))
+
 ## [4.8.2](https://github.com/roggervalf/iam-policies/compare/v4.8.1...v4.8.2) (2021-04-11)
 
 

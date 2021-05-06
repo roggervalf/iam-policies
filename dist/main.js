@@ -767,6 +767,7 @@ const convertDate = (date) => {
     }
     return Date.parse(date);
 };
+
 /**
  * Exact date matching.
  *
@@ -788,6 +789,29 @@ function dateEquals(data, expected) {
     const convertedData = convertDate(data);
     const convertedExpectation = convertDate(expected);
     return (convertedData === convertedExpectation);
+}
+
+/**
+ * Negated date matching.
+ *
+ * @since 4.9.0
+ * @category Date
+ * @param {Date} data The value to be compared.
+ * @param {Date} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is not equal to `expected value`.
+ * @example
+ * ```javascript
+ * dateNotEquals('December 15, 1994 03:24:00', 'December 16, 1995 03:24:00')
+ * // => true
+ *
+ * dateNotEquals('December 15, 2000 03:24:00', 'December 15, 2000 03:24:00')
+ * // => false
+ * ```
+ */
+function dateNotEquals(data, expected) {
+    const convertedData = convertDate(data);
+    const convertedExpectation = convertDate(expected);
+    return (convertedData !== convertedExpectation);
 }
 
 /**
@@ -1024,6 +1048,7 @@ function stringNotEqualsIgnoreCase(data, expected) {
 const operators = {
     bool,
     dateEquals,
+    dateNotEquals,
     numericEquals,
     numericGreaterThan,
     numericGreaterThanEquals,
@@ -1332,7 +1357,10 @@ class ResourceBased extends Statement {
                     if (principalValues instanceof Array) {
                         return principalValues.some((a) => new Matcher(applyContext(a, context)).match(principal));
                     }
-                    return new Matcher(applyContext(principalValues, context)).match(principal);
+                    else if (principalValues) {
+                        return new Matcher(applyContext(principalValues, context)).match(principal);
+                    }
+                    return false;
                 }
                 return false;
             }
@@ -1352,7 +1380,10 @@ class ResourceBased extends Statement {
                     if (principalValues instanceof Array) {
                         return !principalValues.some((a) => new Matcher(applyContext(a, context)).match(principal));
                     }
-                    return !new Matcher(applyContext(principalValues, context)).match(principal);
+                    else if (principalValues) {
+                        return !new Matcher(applyContext(principalValues, context)).match(principal);
+                    }
+                    return true;
                 }
                 return true;
             }
@@ -1506,7 +1537,7 @@ class IdentityBasedPolicy extends Policy {
         return this.allowStatements.some((s) => s.matches({
             action,
             resource,
-            context,
+            context: context || this.context,
             conditionResolver: this.conditionResolver
         }));
     }
@@ -1514,7 +1545,7 @@ class IdentityBasedPolicy extends Policy {
         return this.denyStatements.some((s) => s.matches({
             action,
             resource,
-            context,
+            context: context || this.context,
             conditionResolver: this.conditionResolver
         }));
     }
@@ -1551,7 +1582,7 @@ class ResourceBasedPolicy extends Policy {
             action,
             resource,
             principalType,
-            context,
+            context: context || this.context,
             conditionResolver: this.conditionResolver
         }));
     }
@@ -1561,7 +1592,7 @@ class ResourceBasedPolicy extends Policy {
             action,
             resource,
             principalType,
-            context,
+            context: context || this.context,
             conditionResolver: this.conditionResolver
         }));
     }

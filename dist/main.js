@@ -792,6 +792,52 @@ function dateEquals(data, expected) {
 }
 
 /**
+ * Matching before a specific date and time
+ *
+ * @since 4.9.0
+ * @category Date
+ * @param {Date} data The value to be compared.
+ * @param {Date} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is before than `expected value`.
+ * @example
+ * ```javascript
+ * dateLessThan('December 15, 1994 03:24:00', 'December 16, 1994 03:24:00')
+ * // => true
+ *
+ * dateLessThan('December 15, 2000 03:24:00', 'December 15, 2000 03:24:00')
+ * // => false
+ * ```
+ */
+function dateLessThan(data, expected) {
+    const convertedData = convertDate(data);
+    const convertedExpectation = convertDate(expected);
+    return (convertedData < convertedExpectation);
+}
+
+/**
+ * Matching at or before a specific date and time
+ *
+ * @since 4.9.0
+ * @category Date
+ * @param {Date} data The value to be compared.
+ * @param {Date} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is equal or before than `expected value`.
+ * @example
+ * ```javascript
+ * dateLessThanEquals('December 15, 1994 03:24:00', 'December 15, 1994 03:24:00')
+ * // => true
+ *
+ * dateLessThanEquals('December 15, 2000 03:24:00', 'December 15, 2000 03:24:00')
+ * // => false
+ * ```
+ */
+function dateLessThanEquals(data, expected) {
+    const convertedData = convertDate(data);
+    const convertedExpectation = convertDate(expected);
+    return (convertedData <= convertedExpectation);
+}
+
+/**
  * Negated date matching.
  *
  * @since 4.9.0
@@ -1048,6 +1094,8 @@ function stringNotEqualsIgnoreCase(data, expected) {
 const operators = {
     bool,
     dateEquals,
+    dateLessThan,
+    dateLessThanEquals,
     dateNotEquals,
     numericEquals,
     numericGreaterThan,

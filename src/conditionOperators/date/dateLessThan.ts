@@ -3,7 +3,7 @@ import {DateType, convertDate} from './convertDate';
 /**
  * Matching before a specific date and time
  *
- * @since 4.9.0
+ * @since 4.10.0
  * @category Date
  * @param {Date} data The value to be compared.
  * @param {Date} expected The expected value.

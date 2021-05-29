@@ -790,7 +790,7 @@ function dateEquals(data, expected) {
 /**
  * Matching before a specific date and time
  *
- * @since 4.9.0
+ * @since 4.10.0
  * @category Date
  * @param {Date} data The value to be compared.
  * @param {Date} expected The expected value.
@@ -813,7 +813,7 @@ function dateLessThan(data, expected) {
 /**
  * Matching at or before a specific date and time
  *
- * @since 4.9.0
+ * @since 4.10.0
  * @category Date
  * @param {Date} data The value to be compared.
  * @param {Date} expected The expected value.

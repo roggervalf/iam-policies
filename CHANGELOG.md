@@ -1,3 +1,11 @@
+# [4.10.0](https://github.com/roggervalf/iam-policies/compare/v4.9.0...v4.10.0) (2021-05-29)
+
+
+### Features
+
+* **date:** adding maching before a specific date and time operator (dateLessThan) ([3c6a7fe](https://github.com/roggervalf/iam-policies/commit/3c6a7fedabee69162ad84069f903c5075929fead))
+* **date:** adding matching at or before a specific date and time (dateLessThanEquals) ([e359440](https://github.com/roggervalf/iam-policies/commit/e3594409c1e7045d83586a8dd0458070b9f60e50))
+
 # [4.9.0](https://github.com/roggervalf/iam-policies/compare/v4.8.2...v4.9.0) (2021-05-06)
 
 

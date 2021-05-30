@@ -1,5 +1,6 @@
 import {bool} from './boolean/bool';
 import {dateEquals} from './date/dateEquals';
+import {dateGreaterThan} from './date/dateGreaterThan';
 import {dateLessThan} from './date/dateLessThan';
 import {dateLessThanEquals} from './date/dateLessThanEquals';
 import {dateNotEquals} from './date/dateNotEquals';
@@ -18,6 +19,7 @@ import {stringNotEqualsIgnoreCase} from './string/stringNotEqualsIgnoreCase';
 export const operators: Record<string, unknown>={
   bool,
   dateEquals,
+  dateGreaterThan,
   dateLessThan,
   dateLessThanEquals,
   dateNotEquals,

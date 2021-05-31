@@ -1,3 +1,11 @@
+# [4.11.0](https://github.com/roggervalf/iam-policies/compare/v4.10.0...v4.11.0) (2021-05-31)
+
+
+### Features
+
+* **date:** adding matching after a specific date and time operator (dateGreaterThan) ([9e5c93d](https://github.com/roggervalf/iam-policies/commit/9e5c93dd1c755614eb4090d8cb2d3a31df041187))
+* **date:** adding matching at or after a specific date and time operator (dateGreaterThanEquals) ([a0e84ca](https://github.com/roggervalf/iam-policies/commit/a0e84ca5a4a7c5dfad4cfbf1a3ddae832a1f1d58))
+
 # [4.10.0](https://github.com/roggervalf/iam-policies/compare/v4.9.0...v4.10.0) (2021-05-29)
 
 

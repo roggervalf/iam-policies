@@ -1,7 +1,7 @@
-import {DateType, convertDate} from './convertDate';
+import { DateType, convertDate } from './convertDate';
 
 /**
- * Matching after a specific a date and time
+ * Matching after a specific date and time
  *
  * @since 4.11.0
  * @category Date
@@ -20,7 +20,5 @@ import {DateType, convertDate} from './convertDate';
 export function dateGreaterThan(data: DateType, expected: DateType): boolean {
   const convertedData = convertDate(data);
   const convertedExpectation = convertDate(expected);
-  return (
-    convertedData > convertedExpectation
-  );
+  return convertedData > convertedExpectation;
 }

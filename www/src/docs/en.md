@@ -707,12 +707,14 @@ Boolean conditions let you construct **condition** elements that restrict access
 
 Date conditions let you construct **condition** elements that restrict access based on comparing a key to **date/time** value.
 
-| Name                 | First Parameter | Expected Parameter | Description                                     |
-| -------------------- | --------------- | ------------------ | ----------------------------------------------- |
-| `dateEquals`         | Date or string  | Date or string     | Matching a specific date.                       |
-| `dateNotEquals`      | Date or string  | Date or string     | Negated matching.                               |
-| `dateLessThan`       | Date or string  | Date or string     | Matching before a specific date and time.       |
-| `dateLessThanEquals` | Date or string  | Date or string     | Matching at or before a specific date and time. |
+| Name                    | First Parameter | Expected Parameter | Description                                     |
+| ----------------------- | --------------- | ------------------ | ----------------------------------------------- |
+| `dateEquals`            | Date or string  | Date or string     | Matching a specific date.                       |
+| `dateNotEquals`         | Date or string  | Date or string     | Negated matching.                               |
+| `dateLessThan`          | Date or string  | Date or string     | Matching before a specific date and time.       |
+| `dateLessThanEquals`    | Date or string  | Date or string     | Matching at or before a specific date and time. |
+| `dateGreaterThan`       | Date or string  | Date or string     | Matching after a specific date and time.        |
+| `dateGreaterThanEquals` | Date or string  | Date or string     | Matching at or after a specific date and time.  |
 
 ### Numeric condition operators
 

@@ -792,6 +792,52 @@ function dateEquals(data, expected) {
 }
 
 /**
+ * Matching after a specific date and time
+ *
+ * @since 4.11.0
+ * @category Date
+ * @param {Date} data The value to be compared.
+ * @param {Date} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is after than `expected value`.
+ * @example
+ * ```javascript
+ * dateGreaterThan('December 17, 1994 03:24:00', 'December 16, 1994 03:24:00')
+ * // => true
+ *
+ * dateGreaterThan('December 15, 2000 03:24:00', 'December 15, 2000 03:24:00')
+ * // => false
+ * ```
+ */
+function dateGreaterThan(data, expected) {
+    const convertedData = convertDate(data);
+    const convertedExpectation = convertDate(expected);
+    return convertedData > convertedExpectation;
+}
+
+/**
+ * Matching at or after a specific date and time
+ *
+ * @since 4.11.0
+ * @category Date
+ * @param {Date} data The value to be compared.
+ * @param {Date} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is after than or equals `expected value`.
+ * @example
+ * ```javascript
+ * dateGreaterThanEquals('December 17, 1994 03:24:00', 'December 16, 1994 03:24:00')
+ * // => true
+ *
+ * dateGreaterThanEquals('December 15, 2000 03:24:00', 'December 15, 2000 03:25:00')
+ * // => false
+ * ```
+ */
+function dateGreaterThanEquals(data, expected) {
+    const convertedData = convertDate(data);
+    const convertedExpectation = convertDate(expected);
+    return convertedData >= convertedExpectation;
+}
+
+/**
  * Matching before a specific date and time
  *
  * @since 4.10.0
@@ -1094,6 +1140,8 @@ function stringNotEqualsIgnoreCase(data, expected) {
 const operators = {
     bool,
     dateEquals,
+    dateGreaterThan,
+    dateGreaterThanEquals,
     dateLessThan,
     dateLessThanEquals,
     dateNotEquals,

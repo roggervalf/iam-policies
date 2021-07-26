@@ -1,3 +1,10 @@
+# [4.12.0](https://github.com/roggervalf/iam-policies/compare/v4.11.0...v4.12.0) (2021-07-26)
+
+
+### Features
+
+* **string:** add case-sensitive-matching if exist (stringLikeIfExists) ([695961d](https://github.com/roggervalf/iam-policies/commit/695961df60775e8cbe84cc46454a7cc86ddcbf0b))
+
 # [4.11.0](https://github.com/roggervalf/iam-policies/compare/v4.10.0...v4.11.0) (2021-05-31)
 
 

@@ -733,13 +733,14 @@ Numeric condition operators let you construct **condition** elements that restri
 
 String condition operators let you construct **condition** elements that restrict access based on comparing a key to a string value.
 
-| Name                        | First Parameter | Expected Parameter | Description                                                                                                    |
-| --------------------------- | --------------- | ------------------ | -------------------------------------------------------------------------------------------------------------- |
-| `stringEquals`              | string          | string             | Exact matching, case sensitive.                                                                                |
-| `stringNotEquals`           | string          | string             | Negated matching.                                                                                              |
-| `stringEqualsIgnoreCase`    | string          | string             | Exact matching, ignoring case.                                                                                 |
-| `stringNotEqualsIgnoreCase` | string          | string             | Negated matching, ignoring case.                                                                               |
-| `stringLike`                | string          | string             | Case-sensitive matching. The values can include a multi-character match wildcard (`*`) anywhere in the string. |
+| Name                        | First Parameter | Expected Parameter | Description                                                                                                              |
+| --------------------------- | --------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `stringEquals`              | string          | string             | Exact matching, case sensitive.                                                                                          |
+| `stringNotEquals`           | string          | string             | Negated matching.                                                                                                        |
+| `stringEqualsIgnoreCase`    | string          | string             | Exact matching, ignoring case.                                                                                           |
+| `stringNotEqualsIgnoreCase` | string          | string             | Negated matching, ignoring case.                                                                                         |
+| `stringLike`                | string          | string             | Case-sensitive matching. The values can include a multi-character match wildcard (`*`) anywhere in the string.           |
+| `stringLikeIfExists`        | string          | string             | Case-sensitive matching if exists. The values can include a multi-character match wildcard (`*`) anywhere in the string. |
 
 ## getValueFromPath(data, path) Function
 

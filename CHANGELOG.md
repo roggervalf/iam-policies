@@ -11,7 +11,7 @@
 
 ### Features
 
-* **date:** add maching before a specific date and time operator (dateLessThan) ([3c6a7fe](https://github.com/roggervalf/iam-policies/commit/3c6a7fedabee69162ad84069f903c5075929fead))
+* **date:** add matching before a specific date and time operator (dateLessThan) ([3c6a7fe](https://github.com/roggervalf/iam-policies/commit/3c6a7fedabee69162ad84069f903c5075929fead))
 * **date:** add matching at or before a specific date and time (dateLessThanEquals) ([e359440](https://github.com/roggervalf/iam-policies/commit/e3594409c1e7045d83586a8dd0458070b9f60e50))
 
 # [4.9.0](https://github.com/roggervalf/iam-policies/compare/v4.8.2...v4.9.0) (2021-05-06)
@@ -19,7 +19,7 @@
 
 ### Features
 
-* **date:** add negated date maching condition operator ([6081df9](https://github.com/roggervalf/iam-policies/commit/6081df9d83fba84599251914ece843f5a5ddd3a8))
+* **date:** add negated date matching condition operator ([6081df9](https://github.com/roggervalf/iam-policies/commit/6081df9d83fba84599251914ece843f5a5ddd3a8))
 
 ## [4.8.2](https://github.com/roggervalf/iam-policies/compare/v4.8.1...v4.8.2) (2021-04-11)
 
@@ -148,7 +148,7 @@
 
 ### BREAKING CHANGES
 
-* new way to contruct Policies instances with a json
+* new way to construct Policies instances with a json
 
 # [3.5.0](https://github.com/roggervalf/iam-policies/compare/v3.4.1...v3.5.0) (2020-10-11)
 

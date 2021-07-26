@@ -292,7 +292,7 @@ describe('IdentityBasedPolicy Class', () => {
     });
   });
 
-  describe('when match based on conditions', () => {
+  describe('when match based on custom conditions', () => {
     it('returns true or false', () => {
       const conditionResolver = {
         greaterThan: (data: number, expected: number): boolean => {
@@ -337,6 +337,57 @@ describe('IdentityBasedPolicy Class', () => {
           action: 'read',
           resource: 'posts:456:sshhh',
           context: { user: { id: 456, age: 19 } }
+        })
+      ).toBe(true);
+    });
+  });
+
+  describe('when match based on default conditions', () => {
+    it('returns true or false', () => {
+      const policy = new IdentityBasedPolicy({
+        statements: [
+          {
+            resource: 'secrets:*',
+            action: ['read', 'write']
+          },
+          {
+            resource: ['posts:*'],
+            action: ['write', 'read', 'update'],
+            condition: {
+              stringLikeIfExists: {
+                'user.id': '12'
+              }
+            }
+          }
+        ]
+      });
+
+      expect(
+        policy.evaluate({
+          action: 'read',
+          resource: 'secrets:123:ultra',
+          context: { user: {  } }
+        })
+      ).toBe(true);
+      expect(
+        policy.evaluate({
+          action: 'write',
+          resource: 'posts:ultra',
+          context: { user: { id: '123', age: 17 } }
+        })
+      ).toBe(false);
+      expect(
+        policy.evaluate({
+          action: 'read',
+          resource: 'posts:ultra',
+          context: { user: { age: 19 } }
+        })
+      ).toBe(true);
+      expect(
+        policy.evaluate({
+          action: 'read',
+          resource: 'posts:ultra',
+          context: { user: { id: '12', age: 19 } }
         })
       ).toBe(true);
     });

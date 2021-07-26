@@ -1096,6 +1096,27 @@ function stringLike(data, expected) {
 }
 
 /**
+ * Case-sensitive matching if exist. The values can include a multi-character match wildcard (*) anywhere in the string.
+ *
+ * @since 4.12.0
+ * @category String
+ * @param {string} data The value to be compared.
+ * @param {string} expected The expected value.
+ * @returns {boolean} Returns `true` if `value` is equal like `expected value` or if it does not exist.
+ * @example
+ * ```javascript
+ * stringLikeIfExists(undefined, 'new*')
+ * // => true
+ *
+ * stringLikeIfExists('House', 'new*')
+ * // => false
+ * ```
+ */
+function stringLikeIfExists(data, expected) {
+    return data ? (stringLike(data, expected)) : true;
+}
+
+/**
  * Negated string matching.
  *
  * @since 4.4.0
@@ -1154,6 +1175,7 @@ const operators = {
     stringEquals,
     stringEqualsIgnoreCase,
     stringLike,
+    stringLikeIfExists,
     stringNotEquals,
     stringNotEqualsIgnoreCase
 };

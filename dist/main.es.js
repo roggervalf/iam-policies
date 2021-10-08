@@ -1595,11 +1595,11 @@ class ActionBasedPolicy extends Policy {
                         if (typeof prop === 'string') {
                             const property = propertyMapGet[prop] || prop;
                             if (this.evaluate({ action: property }))
-                                return target[prop];
+                                return Reflect.get(target, prop);
                             throw new Error(`Unauthorize to get ${prop} property`);
                         }
                     }
-                    return target[prop];
+                    return Reflect.get(target, prop);
                 }
             }
             : {})), (allowSet
@@ -1608,8 +1608,7 @@ class ActionBasedPolicy extends Policy {
                     if (typeof prop === 'string') {
                         const property = propertyMapSet[prop] || prop;
                         if (this.evaluate({ action: property })) {
-                            target[prop] = value;
-                            return true;
+                            return Reflect.set(target, prop, value);
                         }
                         else
                             throw new Error(`Unauthorize to set ${prop} property`);

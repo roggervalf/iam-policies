@@ -87,7 +87,7 @@ export class ActionBasedPolicy<T extends object> extends Policy<
     );
   }
 
-  generateProxy<U extends object, W extends keyof U>(
+  generateProxy<U extends object>(
     this: ActionBasedPolicy<T>,
     obj: U,
     options: ProxyOptions = {}
@@ -98,26 +98,26 @@ export class ActionBasedPolicy<T extends object> extends Policy<
     const handler = {
       ...(allowGet
         ? {
-            get: (target: U, prop: W): any => {
+            get: (target: U, prop: string | symbol): any => {
               if (prop in target) {
                 if (typeof prop === 'string') {
                   const property = propertyMapGet[prop] || prop;
-                  if (this.evaluate({ action: property })) return target[prop];
+                  if (this.evaluate({ action: property }))
+                    return Reflect.get(target, prop);
                   throw new Error(`Unauthorize to get ${prop} property`);
                 }
               }
-              return target[prop];
+              return Reflect.get(target, prop);
             }
           }
         : {}),
       ...(allowSet
         ? {
-            set: (target: U, prop: W, value: any): boolean => {
+            set: (target: U, prop: string | symbol, value: any): boolean => {
               if (typeof prop === 'string') {
                 const property = propertyMapSet[prop] || prop;
                 if (this.evaluate({ action: property })) {
-                  target[prop] = value;
-                  return true;
+                  return Reflect.set(target, prop, value);
                 } else throw new Error(`Unauthorize to set ${prop} property`);
               }
               return true;

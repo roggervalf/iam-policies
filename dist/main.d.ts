@@ -216,7 +216,7 @@ declare class ActionBasedPolicy<T extends object> extends Policy<T, ActionBasedT
     evaluate(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): boolean;
     can(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): boolean;
     cannot(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): boolean;
-    generateProxy<U extends object, W extends keyof U>(this: ActionBasedPolicy<T>, obj: U, options?: ProxyOptions): U;
+    generateProxy<U extends object>(this: ActionBasedPolicy<T>, obj: U, options?: ProxyOptions): U;
 }
 
 interface IdentityBasedPolicyInterface<T extends object> {

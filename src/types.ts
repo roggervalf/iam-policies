@@ -71,7 +71,7 @@ export interface MatchConditionInterface<T extends object> {
 }
 
 export interface MatchConditionResolverInterface<T extends object> {
-  context: T
+  context: T;
   conditionResolver?: ConditionResolver;
   path: string;
   condition: string;
@@ -130,11 +130,11 @@ type ResourceBasedType = StatementInterface &
 interface ProxyOptions {
   get?: {
     allow?: boolean;
-    propertyMap?: Record<string, string>;
+    propertyMap?: Record<PropertyKey, PropertyKey>;
   };
   set?: {
     allow?: boolean;
-    propertyMap?: Record<string, string>;
+    propertyMap?: Record<PropertyKey, PropertyKey>;
   };
 }
 

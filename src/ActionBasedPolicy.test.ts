@@ -434,7 +434,7 @@ describe('ActionBasedPolicy Class', () => {
             }
           ]
         });
-        const sym: string = (Symbol('id') as unknown) as string;
+        const sym: string = Symbol('id') as unknown as string;
         const user = {
           firstName: 'John',
           lastName: 'Wick',
@@ -444,12 +444,17 @@ describe('ActionBasedPolicy Class', () => {
         const expectedError = new Error(
           'Unauthorize to get firstName property'
         );
+        const expectedError2 = new Error(
+          'Unauthorize to set Symbol(id) property'
+        );
+        const expectedError3 = new Error(
+          'Unauthorize to get otherValue property'
+        );
 
         expect(proxy.lastName).toBe('Wick');
-        expect(() => (proxy[sym] = 2)).not.toThrow();
-        expect(proxy[sym]).toBe(1);
-        expect(proxy.otherValue).toBe(undefined);
         expect(() => proxy.firstName).toThrow(expectedError);
+        expect(() => (proxy[sym] = 2)).toThrow(expectedError2);
+        expect(() => proxy.otherValue).toThrow(expectedError3);
       });
     });
 

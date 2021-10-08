@@ -118,11 +118,11 @@ declare type ResourceBasedType = StatementInterface & (OptionalPrincipalBlock | 
 interface ProxyOptions {
     get?: {
         allow?: boolean;
-        propertyMap?: Record<string, string>;
+        propertyMap?: Record<PropertyKey, PropertyKey>;
     };
     set?: {
         allow?: boolean;
-        propertyMap?: Record<string, string>;
+        propertyMap?: Record<PropertyKey, PropertyKey>;
     };
 }
 

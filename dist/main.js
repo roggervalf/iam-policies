@@ -1595,29 +1595,21 @@ class ActionBasedPolicy extends Policy {
         const handler = Object.assign(Object.assign({}, (allowGet
             ? {
                 get: (target, prop) => {
-                    if (prop in target) {
-                        if (typeof prop === 'string') {
-                            const property = propertyMapGet[prop] || prop;
-                            if (this.evaluate({ action: property }))
-                                return Reflect.get(target, prop);
-                            throw new Error(`Unauthorize to get ${prop} property`);
-                        }
-                    }
-                    return Reflect.get(target, prop);
+                    const property = (Reflect.has(propertyMapGet, prop)) ? Reflect.get(propertyMapGet, prop) : prop;
+                    if (this.evaluate({ action: property }))
+                        return Reflect.get(target, prop);
+                    throw new Error(`Unauthorize to get ${String(prop)} property`);
                 }
             }
             : {})), (allowSet
             ? {
                 set: (target, prop, value) => {
-                    if (typeof prop === 'string') {
-                        const property = propertyMapSet[prop] || prop;
-                        if (this.evaluate({ action: property })) {
-                            return Reflect.set(target, prop, value);
-                        }
-                        else
-                            throw new Error(`Unauthorize to set ${prop} property`);
+                    const property = (Reflect.has(propertyMapSet, prop)) ? Reflect.get(propertyMapSet, prop) : prop;
+                    if (this.evaluate({ action: property })) {
+                        return Reflect.set(target, prop, value);
                     }
-                    return true;
+                    else
+                        throw new Error(`Unauthorize to set ${String(prop)} property`);
                 }
             }
             : {}));

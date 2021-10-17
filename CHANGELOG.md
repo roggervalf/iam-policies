@@ -1,3 +1,10 @@
+# [4.13.0](https://github.com/roggervalf/iam-policies/compare/v4.12.0...v4.13.0) (2021-10-17)
+
+
+### Features
+
+* **generate-proxy:** update Proxy types ([#58](https://github.com/roggervalf/iam-policies/issues/58)) ([236627a](https://github.com/roggervalf/iam-policies/commit/236627acae923a334eb3635f177af9f3528ba42a))
+
 # [4.12.0](https://github.com/roggervalf/iam-policies/compare/v4.11.0...v4.12.0) (2021-07-26)
 
 

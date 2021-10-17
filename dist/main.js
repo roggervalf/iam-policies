@@ -1595,30 +1595,39 @@ class ActionBasedPolicy extends Policy {
         const handler = Object.assign(Object.assign({}, (allowGet
             ? {
                 get: (target, prop) => {
-                    if (prop in target) {
-                        if (typeof prop === 'string') {
-                            const property = propertyMapGet[prop] || prop;
-                            if (this.evaluate({ action: property }))
-                                return target[prop];
+                    const property = Reflect.has(propertyMapGet, prop)
+                        ? Reflect.get(propertyMapGet, prop)
+                        : prop;
+                    if (typeof prop === 'string') {
+                        if (this.evaluate({ action: property })) {
+                            return Reflect.get(target, prop);
+                        }
+                        else {
                             throw new Error(`Unauthorize to get ${prop} property`);
                         }
                     }
-                    return target[prop];
+                    else {
+                        return Reflect.get(target, prop);
+                    }
                 }
             }
             : {})), (allowSet
             ? {
                 set: (target, prop, value) => {
+                    const property = Reflect.has(propertyMapSet, prop)
+                        ? Reflect.get(propertyMapSet, prop)
+                        : prop;
                     if (typeof prop === 'string') {
-                        const property = propertyMapSet[prop] || prop;
                         if (this.evaluate({ action: property })) {
-                            target[prop] = value;
-                            return true;
+                            return Reflect.set(target, prop, value);
                         }
-                        else
+                        else {
                             throw new Error(`Unauthorize to set ${prop} property`);
+                        }
                     }
-                    return true;
+                    else {
+                        return false;
+                    }
                 }
             }
             : {}));

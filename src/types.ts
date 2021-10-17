@@ -71,7 +71,7 @@ export interface MatchConditionInterface<T extends object> {
 }
 
 export interface MatchConditionResolverInterface<T extends object> {
-  context: T
+  context: T;
   conditionResolver?: ConditionResolver;
   path: string;
   condition: string;

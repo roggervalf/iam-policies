@@ -87,7 +87,7 @@ export class ActionBasedPolicy<T extends object> extends Policy<
     );
   }
 
-  generateProxy<U extends object, W extends keyof U>(
+  generateProxy<U extends object>(
     this: ActionBasedPolicy<T>,
     obj: U,
     options: ProxyOptions = {}
@@ -98,29 +98,37 @@ export class ActionBasedPolicy<T extends object> extends Policy<
     const handler = {
       ...(allowGet
         ? {
-            get: (target: U, prop: W): any => {
-              if (prop in target) {
-                if (typeof prop === 'string') {
-                  const property = propertyMapGet[prop] || prop;
-                  if (this.evaluate({ action: property })) return target[prop];
+            get: (target: U, prop: string | symbol): any => {
+              const property = Reflect.has(propertyMapGet, prop)
+                ? Reflect.get(propertyMapGet, prop)
+                : prop;
+              if (typeof prop === 'string') {
+                if (this.evaluate({ action: property })) {
+                  return Reflect.get(target, prop);
+                } else {
                   throw new Error(`Unauthorize to get ${prop} property`);
                 }
+              } else {
+                return Reflect.get(target, prop);
               }
-              return target[prop];
             }
           }
         : {}),
       ...(allowSet
         ? {
-            set: (target: U, prop: W, value: any): boolean => {
+            set: (target: U, prop: string | symbol, value: any): boolean => {
+              const property = Reflect.has(propertyMapSet, prop)
+                ? Reflect.get(propertyMapSet, prop)
+                : prop;
               if (typeof prop === 'string') {
-                const property = propertyMapSet[prop] || prop;
                 if (this.evaluate({ action: property })) {
-                  target[prop] = value;
-                  return true;
-                } else throw new Error(`Unauthorize to set ${prop} property`);
+                  return Reflect.set(target, prop, value);
+                } else {
+                  throw new Error(`Unauthorize to set ${prop} property`);
+                }
+              } else {
+                return false;
               }
-              return true;
             }
           }
         : {})

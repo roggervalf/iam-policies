@@ -445,7 +445,7 @@ describe('ActionBasedPolicy Class', () => {
           'Unauthorize to get firstName property'
         );
         const expectedError2 = new Error(
-          'Unauthorize to set Symbol(id) property'
+          "'set' on proxy: trap returned falsish for property 'Symbol(id)'"
         );
         const expectedError3 = new Error(
           'Unauthorize to get otherValue property'
@@ -454,6 +454,7 @@ describe('ActionBasedPolicy Class', () => {
         expect(proxy.lastName).toBe('Wick');
         expect(() => proxy.firstName).toThrow(expectedError);
         expect(() => (proxy[sym] = 2)).toThrow(expectedError2);
+        expect(proxy[sym]).toBe(1);
         expect(() => proxy.otherValue).toThrow(expectedError3);
       });
     });

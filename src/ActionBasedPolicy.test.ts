@@ -339,6 +339,21 @@ describe('ActionBasedPolicy Class', () => {
         })
       ).toBe(true);
       expect(
+        policy.whyCan({
+          action: 'getUser/123',
+          context: { user: { id: 123 } }
+        })
+      ).toMatchObject([
+        {
+          effect: 'allow',
+          action: [
+            'createProject',
+            'getUser/${user.id}',
+            'updateUser/${user.id}'
+          ]
+        }
+      ]);
+      expect(
         policy.can({
           action: 'createProject'
         })
@@ -371,6 +386,21 @@ describe('ActionBasedPolicy Class', () => {
           context: { user: { id: 123 } }
         })
       ).toBe(true);
+      expect(
+        policy.whyCannot({
+          action: 'getUser/123',
+          context: { user: { id: 123 } }
+        })
+      ).toMatchObject([
+        {
+          effect: 'deny',
+          action: [
+            'createProject',
+            'getUser/${user.id}',
+            'updateUser/${user.id}'
+          ]
+        }
+      ]);
       expect(
         policy.cannot({
           action: 'createProject'

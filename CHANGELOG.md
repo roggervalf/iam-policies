@@ -1,3 +1,10 @@
+# [4.14.0](https://github.com/roggervalf/iam-policies/compare/v4.13.0...v4.14.0) (2021-11-08)
+
+
+### Features
+
+* **action-policy:** add whyCan and whyCannot methods ([#59](https://github.com/roggervalf/iam-policies/issues/59)) ([fef8e89](https://github.com/roggervalf/iam-policies/commit/fef8e8994ab57d29e3382cd9cf967b7d43a31879))
+
 # [4.13.0](https://github.com/roggervalf/iam-policies/compare/v4.12.0...v4.13.0) (2021-10-17)
 
 

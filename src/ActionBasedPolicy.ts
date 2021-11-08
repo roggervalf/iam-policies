@@ -74,6 +74,23 @@ export class ActionBasedPolicy<T extends object> extends Policy<
     );
   }
 
+  whyCan(
+    this: ActionBasedPolicy<T>,
+    { action, context }: EvaluateActionBasedInterface<T>
+  ): ActionBasedType[] {
+    return this.allowStatements.reduce((statements, currentStatement) => {
+      const matches = currentStatement.matches({
+        action,
+        context: context || this.context,
+        conditionResolver: this.conditionResolver
+      });
+      if (matches) {
+        return [...statements, currentStatement.getStatement()];
+      }
+      return statements;
+    }, [] as ActionBasedType[]);
+  }
+
   cannot(
     this: ActionBasedPolicy<T>,
     { action, context }: EvaluateActionBasedInterface<T>
@@ -85,6 +102,23 @@ export class ActionBasedPolicy<T extends object> extends Policy<
         conditionResolver: this.conditionResolver
       })
     );
+  }
+
+  whyCannot(
+    this: ActionBasedPolicy<T>,
+    { action, context }: EvaluateActionBasedInterface<T>
+  ): ActionBasedType[] {
+    return this.denyStatements.reduce((statements, currentStatement) => {
+      const matches = currentStatement.matches({
+        action,
+        context: context || this.context,
+        conditionResolver: this.conditionResolver
+      });
+      if (matches) {
+        return [...statements, currentStatement.getStatement()];
+      }
+      return statements;
+    }, [] as ActionBasedType[]);
   }
 
   generateProxy<U extends object>(

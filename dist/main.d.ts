@@ -215,7 +215,9 @@ declare class ActionBasedPolicy<T extends object> extends Policy<T, ActionBasedT
     getStatements(this: ActionBasedPolicy<T>): ActionBasedType[];
     evaluate(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): boolean;
     can(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): boolean;
+    whyCan(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): ActionBasedType[];
     cannot(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): boolean;
+    whyCannot(this: ActionBasedPolicy<T>, { action, context }: EvaluateActionBasedInterface<T>): ActionBasedType[];
     generateProxy<U extends object>(this: ActionBasedPolicy<T>, obj: U, options?: ProxyOptions): U;
 }
 
@@ -233,6 +235,7 @@ declare class IdentityBasedPolicy<T extends object> extends Policy<T, IdentityBa
     getStatements(this: IdentityBasedPolicy<T>): IdentityBasedType[];
     evaluate(this: IdentityBasedPolicy<T>, { action, resource, context }: EvaluateIdentityBasedInterface<T>): boolean;
     can(this: IdentityBasedPolicy<T>, { action, resource, context }: EvaluateIdentityBasedInterface<T>): boolean;
+    whyCan(this: IdentityBasedPolicy<T>, { action, resource, context }: EvaluateIdentityBasedInterface<T>): IdentityBasedType[];
     cannot(this: IdentityBasedPolicy<T>, { action, resource, context }: EvaluateIdentityBasedInterface<T>): boolean;
 }
 

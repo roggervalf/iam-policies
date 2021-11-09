@@ -366,7 +366,7 @@ describe('IdentityBasedPolicy Class', () => {
         policy.evaluate({
           action: 'read',
           resource: 'secrets:123:ultra',
-          context: { user: {  } }
+          context: { user: {} }
         })
       ).toBe(true);
       expect(
@@ -401,6 +401,11 @@ describe('IdentityBasedPolicy Class', () => {
             effect: 'allow',
             resource: ['posts:${user.id}:*'],
             action: ['write', 'read', 'update']
+          },
+          {
+            effect: 'allow',
+            resource: ['projects:${user.id}:*'],
+            action: ['write', 'read']
           }
         ]
       });
@@ -412,6 +417,19 @@ describe('IdentityBasedPolicy Class', () => {
           context: { user: { id: 123 } }
         })
       ).toBe(true);
+      expect(
+        policy.whyCan({
+          action: 'read',
+          resource: 'posts:123:sshhh',
+          context: { user: { id: 123 } }
+        })
+      ).toMatchObject([
+        {
+          effect: 'allow',
+          resource: ['posts:${user.id}:*'],
+          action: ['write', 'read', 'update']
+        }
+      ]);
       expect(
         policy.can({
           action: 'read',

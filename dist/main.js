@@ -1581,12 +1581,38 @@ class ActionBasedPolicy extends Policy {
             conditionResolver: this.conditionResolver
         }));
     }
+    whyCan({ action, context }) {
+        return this.allowStatements.reduce((statements, currentStatement) => {
+            const matches = currentStatement.matches({
+                action,
+                context: context || this.context,
+                conditionResolver: this.conditionResolver
+            });
+            if (matches) {
+                return [...statements, currentStatement.getStatement()];
+            }
+            return statements;
+        }, []);
+    }
     cannot({ action, context }) {
         return this.denyStatements.some((s) => s.matches({
             action,
             context: context || this.context,
             conditionResolver: this.conditionResolver
         }));
+    }
+    whyCannot({ action, context }) {
+        return this.denyStatements.reduce((statements, currentStatement) => {
+            const matches = currentStatement.matches({
+                action,
+                context: context || this.context,
+                conditionResolver: this.conditionResolver
+            });
+            if (matches) {
+                return [...statements, currentStatement.getStatement()];
+            }
+            return statements;
+        }, []);
     }
     generateProxy(obj, options = {}) {
         const { get = {}, set = {} } = options;

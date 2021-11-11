@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/roggervalf/iam-policies#readme",
   "scripts": {
+    "docs": "(api-extractor run || true) && api-documenter markdown -i ./temp -o docs/gitbook/api",
     "pretest": "npm-run-all pretty:quick lint:staged",
     "prettier:format": "./node_modules/.bin/prettier **/*.{ts,js,json,yml} -l --ignore-path ./.eslintignore",
     "prettier:fix": "./node_modules/.bin/prettier **/*.{ts,js,json,yml} --write --ignore-path ./.eslintignore",
@@ -57,7 +58,7 @@
   "main": "dist/main.js",
   "module": "dist/main.es.js",
   "jsnext:main": "dist/main.es.js",
-  "typings": "dist/main.d.ts",
+  "types": "dist/main.d.ts",
   "devDependencies": {
     "@babel/core": "7.7.2",
     "@babel/preset-env": "7.7.1",
@@ -65,6 +66,8 @@
     "@commitlint/cli": "8.3.5",
     "@commitlint/config-conventional": "8.3.4",
     "@commitlint/travis-cli": "10.0.0",
+    "@microsoft/api-documenter": "^7.13.50",
+    "@microsoft/api-extractor": "^7.18.9",
     "@rollup/plugin-babel": "5.0.0",
     "@rollup/plugin-commonjs": "16.0.0",
     "@rollup/plugin-node-resolve": "10.0.0",

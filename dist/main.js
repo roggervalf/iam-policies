@@ -1694,6 +1694,20 @@ class IdentityBasedPolicy extends Policy {
             conditionResolver: this.conditionResolver
         }));
     }
+    whyCan({ action, resource, context }) {
+        return this.allowStatements.reduce((statements, currentStatement) => {
+            const matches = currentStatement.matches({
+                action,
+                resource,
+                context: context || this.context,
+                conditionResolver: this.conditionResolver
+            });
+            if (matches) {
+                return [...statements, currentStatement.getStatement()];
+            }
+            return statements;
+        }, []);
+    }
     cannot({ action, resource, context }) {
         return this.denyStatements.some((s) => s.matches({
             action,

@@ -328,6 +328,10 @@ describe('ActionBasedPolicy Class', () => {
               'getUser/${user.id}',
               'updateUser/${user.id}'
             ]
+          },
+          {
+            effect: 'allow',
+            action: ['createAccount']
           }
         ]
       });
@@ -376,6 +380,10 @@ describe('ActionBasedPolicy Class', () => {
               'getUser/${user.id}',
               'updateUser/${user.id}'
             ]
+          },
+          {
+            effect: 'deny',
+            action: ['createAccount']
           }
         ]
       });

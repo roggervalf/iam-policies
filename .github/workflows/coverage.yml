@@ -27,6 +27,5 @@ jobs:
           key: node_modules-${{ hashFiles('**/yarn.lock') }}
           # no restore-keys here, so we only accept this exact version
       - run: yarn install --frozen-lockfile --non-interactive
-      - run: yarn coverage
       - name: Coverage
         run: yarn test:coveralls

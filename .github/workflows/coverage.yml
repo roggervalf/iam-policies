@@ -27,8 +27,8 @@ jobs:
           key: node_modules-${{ hashFiles('**/yarn.lock') }}
           # no restore-keys here, so we only accept this exact version
       - run: yarn install --frozen-lockfile --non-interactive
+      - run: yarn test:coverage
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn test:coveralls

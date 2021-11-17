@@ -108,4 +108,22 @@ export class IdentityBasedPolicy<T extends object> extends Policy<
       })
     );
   }
+
+  whyCannot(
+    this: IdentityBasedPolicy<T>,
+    { action, resource, context }: EvaluateIdentityBasedInterface<T>
+  ): IdentityBasedType[] {
+    return this.denyStatements.reduce((statements, currentStatement) => {
+      const matches = currentStatement.matches({
+        action,
+        resource,
+        context: context || this.context,
+        conditionResolver: this.conditionResolver
+      });
+      if (matches) {
+        return [...statements, currentStatement.getStatement()];
+      }
+      return statements;
+    }, [] as IdentityBasedType[]);
+  }
 }

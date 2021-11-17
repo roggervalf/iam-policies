@@ -45,8 +45,9 @@
     "test:coveralls": "npm-run-all test:coverage send:coveralls",
     "send:coveralls": "coveralls < coverage/lcov.info",
     "start": "npm-run-all clean build:watch",
-    "prepare": "yarn build",
+    "precommit": "npm-run-all pretty:quick lint:staged",
     "predeploy": "cd example && yarn && yarn start",
+    "prepare": "yarn build",
     "semantic-release": "semantic-release"
   },
   "config": {

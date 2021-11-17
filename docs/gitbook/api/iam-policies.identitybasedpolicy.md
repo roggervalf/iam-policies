@@ -26,4 +26,6 @@ declare class IdentityBasedPolicy<T extends object> extends Policy<T, IdentityBa
 |  [cannot(this, { action, resource, context })](./iam-policies.identitybasedpolicy.cannot.md) |  |  |
 |  [evaluate(this, { action, resource, context })](./iam-policies.identitybasedpolicy.evaluate.md) |  |  |
 |  [getStatements(this)](./iam-policies.identitybasedpolicy.getstatements.md) |  |  |
+|  [whyCan(this, { action, resource, context })](./iam-policies.identitybasedpolicy.whycan.md) |  |  |
+|  [whyCannot(this, { action, resource, context })](./iam-policies.identitybasedpolicy.whycannot.md) |  |  |
 

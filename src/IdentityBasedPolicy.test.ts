@@ -446,6 +446,11 @@ describe('IdentityBasedPolicy Class', () => {
             effect: 'deny',
             resource: ['posts:${user.id}:*'],
             action: ['write', 'read', 'update']
+          },
+          {
+            effect: 'deny',
+            resource: ['projects:${user.id}:*'],
+            action: ['write', 'read']
           }
         ]
       });
@@ -457,6 +462,19 @@ describe('IdentityBasedPolicy Class', () => {
           context: { user: { id: 123 } }
         })
       ).toBe(true);
+      expect(
+        policy.whyCannot({
+          action: 'read',
+          resource: 'posts:123:sshhh',
+          context: { user: { id: 123 } }
+        })
+      ).toMatchObject([
+        {
+          effect: 'deny',
+          resource: ['posts:${user.id}:*'],
+          action: ['write', 'read', 'update']
+        }
+      ]);
       expect(
         policy.cannot({
           action: 'read',

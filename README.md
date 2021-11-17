@@ -70,8 +70,11 @@ Supports these glob features:
 Please click on the language that you prefer
 
 - Translations:
+
   - [Chinese docs](https://roggervalf.github.io/iam-policies/zh-CN/) by [@mickymao1110](https://github.com/mickymao1110) (< v3.5.0 )
   - [English docs](https://roggervalf.github.io/iam-policies/en/) by [@roggervalf](https://github.com/roggervalf)
+
+- [Api documentation](https://github.com/roggervalf/iam-policies/blob/master/docs/gitbook/api/index.md)
 
 ## Article
 

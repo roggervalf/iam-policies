@@ -27,4 +27,31 @@
 |  Interface | Description |
 |  --- | --- |
 |  [ActionBasedPolicyInterface](./iam-policies.actionbasedpolicyinterface.md) |  |
+|  [ConditionMap](./iam-policies.conditionmap.md) |  |
+|  [ConditionResolver](./iam-policies.conditionresolver.md) |  |
+|  [DecomposeString](./iam-policies.decomposestring.md) |  |
+|  [EvaluateActionBasedInterface](./iam-policies.evaluateactionbasedinterface.md) |  |
+|  [EvaluateIdentityBasedInterface](./iam-policies.evaluateidentitybasedinterface.md) |  |
+|  [EvaluateResourceBasedInterface](./iam-policies.evaluateresourcebasedinterface.md) |  |
+|  [MatchActionBasedInterface](./iam-policies.matchactionbasedinterface.md) |  |
+|  [MatchConditionInterface](./iam-policies.matchconditioninterface.md) |  |
+|  [MatchConditionResolverInterface](./iam-policies.matchconditionresolverinterface.md) |  |
+|  [MatchIdentityBasedInterface](./iam-policies.matchidentitybasedinterface.md) |  |
+|  [MatchResourceBasedInterface](./iam-policies.matchresourcebasedinterface.md) |  |
+|  [MemoizeInterface](./iam-policies.memoizeinterface.md) |  |
+|  [PrincipalMap](./iam-policies.principalmap.md) |  |
+|  [ProxyOptions](./iam-policies.proxyoptions.md) |  |
+|  [StatementInterface](./iam-policies.statementinterface.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [ActionBasedType](./iam-policies.actionbasedtype.md) |  |
+|  [ConditionBlock](./iam-policies.conditionblock.md) |  |
+|  [ConditionKey](./iam-policies.conditionkey.md) |  |
+|  [EffectBlock](./iam-policies.effectblock.md) |  |
+|  [IdentityBasedType](./iam-policies.identitybasedtype.md) |  |
+|  [Patterns](./iam-policies.patterns.md) |  |
+|  [ResourceBasedType](./iam-policies.resourcebasedtype.md) |  |
 

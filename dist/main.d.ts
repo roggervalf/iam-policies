@@ -75,11 +75,22 @@ interface OptionalResourceBlock {
 interface OptionalNotResourceBlock {
     notResource?: Patterns;
 }
+declare type ConditionKey = string | number | boolean;
+interface ConditionMap {
+    [key: string]: ConditionKey[] | ConditionKey;
+}
 declare type ConditionBlock = Record<string, Record<string, unknown>>;
 interface StatementInterface {
     sid?: string;
     effect?: EffectBlock;
     condition?: ConditionBlock;
+}
+interface DecomposeString {
+    start: number;
+    end: number;
+    pre: string;
+    body: string;
+    post: string;
 }
 declare type Resolver = (data: any, expected: any) => boolean;
 interface ConditionResolver {
@@ -88,6 +99,13 @@ interface ConditionResolver {
 interface MatchConditionInterface<T extends object> {
     context?: T;
     conditionResolver?: ConditionResolver;
+}
+interface MatchConditionResolverInterface<T extends object> {
+    context: T;
+    conditionResolver?: ConditionResolver;
+    path: string;
+    condition: string;
+    value: any;
 }
 interface MatchActionBasedInterface<T extends object> extends MatchConditionInterface<T> {
     action: string;
@@ -111,6 +129,9 @@ interface EvaluateResourceBasedInterface<T extends object> extends EvaluateActio
     principal?: string;
     principalType?: string;
     resource?: string;
+}
+interface MemoizeInterface extends Function {
+    cache: Map<any, any>;
 }
 declare type ActionBasedType = StatementInterface & (ActionBlock | NotActionBlock);
 declare type IdentityBasedType = StatementInterface & (ActionBlock | NotActionBlock) & (ResourceBlock | NotResourceBlock);
@@ -237,6 +258,7 @@ declare class IdentityBasedPolicy<T extends object> extends Policy<T, IdentityBa
     can(this: IdentityBasedPolicy<T>, { action, resource, context }: EvaluateIdentityBasedInterface<T>): boolean;
     whyCan(this: IdentityBasedPolicy<T>, { action, resource, context }: EvaluateIdentityBasedInterface<T>): IdentityBasedType[];
     cannot(this: IdentityBasedPolicy<T>, { action, resource, context }: EvaluateIdentityBasedInterface<T>): boolean;
+    whyCannot(this: IdentityBasedPolicy<T>, { action, resource, context }: EvaluateIdentityBasedInterface<T>): IdentityBasedType[];
 }
 
 interface ResourceBasedPolicyInterface<T extends object> {
@@ -256,4 +278,4 @@ declare class ResourceBasedPolicy<T extends object> extends Policy<T, ResourceBa
     cannot(this: ResourceBasedPolicy<T>, { principal, action, resource, principalType, context }: EvaluateResourceBasedInterface<T>): boolean;
 }
 
-export { ActionBased, ActionBasedPolicy, ActionBasedPolicyInterface, IdentityBased, IdentityBasedPolicy, ResourceBased, ResourceBasedPolicy, applyContext, getValueFromPath };
+export { ActionBased, ActionBasedPolicy, ActionBasedPolicyInterface, ActionBasedType, ConditionBlock, ConditionKey, ConditionMap, ConditionResolver, DecomposeString, EffectBlock, EvaluateActionBasedInterface, EvaluateIdentityBasedInterface, EvaluateResourceBasedInterface, IdentityBased, IdentityBasedPolicy, IdentityBasedType, MatchActionBasedInterface, MatchConditionInterface, MatchConditionResolverInterface, MatchIdentityBasedInterface, MatchResourceBasedInterface, MemoizeInterface, Patterns, PrincipalMap, ProxyOptions, ResourceBased, ResourceBasedPolicy, ResourceBasedType, StatementInterface, applyContext, getValueFromPath };

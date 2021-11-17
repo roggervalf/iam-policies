@@ -26,7 +26,12 @@
       "classes": true
     }
   },
-  "plugins": ["promise", "prettier", "@typescript-eslint/eslint-plugin"],
+  "plugins": [
+    "eslint-plugin-tsdoc",
+    "promise",
+    "prettier",
+    "@typescript-eslint/eslint-plugin"
+  ],
   "extends": [
     "prettier",
     "eslint:recommended",

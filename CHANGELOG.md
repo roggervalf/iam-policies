@@ -1,3 +1,10 @@
+# [4.16.0](https://github.com/roggervalf/iam-policies/compare/v4.15.0...v4.16.0) (2021-11-17)
+
+
+### Features
+
+* **identity-based-policy:** add whyCannot method ([#71](https://github.com/roggervalf/iam-policies/issues/71)) ([47f21f1](https://github.com/roggervalf/iam-policies/commit/47f21f17c50b76fc3206a36a10778e3eb00c279a))
+
 # [4.15.0](https://github.com/roggervalf/iam-policies/compare/v4.14.0...v4.15.0) (2021-11-09)
 
 

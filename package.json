@@ -21,7 +21,6 @@
   "bugs": {
     "url": "https://github.com/roggervalf/iam-policies/issues"
   },
-  "homepage": "https://github.com/roggervalf/iam-policies#readme",
   "scripts": {
     "build": "npm-run-all build:c clean:temp clean:temp:files",
     "build:c": "rollup -c",

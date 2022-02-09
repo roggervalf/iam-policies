@@ -35,17 +35,18 @@ const expand = (str: string, isTop?: boolean): string[] => {
   const pre = balance.pre;
   const postParts = balance.post.length ? expand(balance.post, false) : [''];
 
-  if (/\$$/.test(balance.pre)) {
+  if (/\$$/.test(pre) && !/\\\$$/.test(pre)) {
     postParts.forEach((postPart) => {
-      const expansion = `${balance.pre.slice(0, -1)}{${
-        balance.body
-      }}${postPart}`;
+      const expansion = `${pre.slice(0, -1)}{${balance.body}}${postPart}`;
       expansions.push(expansion);
     });
   } else {
+    const newPre = /\\\$$/.test(pre)
+      ? `${pre.substring(0, pre.length - 2)}$`
+      : pre;
     parts.forEach((part: string) => {
       postParts.forEach((postPart) => {
-        const expansion = pre + part + postPart;
+        const expansion = newPre + part + postPart;
         if (!isTop || expansion) expansions.push(expansion);
       });
     });

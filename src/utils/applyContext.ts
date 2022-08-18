@@ -40,7 +40,7 @@ export function applyContext<T extends object>(
       const value = getValueFromPath(context, path);
       if (Array.isArray(value)) return `{${value}}`;
       if (value instanceof Object) {
-        const json = value.toJSON?.();
+        const json = value.toJSON ? value.toJSON() : undefined;
         return typeof json === 'string' ? json : 'undefined';
       }
 

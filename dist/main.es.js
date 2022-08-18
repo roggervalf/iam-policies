@@ -332,12 +332,11 @@ function applyContext(str, context) {
     if (!context)
         return str;
     return specialTrim(str.replace(reDelimiters, (_, path) => {
-        var _a;
         const value = getValueFromPath(context, path);
         if (Array.isArray(value))
             return `{${value}}`;
         if (value instanceof Object) {
-            const json = (_a = value.toJSON) === null || _a === void 0 ? void 0 : _a.call(value);
+            const json = value.toJSON ? value.toJSON() : undefined;
             return typeof json === 'string' ? json : 'undefined';
         }
         return String(value);

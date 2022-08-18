@@ -1,3 +1,10 @@
+# [4.17.0](https://github.com/roggervalf/iam-policies/compare/v4.16.0...v4.17.0) (2022-08-18)
+
+
+### Features
+
+* **apply-context:** support objects with toJSON method as context variables ([#88](https://github.com/roggervalf/iam-policies/issues/88)) ([ecb3dbc](https://github.com/roggervalf/iam-policies/commit/ecb3dbce21e622a3e508d19d43a142be95bfb0ab))
+
 # [4.16.0](https://github.com/roggervalf/iam-policies/compare/v4.15.0...v4.16.0) (2021-11-17)
 
 

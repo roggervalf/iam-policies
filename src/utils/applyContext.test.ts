@@ -1,3 +1,4 @@
+import { ObjectId } from 'bson';
 import { applyContext } from './applyContext';
 
 describe('applyContext', () => {
@@ -41,6 +42,16 @@ describe('applyContext', () => {
 
     expect(applyContext('secrets:${user.address}:account', context)).toBe(
       'secrets:undefined:account'
+    );
+  });
+
+  it('can match ObjectId', () => {
+    const context = {
+      user: { id: 456, oid: new ObjectId('62fe296afd3ad81be5088699') }
+    };
+
+    expect(applyContext('secrets:${user.oid}:account', context)).toBe(
+      'secrets:62fe296afd3ad81be5088699:account'
     );
   });
 });

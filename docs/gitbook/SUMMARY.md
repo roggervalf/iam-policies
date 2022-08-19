@@ -1,8 +1,8 @@
 # Table of contents
 
-- [Quick Start](README.md)
-- [What is Iam-Policies](what-is-iam-policies.md)
-- [API Reference](index.md)
-- [Changelog](changelog.md)
+* [What is Iam-Policies](README.md)
+* [Quick Start](<README (1).md>)
+* [API Reference](index.md)
+* [Changelog](changelog.md)
 
 ## Guide

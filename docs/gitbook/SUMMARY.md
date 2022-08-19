@@ -6,3 +6,9 @@
 * [Changelog](changelog.md)
 
 ## Guide
+
+* [Introduction](guide/introduction.md)
+* [Action Based Policy](guide/action-based-policy.md)
+* [Identity Based Policy](guide/identity-based-policy.md)
+* [Resource Based Policy](guide/resource-based-policy.md)
+* [Condition Operators](guide/condition-operators.md)

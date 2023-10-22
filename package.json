@@ -100,7 +100,7 @@
     "rollup-plugin-dts": "1.4.13",
     "rollup-plugin-peer-deps-external": "2.2.4",
     "rollup-plugin-typescript2": "0.25.3",
-    "semantic-release": "18.0.0",
+    "semantic-release": "19.0.3",
     "tslib": "1.14.1",
     "typescript": "4.0.3"
   },

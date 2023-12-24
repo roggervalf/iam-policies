@@ -18,7 +18,7 @@
     "gatsby-remark-prismjs": "^3.5.4",
     "gatsby-remark-table-of-contents": "^0.0.9",
     "gatsby-source-filesystem": "^2.3.8",
-    "gatsby-transformer-remark": "^2.8.15",
+    "gatsby-transformer-remark": "^5.25.1",
     "gatsby-transformer-sharp": "^2.5.3",
     "prismjs": "^1.27.0",
     "prop-types": "^15.7.2",
